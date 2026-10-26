@@ -1,0 +1,108 @@
+<!--{"title": "Features", "description": "Sales, invoices, cash register, stock, purchases, expenses, payments, reports and team: what Nhill Business and Nhill POS do, and what they do not do yet.", "nav": "features", "pair": "fonctionnalites"}-->
+<section class="page-head">
+  <div class="wrap">
+    <h1>What Nhill Business and Nhill POS do</h1>
+    <p class="lede">This page describes the functions available in version 2.0.0. What does not exist yet is listed at the bottom of the page.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <div class="prose">
+      <h2>Sales and invoices</h2>
+      <ul>
+        <li>Quotes, purchase orders, invoices and credit notes, numbered by the server without gaps or duplicates.</li>
+        <li>Quote converted into an invoice, credit note on an invoice with goods returned to stock.</li>
+        <li>Per-line discounts and taxes (DRC profile: 16 % VAT, 0 %, exempt), exact rounding.</li>
+        <li>Documents in CDF, USD, EUR or another currency, with the exchange rate recorded.</li>
+        <li>PDF with your legal details and logo, in French or English.</li>
+        <li>An issued invoice can no longer be changed: it is corrected by a credit note, as in accounting.</li>
+        <li>For VAT-registered businesses: a field to record the reference of the standardised invoice issued by your fiscal device.</li>
+      </ul>
+    </div>
+    <figure class="shot">
+      <img src="{{root}}/assets/images/capture-facture.webp" width="1280" height="820" loading="lazy" alt="Invoice FA-2026-000002 in Nhill Business: customer, lines, totals before tax, taxes, total, amount paid and balance, status history.">
+      <figcaption>A partly paid invoice. Real screenshot, demo data (French interface).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section section-mist">
+  <div class="wrap split reverse">
+    <div class="prose">
+      <h2>Cash register: Nhill POS</h2>
+      <ul>
+        <li>Each cashier signs in with their own account and only sees their register and session.</li>
+        <li>Opening with a float, selling by touch or with a barcode scanner (USB, works like a keyboard).</li>
+        <li>Payment with several methods (cash, card, Mobile Money…) and change computed.</li>
+        <li>Discount above the set limit: a supervisor approves with their password, valid once.</li>
+        <li>Returns and voids through credit notes, goods back in stock, cash refund.</li>
+        <li>Justified cash in and out, X reading during the day, closing with variance and Z report.</li>
+        <li>PDF receipts in 58 or 80 mm roll format. Keyboard shortcuts: F2 to scan, F9 to pay.</li>
+      </ul>
+    </div>
+    <figure class="shot">
+      <img src="{{root}}/assets/images/capture-session-caisse.webp" width="1280" height="800" loading="lazy" alt="Cash session in Nhill POS: sales, returns, net sales, expected cash and the list of receipts of the session.">
+      <figcaption>Following a cash session. Real screenshot, demo data (French interface).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <div class="prose">
+      <h2>Stock, purchases and expenses</h2>
+      <ul>
+        <li>Products and services, references, barcodes, categories, sale and purchase prices.</li>
+        <li>Stock per warehouse, alert thresholds, traced movements (sale, received purchase, justified adjustment, transfer).</li>
+        <li>Catalogue import and export as CSV.</li>
+        <li>Supplier purchases: receiving goods updates the stock, amount left to pay.</li>
+        <li>Expenses with a category and a receipt (photo or PDF).</li>
+      </ul>
+      <h2>Payments and reports</h2>
+      <ul>
+        <li>Payments received and made, attached to invoices, purchases and expenses; cash and bank accounts.</li>
+        <li>Sales journal, payments, expenses, sales by product with estimated margin, stock movements, customer receivables, amounts to pay.</li>
+        <li>PDF and CSV export.</li>
+      </ul>
+    </div>
+    <figure class="shot">
+      <img src="{{root}}/assets/images/capture-stock.webp" width="1280" height="820" loading="lazy" alt="Stock screen of Nhill Business: quantities per product, thresholds and estimated value.">
+      <figcaption>Stock levels. Real screenshot, demo data (French interface).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section section-mist">
+  <div class="wrap split reverse">
+    <div class="prose">
+      <h2>Team, access and traceability</h2>
+      <ul>
+        <li>Roles: owner, administrator, manager, salesperson, accountant, read-only, cash manager, cashier.</li>
+        <li>Employees join the business with an establishment code and an invitation; the code is renewed every 30 days.</li>
+        <li>Activity log: who did what and when, cannot be edited, can be exported.</li>
+        <li>Passwords of at least 8 characters; changing your password closes your other sessions.</li>
+        <li>Several establishments for the same person, with separate access to each.</li>
+      </ul>
+    </div>
+    <figure class="shot">
+      <img src="{{root}}/assets/images/capture-equipe.webp" width="1280" height="820" loading="lazy" alt="Team settings in Nhill Business: members, e-mail address, role, status and last activity.">
+      <figcaption>Managing the team. Real screenshot, demo data (French interface).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap prose">
+    <h2>What Nhill does not do yet</h2>
+    <ul>
+      <li>No standardised invoice homologated by the DGI (no connection to an electronic fiscal device).</li>
+      <li>No offline mode: an Internet connection is required.</li>
+      <li>No direct link with Mobile Money operators and no live online payment activated.</li>
+      <li>No general ledger accounting (OHADA chart of accounts): the CSV exports are for your accountant.</li>
+      <li>No Excel export (CSV and PDF only), no e-mail or SMS sending from the application.</li>
+      <li>Nhill POS and Nhill Console do not exist on Android; only Nhill Business is planned there.</li>
+    </ul>
+    <p>These limits are public because they matter when you decide. The pilot programme also helps us choose which ones to lift first.</p>
+  </div>
+</section>

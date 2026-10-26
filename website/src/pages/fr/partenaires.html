@@ -1,0 +1,44 @@
+<!--{"title": "Devenir partenaire", "description": "Cabinets de conseil, prestataires informatiques, formateurs, associations et structures d'accompagnement : recommandez, installez ou formez à Nhill.", "nav": "partners", "pair": "partners"}-->
+<section class="page-head">
+  <div class="wrap">
+    <h1>Travaillons ensemble auprès des entrepreneurs</h1>
+    <p class="lede">Nhill cherche quelques partenaires qui connaissent les commerçants et les PME et peuvent les conseiller, les équiper ou les former.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Les formes de partenariat</h2>
+    <ul class="ruled">
+      <li><strong>Recommandation</strong><span>Vous présentez Nhill à des entreprises de votre réseau. Si elles deviennent clientes, une commission convenue d'avance vous est versée. Accord de recommandation écrit.</span></li>
+      <li><strong>Installation et assistance</strong><span>Prestataires informatiques : vous installez Nhill, importez les données et assurez l'assistance de premier niveau, rémunérée par vos clients ou par Nhill selon l'accord.</span></li>
+      <li><strong>Formation</strong><span>Formateurs, écoles de gestion, centres d'affaires : vous formez des utilisateurs à Nhill avec nos supports.</span></li>
+      <li><strong>Accompagnement d'entrepreneurs</strong><span>Incubateurs, associations professionnelles, structures d'appui aux PME : vous proposez Nhill aux entreprises que vous suivez, par exemple dans le cadre du programme pilote.</span></li>
+      <li><strong>Utilisateur de référence</strong><span>Une entreprise qui utilise Nhill et accepte, après le pilote et seulement si elle le souhaite, de recevoir d'autres commerçants pour en parler.</span></li>
+    </ul>
+    <div class="note prose">
+      <p>Aucun partenariat n'est annoncé publiquement sans accord signé. Les commissions, responsabilités, règles de confidentialité et conditions de fin sont fixées par écrit avant tout démarrage.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-mist">
+  <div class="wrap">
+    <h2 id="candidature">Proposer un partenariat</h2>
+    <form class="lead" data-kind="partner" novalidate>
+      <div class="field"><label for="r-name">Nom et prénom *</label><input id="r-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="r-name-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-org">Organisation *</label><input id="r-org" name="organisation" autocomplete="organization" required maxlength="160"><p class="err" id="r-org-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-email">E-mail *</label><input id="r-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="err" id="r-email-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-phone">Téléphone ou WhatsApp</label><input id="r-phone" name="phone" type="tel" autocomplete="tel" maxlength="30"><p class="err" id="r-phone-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-city">Ville *</label><input id="r-city" name="city" required maxlength="80"><p class="err" id="r-city-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-type">Type de partenariat *</label>
+        <select id="r-type" name="partner_type" required><option value="">Choisir…</option><option value="referral">Recommandation</option><option value="integrator">Installation et assistance</option><option value="training">Formation</option><option value="support_org">Accompagnement d'entrepreneurs</option><option value="other">Autre</option></select><p class="err" id="r-type-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-msg">Votre réseau et votre proposition *</label><textarea id="r-msg" name="message" required maxlength="2000"></textarea><p class="err" id="r-msg-err" aria-live="polite"></p></div>
+      <div class="hp" aria-hidden="true"><label for="r-website">Ne pas remplir</label><input id="r-website" name="website" class="hp-input" tabindex="-1" autocomplete="off"></div>
+      <div class="check"><input id="r-privacy" name="consent_privacy" type="checkbox" required><label for="r-privacy">J'accepte que Nhill utilise ces informations pour étudier ma proposition, comme décrit dans la <a href="{{p:confidentialite}}">politique de confidentialité</a>. *</label></div>
+      <p class="err" id="r-privacy-err" aria-live="polite"></p>
+      <button class="btn btn-blue" type="submit">Envoyer ma proposition</button>
+      <div class="form-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>

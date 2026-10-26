@@ -1,0 +1,6 @@
+{
+  "_comment": "Public configuration read by the browser (assets/js/site.js) and by tools/build_site.py. NEVER put a secret here: this file is downloaded by every visitor. apiBaseUrl: address of the form backend (empty = forms say they are not connected). contactEmail: shown when forms are not connected.",
+  "publicBaseUrl": "https://www.nhill.example",
+  "apiBaseUrl": "",
+  "contactEmail": ""
+}

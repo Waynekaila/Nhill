@@ -30,3 +30,44 @@ jobs:
             marketing/pdf/
             README*.pdf
             dist/website/
+  site-backend-postgresql:
+    # Mêmes scénarios que les tests SQLite, sur PostgreSQL avec les rôles à privilèges minimaux.
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: ci-only-superuser
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGUSER: postgres
+      PGPASSWORD: ci-only-superuser
+      NHILL_SITE_PG_TEST: '1'
+      SITE_DATABASE_HOST: 127.0.0.1
+      SITE_DATABASE_PORT: '5432'
+      SITE_DATABASE_NAME: nhill_site
+      SITE_DATABASE_USER: nhill_site_app
+      SITE_DATABASE_PASSWORD: ci-only-app
+      SITE_DATABASE_SSLMODE: disable
+      SITE_MAINTENANCE_DATABASE_USER: nhill_site_maint
+      SITE_MAINTENANCE_DATABASE_PASSWORD: ci-only-maint
+    steps:
+      - uses: actions/checkout@v4
+      - name: Client PostgreSQL + psycopg 3
+        run: sudo apt-get update -q && sudo apt-get install -y -q postgresql-client python3-psycopg
+      - name: Rôles, base et schéma
+        working-directory: website/backend/schema/postgresql
+        run: |
+          psql -v ON_ERROR_STOP=1 -v owner_pw=ci-only-owner -v app_pw=ci-only-app \
+               -v maint_pw=ci-only-maint -f 000_roles.sql
+          PGUSER=nhill_site_owner PGPASSWORD=ci-only-owner psql -v ON_ERROR_STOP=1 -d nhill_site -f 001_init.sql
+      - name: Le rôle applicatif ne peut pas relire les demandes
+        run: |
+          if PGUSER=nhill_site_app PGPASSWORD=ci-only-app psql -d nhill_site -c 'SELECT * FROM submissions' 2>/dev/null; then
+            echo "le rôle applicatif lit les demandes : privilèges trop larges"; exit 1
+          fi
+      - name: Tests du backend sur PostgreSQL
+        working-directory: website/backend
+        run: python3 -m unittest discover -s tests -v

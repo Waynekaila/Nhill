@@ -1,0 +1,27 @@
+# Nhill website form backend (systemd). Install:
+#   sudo useradd --system --home /var/lib/nhill-site --shell /usr/sbin/nologin nhill-site
+#   sudo install -d -o nhill-site -g nhill-site -m 700 /var/lib/nhill-site
+#   sudo cp -r website/backend /opt/nhill-site && sudo cp deploy/nhill-site.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now nhill-site
+[Unit]
+Description=Nhill website form backend
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=nhill-site
+Group=nhill-site
+WorkingDirectory=/opt/nhill-site
+EnvironmentFile=/etc/nhill-site/site.env
+ExecStart=/usr/bin/python3 -m nhill_site.server
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/nhill-site
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

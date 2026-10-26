@@ -1,0 +1,44 @@
+<!--{"title": "Become a partner", "description": "Consultancies, IT providers, trainers, associations and support organisations: recommend, install or train on Nhill.", "nav": "partners", "pair": "partenaires"}-->
+<section class="page-head">
+  <div class="wrap">
+    <h1>Let's work together with entrepreneurs</h1>
+    <p class="lede">Nhill is looking for a few partners who know shopkeepers and SMEs and can advise, equip or train them.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Forms of partnership</h2>
+    <ul class="ruled">
+      <li><strong>Referral</strong><span>You introduce Nhill to businesses in your network. If they become customers, a commission agreed in advance is paid to you. Written referral agreement.</span></li>
+      <li><strong>Installation and support</strong><span>IT providers: you install Nhill, import data and provide first-level support, paid by your customers or by Nhill depending on the agreement.</span></li>
+      <li><strong>Training</strong><span>Trainers, business schools, business centres: you train users on Nhill with our materials.</span></li>
+      <li><strong>Entrepreneur support</strong><span>Incubators, professional associations, SME support organisations: you offer Nhill to the businesses you follow, for example through the pilot programme.</span></li>
+      <li><strong>Reference user</strong><span>A business that uses Nhill and agrees, after the pilot and only if it wishes, to talk about it with other shopkeepers.</span></li>
+    </ul>
+    <div class="note prose">
+      <p>No partnership is announced publicly without a signed agreement. Commissions, responsibilities, confidentiality rules and termination conditions are set in writing before anything starts.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-mist">
+  <div class="wrap">
+    <h2 id="candidature">Propose a partnership</h2>
+    <form class="lead" data-kind="partner" novalidate>
+      <div class="field"><label for="r-name">Full name *</label><input id="r-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="r-name-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-org">Organisation *</label><input id="r-org" name="organisation" autocomplete="organization" required maxlength="160"><p class="err" id="r-org-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-email">E-mail *</label><input id="r-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="err" id="r-email-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-phone">Phone or WhatsApp</label><input id="r-phone" name="phone" type="tel" autocomplete="tel" maxlength="30"><p class="err" id="r-phone-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-city">City *</label><input id="r-city" name="city" required maxlength="80"><p class="err" id="r-city-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-type">Type of partnership *</label>
+        <select id="r-type" name="partner_type" required><option value="">Choose…</option><option value="referral">Referral</option><option value="integrator">Installation and support</option><option value="training">Training</option><option value="support_org">Entrepreneur support</option><option value="other">Other</option></select><p class="err" id="r-type-err" aria-live="polite"></p></div>
+      <div class="field"><label for="r-msg">Your network and your proposal *</label><textarea id="r-msg" name="message" required maxlength="2000"></textarea><p class="err" id="r-msg-err" aria-live="polite"></p></div>
+      <div class="hp" aria-hidden="true"><label for="r-website">Leave empty</label><input id="r-website" name="website" class="hp-input" tabindex="-1" autocomplete="off"></div>
+      <div class="check"><input id="r-privacy" name="consent_privacy" type="checkbox" required><label for="r-privacy">I agree that Nhill uses this information to review my proposal, as described in the <a href="{{p:privacy}}">privacy policy</a>. *</label></div>
+      <p class="err" id="r-privacy-err" aria-live="polite"></p>
+      <button class="btn btn-blue" type="submit">Send my proposal</button>
+      <div class="form-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>

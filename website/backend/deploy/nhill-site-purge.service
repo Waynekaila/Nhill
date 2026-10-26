@@ -1,0 +1,9 @@
+[Unit]
+Description=Nhill website — apply the retention rules to form submissions
+
+[Service]
+Type=oneshot
+User=nhill-site
+WorkingDirectory=/opt/nhill-site
+EnvironmentFile=/etc/nhill-site/site.env
+ExecStart=/usr/bin/python3 -m nhill_site.cli purge
