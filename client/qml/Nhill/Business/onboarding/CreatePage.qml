@@ -188,7 +188,7 @@ OnboardingFrame {
         Field { id: ownerEmailField; label: qsTr("E-mail (your login)"); required: true
                 FbTextField { id: ownerEmail; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase; onTextChanged: ownerEmailField.error = "" } }
         Field { label: qsTr("Mobile phone"); FbTextField { id: ownerPhone; inputMethodHints: Qt.ImhDialableCharactersOnly } }
-        Field { id: ownerPasswordField; label: qsTr("Password"); required: true; help: qsTr("At least 10 characters. If you already have a Nhill account, use its password.")
+        Field { id: ownerPasswordField; label: qsTr("Password"); required: true; help: qsTr("At least 8 characters. If you already have a Nhill account, use its password.")
                 FbTextField { id: ownerPassword; echoMode: TextInput.Password; onTextChanged: ownerPasswordField.error = "" } }
         Field { id: ownerConfirmField; label: qsTr("Confirm the password"); required: true
                 FbTextField { id: ownerConfirm; echoMode: TextInput.Password; onTextChanged: ownerConfirmField.error = "" } }

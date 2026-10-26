@@ -15,7 +15,7 @@
 #ifndef OutputDir
   #define OutputDir "."
 #endif
-#define AppVersion "0.1.0"
+#define AppVersion "2.0.0"
 
 #if AppId == "nhill-business"
   #define AppName "Nhill Business"

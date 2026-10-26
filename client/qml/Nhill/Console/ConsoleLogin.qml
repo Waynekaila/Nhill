@@ -29,7 +29,7 @@ Rectangle {
                 Field { label: qsTr("Email"); FbTextField { id: email; text: root.presetEmail; inputMethodHints: Qt.ImhEmailCharactersOnly } }
                 Field { visible: root.mode !== "login"; label: qsTr("Setup token"); help: qsTr("Given once by the person who created your account (valid 30 minutes).")
                         FbTextField { id: setupToken; text: root.presetToken; monospace: true; enabled: root.mode === "setup" } }
-                Field { visible: root.mode !== "confirm"; label: root.mode === "setup" ? qsTr("Choose a password (14 characters minimum)") : qsTr("Password")
+                Field { visible: root.mode !== "confirm"; label: root.mode === "setup" ? qsTr("Choose a password (8 characters minimum)") : qsTr("Password")
                         FbTextField { id: password; echoMode: TextInput.Password } }
                 ColumnLayout {
                     visible: root.mode === "confirm" && !!root.setupResult

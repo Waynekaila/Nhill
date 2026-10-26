@@ -181,7 +181,7 @@ QtObject {
     }
     function password(code) {
         switch (code) {
-        case "password_too_short": return qsTr("At least 10 characters.")
+        case "password_too_short": return qsTr("At least 8 characters.")
         case "password_too_common": return qsTr("Too common.")
         case "password_same_as_email": return qsTr("Must differ from the e-mail.")
         case "password_repetitive": return qsTr("Too repetitive.")

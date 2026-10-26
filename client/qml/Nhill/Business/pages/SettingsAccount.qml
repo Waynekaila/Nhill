@@ -63,7 +63,7 @@ ColumnLayout {
                 columns: Theme.compact ? 1 : 2
                 columnSpacing: Theme.s3; rowSpacing: Theme.s3
                 Field { label: qsTr("Current password"); FbTextField { id: currentPw; echoMode: TextInput.Password } }
-                Field { id: newField; label: qsTr("New password"); help: qsTr("At least 10 characters"); FbTextField { id: newPw; echoMode: TextInput.Password } }
+                Field { id: newField; label: qsTr("New password"); help: qsTr("At least 8 characters"); FbTextField { id: newPw; echoMode: TextInput.Password } }
             }
             RowLayout {
                 Item { Layout.fillWidth: true }

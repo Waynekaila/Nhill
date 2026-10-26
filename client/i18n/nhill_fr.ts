@@ -275,8 +275,8 @@
         <translation>Remis une seule fois par la personne qui a créé votre compte (valable 30 minutes).</translation>
     </message>
     <message>
-        <source>Choose a password (14 characters minimum)</source>
-        <translation>Choisissez un mot de passe (14 caractères minimum)</translation>
+        <source>Choose a password (8 characters minimum)</source>
+        <translation>Choisissez un mot de passe (8 caractères minimum)</translation>
     </message>
     <message>
         <source>Password</source>
@@ -847,8 +847,8 @@
         <translation>Mot de passe</translation>
     </message>
     <message>
-        <source>At least 10 characters. If you already have a Nhill account, use its password.</source>
-        <translation>Au moins 10 caractères. Si vous avez déjà un compte Nhill, utilisez son mot de passe.</translation>
+        <source>At least 8 characters. If you already have a Nhill account, use its password.</source>
+        <translation>Au moins 8 caractères. Si vous avez déjà un compte Nhill, utilisez son mot de passe.</translation>
     </message>
     <message>
         <source>Confirm the password</source>
@@ -2291,8 +2291,8 @@
         <translation>Choisissez un mot de passe</translation>
     </message>
     <message>
-        <source>At least 10 characters. A short sentence is easy to remember.</source>
-        <translation>Au moins 10 caractères. Une courte phrase se retient facilement.</translation>
+        <source>At least 8 characters. A short sentence is easy to remember.</source>
+        <translation>Au moins 8 caractères. Une courte phrase se retient facilement.</translation>
     </message>
     <message>
         <source>Confirm the password</source>
@@ -2606,8 +2606,8 @@
         <translation>Afrique du Sud</translation>
     </message>
     <message>
-        <source>At least 10 characters.</source>
-        <translation>Au moins 10 caractères.</translation>
+        <source>At least 8 characters.</source>
+        <translation>Au moins 8 caractères.</translation>
     </message>
     <message>
         <source>Too common.</source>
@@ -5540,8 +5540,8 @@
         <translation>Nouveau mot de passe</translation>
     </message>
     <message>
-        <source>At least 10 characters</source>
-        <translation>Au moins 10 caractères</translation>
+        <source>At least 8 characters</source>
+        <translation>Au moins 8 caractères</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -7586,8 +7586,8 @@
         <translation>Le montant dépasse le reste dû.</translation>
     </message>
     <message>
-        <source>The password must contain at least 10 characters.</source>
-        <translation>Le mot de passe doit contenir au moins 10 caractères.</translation>
+        <source>The password must contain at least 8 characters.</source>
+        <translation>Le mot de passe doit contenir au moins 8 caractères.</translation>
     </message>
     <message>
         <source>This password is too common.</source>

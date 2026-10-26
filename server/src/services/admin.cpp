@@ -56,7 +56,9 @@ void registerAdminRoutes(App& app, Env& env) {
         std::string password = b["password"];
         auto issue = v::checkPassword(password, email);
         if (issue != v::PasswordIssue::None) throw invalid("password", v::passwordIssueCode(issue));
-        if (password.size() < 14) throw invalid("password", "admin_password_min_14");
+        // 2.0.0: same 8-character minimum as every account. Console accounts keep the
+        // mandatory TOTP second factor (platform-wide privileges), which is what makes
+        // an 8-character password acceptable for them (NIST SP 800-63B-4, 3.1.1.2).
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             auto a = tx.opt("SELECT id, encode(setup_token_hash,'hex') FROM admin_users WHERE email = $1 AND status = 'pending' "
                             "AND setup_expires_at > now() FOR UPDATE",

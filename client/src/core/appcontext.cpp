@@ -165,7 +165,7 @@ QString Errors::code(const QString& c, const QString& field) const {
         {"invalid_phone", QT_TR_NOOP("%1: invalid phone number.")},
         {"invalid_amount", QT_TR_NOOP("%1: invalid amount (check the number of decimals).")},
         {"exceeds_amount_due", QT_TR_NOOP("The amount exceeds what is still due.")},
-        {"password_too_short", QT_TR_NOOP("The password must contain at least 10 characters.")},
+        {"password_too_short", QT_TR_NOOP("The password must contain at least 8 characters.")},
         {"password_too_common", QT_TR_NOOP("This password is too common.")},
         {"password_same_as_email", QT_TR_NOOP("The password must differ from the e-mail address.")},
         {"password_repetitive", QT_TR_NOOP("The password is too repetitive.")},
@@ -179,6 +179,7 @@ QString Errors::code(const QString& c, const QString& field) const {
         {"invalid_identifier", QT_TR_NOOP("%1: invalid identifier.")},
         {"must_be_positive", QT_TR_NOOP("%1 must be greater than zero.")},
         {"too_short", QT_TR_NOOP("%1 is too short.")},
+        // Sent by 0.1.x servers only (kept so a 2.0 console still explains it).
         {"admin_password_min_14", QT_TR_NOOP("Administrator passwords need at least 14 characters.")},
         {"invalid_quantity", QT_TR_NOOP("%1: invalid quantity.")},
         {"same_warehouse", QT_TR_NOOP("Choose two different warehouses.")},

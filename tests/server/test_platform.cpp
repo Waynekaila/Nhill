@@ -221,6 +221,51 @@ TEST(Auth, LogoutAndPasswordChangeRevokeSessions) {
     EXPECT_EQ(h.get("/api/v1/me", t.token).status, 401);
 }
 
+// V2.0.0: minimum 8 characters on every path that sets a password, enforced by the
+// server (the client check is only a convenience). No composition rule, no expiry.
+TEST(Auth, PasswordMinimumIsEightCharactersOnEveryPath) {
+    auto& h = Harness::get();
+    resetIpThrottles();
+    // 1. account creation (new establishment + owner)
+    json body = {{"kind", "individual"}, {"trade_name", "Huit caractères"}, {"country_code", "CD"}, {"main_currency", "CDF"},
+                 {"owner", {{"full_name", "Huit"}, {"email", uniq("huit") + "@example.cd"}, {"password", "Kin-202"}}}};
+    auto r = h.post("/api/v1/establishments", body);
+    EXPECT_EQ(r.status, 422) << r.raw;
+    EXPECT_EQ(r.body["error"]["details"]["reason"], "password_too_short");
+    body["owner"]["password"] = "Kin-2026";  // exactly 8
+    r = h.post("/api/v1/establishments", body);
+    EXPECT_EQ(r.status, 201) << r.raw;
+    // 2. password change
+    Tenant t = createTenant("company");
+    auto ch = h.post("/api/v1/me/password", {{"current_password", t.password}, {"new_password", "Gombe-7"}}, t.token);
+    EXPECT_EQ(ch.status, 422) << ch.raw;
+    EXPECT_EQ(ch.body["error"]["details"]["reason"], "password_too_short");
+    ch = h.post("/api/v1/me/password", {{"current_password", t.password}, {"new_password", "Gombe-26"}}, t.token);
+    EXPECT_EQ(ch.status, 204) << ch.raw;
+    EXPECT_EQ(h.post("/api/v1/auth/login", {{"email", t.ownerEmail}, {"password", "Gombe-26"}}).status, 200);
+    // 3. common passwords stay refused even when long enough
+    ch = h.post("/api/v1/me/password", {{"current_password", "Gombe-26"}, {"new_password", "password1"}}, t.token);
+    EXPECT_EQ(ch.body["error"]["details"]["reason"], "password_too_common");
+}
+
+TEST(Admin, ConsoleFirstAccessAcceptsEightCharactersWithTotp) {
+    auto& h = Harness::get();
+    resetIpThrottles();
+    std::string email = uniq("admin8") + "@nhill.test";
+    std::string token = nh::crypto::randomToken(24);
+    h.su("INSERT INTO admin_users (email, full_name, role, setup_token_hash, setup_expires_at) VALUES ('" + email +
+         "', 'Admin', 'support', decode('" + nh::crypto::sha256Hex(token) + "','hex'), now() + interval '30 minutes')");
+    auto shortPw = h.post("/api/v1/admin/auth/setup", {{"email", email}, {"setup_token", token}, {"password", "Adm-202"}});
+    EXPECT_EQ(shortPw.status, 422) << shortPw.raw;
+    EXPECT_EQ(shortPw.body["error"]["details"]["reason"], "password_too_short");
+    auto ok = h.post("/api/v1/admin/auth/setup", {{"email", email}, {"setup_token", token}, {"password", "Adm-2026"}});
+    EXPECT_EQ(ok.status, 200) << ok.raw;  // the TOTP secret is still issued: second factor stays mandatory
+    EXPECT_FALSE(ok.body["totp_secret"].get<std::string>().empty());
+    // Without the TOTP code the password alone does not open a console session.
+    auto noTotp = h.post("/api/v1/admin/auth/login", {{"email", email}, {"password", "Adm-2026"}});
+    EXPECT_NE(noTotp.status, 200);
+}
+
 TEST(Codes, ValidationIsGenericForEveryFailure) {
     auto& h = Harness::get();
     Tenant t = createTenant("company");

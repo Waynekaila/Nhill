@@ -74,12 +74,18 @@ std::optional<std::string> normalizeLegalId(std::string_view id) {
 
 PasswordIssue checkPassword(std::string_view password, std::string_view email) {
     auto len = utf8Length(password);
-    if (!len || *len < 10) return PasswordIssue::TooShort;
-    if (password.size() > 128) return PasswordIssue::TooLong;
+    if (!len || *len < kMinPasswordLength) return PasswordIssue::TooShort;
+    if (password.size() > kMaxPasswordBytes) return PasswordIssue::TooLong;
     if (!email.empty() && toLowerAscii(password) == normalizeEmail(email)) return PasswordIssue::SameAsEmail;
-    static constexpr std::array<std::string_view, 12> kCommon{
+    // Very common choices of 8 characters or more (whole-password comparison, lower case).
+    // Since 2.0.0 the minimum is 8 characters, so 8- and 9-character favourites are listed too.
+    static constexpr std::array<std::string_view, 40> kCommon{
         "1234567890", "0123456789", "motdepasse", "motdepasse1", "password12", "password123",
-        "azertyuiop", "qwertyuiop", "1111111111", "abcdefghij", "nhill1", "nhill123"};
+        "azertyuiop", "qwertyuiop", "1111111111", "abcdefghij", "nhill1", "nhill123",
+        "12345678", "123456789", "87654321", "98765432", "password", "password1", "passw0rd",
+        "azerty12", "azerty123", "qwerty12", "qwerty123", "azertyui", "qwertyui", "abcd1234",
+        "abc12345", "1q2w3e4r", "1qaz2wsx", "iloveyou", "sunshine", "football", "baseball",
+        "bienvenue", "welcome1", "jetaime1", "nhill2026", "nhill123456", "kinshasa", "congo123"};
     std::string lower = toLowerAscii(password);
     for (auto c : kCommon)
         if (lower == c) return PasswordIssue::TooCommon;

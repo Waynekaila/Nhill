@@ -186,9 +186,34 @@ TEST(Validation, Passwords) {
     EXPECT_EQ(checkPassword("aaaaaaaaaaaa", ""), PasswordIssue::Repetitive);
     EXPECT_EQ(checkPassword("me@example.com", "ME@example.com"), PasswordIssue::SameAsEmail);
     EXPECT_EQ(checkPassword("Kinshasa la belle 2026", ""), PasswordIssue::None);
-    // 10 accented characters count as 10 code points, not 20 bytes
-    EXPECT_EQ(checkPassword("éééééééééé", ""), PasswordIssue::Repetitive);
-    EXPECT_EQ(checkPassword("ééééééééé", ""), PasswordIssue::TooShort);
+    // Accented characters count as code points, not bytes: 8 "é" (16 bytes) reach the
+    // minimum (then rejected as repetitive), 7 "é" (14 bytes) are too short.
+    EXPECT_EQ(checkPassword("éééééééé", ""), PasswordIssue::Repetitive);
+    EXPECT_EQ(checkPassword("ééééééé", ""), PasswordIssue::TooShort);
+}
+
+// V2.0.0 rule: at least 8 characters for every account (creation, invitation,
+// password change, console first access). No composition rule, no expiry.
+TEST(Validation, PasswordMinimumIsEightCharacters) {
+    using namespace validation;
+    EXPECT_EQ(kMinPasswordLength, 8u);
+    EXPECT_EQ(checkPassword("Kin-202", ""), PasswordIssue::TooShort);        // 7
+    EXPECT_EQ(checkPassword("Kin-2026", ""), PasswordIssue::None);           // 8
+    EXPECT_EQ(checkPassword("matadi26", ""), PasswordIssue::None);           // 8, lower case + digits only
+    EXPECT_EQ(checkPassword("Mbandaka", ""), PasswordIssue::None);           // letters only: accepted (no composition rule)
+    EXPECT_EQ(checkPassword("Lubumbashi", ""), PasswordIssue::None);         // 10 (former minimum) still accepted
+    EXPECT_EQ(checkPassword("Bùkàvù-26", ""), PasswordIssue::None);          // 9 code points
+    EXPECT_EQ(checkPassword("Bùkàvù", ""), PasswordIssue::TooShort);         // 6 code points, 9 bytes
+    EXPECT_EQ(checkPassword(std::string(128, 'a') + "", ""), PasswordIssue::Repetitive);
+    EXPECT_EQ(checkPassword(std::string(64, 'a') + std::string(65, 'b'), ""), PasswordIssue::TooLong);  // > 128 bytes
+}
+
+TEST(Validation, PasswordBlocklistCoversEightCharacterFavourites) {
+    using namespace validation;
+    for (const char* p : {"12345678", "password", "PASSWORD", "Password1", "azerty123", "abcd1234", "iloveyou", "Kinshasa"})
+        EXPECT_EQ(checkPassword(p, ""), PasswordIssue::TooCommon);
+    EXPECT_EQ(checkPassword("caisse@ex.cd", "CAISSE@ex.cd"), PasswordIssue::SameAsEmail);
+    EXPECT_EQ(checkPassword("11111111", ""), PasswordIssue::Repetitive);
 }
 
 TEST(Validation, Text) {

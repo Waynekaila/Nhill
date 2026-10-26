@@ -276,7 +276,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose a password (14 characters minimum)</source>
+        <source>Choose a password (8 characters minimum)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -840,7 +840,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least 10 characters. If you already have a Nhill account, use its password.</source>
+        <source>At least 8 characters. If you already have a Nhill account, use its password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2284,7 +2284,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least 10 characters. A short sentence is easy to remember.</source>
+        <source>At least 8 characters. A short sentence is easy to remember.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2595,7 +2595,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least 10 characters.</source>
+        <source>At least 8 characters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5497,7 +5497,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>At least 10 characters</source>
+        <source>At least 8 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7483,7 +7483,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The password must contain at least 10 characters.</source>
+        <source>The password must contain at least 8 characters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

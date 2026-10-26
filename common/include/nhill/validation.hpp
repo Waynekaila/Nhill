@@ -2,6 +2,7 @@
 // (authoritative). The server never trusts the client's result.
 #pragma once
 
+#include <cstddef>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -22,6 +23,11 @@ std::optional<std::string> normalizePhone(std::string_view phone);
 // Legal identifiers (RCCM, Id. Nat., NIF...): uppercase, without spaces,
 // dots, dashes or slashes. Empty result -> nullopt.
 std::optional<std::string> normalizeLegalId(std::string_view id);
+
+// Minimum password length in Unicode code points (account creation, invitation,
+// password change, console first access). 2.0.0: 8 (was 10, and 14 for the console).
+inline constexpr std::size_t kMinPasswordLength = 8;
+inline constexpr std::size_t kMaxPasswordBytes = 128;
 
 enum class PasswordIssue { None, TooShort, TooLong, SameAsEmail, TooCommon, Repetitive };
 // NIST SP 800-63B style: length over composition rules.

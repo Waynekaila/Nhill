@@ -117,7 +117,7 @@ OnboardingFrame {
             Field { label: qsTr("E-mail used for the invitation"); FbTextField { id: aEmail; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase } }
             Field { label: qsTr("Activation code"); help: qsTr("8 digits, for example 1234-5678."); FbTextField { id: activation; monospace: true; inputMethodHints: Qt.ImhDigitsOnly } }
             Field { label: qsTr("Full name"); FbTextField { id: fullName } }
-            Field { id: pwField; label: qsTr("Choose a password"); help: qsTr("At least 10 characters. A short sentence is easy to remember.")
+            Field { id: pwField; label: qsTr("Choose a password"); help: qsTr("At least 8 characters. A short sentence is easy to remember.")
                     FbTextField { id: newPassword; echoMode: TextInput.Password; onTextChanged: pwField.error = "" } }
             Field { id: confirmField; label: qsTr("Confirm the password"); FbTextField { id: confirmPassword; echoMode: TextInput.Password; onTextChanged: confirmField.error = "" } }
             FbButton { text: qsTr("Activate my access"); Layout.fillWidth: true; busy: page.busy; onClicked: page.activate() }
