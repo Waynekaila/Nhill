@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Layouts
 import Nhill.Core
@@ -9,15 +10,27 @@ import Nhill.Pos
 // register, open a cash session, sell, close.
 ApplicationWindow {
     id: win
-    width: typeof tourConfig !== "undefined" && tourConfig.width ? tourConfig.width : 1280
-    height: typeof tourConfig !== "undefined" && tourConfig.height ? tourConfig.height : 800
-    minimumWidth: 1000
-    minimumHeight: 640
+    // 2.0.0 window sizing: the first size fits the screen (1366 x 768 laptops, 125 percent
+    // scaling, small netbooks), the window is centred, and small screens start maximised.
+    // The documentation tour can still force a size (NHILL_TOUR_SIZE).
+    readonly property bool tourSized: typeof tourConfig !== "undefined" && !!tourConfig.width
+    readonly property int availW: Screen.desktopAvailableWidth > 0 ? Screen.desktopAvailableWidth : 1280
+    readonly property int availH: Screen.desktopAvailableHeight > 0 ? Screen.desktopAvailableHeight : 800
+    width: tourSized ? tourConfig.width : Theme.fitWidth(1280, availW)
+    height: tourSized ? tourConfig.height : Theme.fitHeight(800, availH)
+    minimumWidth: Math.min(860, availW)
+    minimumHeight: Math.min(560, availH)
+    function placeOnScreen() {
+        if (tourSized || Qt.platform.os === "android" || Qt.platform.os === "ios") return
+        x = Screen.virtualX + Math.max(0, Math.round((availW - width) / 2))
+        y = Screen.virtualY + Math.max(0, Math.round((availH - height) / 2))
+        if (availW < 1100 || availH < 700) showMaximized()
+    }
     visible: true
     title: Session.loggedIn ? Session.establishment.trade_name + " — Nhill POS" : "Nhill POS"
     color: Theme.bg
     font.family: Theme.font
-    Component.onCompleted: PosNav.window = win
+    Component.onCompleted: { PosNav.window = win; placeOnScreen() }
 
     function toast(text, tone) { notifier.show(text, tone) }
     function fail(r) { var m = Errors.message(r); if (m.length > 0) notifier.error(m) }

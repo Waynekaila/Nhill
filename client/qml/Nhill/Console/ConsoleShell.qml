@@ -65,11 +65,17 @@ Item {
                                 Layout.fillWidth: true
                                 readonly property bool active: shell.section === modelData.key
                                 onClicked: shell.navigate(modelData.key)
-                                background: Rectangle { radius: Theme.radius; color: item.active ? Theme.sidebarActive : item.hovered ? "#163650" : "transparent" }
+                                focusPolicy: Qt.StrongFocus
+                                Accessible.name: modelData.title
+                                ToolTip.visible: hovered && consoleNavLabel.truncated
+                                ToolTip.text: modelData.title
+                                ToolTip.delay: 400
+                                background: Rectangle { radius: Theme.radius; color: item.active ? Theme.sidebarActive : item.hovered ? "#163650" : "transparent"
+                                                        border.width: item.visualFocus ? 2 : 0; border.color: Theme.focus }
                                 contentItem: RowLayout {
                                     spacing: Theme.s3
                                     Icon { name: modelData.icon; size: 18; color: item.active ? "#FFFFFF" : Theme.sidebarMuted }
-                                    Text { text: modelData.title; color: item.active ? "#FFFFFF" : Theme.sidebarText; font.family: Theme.font; font.pixelSize: Theme.fs_md; Layout.fillWidth: true }
+                                    Text { id: consoleNavLabel; text: modelData.title; color: item.active ? "#FFFFFF" : Theme.sidebarText; font.family: Theme.font; font.pixelSize: Theme.fs_md; Layout.fillWidth: true; elide: Text.ElideRight }
                                     Rectangle {
                                         visible: modelData.key === "notifications" && shell.unread > 0
                                         implicitWidth: Math.max(20, badge.implicitWidth + 10); implicitHeight: 20; radius: 10; color: Theme.accent

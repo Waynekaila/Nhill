@@ -60,6 +60,9 @@ Item {
                     implicitHeight: Theme.compact ? 48 : 40
                     focusPolicy: Qt.StrongFocus
                     Accessible.name: modelData.title
+                    ToolTip.visible: hovered && navLabel.truncated
+                    ToolTip.text: modelData.title
+                    ToolTip.delay: 400
                     onClicked: shell.navigate(modelData.key)
                     background: Rectangle {
                         radius: Theme.radius
@@ -73,6 +76,7 @@ Item {
                         Item { width: 4 }
                         Icon { name: modelData.icon; size: 19; color: item.active ? "#FFFFFF" : Theme.sidebarMuted }
                         Text {
+                            id: navLabel
                             text: modelData.title
                             Layout.fillWidth: true
                             elide: Text.ElideRight
@@ -102,6 +106,10 @@ Item {
                 ColumnLayout {
                     Layout.fillWidth: true
                     spacing: 0
+                    HoverHandler { id: whoHover }
+                    ToolTip.visible: whoHover.hovered
+                    ToolTip.delay: 500
+                    ToolTip.text: (Session.establishment.trade_name || "") + "\n" + (Session.me.user ? Session.me.user.full_name : "") + " · " + Labels.role(Session.role)
                     Text { text: Session.establishment.trade_name || ""; color: "#FFFFFF"; font.family: Theme.font; font.pixelSize: Theme.fs_sm; font.weight: Font.DemiBold; elide: Text.ElideRight; Layout.fillWidth: true }
                     Text { text: (Session.me.user ? Session.me.user.full_name : "") + " · " + Labels.role(Session.role); color: Theme.sidebarMuted; font.family: Theme.font; font.pixelSize: Theme.fs_xs; elide: Text.ElideRight; Layout.fillWidth: true }
                 }
@@ -126,8 +134,17 @@ Item {
                 anchors.margins: Theme.s4
                 spacing: Theme.s4
                 LogoMark { variant: "reverse"; app: "business"; Layout.preferredHeight: 30; Layout.preferredWidth: 170; horizontalAlignment: Image.AlignLeft; Layout.topMargin: Theme.s2; Layout.bottomMargin: Theme.s2 }
-                Loader { sourceComponent: navList; Layout.fillWidth: true }
-                Item { Layout.fillHeight: true }
+                // 2.0.0: the menu scrolls when the window is short (1366 x 768 laptops,
+                // 125 % scaling) instead of overlapping the account footer.
+                Flickable {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    contentHeight: sideNav.implicitHeight
+                    clip: true
+                    boundsBehavior: Flickable.StopAtBounds
+                    ScrollIndicator.vertical: ScrollIndicator {}
+                    Loader { id: sideNav; width: parent.width; sourceComponent: navList }
+                }
                 Loader { sourceComponent: sideFooter; Layout.fillWidth: true }
             }
         }
@@ -160,6 +177,9 @@ Item {
                     AbstractButton {
                         visible: !Theme.compact
                         Layout.preferredWidth: 420
+                        Layout.maximumWidth: 420
+                        Layout.minimumWidth: 160
+                        Layout.fillWidth: true
                         Layout.preferredHeight: 38
                         Accessible.name: qsTr("Search")
                         onClicked: searchPopup.openSearch()
@@ -229,8 +249,15 @@ Item {
             anchors.margins: Theme.s4
             spacing: Theme.s3
             LogoMark { variant: "reverse"; app: "business"; Layout.preferredHeight: 28; Layout.preferredWidth: 160; horizontalAlignment: Image.AlignLeft }
-            Loader { sourceComponent: navList; Layout.fillWidth: true }
-            Item { Layout.fillHeight: true }
+            Flickable {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                contentHeight: drawerNav.implicitHeight
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
+                ScrollIndicator.vertical: ScrollIndicator {}
+                Loader { id: drawerNav; width: parent.width; sourceComponent: navList }
+            }
             Loader { sourceComponent: sideFooter; Layout.fillWidth: true }
         }
     }

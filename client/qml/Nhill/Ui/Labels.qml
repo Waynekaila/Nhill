@@ -194,7 +194,8 @@ QtObject {
                  { value: "purchase.", text: qsTr("Purchases") }, { value: "stock.", text: qsTr("Stock") },
                  { value: "product.", text: qsTr("Products") }, { value: "party.", text: qsTr("Customers & suppliers") },
                  { value: "auth.", text: qsTr("Sign-ins & passwords") }, { value: "member.", text: qsTr("Team") },
-                 { value: "establishment.", text: qsTr("Settings") }, { value: "admin.", text: qsTr("Nhill support") } ]
+                 { value: "establishment.", text: qsTr("Settings") }, { value: "pos.", text: qsTr("Point of sale") },
+                 { value: "support.", text: qsTr("Help requests") }, { value: "admin.", text: qsTr("Nhill support") } ]
     }
     function timeZones() {
         return [ { value: "Africa/Kinshasa", text: qsTr("Kinshasa (UTC+1)") }, { value: "Africa/Lubumbashi", text: qsTr("Lubumbashi (UTC+2)") },

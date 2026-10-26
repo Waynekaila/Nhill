@@ -19,7 +19,11 @@ namespace {
 // Short, readable summary of the JSON details (scalars only, no nested objects).
 std::string detailsSummary(Env& env, const std::string& lang, const json& d) {
     if (!d.is_object()) return "";
-    static const std::set<std::string> skip = {"password", "token", "refresh_token", "lines", "legal_ids", "user_id", "action"};
+    // Secrets, bulky values and technical identifiers (UUIDs, amounts in minor units) are not
+    // shown to users: they are meaningless in the activity log (2.0.0).
+    static const std::set<std::string> skip = {"password", "token", "refresh_token", "lines", "legal_ids", "user_id", "action",
+                                               "session_id", "register_id", "receipt_id", "approved_by", "promo", "user_ids",
+                                               "change_minor"};
     std::string out;
     for (auto it = d.begin(); it != d.end(); ++it) {
         if (skip.count(it.key()) || it->is_object() || it->is_array() || it->is_null()) continue;

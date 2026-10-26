@@ -2885,6 +2885,14 @@
         <source>Free trial refused (already used)</source>
         <translation>Essai gratuit refusé (déjà utilisé)</translation>
     </message>
+    <message>
+        <source>Point of sale</source>
+        <translation>Point de vente</translation>
+    </message>
+    <message>
+        <source>Help requests</source>
+        <translation>Demandes d&apos;assistance</translation>
+    </message>
 </context>
 <context>
     <name>LoginPage</name>
@@ -2907,6 +2915,10 @@
     <message>
         <source>I have an establishment code</source>
         <translation>J'ai un code d'établissement</translation>
+    </message>
+    <message>
+        <source>Enter a valid e-mail address (for example name@company.cd).</source>
+        <translation>Saisissez une adresse e-mail valide (par exemple nom@entreprise.cd).</translation>
     </message>
 </context>
 <context>
@@ -4157,8 +4169,8 @@
         <translation>Se déconnecter</translation>
     </message>
     <message>
-        <source>Scan a barcode or search a product (Enter adds it)</source>
-        <translation>Scannez un code-barres ou cherchez un produit (Entrée pour ajouter)</translation>
+        <source>Scan a barcode or search a product (Enter adds it, F2 returns here)</source>
+        <translation>Scannez un code-barres ou cherchez un produit (Entrée pour ajouter, F2 pour revenir ici)</translation>
     </message>
     <message>
         <source>All</source>
@@ -4185,12 +4197,12 @@
         <translation>Client comptoir</translation>
     </message>
     <message>
-        <source>Less</source>
-        <translation>Moins</translation>
+        <source>Decrease the quantity</source>
+        <translation>Diminuer la quantité</translation>
     </message>
     <message>
-        <source>More</source>
-        <translation>Plus</translation>
+        <source>Increase the quantity</source>
+        <translation>Augmenter la quantité</translation>
     </message>
     <message>
         <source>Discount</source>
@@ -4271,6 +4283,18 @@
     <message>
         <source>Help &amp; support</source>
         <translation>Aide et assistance</translation>
+    </message>
+    <message>
+        <source>Remove the line</source>
+        <translation>Retirer la ligne</translation>
+    </message>
+    <message>
+        <source>Quantity %1</source>
+        <translation>Quantité %1</translation>
+    </message>
+    <message>
+        <source>Shortcut: F9</source>
+        <translation>Raccourci : F9</translation>
     </message>
 </context>
 <context>
@@ -4360,8 +4384,8 @@
         <translation>Écart à la clôture : %1</translation>
     </message>
     <message>
-        <source>Time</source>
-        <translation>Heure</translation>
+        <source>Date / time</source>
+        <translation>Date et heure</translation>
     </message>
     <message>
         <source>Number</source>
@@ -4506,6 +4530,10 @@
     <message>
         <source>Note (optional)</source>
         <translation>Note (facultative)</translation>
+    </message>
+    <message>
+        <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
+        <translation>Saisissez les espèces comptées dans le tiroir (0 si le tiroir est vide).</translation>
     </message>
 </context>
 <context>
@@ -7868,6 +7896,21 @@
     <message>
         <source>This server is already installed.</source>
         <translation>Ce serveur est déjà installé.</translation>
+    </message>
+    <message>
+        <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
+        <translation>Saisissez les espèces comptées dans le tiroir (0 si le tiroir est vide).</translation>
+    </message>
+</context>
+<context>
+    <name>FbTextField</name>
+    <message>
+        <source>Hide password</source>
+        <translation>Masquer le mot de passe</translation>
+    </message>
+    <message>
+        <source>Show password</source>
+        <translation>Afficher le mot de passe</translation>
     </message>
 </context>
 </TS>

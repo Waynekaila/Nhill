@@ -6,11 +6,12 @@ Switch {
     font.family: Theme.font
     font.pixelSize: Theme.fs_md
     implicitHeight: Theme.controlHeight
+    Accessible.name: text
     indicator: Rectangle {
         x: control.leftPadding
         y: (control.height - height) / 2
         width: 40; height: 22; radius: 11
-        color: control.checked ? Theme.primary : Theme.lineStrong
+        color: control.checked ? Theme.primary : Theme.inputBorder
         border.width: control.visualFocus ? 2 : 0
         border.color: Theme.focus
         Rectangle {

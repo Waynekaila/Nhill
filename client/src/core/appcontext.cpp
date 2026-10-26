@@ -194,6 +194,7 @@ QString Errors::code(const QString& c, const QString& field) const {
         {"unsupported_currency", QT_TR_NOOP("This currency is not supported.")},
         {"corrupted_pdf", QT_TR_NOOP("The PDF file is damaged.")},
         {"out_of_range", QT_TR_NOOP("%1: value out of the allowed range.")},
+        {"cash_count_required", QT_TR_NOOP("Enter the cash counted in the drawer (0 if the drawer is empty).")},
     };
     if (c == QLatin1String("validation_failed")) return QString();
     auto it = msgs.find(c);

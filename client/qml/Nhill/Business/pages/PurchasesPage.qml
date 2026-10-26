@@ -18,10 +18,10 @@ FbPage {
         anchors.fill: parent
         loading: page.loading
         rows: page.rows
-        titleColumn: 0; subtitleColumn: 1; trailingColumn: 3; chipColumn: 5
+        titleColumn: 0; subtitleColumn: 2; trailingColumn: 3; chipColumn: 5
         columns: [
             { title: qsTr("Supplier"), width: 2.2, strong: true, value: function(p) { return p.supplier_name } },
-            { title: qsTr("Reference"), width: 1.2, mono: true, muted: true, value: function(p) { return (p.supplier_reference || "—") + " · " + Fmt.date(p.purchase_date) } },
+            { title: qsTr("Reference"), width: 1.2, minWidth: 130, mono: true, muted: true, value: function(p) { return p.supplier_reference || "—" } },
             { title: qsTr("Date"), width: 1, muted: true, value: function(p) { return Fmt.date(p.purchase_date) } },
             { title: qsTr("Amount"), width: 1.3, align: "right", value: function(p) { return Fmt.money(p.total, p.currency) } },
             { title: qsTr("To pay"), width: 1.3, align: "right", value: function(p) { return Fmt.isZero(p.balance) ? "—" : Fmt.money(p.balance, p.currency) } },

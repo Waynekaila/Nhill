@@ -41,12 +41,12 @@ FbPage {
             rows: page.rows
             titleColumn: 1; subtitleColumn: 0; trailingColumn: 5
             columns: [
-                { title: qsTr("Date"), width: 1.1, muted: true, value: function(p) { return Fmt.date(p.paid_at) + " · " + Labels.method(p.method) } },
+                { title: qsTr("Date"), width: 0.9, minWidth: 104, muted: true, value: function(p) { return Fmt.date(p.paid_at) } },
                 { title: qsTr("Party"), width: 2, strong: true, value: function(p) { return p.party_name || "—" } },
-                { title: qsTr("Document"), width: 1.3, mono: true, value: function(p) { return p.document_number || (p.purchase_id ? qsTr("Purchase") : p.expense_id ? qsTr("Expense") : "—") } },
+                { title: qsTr("Document"), width: 1.3, minWidth: 150, mono: true, value: function(p) { return p.document_number || (p.purchase_id ? qsTr("Purchase") : p.expense_id ? qsTr("Expense") : "—") } },
                 { title: qsTr("Method"), width: 1.1, muted: true, value: function(p) { return Labels.method(p.method) + (p.reference ? " · " + p.reference : "") } },
                 { title: qsTr("Account"), width: 1, muted: true, value: function(p) { return p.account || "—" } },
-                { title: qsTr("Amount"), width: 1.3, align: "right", strong: true, value: function(p) { return (p.direction === "in" ? "+ " : "− ") + Fmt.money(p.amount, p.currency) } }
+                { title: qsTr("Amount"), width: 1.3, minWidth: 140, align: "right", strong: true, value: function(p) { return (p.direction === "in" ? "+ " : "− ") + Fmt.money(p.amount, p.currency) } }
             ]
             emptyIcon: "payment"
             emptyTitle: qsTr("No payment yet")

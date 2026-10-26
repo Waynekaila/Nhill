@@ -199,8 +199,15 @@ httplib::Server::Handler App::wrap(RouteOpts o, Handler h) {
         res.set_header("X-Request-Id", ctx.actor.requestId);
         ctx.actor.ip = req.remote_addr;
         if (cfg_.trustProxy) {
+            // Right-most entry: the address added by our own reverse proxy. Entries on the
+            // left come from the client and can be forged (per-IP rate limits would be
+            // bypassed with a proxy that appends instead of replacing the header).
             auto xff = req.get_header_value("X-Forwarded-For");
-            if (!xff.empty()) ctx.actor.ip = xff.substr(0, xff.find(','));
+            auto comma = xff.rfind(',');
+            std::string last = comma == std::string::npos ? xff : xff.substr(comma + 1);
+            auto b = last.find_first_not_of(" \t");
+            auto e = last.find_last_not_of(" \t");
+            if (b != std::string::npos) ctx.actor.ip = last.substr(b, e - b + 1);
         }
         ctx.actor.userAgent = req.get_header_value("User-Agent").substr(0, 200);
         auto lang = req.get_header_value("Accept-Language");

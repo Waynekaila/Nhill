@@ -29,11 +29,12 @@ OnboardingFrame {
     Banner { visible: page.notice.length > 0; text: page.notice; tone: "warning" }
     Field {
         label: qsTr("E-mail")
+        error: email.invalid ? qsTr("Enter a valid e-mail address (for example name@company.cd).") : ""
         FbTextField { id: email; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase; onTextChanged: invalid = false; focus: true }
     }
     Field {
         label: qsTr("Password")
-        FbTextField { id: password; echoMode: TextInput.Password; onAccepted: page.submit() }
+        FbTextField { id: password; echoMode: TextInput.Password; onAccepted: if (email.text.length > 0 && password.text.length > 0) page.submit() }
     }
     FbButton { text: qsTr("Sign in"); Layout.fillWidth: true; busy: page.busy; enabled: email.text.length > 0 && password.text.length > 0; onClicked: page.submit() }
     ColumnLayout {

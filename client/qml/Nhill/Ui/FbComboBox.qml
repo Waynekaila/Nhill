@@ -11,6 +11,7 @@ ComboBox {
     implicitHeight: Theme.controlHeight
     font.family: Theme.font
     font.pixelSize: Theme.fs_md
+    Accessible.name: displayText
     onActivated: value = currentValue
     onValueChanged: {
         var i = indexOfValue(value)
@@ -36,7 +37,7 @@ ComboBox {
         radius: Theme.radius
         color: Theme.surface
         border.width: control.activeFocus ? 2 : 1
-        border.color: control.invalid ? Theme.danger : control.activeFocus ? Theme.focus : Theme.lineStrong
+        border.color: control.invalid ? Theme.danger : control.activeFocus ? Theme.focus : Theme.inputBorder
     }
     delegate: ItemDelegate {
         width: control.width

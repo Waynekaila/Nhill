@@ -7,8 +7,11 @@ Item {
     anchors.fill: parent
     z: 1000
     ListModel { id: toasts }
+    // 2.0.0: errors and warnings stay 8 s (4.2 s for the others); click to dismiss.
     function show(text, tone) {
         toasts.append({ text: text, tone: tone || "neutral" })
+        if (toasts.count > 4) toasts.remove(0)
+        timer.interval = (tone === "danger" || tone === "warning") ? 8000 : 4200
         timer.restart()
     }
     function error(text) { show(text, "danger") }
@@ -27,6 +30,8 @@ Item {
                 height: msg.implicitHeight + 2 * Theme.s3
                 radius: Theme.radius
                 color: Theme.dark ? "#22302B" : "#16181D"
+                Accessible.role: Accessible.AlertMessage
+                Accessible.name: model.text
                 Rectangle { width: 4; height: parent.height; radius: 2; color: model.tone === "danger" ? Theme.danger : model.tone === "success" ? Theme.success : Theme.accent }
                 Text {
                     id: msg

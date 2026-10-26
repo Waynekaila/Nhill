@@ -16,6 +16,8 @@ Rectangle {
     property var cart: []                 // [{product, qty, discount_bp}]
     property var customer: null           // {id, name} or null (walk-in)
     property string promo: ""
+    // 2.0.0: the screen adapts down to 860 px wide (small laptops, 1024 x 600 netbooks)
+    readonly property bool narrow: width < 1200
     readonly property string cur: PosNav.session ? PosNav.session.currency : (PosNav.config ? PosNav.config.currency : "CDF")
     readonly property var categories: {
         var set = {}
@@ -59,6 +61,10 @@ Rectangle {
         if (visibleProducts.length === 1) { add(visibleProducts[0]); search.text = "" }
     }
     Component.onCompleted: loadCatalog()
+    // Keyboard (2.0.0): F2 = search / scan field, F9 = pay. The barcode scanner keeps
+    // typing into the search field, as before.
+    Shortcut { sequence: "F2"; onActivated: search.forceActiveFocus() }
+    Shortcut { sequence: "F9"; enabled: root.cart.length > 0 && !pay.opened; onActivated: pay.start() }
     // documentation tour hooks
     function tourFill() { var g = catalog.filter(function(p) { return p.currency === cur }); for (var i = 0; i < Math.min(3, g.length); ++i) add(g[i]); if (cart.length) setQty(0, 2) }
     function tourPay() { pay.start(); pay.tourTender() }
@@ -77,12 +83,13 @@ Rectangle {
             LogoMark { variant: "reverse"; app: "pos"; Layout.preferredHeight: 26; Layout.preferredWidth: 150; horizontalAlignment: Image.AlignLeft }
             Text { color: "#FFFFFF"; font.family: Theme.font; font.weight: Font.DemiBold
                    text: PosNav.session ? PosNav.session.register.code + " · " + PosNav.session.register.name + " · " + qsTr("Session %1").arg(PosNav.session.number) : "" }
-            Text { color: Theme.sidebarMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm; text: Session.me.user ? Session.me.user.full_name + " · " + Labels.role(Session.role) : "" }
+            Text { visible: !root.narrow; color: Theme.sidebarMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm; text: Session.me.user ? Session.me.user.full_name + " · " + Labels.role(Session.role) : ""
+                   elide: Text.ElideRight; Layout.maximumWidth: 260 }
             Item { Layout.fillWidth: true }
             ConnectionBadge {}
             FbButton { text: qsTr("Tickets & cash"); variant: "secondary"; iconName: "receipt"; onClicked: PosNav.window.openSession() }
-            FbButton { text: qsTr("Help"); variant: "secondary"; iconName: "info"; onClicked: supportDialog.open() }
-            FbButton { text: qsTr("Sign out"); variant: "secondary"; iconName: "logout"; onClicked: PosNav.window.signOut() }
+            FbButton { text: root.narrow ? "" : qsTr("Help"); tip: qsTr("Help"); variant: "secondary"; iconName: "info"; onClicked: supportDialog.open() }
+            FbButton { text: root.narrow ? "" : qsTr("Sign out"); tip: qsTr("Sign out"); variant: "secondary"; iconName: "logout"; onClicked: PosNav.window.signOut() }
         }
     }
 
@@ -96,7 +103,7 @@ Rectangle {
             SearchField {
                 id: search
                 Layout.fillWidth: true
-                placeholderText: qsTr("Scan a barcode or search a product (Enter adds it)")
+                placeholderText: qsTr("Scan a barcode or search a product (Enter adds it, F2 returns here)")
                 onAccepted: root.scan(text)
                 focus: true
             }
@@ -145,7 +152,8 @@ Rectangle {
         }
         // ------------------------------------------------------------ ticket
         Rectangle {
-            Layout.preferredWidth: 420; Layout.fillHeight: true
+            Layout.preferredWidth: Math.max(340, Math.min(480, Math.round(root.width * 0.38)))
+            Layout.fillHeight: true
             radius: Theme.radiusLg; color: Theme.surface; border.color: Theme.line
             ColumnLayout {
                 anchors.fill: parent; anchors.margins: Theme.s3
@@ -161,22 +169,28 @@ Rectangle {
                     model: root.cart
                     spacing: 2
                     delegate: Rectangle {
-                        width: lines.width; height: 64
+                        id: lineRow
+                        width: lines.width; height: Math.max(64, lineContent.implicitHeight + 2 * Theme.s2)
                         color: index % 2 ? Theme.surfaceAlt : "transparent"; radius: Theme.radius
                         readonly property var t: root.lineOf(modelData)
                         RowLayout {
-                            anchors.fill: parent; anchors.margins: Theme.s2; spacing: Theme.s2
+                            id: lineContent
+                            anchors.left: parent.left; anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                            anchors.margins: Theme.s2; spacing: Theme.s1
                             ColumnLayout {
                                 Layout.fillWidth: true; spacing: 0
-                                Text { Layout.fillWidth: true; text: modelData.product.name; elide: Text.ElideRight; color: Theme.text; font.family: Theme.font; font.weight: Font.Medium }
+                                // 2.0.0: two lines for long product names instead of "Ciment 50 kg …"
+                                Text { Layout.fillWidth: true; text: modelData.product.name; wrapMode: Text.Wrap; maximumLineCount: 2; elide: Text.ElideRight
+                                       color: Theme.text; font.family: Theme.font; font.weight: Font.Medium }
                                 Text { text: Fmt.money(modelData.product.price, root.cur) + (modelData.discount_bp ? " · −" + Fmt.percent(modelData.discount_bp) : "")
                                        color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_xs }
                             }
-                            FbIconButton { iconName: "chevronLeft"; tip: qsTr("Less"); onClicked: root.setQty(index, modelData.qty - 1) }
-                            Text { text: String(modelData.qty); font.family: Theme.mono; font.pixelSize: Theme.fs_lg; color: Theme.text; horizontalAlignment: Text.AlignHCenter; Layout.preferredWidth: 30 }
-                            FbIconButton { iconName: "chevronRight"; tip: qsTr("More"); onClicked: root.setQty(index, modelData.qty + 1) }
+                            FbIconButton { iconName: "minus"; tip: modelData.qty > 1 ? qsTr("Decrease the quantity") : qsTr("Remove the line"); onClicked: root.setQty(index, modelData.qty - 1) }
+                            Text { text: String(modelData.qty); font.family: Theme.mono; font.pixelSize: Theme.fs_lg; color: Theme.text; horizontalAlignment: Text.AlignHCenter; Layout.preferredWidth: 30
+                                   Accessible.name: qsTr("Quantity %1").arg(modelData.qty) }
+                            FbIconButton { iconName: "plus"; tip: qsTr("Increase the quantity"); onClicked: root.setQty(index, modelData.qty + 1) }
                             FbIconButton { iconName: "percent"; tip: qsTr("Discount"); onClicked: discountDialog.start(index) }
-                            Text { text: Fmt.amount(parent.parent.t.total, root.cur); color: Theme.text; font.family: Theme.font; font.weight: Font.DemiBold; horizontalAlignment: Text.AlignRight; Layout.preferredWidth: 96 }
+                            Text { text: Fmt.amount(lineRow.t.total, root.cur); color: Theme.text; font.family: Theme.font; font.weight: Font.DemiBold; horizontalAlignment: Text.AlignRight; Layout.preferredWidth: 96 }
                         }
                     }
                     EmptyState { anchors.centerIn: parent; visible: root.cart.length === 0; iconName: "cart"; title: qsTr("Empty ticket"); text: qsTr("Tap a product or scan a barcode.") }
@@ -200,7 +214,7 @@ Rectangle {
                 RowLayout {
                     Layout.fillWidth: true
                     FbButton { text: qsTr("Clear"); variant: "secondary"; iconName: "trash"; enabled: root.cart.length > 0; onClicked: root.clear() }
-                    FbButton { Layout.fillWidth: true; implicitHeight: 56; text: qsTr("Pay"); iconName: "payment"; enabled: root.cart.length > 0; onClicked: pay.start() }
+                    FbButton { Layout.fillWidth: true; implicitHeight: 56; text: qsTr("Pay"); tip: qsTr("Shortcut: F9"); iconName: "payment"; enabled: root.cart.length > 0; onClicked: pay.start() }
                 }
             }
         }

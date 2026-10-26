@@ -2874,6 +2874,14 @@
         <source>Free trial refused (already used)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Point of sale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help requests</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginPage</name>
@@ -2895,6 +2903,10 @@
     </message>
     <message>
         <source>I have an establishment code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a valid e-mail address (for example name@company.cd).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4114,7 +4126,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scan a barcode or search a product (Enter adds it)</source>
+        <source>Scan a barcode or search a product (Enter adds it, F2 returns here)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4142,11 +4154,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Less</source>
+        <source>Decrease the quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>More</source>
+        <source>Increase the quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4227,6 +4239,18 @@
     </message>
     <message>
         <source>Help &amp; support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove the line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut: F9</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4317,7 +4341,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time</source>
+        <source>Date / time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4462,6 +4486,10 @@
     </message>
     <message>
         <source>Note (optional)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7764,6 +7792,21 @@
     </message>
     <message>
         <source>This server is already installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FbTextField</name>
+    <message>
+        <source>Hide password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

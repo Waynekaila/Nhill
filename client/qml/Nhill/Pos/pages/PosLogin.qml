@@ -38,8 +38,8 @@ Rectangle {
                 width: parent.width
                 spacing: Theme.s3
                 Banner { Layout.fillWidth: true; visible: root.notice.length > 0; text: root.notice; tone: "warning" }
-                Field { label: qsTr("E-mail"); FbTextField { id: email; focus: true; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase } }
-                Field { label: qsTr("Password"); FbTextField { id: password; echoMode: TextInput.Password; onAccepted: root.submit() } }
+                Field { label: qsTr("E-mail"); FbTextField { id: email; focus: true; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase; onAccepted: password.forceActiveFocus() } }
+                Field { label: qsTr("Password"); FbTextField { id: password; echoMode: TextInput.Password; onAccepted: if (email.text.length > 0 && password.text.length > 0) root.submit() } }
                 FbButton { Layout.fillWidth: true; text: qsTr("Sign in"); busy: root.busy; enabled: email.text.length > 0 && password.text.length > 0; onClicked: root.submit() }
                 Repeater {
                     model: root.choices

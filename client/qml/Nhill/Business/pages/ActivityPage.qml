@@ -80,7 +80,7 @@ FbPage {
             rows: page.rows
             titleColumn: 2; subtitleColumn: 1; trailingColumn: 0
             columns: [
-                { title: qsTr("When"), width: 1.2, muted: true, value: function(a) { return Fmt.dateTime(a.created_at) } },
+                { title: qsTr("When"), width: 1.2, minWidth: 140, muted: true, value: function(a) { return Fmt.dateTime(a.created_at) } },
                 { title: qsTr("Who"), width: 1.4, strong: true, value: function(a) { return a.actor || "—" } },
                 { title: qsTr("Action"), width: 2, value: function(a) { return a.action_label } },
                 { title: qsTr("Concerning"), width: 1.6, mono: true, value: function(a) { return a.reference || "" } },

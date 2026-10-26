@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import Nhill.Core
 import Nhill.Ui
@@ -7,10 +8,21 @@ import Nhill.Ui
 // lives in memory (closing the console signs out); nothing is stored on disk.
 ApplicationWindow {
     id: win
-    width: 1320
-    height: 840
-    minimumWidth: 900
-    minimumHeight: 600
+    // 2.0.0 window sizing: the first size fits the screen (1366 x 768 laptops, 125 percent
+    // scaling, small netbooks), the window is centred, and small screens start maximised.
+    readonly property bool tourSized: false
+    readonly property int availW: Screen.desktopAvailableWidth > 0 ? Screen.desktopAvailableWidth : 1320
+    readonly property int availH: Screen.desktopAvailableHeight > 0 ? Screen.desktopAvailableHeight : 840
+    width: Theme.fitWidth(1320, availW)
+    height: Theme.fitHeight(840, availH)
+    minimumWidth: Math.min(900, availW)
+    minimumHeight: Math.min(560, availH)
+    function placeOnScreen() {
+        if (tourSized || Qt.platform.os === "android" || Qt.platform.os === "ios") return
+        x = Screen.virtualX + Math.max(0, Math.round((availW - width) / 2))
+        y = Screen.virtualY + Math.max(0, Math.round((availH - height) / 2))
+        if (availW < 1100 || availH < 700) showMaximized()
+    }
     visible: true
     title: "Nhill — " + qsTr("Administration")
     color: Theme.bg
@@ -50,6 +62,7 @@ ApplicationWindow {
     // A server without database answers /health with status "setup": open the installation wizard.
     Component.onCompleted: {
         ConsoleNav.window = win
+        placeOnScreen()
         if (typeof setupTour !== "undefined" && setupTour.dir) { Prefs.serverUrl = setupTour.server; win.openSetup(); return }
         if (!(typeof adminTour !== "undefined" && adminTour.dir))
             Api.get("/health", function(r) { if (r.ok && r.data && r.data.status === "setup") win.openSetup() })

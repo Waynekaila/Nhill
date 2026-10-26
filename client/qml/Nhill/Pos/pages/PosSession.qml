@@ -13,6 +13,7 @@ Rectangle {
     property string sessionId: ""
     property var s: null
     readonly property bool open: !!s && s.status === "open"
+    readonly property bool narrow: width < 1180     // 2.0.0: secondary actions become icon buttons
     readonly property string cur: s ? s.currency : "CDF"
     function reload() { Api.get("/api/v1/pos/sessions/" + sessionId, function(r) { if (r.ok) { root.s = r.data; if (r.data.status === "open") PosNav.session = r.data } else PosNav.fail(r) }) }
     function report() {
@@ -37,10 +38,11 @@ Rectangle {
             Layout.fillWidth: true
             FbButton { text: qsTr("Back to sale"); variant: "ghost"; iconName: "chevronLeft"; visible: root.open; onClicked: PosNav.window.openSale() }
             Text { text: root.s ? qsTr("Register %1 · session %2").arg(root.s.register.code).arg(root.s.number) : ""; color: Theme.text
-                   font.family: Theme.font; font.pixelSize: Theme.fs_xxl; font.weight: Font.DemiBold; Layout.fillWidth: true }
+                   font.family: Theme.font; font.pixelSize: root.narrow ? Theme.fs_xl : Theme.fs_xxl; font.weight: Font.DemiBold; Layout.fillWidth: true; elide: Text.ElideRight }
             FbChip { visible: !!root.s; text: root.open ? qsTr("Open") : qsTr("Closed"); tone: root.open ? "success" : "neutral" }
-            FbButton { text: root.open ? qsTr("X reading") : qsTr("Z report"); variant: "secondary"; iconName: "download"; enabled: !!root.s; onClicked: root.report() }
-            FbButton { visible: root.open; text: qsTr("Cash in / out"); variant: "secondary"; iconName: "wallet"; onClicked: cashDialog.start() }
+            FbButton { text: root.narrow ? "" : (root.open ? qsTr("X reading") : qsTr("Z report")); tip: root.open ? qsTr("X reading") : qsTr("Z report")
+                       variant: "secondary"; iconName: "download"; enabled: !!root.s; onClicked: root.report() }
+            FbButton { visible: root.open; text: root.narrow ? "" : qsTr("Cash in / out"); tip: qsTr("Cash in / out"); variant: "secondary"; iconName: "wallet"; onClicked: cashDialog.start() }
             FbButton { visible: root.open; text: qsTr("Close the register"); iconName: "check"; onClicked: closeDialog.start() }
             FbButton { visible: !root.open; text: qsTr("Done"); onClicked: { PosNav.session = null; PosNav.window.loadConfig(function() { PosNav.window.openHome() }) } }
         }
@@ -49,7 +51,7 @@ Rectangle {
                               + (root.s.closed_at ? " · " + qsTr("closed %1 by %2").arg(Fmt.dateTime(root.s.closed_at)).arg(root.s.closed_by_name) : "") : "" }
         GridLayout {
             Layout.fillWidth: true
-            columns: 4
+            columns: root.width < 1000 ? 2 : 4
             columnSpacing: Theme.s3
             KpiTile { Layout.fillWidth: true; label: qsTr("Sales"); iconName: "receipt"; value: root.s ? Fmt.money(root.s.sales_total, root.cur) : "…"
                       caption: root.s ? qsTr("%1 ticket(s)").arg(root.s.sales_count) : "" }
@@ -73,7 +75,7 @@ Rectangle {
             Layout.fillHeight: true
             rows: root.s ? root.s.documents : []
             columns: [
-                { title: qsTr("Time"), width: 0.8, muted: true, value: function(d) { return Fmt.dateTime(d.issued_at) } },
+                { title: qsTr("Date / time"), width: 1, minWidth: 130, muted: true, value: function(d) { return Fmt.dateTime(d.issued_at) } },
                 { title: qsTr("Number"), width: 1.2, mono: true, strong: true, value: function(d) { return d.number } },
                 { title: qsTr("Type"), width: 0.9, value: function(d) { return d.doc_type === "receipt" ? qsTr("Sale") : qsTr("Return / void") } },
                 { title: qsTr("Customer"), width: 1.3, muted: true, value: function(d) { return d.customer } },
@@ -102,6 +104,7 @@ Rectangle {
             open()
         }
         function doReturn() {
+                           if (!docDialog.full) return   // details still loading (2.0.0: was a TypeError)
                            var lines = [], cur = docDialog.full.currency
                            docDialog.full.lines.forEach(function(l) {
                                var q = (docDialog.qty[l.line_no] || "").replace(",", ".")
@@ -161,6 +164,16 @@ Rectangle {
         subtitle: qsTr("Count the drawer and the terminal totals, then confirm.")
         preferredWidth: 560
         function start() { counted = ({}); note.text = ""; open() }
+        // The server requires the cash count (cash_count_required): say it before sending.
+        function cashCounted() {
+            var ms = PosNav.config ? PosNav.config.payment_methods : []
+            for (var i = 0; i < ms.length; ++i) if (ms[i].kind === "cash" && counted[ms[i].code]) return true
+            return false
+        }
+        function confirmSubmit() {
+            if (!cashCounted()) { PosNav.toast(qsTr("Enter the cash counted in the drawer (0 if the drawer is empty)."), "warning"); return }
+            submit()
+        }
         function submit() {
                            var c = {}
                            for (var k in closeDialog.counted) if (closeDialog.counted[k]) c[k] = closeDialog.counted[k]
@@ -184,7 +197,7 @@ Rectangle {
         }
         Field { label: qsTr("Note (optional)"); FbTextField { id: note } }
         footer: [
-            FbButton { text: qsTr("Close the register"); iconName: "check"; onClicked: closeDialog.submit() },
+            FbButton { text: qsTr("Close the register"); iconName: "check"; onClicked: closeDialog.confirmSubmit() },
             FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: closeDialog.close() }
         ]
     }

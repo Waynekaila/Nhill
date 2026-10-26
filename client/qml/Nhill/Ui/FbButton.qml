@@ -2,11 +2,15 @@ import QtQuick
 import QtQuick.Controls
 
 // variant: "primary" | "secondary" | "ghost" | "danger"
+// 2.0.0: explicit disabled colours (readable), focus ring outside the button (visible on
+// every variant), tooltip + accessible name for icon-only buttons (set "tip").
 Button {
     id: control
     property string variant: "primary"
     property string iconName: ""
     property bool busy: false
+    property string tip: ""
+    readonly property bool inactive: !enabled && !busy
     implicitHeight: Theme.controlHeight
     implicitWidth: Math.max(Theme.controlHeight, contentItem.implicitWidth + leftPadding + rightPadding)
     leftPadding: text.length > 0 ? Theme.s4 : Theme.s2
@@ -16,12 +20,18 @@ Button {
     font.weight: Font.DemiBold
     enabled: !busy
     focusPolicy: Qt.StrongFocus
-    Accessible.name: text
+    Accessible.name: text.length > 0 ? text : tip
+    Accessible.description: tip
+    ToolTip.visible: tip.length > 0 && hovered
+    ToolTip.text: tip
+    ToolTip.delay: 600
 
-    readonly property color fg: variant === "primary" ? Theme.textOnPrimary
+    readonly property color fg: inactive ? Theme.disabledText
+                              : variant === "primary" ? Theme.textOnPrimary
                               : variant === "danger" ? "#FFFFFF"
                               : variant === "ghost" ? Theme.primary : Theme.text
-    readonly property color bgColor: variant === "primary" ? (control.hovered ? Theme.primaryHover : Theme.primary)
+    readonly property color bgColor: inactive ? (variant === "ghost" ? "transparent" : Theme.disabledBg)
+                                   : variant === "primary" ? (control.hovered || control.down ? Theme.primaryHover : Theme.primary)
                                    : variant === "danger" ? Theme.danger
                                    : variant === "ghost" ? (control.hovered ? Theme.primarySoft : "transparent")
                                    : (control.hovered ? Theme.surfaceAlt : Theme.surface)
@@ -51,11 +61,23 @@ Button {
             elide: Text.ElideRight
         }
     }
-    background: Rectangle {
-        radius: Theme.radius
-        color: control.bgColor
-        opacity: control.enabled ? 1 : 0.45
-        border.width: control.variant === "secondary" ? 1 : (control.visualFocus ? 2 : 0)
-        border.color: control.visualFocus ? Theme.focus : Theme.lineStrong
+    background: Item {
+        Rectangle {
+            // keyboard focus ring, drawn outside so it shows on dark and light buttons
+            anchors.fill: parent
+            anchors.margins: -3
+            radius: Theme.radius + 3
+            color: "transparent"
+            border.width: 2
+            border.color: Theme.focus
+            visible: control.visualFocus
+        }
+        Rectangle {
+            anchors.fill: parent
+            radius: Theme.radius
+            color: control.bgColor
+            border.width: control.variant === "secondary" && !control.inactive ? 1 : 0
+            border.color: Theme.inputBorder
+        }
     }
 }

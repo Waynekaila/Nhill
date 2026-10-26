@@ -38,7 +38,10 @@ FbPage {
             var cur = -1
             r.data.columns.forEach(function(c, i) { if (c.key === "col.currency") cur = i })
             page.columns = r.data.columns.map(function(c, i) {
+                // 2.0.0: minimum widths per type: wide reports scroll horizontally instead
+                // of cutting dates, numbers and amounts ("26/10/2…", "AV-2026-0…").
                 return { title: c.label, width: c.type === "text" ? 1.5 : c.type === "date" ? 1.15 : c.type === "money" ? 1.25 : 0.9, align: c.type === "money" || c.type === "qty" || c.type === "int" ? "right" : "left",
+                         minWidth: c.type === "date" ? 104 : c.type === "money" ? 128 : (c.key === "col.number" || c.key === "col.sku") ? 150 : c.type === "text" ? 140 : 84,
                          mono: c.key === "col.number" || c.key === "col.sku",
                          value: function(row) {
                              var v = row[i]
