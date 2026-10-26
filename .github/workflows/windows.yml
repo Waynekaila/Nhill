@@ -1,0 +1,65 @@
+# Nhill — installateurs Windows 10/11 x64 (MSVC 2022 + Qt 6.5.3 + NSIS).
+# Produit nhill-business/-pos/-console-<version>-setup.exe (non signés : signer avec
+# un certificat de signature de code avant diffusion publique).
+name: windows
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      server_url:
+        description: "Adresse d'API compilée dans les applications (vide = choix au premier lancement)"
+        required: false
+        default: ""
+permissions:
+  contents: read
+jobs:
+  installers:
+    runs-on: windows-2022
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Qt 6.5.3 MSVC 64 bits
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.5.3'
+          host: windows
+          target: desktop
+          arch: win64_msvc2019_64
+          modules: 'qtshadertools'
+          cache: true
+      - name: Environnement MSVC x64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: NSIS et Ninja
+        shell: pwsh
+        run: |
+          choco install nsis ninja -y --no-progress
+          echo "C:\Program Files (x86)\NSIS" | Out-File -FilePath $env:GITHUB_PATH -Append
+      - name: Compilation + installateurs
+        shell: pwsh
+        run: |
+          powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
+            -Source "$env:GITHUB_WORKSPACE" -QtDir "$env:QT_ROOT_DIR" -ServerUrl "${{ github.event.inputs.server_url }}" `
+            -BuildDir "$env:GITHUB_WORKSPACE\build-windows"
+      - name: Vérification (PE 64 bits, sommes)
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem build-windows\dist\*-setup.exe
+          if ($files.Count -ne 3) { throw "3 installateurs attendus, $($files.Count) trouvés" }
+          foreach ($f in $files) { $b = [IO.File]::ReadAllBytes($f.FullName)[0..1]; if ([Text.Encoding]::ASCII.GetString($b) -ne 'MZ') { throw "$f invalide" } }
+          Get-Content build-windows\dist\SHA256SUMS
+      - name: Installation silencieuse et désinstallation (Nhill POS)
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem build-windows\dist\nhill-pos-*-setup.exe | Select-Object -First 1
+          Start-Process $setup.FullName -ArgumentList '/S' -Wait
+          if (-not (Test-Path "$env:ProgramFiles\Nhill POS\nhill-pos.exe")) { throw "installation silencieuse échouée" }
+          Start-Process "$env:ProgramFiles\Nhill POS\uninstall.exe" -ArgumentList '/S' -Wait
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nhill-windows-installers
+          path: |
+            build-windows/dist/*-setup.exe
+            build-windows/dist/SHA256SUMS

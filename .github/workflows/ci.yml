@@ -1,0 +1,39 @@
+# Nhill — intégration continue : compilation, tests (métier, serveur avec PostgreSQL
+# jetable, client), contrôles QML et traductions, captures d'écran de l'interface.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-test:
+    name: Ubuntu 24.04 — build + tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dépendances (dépôts Ubuntu officiels)
+        run: scripts/install-deps-linux.sh --with-gui-tests --yes
+      - name: Tests métier autonomes (montants, taxes, codes, mots de passe)
+        run: scripts/test-common-standalone.sh
+      - name: Contrôle statique QML + traductions
+        run: python3 scripts/qa/qml-check.py
+      - name: Compilation + ctest (common, serveur, installation, client)
+        run: scripts/build-linux.sh build
+      - name: Captures d'écran (serveur de démonstration + visite automatique)
+        if: always()
+        continue-on-error: true
+        run: scripts/qa/ui-screenshots.sh build artifacts/screenshots
+      - name: Journaux et captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nhill-ci-logs-and-screenshots
+          path: |
+            build/logs/
+            build/Testing/
+            artifacts/screenshots/
+          if-no-files-found: ignore

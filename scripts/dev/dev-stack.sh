@@ -6,7 +6,8 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 STATE="${NH_DEV_STATE:-/tmp/nhill-dev}"
-PGBIN="${NH_PG_BIN:-/usr/lib/postgresql/16/bin}"
+PGBIN="${NH_PG_BIN:-$(ls -d /usr/lib/postgresql/*/bin 2>/dev/null | sort -V | tail -n1)}"
+PGBIN="${PGBIN:-/usr/lib/postgresql/16/bin}"
 PORT_PG="${NH_DEV_PG_PORT:-55433}"
 BUILD="${2:-$ROOT/build}"
 AS=""; [ "$(id -u)" = "0" ] && AS="runuser -u postgres --"

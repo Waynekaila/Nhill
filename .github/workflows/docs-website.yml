@@ -1,0 +1,32 @@
+# Nhill — documentation (PDF depuis Markdown, contrôle de synchronisation) et site vitrine
+# (contrôles statiques, tests du backend de formulaires, archive).
+name: docs-website
+on:
+  push:
+    branches: [main]
+    paths: ['docs/**', 'legal/**', 'marketing/**', 'website/**', 'README*.md', 'scripts/docs/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  docs-site:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: pandoc + WeasyPrint
+        run: scripts/install-deps-linux.sh --with-docs --yes || sudo apt-get install -y -q pandoc python3-weasyprint
+      - name: Les PDF versionnés correspondent-ils aux Markdown ?
+        run: scripts/build-docs-pdf.sh --check
+      - name: Régénération des PDF
+        run: scripts/build-docs-pdf.sh
+      - name: Site vitrine
+        run: scripts/build-website.sh --force
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nhill-docs-and-website
+          path: |
+            docs/pdf/
+            legal/pdf/
+            marketing/pdf/
+            README*.pdf
+            dist/website/

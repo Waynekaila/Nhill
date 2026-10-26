@@ -1,0 +1,8 @@
+# build outputs (never committed)
+/build/
+/dist/
+/release/
+website/backend/data/
+*.sqlite3
+.env
+__pycache__/

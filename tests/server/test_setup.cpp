@@ -18,6 +18,23 @@
 #include "util/crypto.hpp"
 
 namespace fs = std::filesystem;
+
+// Same rule as tests/server/harness.cpp (this test is a separate executable):
+// $NH_PG_BIN, else the newest /usr/lib/postgresql/<version>/bin, else version 16.
+static std::string pgBinDir() {
+    if (const char* b = std::getenv("NH_PG_BIN")) return b;
+    int best = -1;
+    std::string found;
+    std::error_code ec;
+    for (const auto& e : fs::directory_iterator("/usr/lib/postgresql", ec)) {
+        const std::string name = e.path().filename().string();
+        if (name.empty() || name.find_first_not_of("0123456789") != std::string::npos) continue;
+        if (!fs::exists(e.path() / "bin" / "pg_ctl", ec)) continue;
+        int v = std::atoi(name.c_str());
+        if (v > best) { best = v; found = (e.path() / "bin").string(); }
+    }
+    return found.empty() ? std::string("/usr/lib/postgresql/16/bin") : found;
+}
 using nlohmann::json;
 
 namespace {
@@ -41,10 +58,9 @@ int freePort() {
 
 // A PostgreSQL cluster reachable over TCP with SCRAM passwords (like a hosted database).
 struct Cluster {
-    std::string dir, bin = "/usr/lib/postgresql/16/bin", as;
+    std::string dir, bin = pgBinDir(), as;
     int port = 0;
     Cluster() {
-        if (const char* b = std::getenv("NH_PG_BIN")) bin = b;
         char tmpl[] = "/tmp/nhsetup-XXXXXX";
         dir = mkdtemp(tmpl);
         as = geteuid() == 0 ? "runuser -u postgres -- " : "";

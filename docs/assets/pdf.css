@@ -1,0 +1,32 @@
+/* Nhill — feuille de style d'impression des PDF de documentation (md2pdf.py).
+   Couleurs de la marque : bleu nuit #173F5F, or #8E6519, encre #14181F, papier #F7F5F0. */
+@page { size: A4; margin: 18mm 16mm 18mm 16mm;
+  @bottom-left { font-family: "IBM Plex Sans", sans-serif; font-size: 7.5pt; color: #62686F; }
+  @bottom-right { font-family: "IBM Plex Sans", sans-serif; font-size: 7.5pt; color: #62686F; } }
+html { font-family: "IBM Plex Sans", "DejaVu Sans", sans-serif; font-size: 10pt; color: #14181F; line-height: 1.45; }
+body { margin: 0; }
+main { max-width: 100%; }
+h1, h2, h3, h4 { font-weight: 600; color: #173F5F; line-height: 1.2; break-after: avoid; page-break-after: avoid; }
+h1 { font-size: 20pt; margin: 0 0 10pt; padding-bottom: 6pt; border-bottom: 2pt solid #8E6519; }
+h2 { font-size: 14pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 0.6pt solid #E2DED6; }
+h3 { font-size: 11.5pt; margin: 14pt 0 4pt; }
+h4 { font-size: 10.5pt; margin: 10pt 0 3pt; color: #14181F; }
+p, li { orphans: 3; widows: 3; }
+a { color: #173F5F; text-decoration: none; border-bottom: 0.5pt solid #9FB6C9; }
+code, pre, kbd { font-family: "IBM Plex Mono", "DejaVu Sans Mono", monospace; font-size: 8.6pt; }
+code { background: #F2EFE8; padding: 0 2pt; border-radius: 2pt; }
+pre { background: #F7F5F0; border: 0.6pt solid #E2DED6; border-left: 2.5pt solid #173F5F; padding: 6pt 8pt;
+      white-space: pre-wrap; word-break: break-word; border-radius: 3pt; break-inside: avoid; }
+pre code { background: none; padding: 0; }
+table { border-collapse: collapse; width: 100%; margin: 6pt 0 10pt; font-size: 8.8pt; break-inside: auto; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th { background: #F2EFE8; color: #14181F; font-weight: 600; text-align: left; }
+th, td { border: 0.6pt solid #CFC9BD; padding: 3.5pt 5pt; vertical-align: top; }
+blockquote { margin: 8pt 0; padding: 6pt 10pt; background: #F6EBD3; border-left: 3pt solid #8E6519; color: #3A2E14; break-inside: avoid; }
+blockquote p { margin: 2pt 0; }
+hr { border: none; border-top: 0.6pt solid #E2DED6; margin: 12pt 0; }
+img { max-width: 100%; }
+ul, ol { padding-left: 16pt; }
+input[type=checkbox] { margin-right: 4pt; }
+.footnotes { font-size: 8.5pt; color: #56606B; }

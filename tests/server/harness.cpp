@@ -17,6 +17,21 @@ namespace nht {
 
 namespace fs = std::filesystem;
 
+std::string pgBinDir() {
+    if (const char* b = std::getenv("NH_PG_BIN")) return b;
+    int best = -1;
+    std::string found;
+    std::error_code ec;
+    for (const auto& e : fs::directory_iterator("/usr/lib/postgresql", ec)) {
+        const std::string name = e.path().filename().string();
+        if (name.empty() || name.find_first_not_of("0123456789") != std::string::npos) continue;
+        if (!fs::exists(e.path() / "bin" / "pg_ctl", ec)) continue;
+        int v = std::atoi(name.c_str());
+        if (v > best) { best = v; found = (e.path() / "bin").string(); }
+    }
+    return found.empty() ? std::string("/usr/lib/postgresql/16/bin") : found;
+}
+
 namespace {
 
 std::string sh(const std::string& cmd) {
@@ -81,7 +96,7 @@ Harness::~Harness() {
     pool_.reset();
     const char* keep = std::getenv("NH_TEST_KEEP_DB");
     if (!keep) {
-        std::string ctl = "/usr/lib/postgresql/16/bin/pg_ctl -D " + dir_ + "/data -m immediate stop >/dev/null 2>&1";
+        std::string ctl = pgBinDir() + "/pg_ctl -D " + dir_ + "/data -m immediate stop >/dev/null 2>&1";
         if (std::system((geteuid() == 0 ? "runuser -u postgres -- " + ctl : ctl).c_str()) != 0) { /* already stopped */ }
         std::error_code ec;
         fs::remove_all(dir_, ec);
@@ -89,8 +104,7 @@ Harness::~Harness() {
 }
 
 void Harness::startCluster() {
-    std::string bin = "/usr/lib/postgresql/16/bin";
-    if (const char* b = std::getenv("NH_PG_BIN")) bin = b;
+    const std::string bin = pgBinDir();
     char tmpl[] = "/tmp/nhtest-XXXXXX";
     dir_ = mkdtemp(tmpl);
     const bool root = geteuid() == 0;

@@ -18,6 +18,11 @@
 
 namespace nht {
 
+// Directory of the PostgreSQL server binaries used for the throwaway test clusters:
+// $NH_PG_BIN, otherwise the newest /usr/lib/postgresql/<version>/bin (16 on Ubuntu 24.04,
+// 17 on Debian 13), otherwise /usr/lib/postgresql/16/bin.
+std::string pgBinDir();
+
 using json = nlohmann::json;
 
 struct Response {

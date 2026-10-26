@@ -1,0 +1,76 @@
+# Nhill — paquets .deb natifs : Ubuntu 24.04 (Qt 6.4) et Debian 13 (Qt 6.8, conteneur
+# officiel debian:trixie). Chaque paquet est compilé, testé, construit puis installé par
+# apt dans un système propre (conteneur neuf) pour vérifier ses dépendances.
+name: linux-packages
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deb:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ubuntu-24.04
+            image: ubuntu:24.04
+          - name: debian-13
+            image: debian:trixie
+    name: .deb ${{ matrix.name }}
+    runs-on: ubuntu-24.04
+    container: ${{ matrix.image }}
+    timeout-minutes: 120
+    steps:
+      - name: Outils de base
+        run: apt-get update -q && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends git ca-certificates sudo
+      - uses: actions/checkout@v4
+      - name: Dépendances
+        run: scripts/install-deps-linux.sh --with-packaging --yes
+      - name: Compilation, tests, paquets
+        run: scripts/build-deb.sh --force
+      - name: Vérification
+        run: scripts/verify-build.sh --require linux
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nhill-deb-${{ matrix.name }}
+          path: dist/linux/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nhill-deb-${{ matrix.name }}-logs
+          path: build/logs/
+          if-no-files-found: ignore
+  install-test:
+    name: Installation propre ${{ matrix.name }}
+    needs: deb
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: ubuntu-24.04
+            image: ubuntu:24.04
+          - name: debian-13
+            image: debian:trixie
+    runs-on: ubuntu-24.04
+    container: ${{ matrix.image }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: nhill-deb-${{ matrix.name }}
+          path: debs
+      - name: Installation par apt (dépendances résolues depuis les dépôts officiels)
+        run: |
+          apt-get update -q
+          cd debs/* 2>/dev/null || cd debs
+          sha256sum -c SHA256SUMS
+          DEBIAN_FRONTEND=noninteractive apt-get install -y -q ./nhill-business_*.deb ./nhill-pos_*.deb ./nhill-console_*.deb ./nhill-server_*.deb
+      - name: Fichiers installés et démarrage
+        run: |
+          for b in nhill-business nhill-pos nhill-console nhill-server; do command -v $b; done
+          dpkg -L nhill-pos | grep -E 'applications/nhill-pos.desktop|icons/'
+          QT_QPA_PLATFORM=offscreen timeout 8 nhill-pos || [ $? -eq 124 ]
+          QT_QPA_PLATFORM=offscreen timeout 8 nhill-business || [ $? -eq 124 ]
+      - name: Désinstallation
+        run: DEBIAN_FRONTEND=noninteractive apt-get remove -y nhill-business nhill-pos nhill-console && ! command -v nhill-pos
