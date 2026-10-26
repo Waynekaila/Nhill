@@ -1,0 +1,16 @@
+[Unit]
+Description=Nhill encrypted database backup
+After=postgresql.service
+
+[Service]
+Type=oneshot
+User=nhill-backup
+Group=nhill-backup
+EnvironmentFile=/etc/nhill/backup.env
+ExecStart=/usr/sbin/nhill-backup.sh
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/backups/nhill
+UMask=0077

@@ -1,0 +1,10 @@
+#!/bin/sh
+# /etc/nhill is kept even on purge: it holds NH_SECRET_KEY, without which the
+# encrypted fields of the database and of its backups cannot be read.
+set -e
+if [ -d /run/systemd/system ]; then systemctl daemon-reload >/dev/null 2>&1 || true; fi
+if [ "$1" = "purge" ]; then
+    echo "nhill-server: /etc/nhill and /var/backups/nhill were kept (secret key, database settings, backups)."
+    echo "nhill-server: delete them yourself only after saving NH_SECRET_KEY elsewhere."
+fi
+exit 0

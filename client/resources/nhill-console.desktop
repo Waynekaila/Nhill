@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Nhill Console
+GenericName=Administration Nhill
+Comment=Console privée des créateurs de Nhill
+Comment[en]=Private console for the Nhill creators
+Exec=nhill-console
+Icon=nhill-console
+Categories=Office;System;
+Terminal=false

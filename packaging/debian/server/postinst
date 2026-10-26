@@ -1,0 +1,43 @@
+#!/bin/sh
+# nhill-server: system users, configuration directory, service.
+# The configuration created here contains no database settings: the server starts in
+# setup mode and is installed from Nhill Console with the one-time token printed in
+# its journal (journalctl -u nhill-server). No password is generated or stored here.
+set -e
+if [ "$1" = "configure" ]; then
+    if ! getent passwd nhill >/dev/null; then
+        adduser --system --group --no-create-home --home /nonexistent --shell /usr/sbin/nologin nhill >/dev/null
+    fi
+    if ! getent passwd nhill-backup >/dev/null; then
+        adduser --system --group --home /var/backups/nhill --no-create-home --shell /usr/sbin/nologin nhill-backup >/dev/null
+    fi
+    install -d -m 0750 -o nhill -g nhill /etc/nhill
+    install -d -m 0700 -o nhill-backup -g nhill-backup /var/backups/nhill
+    if [ ! -e /etc/nhill/server.env ]; then
+        # 32 random bytes for NH_SECRET_KEY, generated on this host only (never shipped).
+        key=$(od -An -tx1 -N32 /dev/urandom | tr -d ' \n')
+        umask 077
+        sed -e 's/^NH_DATABASE_URL=/#NH_DATABASE_URL=/' -e 's/^NH_MIGRATION_DATABASE_URL=/#NH_MIGRATION_DATABASE_URL=/' \
+            -e "s/^NH_SECRET_KEY=\$/NH_SECRET_KEY=$key/" \
+            /usr/share/nhill/examples/server.env.example > /etc/nhill/server.env
+        unset key
+        chown nhill:nhill /etc/nhill/server.env
+        chmod 0600 /etc/nhill/server.env
+        echo "nhill-server: /etc/nhill/server.env created with a new NH_SECRET_KEY and no database (setup mode)."
+        echo "nhill-server: keep a copy of NH_SECRET_KEY in your password safe, separately from the backups."
+        echo "nhill-server: read the setup token with: journalctl -u nhill-server | grep -i token"
+    fi
+    if [ ! -e /etc/nhill/backup.env ]; then
+        install -m 0600 -o nhill-backup -g nhill-backup /usr/share/nhill/examples/backup.env.example /etc/nhill/backup.env
+    fi
+    if [ -d /run/systemd/system ]; then
+        systemctl daemon-reload >/dev/null 2>&1 || true
+        systemctl enable nhill-server.service >/dev/null 2>&1 || true
+        if [ -z "$2" ]; then
+            systemctl start nhill-server.service || echo "nhill-server: start failed, see journalctl -u nhill-server"
+        else
+            systemctl try-restart nhill-server.service || true
+        fi
+    fi
+fi
+exit 0

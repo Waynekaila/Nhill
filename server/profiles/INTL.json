@@ -1,0 +1,36 @@
+{
+  "code": "INTL",
+  "version": 2,
+  "country": null,
+  "name_fr": "International (facture commerciale générique)",
+  "name_en": "International (generic commercial invoice)",
+  "validation_status": "generic — no country-specific compliance is claimed (in particular no EU e-invoicing format)",
+  "default_currency": "USD",
+  "default_timezone": "UTC",
+  "default_language": "en",
+  "legal_ids": [
+    {"kind": "registration", "label_fr": "Numéro d'immatriculation", "label_en": "Company registration number",
+     "required_for": [], "printed": true},
+    {"kind": "vat", "label_fr": "Numéro de TVA / fiscal", "label_en": "VAT / tax number",
+     "required_for": [], "printed": true}
+  ],
+  "tax_rates": [
+    {"code": "NONE", "label_fr": "Sans taxe", "label_en": "No tax", "rate_bp": 0, "kind": "exempt",
+     "default_when": "not_vat_registered"}
+  ],
+  "tax_rounding": "per_line",
+  "numbering": {
+    "pattern": "{prefix}-{year}-{seq6}",
+    "reset": "yearly",
+    "prefixes": {
+      "fr": {"invoice": "FA", "credit_note": "AV", "quote": "DV", "order": "BC", "receipt": "TK"},
+      "en": {"invoice": "INV", "credit_note": "CN", "quote": "QT", "order": "SO", "receipt": "RCP"}
+    }
+  },
+  "seller_fields": ["legal_name", "address", "city", "phone", "email", "registration", "vat"],
+  "buyer_fields": ["name", "address", "city", "vat"],
+  "document_notices": {},
+  "fiscal_device": {"implemented": false},
+  "retention_years": 10,
+  "sources": []
+}

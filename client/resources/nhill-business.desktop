@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Nhill Business
+GenericName=Gestion commerciale
+GenericName[en]=Business management
+Comment=Ventes, factures, stocks, paiements et rapports
+Comment[en]=Sales, invoices, stock, payments and reports
+Exec=nhill-business
+Icon=nhill-business
+Categories=Office;Finance;
+Terminal=false

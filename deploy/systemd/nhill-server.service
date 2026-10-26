@@ -1,0 +1,46 @@
+[Unit]
+Description=Nhill API server
+Documentation=file:///usr/share/doc/nhill/deploiement-production.md
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nhill
+Group=nhill
+# Applies pending migrations (owner role) before serving; refuses modified migrations.
+# Without a configured database it does nothing and `serve` starts in setup mode.
+ExecStartPre=/usr/bin/nhill-server --config /etc/nhill/server.env migrate
+ExecStart=/usr/bin/nhill-server --config /etc/nhill/server.env serve
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+LimitNOFILE=65536
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+# Setup mode writes the database settings to /etc/nhill/server.env (0600) once.
+ReadWritePaths=/etc/nhill
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

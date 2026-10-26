@@ -1,0 +1,18 @@
+# Client core tests (Qt Test). The network tests need cpp-httplib (local fake API).
+find_package(Qt6 6.4 REQUIRED COMPONENTS Core Gui Network Qml Quick Test)
+find_package(Qt6Keychain CONFIG QUIET)  # imported targets are directory-scoped
+qt_add_executable(test_client test_client.cpp)
+set_target_properties(test_client PROPERTIES AUTOMOC ON)
+target_link_libraries(test_client PRIVATE nhill_client_core Qt6::Test)
+find_package(PkgConfig QUIET)
+if(PkgConfig_FOUND)
+    pkg_check_modules(HTTPLIB_TEST IMPORTED_TARGET cpp-httplib)
+endif()
+if(HTTPLIB_TEST_FOUND)
+    target_link_libraries(test_client PRIVATE PkgConfig::HTTPLIB_TEST)
+    target_compile_definitions(test_client PRIVATE NHILL_TEST_HTTPLIB)
+else()
+    message(STATUS "cpp-httplib not found: ApiClient network tests are skipped")
+endif()
+add_test(NAME client COMMAND test_client)
+set_tests_properties(client PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)

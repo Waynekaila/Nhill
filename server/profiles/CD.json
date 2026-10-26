@@ -1,0 +1,56 @@
+{
+  "code": "CD",
+  "version": 2,
+  "country": "CD",
+  "name_fr": "République démocratique du Congo",
+  "name_en": "Democratic Republic of the Congo",
+  "validation_status": "draft — to be reviewed by a Congolese tax advisor before production use",
+  "default_currency": "CDF",
+  "default_timezone": "Africa/Kinshasa",
+  "default_language": "fr",
+  "legal_ids": [
+    {"kind": "rccm", "label_fr": "RCCM", "label_en": "RCCM (trade and personal property credit register)",
+     "required_for": [], "printed": true},
+    {"kind": "id_nat", "label_fr": "Identification nationale", "label_en": "National identification number",
+     "required_for": [], "printed": true},
+    {"kind": "nif", "label_fr": "NIF (numéro d'impôt)", "label_en": "Tax identification number (NIF)",
+     "required_for": [], "required_if_vat_registered": true, "printed": true}
+  ],
+  "tax_rates": [
+    {"code": "TVA16", "label_fr": "TVA 16 %", "label_en": "VAT 16%", "rate_bp": 1600, "kind": "standard",
+     "default_when": "vat_registered"},
+    {"code": "TVA0", "label_fr": "TVA 0 % (exportation)", "label_en": "VAT 0% (export)", "rate_bp": 0, "kind": "zero"},
+    {"code": "EXO", "label_fr": "Exonéré de TVA", "label_en": "VAT exempt", "rate_bp": 0, "kind": "exempt"},
+    {"code": "NA", "label_fr": "Non assujetti à la TVA", "label_en": "Not VAT-registered", "rate_bp": 0,
+     "kind": "exempt", "default_when": "not_vat_registered"}
+  ],
+  "tax_rounding": "per_line",
+  "numbering": {
+    "pattern": "{prefix}-{year}-{seq6}",
+    "reset": "yearly",
+    "prefixes": {
+      "fr": {"invoice": "FA", "credit_note": "AV", "quote": "DV", "order": "BC", "receipt": "TK"},
+      "en": {"invoice": "INV", "credit_note": "CN", "quote": "QT", "order": "SO", "receipt": "RCP"}
+    }
+  },
+  "seller_fields": ["legal_name", "address", "city", "phone", "email", "rccm", "id_nat", "nif"],
+  "buyer_fields": ["name", "address", "city", "nif"],
+  "document_notices": {
+    "vat_registered": {
+      "fr": "Document de gestion — ne remplace pas la facture normalisée délivrée par le dispositif électronique fiscal (DEF).",
+      "en": "Management document — does not replace the standardised invoice issued by the electronic fiscal device (DEF)."
+    }
+  },
+  "fiscal_device": {
+    "required_when": "vat_registered",
+    "implemented": false,
+    "reference_fields": ["def_nid", "def_auth_code", "normalized_invoice_number"],
+    "note": "Nhill is not a homologated SFE and is not connected to a DEF. Users record the DEF reference manually for reconciliation."
+  },
+  "retention_years": 10,
+  "sources": [
+    {"title": "DGI — Réforme de la facture normalisée", "url": "https://dgi.gouv.cd/reforme-de-la-facture-normalisee/"},
+    {"title": "Ordonnance-loi n° 10/001 du 20 août 2010 (TVA), art. 35 et 58", "url": "https://www.leganet.be/Legislation/Dfiscal/TVA/OL.10.001.20.2010.htm"},
+    {"title": "Acte uniforme OHADA relatif au droit comptable (2017)", "url": "https://www.vie-publique.sn/documents/11026/acte-uniforme-droit-comptable-information-financiere-ohada-2017"}
+  ]
+}

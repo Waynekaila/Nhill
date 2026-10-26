@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Nhill POS
+GenericName=Point de vente
+GenericName[en]=Point of sale
+Comment=Caisse reliée à un établissement Nhill Business
+Comment[en]=Cash register linked to a Nhill Business establishment
+Exec=nhill-pos
+Icon=nhill-pos
+Categories=Office;Finance;
+Terminal=false
