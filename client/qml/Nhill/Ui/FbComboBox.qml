@@ -55,6 +55,7 @@ ComboBox {
     }
     popup: Popup {
         y: control.height + 2
+        margins: Theme.s2          // 2.0.0: the list stays inside the window
         width: control.width
         implicitHeight: Math.min(contentItem.implicitHeight + 2, 320)
         padding: 1

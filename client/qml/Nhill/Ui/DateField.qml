@@ -18,19 +18,20 @@ FbTextField {
     Popup {
         id: picker
         y: root.height + 4
+        margins: Theme.s2          // 2.0.0: kept inside the window (moved up near the bottom edge)
         padding: Theme.s3
         property date shown: root.value ? new Date(root.value + "T12:00:00") : new Date()
         background: Rectangle { color: Theme.surface; border.color: Theme.line; radius: Theme.radius }
         contentItem: ColumnLayout {
             RowLayout {
-                FbIconButton { iconName: "chevronLeft"; onClicked: picker.shown = new Date(picker.shown.getFullYear(), picker.shown.getMonth() - 1, 1) }
+                FbIconButton { iconName: "chevronLeft"; tip: qsTr("Previous month"); onClicked: picker.shown = new Date(picker.shown.getFullYear(), picker.shown.getMonth() - 1, 1) }
                 Text {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
                     text: grid.title
                     color: Theme.text; font.family: Theme.font; font.weight: Font.DemiBold
                 }
-                FbIconButton { iconName: "chevronRight"; onClicked: picker.shown = new Date(picker.shown.getFullYear(), picker.shown.getMonth() + 1, 1) }
+                FbIconButton { iconName: "chevronRight"; tip: qsTr("Next month"); onClicked: picker.shown = new Date(picker.shown.getFullYear(), picker.shown.getMonth() + 1, 1) }
             }
             DayOfWeekRow { locale: grid.locale; Layout.fillWidth: true
                 delegate: Text { text: shortName; color: Theme.textFaint; font.pixelSize: Theme.fs_xs; horizontalAlignment: Text.AlignHCenter } }

@@ -39,6 +39,7 @@ FbIconButton {
     Popup {
         id: pop
         y: root.height + 6
+        margins: Theme.s2
         x: Math.min(0, root.parent ? -(380 - root.width) : 0)
         width: Math.min(380, ApplicationWindow.window ? ApplicationWindow.window.width - 16 : 380)
         height: Math.min(460, list.contentHeight + 60)

@@ -1104,6 +1104,14 @@
         <source>Clear</source>
         <translation>Effacer</translation>
     </message>
+    <message>
+        <source>Previous month</source>
+        <translation>Mois précédent</translation>
+    </message>
+    <message>
+        <source>Next month</source>
+        <translation>Mois suivant</translation>
+    </message>
 </context>
 <context>
     <name>DocumentEditorPage</name>
