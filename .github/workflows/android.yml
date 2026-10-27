@@ -49,3 +49,27 @@ jobs:
           JOB_STATUS: ${{ job.status }}
           MATRIX_NAME: ''
         run: .github/scripts/publish-results.sh ci-results/android dist/android build/logs android-build-log.txt
+  keychain-emulator:
+    # « Se souvenir de moi » vérifié sur un vrai Android (émulateur x86_64, Keystore) avec
+    # fermeture et réouverture de l'application entre les étapes.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Test du Keystore sur émulateur
+        shell: bash
+        run: |
+          set -o pipefail
+          .github/scripts/android-keychain-emulator.sh 2>&1 | tee android-keychain-log.txt
+      - name: Publication des résultats (branche ci-results/android-keychain)
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/android-keychain android-keychain-log.txt android-keychain-logs

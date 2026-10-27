@@ -21,7 +21,16 @@ struct Config {
     std::string i18nDir;
     std::string fontDir;
     std::string migrationsDir;
-    std::string emailTransport = "log"; // "log" | "disabled"
+    std::string emailTransport = "log"; // "log" | "smtp" | "disabled"
+    // SMTP relay (NH_EMAIL_TRANSPORT=smtp). TLS is mandatory: smtps:// (implicit TLS) or
+    // smtp:// with STARTTLS required; NH_SMTP_TLS=off is accepted for a loopback relay only.
+    std::string smtpUrl;                // smtps://smtp.example.com:465 | smtp://smtp.example.com:587
+    std::string smtpUsername;
+    std::string smtpPassword;           // secret (NH_SMTP_PASSWORD or NH_SMTP_PASSWORD_FILE), never logged
+    std::string smtpFrom;               // "Nhill <no-reply@example.com>"
+    std::string smtpCaFile;             // optional CA bundle (default: system store)
+    bool smtpTls = true;
+    int smtpTimeoutSeconds = 20;
     crypto::Argon2Params argon2;
     int accessTokenMinutes = 15;
     int refreshTokenDays = 30;
@@ -33,6 +42,7 @@ struct Config {
     std::string dataKey;                // derived: secretbox for codes / TOTP secrets
     std::string fingerprintKey;         // derived: trial registry
     std::string providerKey;            // derived: secretbox for payment provider secrets
+    std::string resetKey;               // derived: HMAC of password-recovery codes
     std::string publicBaseUrl;          // public HTTPS address of this API (webhook URLs, payment return pages)
     std::map<std::string, std::string> webhookSecrets;  // provider -> secret
 

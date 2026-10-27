@@ -11,6 +11,8 @@
 #   QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 #   ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
 #   scripts/build-android.sh [--server-url URL] [--output DIR] [--force] [--dry-run]
+# QtKeychain (« Se souvenir de moi », Keystore Android) : KEYCHAIN_PREFIX=… construit par
+# packaging/android/build-qtkeychain-android.sh (obligatoire, ALLOW_NO_KEYCHAIN=1 pour s'en passer).
 # Signature de publication : KEYSTORE=… KEYSTORE_ALIAS=… KEYSTORE_PASS=… (sinon clé de
 # débogage : APK installable par adb, non publiable).
 # CI : .github/workflows/android.yml (installe SDK, NDK et Qt pour Android).
@@ -26,7 +28,7 @@ while [[ $# -gt 0 ]]; do
     --output|-o) OUT="${2:?}"; shift ;;
     --force) FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;
-    -h|--help) sed -n '2,19p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,21p' "$0"; exit 0 ;;
     *) die "option inconnue : $1" 2 ;;
   esac
   shift

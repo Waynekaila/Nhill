@@ -79,6 +79,7 @@ ApplicationWindow {
     Connections {
         target: Session
         function onExpired() { win.openLogin(qsTr("Your session has expired. Please sign in again.")) }
+        function onRememberFailed() { win.toast(qsTr("This device could not keep your session (system secure storage unavailable): you will sign in again at the next start."), "warning") }
     }
 
     // ---- documentation tour (NHILL_TOUR_DIR, NHILL_TOUR_EMAIL, NHILL_TOUR_PASSWORD)

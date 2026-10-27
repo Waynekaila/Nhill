@@ -279,8 +279,10 @@ void registerEstablishmentRoutes(App& app, Env& env) {
             }
             // Owner account: new user, or an existing user proving ownership with its password.
             std::string userId;
-            if (auto u = tx.opt("SELECT id, password_hash FROM users WHERE email = $1", ownerEmail)) {
+            if (auto u = tx.opt("SELECT id, password_hash, must_change_password FROM users WHERE email = $1", ownerEmail)) {
                 if (!crypto::verifyPassword(db::str((*u)[1]), password)) throw conflict("email_taken");
+                // A temporary password (given by an administrator) is replaced before any other use.
+                if (db::boolean((*u)[2])) throw conflict("password_change_required");
                 userId = db::str((*u)[0]);
             } else {
                 auto issue = v::checkPassword(password, ownerEmail);
@@ -448,9 +450,11 @@ void registerEstablishmentRoutes(App& app, Env& env) {
             if (!inv || !crypto::constantTimeEquals(db::str((*inv)[2]), crypto::sha256Hex(activation)))
                 return {{"_failed", true}};
             std::string userId;
-            if (auto u = tx.opt("SELECT id, password_hash FROM users WHERE email = $1", email)) {
+            if (auto u = tx.opt("SELECT id, password_hash, must_change_password FROM users WHERE email = $1", email)) {
                 // Existing account (member elsewhere): its own password proves identity.
                 if (!crypto::verifyPassword(db::str((*u)[1]), password)) return {{"_failed", true}};
+                // A temporary password (given by an administrator) is replaced before any other use.
+                if (db::boolean((*u)[2])) throw conflict("password_change_required");
                 userId = db::str((*u)[0]);
             } else {
                 std::string name = in::reqStr(b, "full_name", 120);

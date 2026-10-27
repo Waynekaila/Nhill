@@ -68,7 +68,7 @@ set_target_properties(nhill-business PROPERTIES
     QT_ANDROID_TARGET_SDK_VERSION 34
     QT_ANDROID_MIN_SDK_VERSION 24
     QT_ANDROID_VERSION_NAME ${PROJECT_VERSION}
-    QT_ANDROID_VERSION_CODE 20000)   # 2.0.0 — must increase with every Android release
+    QT_ANDROID_VERSION_CODE 20100)   # 2.1.0 — must increase with every Android release
 
 # Nhill Console — creators only (Windows, Linux; never built for Android)
 if(NOT ANDROID)

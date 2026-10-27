@@ -1,4 +1,8 @@
 // Team management: members, roles, invitations.
+#include <algorithm>
+#include <string_view>
+
+#include "nhill/validation.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
 
@@ -18,9 +22,70 @@ int seatLimit(db::Tx& tx, const std::string& est, const std::string& kind) {
     return 1000000;
 }
 
+// Temporary password: 12 characters without look-alikes (0/O, 1/l/I), shown as
+// xxxx-xxxx-xxxx (about 69 bits of entropy), always accepted by the password rule.
+std::string temporaryPassword(const std::string& email) {
+    static constexpr std::string_view alphabet = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    for (;;) {
+        std::string r = crypto::randomFromAlphabet(alphabet, 12);
+        std::string pw = r.substr(0, 4) + "-" + r.substr(4, 4) + "-" + r.substr(8, 4);
+        if (nhill::validation::checkPassword(pw, email) == nhill::validation::PasswordIssue::None) return pw;
+    }
+}
+
 }  // namespace
 
 void registerMemberRoutes(App& app, Env& env) {
+    // Forgotten password of a member: an owner / administrator gives a temporary password,
+    // shown once, to hand over in person or by phone. The member must replace it at the
+    // next sign-in; every session of the member is closed now. Rules: same establishment
+    // only, never the owner (e-mail recovery), administrators by the owner only, not
+    // oneself, and not an account also used in another establishment (its password is
+    // not this establishment's to change: e-mail recovery).
+    app.post("/api/v1/members/:id/password-reset", {Access::User, "users.manage"}, [&env](Ctx& ctx) {
+        std::string id = in::uuidParam(ctx.param("id"));
+        throttle(env.pool, "pwreset:admin:" + ctx.actor.userId, 10);
+        json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
+            auto m = tx.opt(
+                "SELECT m.user_id, m.role, m.status, u.status, u.email FROM memberships m JOIN users u ON u.id = m.user_id "
+                "WHERE m.id = $1 AND m.establishment_id = $2 FOR UPDATE OF m",
+                id, ctx.actor.establishmentId);
+            if (!m) throw notFound("member");
+            const std::string userId = db::str((*m)[0]), role = db::str((*m)[1]), email = db::str((*m)[4]);
+            if (userId == ctx.actor.userId) throw forbidden("cannot_modify_self");
+            if (role == "owner") throw forbidden("owner_immutable");
+            if (role == "admin" && ctx.actor.role != "owner") throw forbidden("owner_required");
+            if (db::str((*m)[2]) != "active" || db::str((*m)[3]) != "active")
+                throw conflict("member_disabled", "re-enable the access first");
+            int elsewhere = tx.one(
+                "SELECT count(*) FROM memberships m JOIN establishments e ON e.id = m.establishment_id "
+                "WHERE m.user_id = $1 AND m.establishment_id <> $2 AND m.status = 'active' AND e.status <> 'closed'",
+                userId, ctx.actor.establishmentId)[0].as<int>();
+            if (elsewhere > 0)
+                throw conflict("account_shared", "this account is also used in another establishment: e-mail recovery");
+            const std::string temporary = temporaryPassword(email);
+            const int hours = std::clamp(setting(tx, "temporary_password_hours", 72), 1, 168);
+            auto r = tx.one(
+                "UPDATE users SET password_hash = $2, password_changed_at = now(), must_change_password = true, "
+                "temporary_password_expires_at = now() + make_interval(hours => $3) WHERE id = $1 "
+                "RETURNING nh_iso(temporary_password_expires_at)",
+                userId, crypto::hashPassword(temporary, env.cfg.argon2), hours);
+            tx.q("UPDATE password_resets SET revoked_at = now() WHERE user_id = $1 AND used_at IS NULL AND revoked_at IS NULL",
+                 userId);
+            tx.q("UPDATE sessions SET revoked_at = now(), revoke_reason = 'password_reset_by_admin' "
+                 "WHERE user_id = $1 AND revoked_at IS NULL",
+                 userId);
+            // Never the password itself in the history, the e-mail or the logs.
+            audit(tx, ctx.actor, "member.password_reset", "membership", id, {{"email", email}});
+            emailUser(tx, userId, "password_reset_by_admin",
+                      {{"establishment", db::str(tx.one("SELECT trade_name FROM establishments WHERE id = $1",
+                                                        ctx.actor.establishmentId)[0])}});
+            return {{"temporary_password", temporary}, {"expires_at", db::str(r[0])}, {"must_change_password", true}};
+        });
+        jobs::kickEmails();
+        ctx.json(200, out);
+    });
+
     app.get("/api/v1/members", {Access::User, "users.manage"}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             json members = json::array();

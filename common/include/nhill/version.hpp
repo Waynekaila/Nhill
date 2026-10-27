@@ -5,9 +5,9 @@
 namespace nhill {
 
 inline constexpr const char* kProductName = "Nhill";
-inline constexpr const char* kProductVersion = "2.0.0";
+inline constexpr const char* kProductVersion = "2.1.0";
 inline constexpr const char* kApiVersion = "v1";
-// Oldest client version the server accepts (semantic version). 2.0.0 keeps API v1
+// Oldest client version the server accepts (semantic version). 2.x keeps API v1
 // unchanged, so 0.1.x clients stay accepted (see docs/fr/changelog.md).
 inline constexpr const char* kMinClientVersion = "0.1.0";
 

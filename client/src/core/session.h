@@ -5,6 +5,7 @@
 
 #include <QJSValue>
 #include <QObject>
+#include <functional>
 #include <QStringList>
 #include <QVariantMap>
 
@@ -25,6 +26,10 @@ class Session : public QObject {
     Q_PROPERTY(bool writeAllowed READ writeAllowed NOTIFY changed)
     Q_PROPERTY(QString currency READ currency NOTIFY changed)
     Q_PROPERTY(bool persistent READ persistent NOTIFY changed)
+    // "Remember me": the refresh token is kept in the OS credential store only when true.
+    Q_PROPERTY(bool remember READ remember WRITE setRemember NOTIFY rememberChanged)
+    // False when this build has no secure store at all (the option is then unavailable).
+    Q_PROPERTY(bool rememberSupported READ rememberSupported CONSTANT)
 
 public:
     Session(ApiClient* api, SecureStore* store, QObject* parent = nullptr);
@@ -38,43 +43,57 @@ public:
     bool writeAllowed() const { return subscription().value(QStringLiteral("write_allowed")).toBool(); }
     QString currency() const { return establishment().value(QStringLiteral("main_currency")).toString(); }
     bool persistent() const;
+    bool remember() const { return m_remember; }
+    void setRemember(bool on);
+    bool rememberSupported() const;
 
     Q_INVOKABLE bool can(const QString& permission) const;
     // Accepts the "session" object returned by login / creation / join endpoints.
     Q_INVOKABLE void start(const QVariantMap& session, const QJSValue& done = QJSValue());
     Q_INVOKABLE void reload(const QJSValue& done = QJSValue());
-    // Tries to resume with the refresh token kept in the OS keychain.
+    // Tries to resume with the refresh token kept in the OS keychain ("remember me").
     Q_INVOKABLE void restore(const QJSValue& done);
     Q_INVOKABLE void logout();
 
 signals:
     void changed();
     void expired();
+    void rememberChanged();
+    // The secure store refused to keep the session (e.g. no keyring service on Linux).
+    void rememberFailed();
 
 private:
     void setMe(const QVariantMap& me);
     void persist(const QString& refresh);
     void callJs(const QJSValue& cb, bool ok);
+    void forget();
     ApiClient* m_api;
     SecureStore* m_store;
     bool m_loggedIn = false;
+    bool m_remember = false;
     QVariantMap m_me;
 };
 
-// OS credential store (Secret Service / Windows Credential Manager / Android
-// Keystore via QtKeychain). When unavailable, nothing is persisted: the
-// refresh token is never written in clear text.
+// OS credential store through QtKeychain: Windows Credential Manager (DPAPI-protected,
+// per user), Android Keystore (key never leaves the Keystore; the token is stored
+// encrypted with it), Secret Service / KWallet on Linux. When unavailable, nothing is
+// persisted: the refresh token is never written in clear text.
 class SecureStore : public QObject {
     Q_OBJECT
 public:
-    explicit SecureStore(QObject* parent = nullptr) : QObject(parent) {}
+    explicit SecureStore(QObject* parent = nullptr, const QString& service = QStringLiteral("Nhill"))
+        : QObject(parent), m_service(service) {}
     void write(const QString& key, const QString& value, std::function<void(bool)> done);
     void read(const QString& key, std::function<void(bool, QString)> done);
-    void remove(const QString& key);
+    void remove(const QString& key, std::function<void(bool)> done = {});
     bool available() const { return m_available; }
+    static bool supported();
+    QString lastError() const { return m_lastError; }
 
 private:
+    QString m_service;
     bool m_available = true;
+    QString m_lastError;
 };
 
 }  // namespace nhc

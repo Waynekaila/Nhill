@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(nhill VERSION 2.0.0 LANGUAGES CXX)
+project(nhill VERSION 2.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,6 +11,8 @@ option(NHILL_BUILD_SERVER "Build the backend (Linux)" ${UNIX})
 option(NHILL_BUILD_CLIENT "Build the Qt client and admin console" ON)
 option(NHILL_BUILD_TESTS  "Build tests" ON)
 option(NHILL_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+# Only the "remember me" test against the platform credential store (Windows / Android CI).
+option(NHILL_BUILD_KEYCHAIN_TEST "Build the OS credential store test (tests/keychain)" OFF)
 
 if(ANDROID)
     set(NHILL_BUILD_SERVER OFF)
@@ -43,6 +45,11 @@ endif()
 
 if(NHILL_BUILD_TESTS)
     add_subdirectory(tests)
+elseif(NHILL_BUILD_KEYCHAIN_TEST AND NHILL_BUILD_CLIENT)
+    if(NOT ANDROID)
+        enable_testing()
+    endif()
+    add_subdirectory(tests/keychain)
 endif()
 
 include(cmake/NhillPackaging.cmake)

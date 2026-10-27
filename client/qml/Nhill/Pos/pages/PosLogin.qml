@@ -18,12 +18,20 @@ Rectangle {
         Api.send("POST", "/api/v1/auth/login", body, function(r) {
             root.busy = false
             if (!r.ok) { PosNav.fail(r); return }
-            if (r.data.choose_establishment) { root.choices = r.data.choose_establishment; return }
-            Session.start(r.data, function(ok) {
-                if (!ok) return
-                password.text = ""
-                PosNav.window.loadConfig(function() { PosNav.session ? PosNav.window.openSale() : PosNav.window.openHome() })
-            })
+            if (r.data.password_change_required) {
+                changeRequired.start(r.data.change_token, email.text.trim(), establishmentId || "")
+                return
+            }
+            root.signedIn(r.data)
+        })
+    }
+    function signedIn(data) {
+        if (data.choose_establishment) { root.choices = data.choose_establishment; return }
+        password.text = ""
+        Session.remember = remember.checked
+        Session.start(data, function(ok) {
+            if (!ok) return
+            PosNav.window.loadConfig(function() { PosNav.session ? PosNav.window.openSale() : PosNav.window.openHome() })
         })
     }
     ColumnLayout {
@@ -40,7 +48,9 @@ Rectangle {
                 Banner { Layout.fillWidth: true; visible: root.notice.length > 0; text: root.notice; tone: "warning" }
                 Field { label: qsTr("E-mail"); FbTextField { id: email; focus: true; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase; onAccepted: password.forceActiveFocus() } }
                 Field { label: qsTr("Password"); FbTextField { id: password; echoMode: TextInput.Password; onAccepted: if (email.text.length > 0 && password.text.length > 0) root.submit() } }
+                RememberMeSwitch { id: remember }
                 FbButton { Layout.fillWidth: true; text: qsTr("Sign in"); busy: root.busy; enabled: email.text.length > 0 && password.text.length > 0; onClicked: root.submit() }
+                FbButton { Layout.alignment: Qt.AlignHCenter; text: qsTr("Forgot your password?"); variant: "ghost"; onClicked: recovery.start(email.text.trim()) }
                 Repeater {
                     model: root.choices
                     delegate: FbButton { Layout.fillWidth: true; variant: "secondary"; text: modelData.name + " · " + Labels.role(modelData.role); onClicked: root.submit(modelData.id) }
@@ -57,5 +67,13 @@ Rectangle {
         Field { label: qsTr("Server address"); FbTextField { id: serverField; text: Prefs.serverUrl; monospace: true } }
         footer: [ FbButton { text: qsTr("Save"); onClicked: { Prefs.serverUrl = serverField.text.trim(); serverDialog.close() } },
                   FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() } ]
+    }
+    PasswordRecoveryDialog {
+        id: recovery
+        onFinished: function(address) { email.text = address; password.text = ""; password.forceActiveFocus() }
+    }
+    PasswordChangeRequiredDialog {
+        id: changeRequired
+        onCompleted: function(data) { root.signedIn(data) }
     }
 }

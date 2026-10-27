@@ -285,7 +285,12 @@ void notify(db::Tx& tx, const std::string& establishmentId, const std::optional<
          establishmentId, userId, kind, params.dump());
 }
 
-void emailManagers(db::Tx& tx, const std::string& establishmentId, const std::string& tmpl, const json& params) {
+void emailManagers(db::Tx& tx, const std::string& establishmentId, const std::string& tmpl, const json& extra) {
+    json params = extra;
+    if (!params.contains("establishment")) {
+        auto e = tx.opt("SELECT trade_name FROM establishments WHERE id = $1", establishmentId);
+        if (e) params["establishment"] = db::str((*e)[0]);
+    }
     auto r = tx.q(
         "SELECT u.email, u.preferred_language FROM memberships m JOIN users u ON u.id = m.user_id "
         "WHERE m.establishment_id = $1 AND m.status = 'active' AND u.status = 'active' AND m.role IN ('owner','admin')",
@@ -294,6 +299,12 @@ void emailManagers(db::Tx& tx, const std::string& establishmentId, const std::st
         tx.q("INSERT INTO email_outbox (to_address, template, language, params) VALUES ($1, $2, $3, $4::jsonb)",
              db::str(row[0]), tmpl, db::str(row[1]), params.dump());
     }
+}
+
+void emailUser(db::Tx& tx, const std::string& userId, const std::string& tmpl, const json& params) {
+    tx.q("INSERT INTO email_outbox (to_address, template, language, params) "
+         "SELECT email, $2, preferred_language, $3::jsonb FROM users WHERE id = $1 AND status = 'active'",
+         userId, tmpl, params.dump());
 }
 
 Result idempotent(db::Tx& tx, Ctx& ctx, const std::function<Result()>& fn) {

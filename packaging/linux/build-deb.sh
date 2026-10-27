@@ -212,6 +212,7 @@ cmake_grep() { grep -hoE "$1" "${CMAKE_FILES[@]}" 2>/dev/null || true; }
 # scripts/build-linux.sh et docs/installation.md (vérifiés ensuite dans apt).
 declare -A PKGCONFIG_MAP=(
     [libpqxx]=libpqxx-dev [libsodium]=libsodium-dev [libpng]=libpng-dev [cpp-httplib]=libcpp-httplib-dev
+    [libcurl]=libcurl4-openssl-dev
 )
 declare -A FINDPKG_MAP=(
     [OpenSSL]=libssl-dev [nlohmann_json]=nlohmann-json3-dev [Threads]="" [PkgConfig]=pkgconf

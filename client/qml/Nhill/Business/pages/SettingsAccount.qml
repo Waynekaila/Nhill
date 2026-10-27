@@ -77,5 +77,24 @@ ColumnLayout {
             }
         }
     }
+    FbCard {
+        Layout.fillWidth: true
+        ColumnLayout {
+            width: parent.width
+            spacing: Theme.s3
+            SectionTitle { text: qsTr("This device") }
+            FbSwitch {
+                Layout.fillWidth: true
+                text: qsTr("Remember me on this device")
+                enabled: Session.rememberSupported
+                checked: Session.rememberSupported && Session.remember
+                onToggled: Session.remember = checked
+            }
+            Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                   text: !Session.rememberSupported ? qsTr("Not available on this device: the session is never stored without the system's secure storage.")
+                         : Session.remember && !Session.persistent ? qsTr("The system's secure storage refused to keep the session: you will sign in again at the next start.")
+                         : qsTr("When on, Nhill reopens signed in, using a token kept in the system's secure storage (never your password). Turn it off on a shared device.") }
+        }
+    }
     FbButton { text: qsTr("Sign out"); iconName: "logout"; variant: "secondary"; onClicked: { Session.logout(); Nav.window.openWelcome() } }
 }

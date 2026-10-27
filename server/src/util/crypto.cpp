@@ -28,6 +28,14 @@ std::string randomDigits(int digits) {
     return out;
 }
 
+std::string randomFromAlphabet(std::string_view alphabet, size_t n) {
+    std::string out;
+    out.reserve(n);
+    for (size_t i = 0; i < n; ++i)
+        out.push_back(alphabet[randombytes_uniform(static_cast<uint32_t>(alphabet.size()))]);
+    return out;
+}
+
 std::string toHex(std::string_view bytes) {
     std::string out(bytes.size() * 2 + 1, '\0');
     sodium_bin2hex(out.data(), out.size(), reinterpret_cast<const unsigned char*>(bytes.data()), bytes.size());

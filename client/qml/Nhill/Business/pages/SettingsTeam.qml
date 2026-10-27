@@ -100,7 +100,50 @@ ColumnLayout {
             FbButton { text: qsTr("Save"); onClicked: Api.send("PATCH", "/api/v1/members/" + member.m.id, { role: memberRole.value }, function(r) { if (r.ok) { member.close(); root.load() } else Nav.fail(r) }) },
             FbButton { text: member.m && member.m.status === "active" ? qsTr("Disable access") : qsTr("Re-enable access"); variant: "secondary"
                        onClicked: Api.send("PATCH", "/api/v1/members/" + member.m.id, { status: member.m.status === "active" ? "disabled" : "active" }, function(r) { if (r.ok) { member.close(); root.load() } else Nav.fail(r) }) },
+            FbButton { visible: !!member.m && member.m.status === "active" && (member.m.role !== "admin" || Session.role === "owner")
+                       text: qsTr("Reset the password"); variant: "secondary"; iconName: "key"
+                       onClicked: { var x = member.m; member.close(); reset.ask(x) } },
             FbButton { text: qsTr("Cancel"); variant: "ghost"; onClicked: member.close() }
+        ]
+    }
+    // Forgotten password of a member: a temporary password shown once, to hand over in
+    // person or by phone; the member chooses their own at the next sign-in.
+    FbDialog {
+        id: reset
+        property var m: null
+        property var result: null
+        property bool busy: false
+        title: result ? qsTr("Temporary password") : qsTr("Reset the password")
+        subtitle: m ? m.full_name + " · " + m.email : ""
+        function ask(x) { m = x; result = null; busy = false; open() }
+        ColumnLayout {
+            Layout.fillWidth: true
+            visible: !reset.result
+            spacing: Theme.s3
+            Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.text; font.family: Theme.font
+                   text: qsTr("Nhill creates a temporary password for this person. Their open sessions are closed now, and they will choose their own password at the next sign-in.") }
+            Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                   text: qsTr("Make sure it is really them who asked (in person or by phone on their usual number).") }
+        }
+        ColumnLayout {
+            Layout.fillWidth: true
+            visible: !!reset.result
+            spacing: Theme.s3
+            Banner { Layout.fillWidth: true; tone: "warning"
+                     text: qsTr("Shown only once. Give it in person or by phone — not by e-mail or in a group chat. Nhill keeps no readable copy.") }
+            Text { Layout.alignment: Qt.AlignHCenter; font.family: Theme.mono; font.pixelSize: 28; font.weight: Font.DemiBold; color: Theme.text
+                   text: reset.result ? reset.result.temporary_password : "" }
+            Text { Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font
+                   text: reset.result ? qsTr("Valid until %1. At the next sign-in, %2 must choose a new password of at least 8 characters.").arg(Fmt.dateTime(reset.result.expires_at)).arg(reset.m ? reset.m.full_name : "") : "" }
+        }
+        footer: [
+            FbButton { visible: !reset.result; text: qsTr("Create a temporary password"); busy: reset.busy
+                       onClicked: { reset.busy = true
+                           Api.send("POST", "/api/v1/members/" + reset.m.id + "/password-reset", {}, function(r) {
+                               reset.busy = false
+                               if (r.ok) { reset.result = r.data; root.load() } else { reset.close(); Nav.fail(r) } }) } },
+            FbButton { visible: !!reset.result; text: qsTr("Copy"); iconName: "copy"; variant: "secondary"; onClicked: Tools.copyText(reset.result.temporary_password) },
+            FbButton { text: reset.result ? qsTr("Done") : qsTr("Cancel"); variant: reset.result ? "primary" : "secondary"; onClicked: { reset.result = null; reset.close() } }
         ]
     }
 }

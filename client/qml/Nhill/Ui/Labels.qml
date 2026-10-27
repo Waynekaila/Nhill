@@ -185,6 +185,7 @@ QtObject {
         case "password_too_common": return qsTr("Too common.")
         case "password_same_as_email": return qsTr("Must differ from the e-mail.")
         case "password_repetitive": return qsTr("Too repetitive.")
+        case "password_reused": return qsTr("Must differ from the temporary password.")
         }
         return ""
     }

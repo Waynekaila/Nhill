@@ -2310,6 +2310,10 @@
         <source>Activate my access</source>
         <translation>Activer mon accès</translation>
     </message>
+    <message>
+        <source>Password changed. Sign in to choose your business.</source>
+        <translation>Mot de passe modifié. Connectez-vous pour choisir votre entreprise.</translation>
+    </message>
 </context>
 <context>
     <name>Labels</name>
@@ -2901,6 +2905,10 @@
         <source>Help requests</source>
         <translation>Demandes d&apos;assistance</translation>
     </message>
+    <message>
+        <source>Must differ from the temporary password.</source>
+        <translation>Doit différer du mot de passe temporaire.</translation>
+    </message>
 </context>
 <context>
     <name>LoginPage</name>
@@ -2928,6 +2936,10 @@
         <source>Enter a valid e-mail address (for example name@company.cd).</source>
         <translation>Saisissez une adresse e-mail valide (par exemple nom@entreprise.cd).</translation>
     </message>
+    <message>
+        <source>Forgot your password?</source>
+        <translation>Mot de passe oublié ?</translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -2938,6 +2950,10 @@
     <message>
         <source>This version of Nhill (%1) is no longer supported. Please install version %2 or later.</source>
         <translation>Cette version de Nhill (%1) n'est plus prise en charge. Veuillez installer la version %2 ou une version ultérieure.</translation>
+    </message>
+    <message>
+        <source>This device could not keep your session (system secure storage unavailable): you will sign in again at the next start.</source>
+        <translation>Cet appareil n&apos;a pas pu mémoriser votre session (stockage sécurisé du système indisponible) : vous devrez vous reconnecter au prochain démarrage.</translation>
     </message>
 </context>
 <context>
@@ -4079,6 +4095,10 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Forgot your password?</source>
+        <translation>Mot de passe oublié ?</translation>
+    </message>
 </context>
 <context>
     <name>PosMain</name>
@@ -4089,6 +4109,10 @@
     <message>
         <source>Your session has expired. Please sign in again.</source>
         <translation>Votre session a expiré. Veuillez vous reconnecter.</translation>
+    </message>
+    <message>
+        <source>This device could not keep your session (system secure storage unavailable): you will sign in again at the next start.</source>
+        <translation>Cet appareil n&apos;a pas pu mémoriser votre session (stockage sécurisé du système indisponible) : vous devrez vous reconnecter au prochain démarrage.</translation>
     </message>
 </context>
 <context>
@@ -5591,6 +5615,26 @@
         <source>Sign out</source>
         <translation>Se déconnecter</translation>
     </message>
+    <message>
+        <source>This device</source>
+        <translation>Cet appareil</translation>
+    </message>
+    <message>
+        <source>Remember me on this device</source>
+        <translation>Se souvenir de moi sur cet appareil</translation>
+    </message>
+    <message>
+        <source>Not available on this device: the session is never stored without the system&apos;s secure storage.</source>
+        <translation>Indisponible sur cet appareil : la session n&apos;est jamais conservée sans le stockage sécurisé du système.</translation>
+    </message>
+    <message>
+        <source>The system&apos;s secure storage refused to keep the session: you will sign in again at the next start.</source>
+        <translation>Le stockage sécurisé du système a refusé de conserver la session : vous devrez vous reconnecter au prochain démarrage.</translation>
+    </message>
+    <message>
+        <source>When on, Nhill reopens signed in, using a token kept in the system&apos;s secure storage (never your password). Turn it off on a shared device.</source>
+        <translation>Activé, Nhill se rouvre connecté grâce à un jeton conservé dans le stockage sécurisé du système (jamais votre mot de passe). Désactivez-le sur un appareil partagé.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCode</name>
@@ -6743,6 +6787,38 @@
     <message>
         <source>Re-enable access</source>
         <translation>Réactiver l'accès</translation>
+    </message>
+    <message>
+        <source>Reset the password</source>
+        <translation>Réinitialiser le mot de passe</translation>
+    </message>
+    <message>
+        <source>Temporary password</source>
+        <translation>Mot de passe temporaire</translation>
+    </message>
+    <message>
+        <source>Nhill creates a temporary password for this person. Their open sessions are closed now, and they will choose their own password at the next sign-in.</source>
+        <translation>Nhill crée un mot de passe temporaire pour cette personne. Ses sessions ouvertes sont fermées immédiatement et elle choisira son propre mot de passe à la prochaine connexion.</translation>
+    </message>
+    <message>
+        <source>Make sure it is really them who asked (in person or by phone on their usual number).</source>
+        <translation>Assurez-vous que c&apos;est bien elle qui le demande (en personne ou par téléphone, à son numéro habituel).</translation>
+    </message>
+    <message>
+        <source>Shown only once. Give it in person or by phone — not by e-mail or in a group chat. Nhill keeps no readable copy.</source>
+        <translation>Affiché une seule fois. Remettez-le en personne ou par téléphone — pas par e-mail ni dans un groupe de discussion. Nhill n&apos;en garde aucune copie lisible.</translation>
+    </message>
+    <message>
+        <source>Valid until %1. At the next sign-in, %2 must choose a new password of at least 8 characters.</source>
+        <translation>Valable jusqu&apos;au %1. À la prochaine connexion, %2 devra choisir un nouveau mot de passe d&apos;au moins 8 caractères.</translation>
+    </message>
+    <message>
+        <source>Create a temporary password</source>
+        <translation>Créer un mot de passe temporaire</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copier</translation>
     </message>
 </context>
 <context>
@@ -7909,6 +7985,34 @@
         <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
         <translation>Saisissez les espèces comptées dans le tiroir (0 si le tiroir est vide).</translation>
     </message>
+    <message>
+        <source>Incorrect or expired code. Use the code of the last e-mail received, or ask for a new one.</source>
+        <translation>Code incorrect ou expiré. Utilisez le code du dernier e-mail reçu, ou demandez-en un nouveau.</translation>
+    </message>
+    <message>
+        <source>This step has expired. Sign in again with the temporary password.</source>
+        <translation>Cette étape a expiré. Reconnectez-vous avec le mot de passe temporaire.</translation>
+    </message>
+    <message>
+        <source>This temporary password has expired. Ask your administrator for a new one.</source>
+        <translation>Ce mot de passe temporaire a expiré. Demandez-en un nouveau à votre administrateur.</translation>
+    </message>
+    <message>
+        <source>Choose your own password first: sign in with the temporary password given by your administrator.</source>
+        <translation>Choisissez d&apos;abord votre propre mot de passe : connectez-vous avec le mot de passe temporaire remis par votre administrateur.</translation>
+    </message>
+    <message>
+        <source>This account is also used in another business: the person resets it with &quot;Forgot your password?&quot; on the sign-in screen.</source>
+        <translation>Ce compte est aussi utilisé dans une autre entreprise : la personne le réinitialise avec « Mot de passe oublié ? » sur l&apos;écran de connexion.</translation>
+    </message>
+    <message>
+        <source>Re-enable this person&apos;s access first.</source>
+        <translation>Réactivez d&apos;abord l&apos;accès de cette personne.</translation>
+    </message>
+    <message>
+        <source>Choose a password different from the temporary one.</source>
+        <translation>Choisissez un mot de passe différent du mot de passe temporaire.</translation>
+    </message>
 </context>
 <context>
     <name>FbTextField</name>
@@ -7919,6 +8023,139 @@
     <message>
         <source>Show password</source>
         <translation>Afficher le mot de passe</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordRecoveryDialog</name>
+    <message>
+        <source>Forgot your password?</source>
+        <translation>Mot de passe oublié ?</translation>
+    </message>
+    <message>
+        <source>Enter a valid e-mail address (for example name@company.cd).</source>
+        <translation>Saisissez une adresse e-mail valide (par exemple nom@entreprise.cd).</translation>
+    </message>
+    <message>
+        <source>The code has 8 digits (for example 1234-5678).</source>
+        <translation>Le code comporte 8 chiffres (par exemple 1234-5678).</translation>
+    </message>
+    <message>
+        <source>The two passwords differ.</source>
+        <translation>Les deux mots de passe sont différents.</translation>
+    </message>
+    <message>
+        <source>You work in a business that uses Nhill</source>
+        <translation>Vous travaillez dans une entreprise qui utilise Nhill</translation>
+    </message>
+    <message>
+        <source>Ask the owner or an administrator of your business. In Nhill Business (Settings › Team) they give you a temporary password; you choose your own when you sign in.</source>
+        <translation>Adressez-vous au propriétaire ou à un administrateur de votre entreprise. Dans Nhill Business (Paramètres › Équipe), il vous attribue un mot de passe temporaire ; vous choisirez le vôtre à la connexion.</translation>
+    </message>
+    <message>
+        <source>You are the owner or an administrator</source>
+        <translation>Vous êtes le propriétaire ou un administrateur</translation>
+    </message>
+    <message>
+        <source>Enter the e-mail address of your account: we send it a one-time code, valid for a few minutes.</source>
+        <translation>Saisissez l&apos;adresse e-mail de votre compte : nous y envoyons un code à usage unique, valable quelques minutes.</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation>E-mail</translation>
+    </message>
+    <message>
+        <source>If an account uses %1, an e-mail has just been sent to it: a code for owners and administrators, otherwise the person to contact. Check the spam folder too.</source>
+        <translation>Si un compte utilise %1, un e-mail vient d&apos;y être envoyé : un code pour les propriétaires et administrateurs, sinon la personne à contacter. Pensez à vérifier les courriers indésirables.</translation>
+    </message>
+    <message>
+        <source>Code received by e-mail</source>
+        <translation>Code reçu par e-mail</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation>Nouveau mot de passe</translation>
+    </message>
+    <message>
+        <source>At least 8 characters. A short sentence is easy to remember.</source>
+        <translation>Au moins 8 caractères. Une courte phrase se retient facilement.</translation>
+    </message>
+    <message>
+        <source>Confirm the new password</source>
+        <translation>Confirmez le nouveau mot de passe</translation>
+    </message>
+    <message>
+        <source>Password changed. For your security, every open session of this account was closed. Sign in with your new password.</source>
+        <translation>Mot de passe modifié. Par sécurité, toutes les sessions ouvertes de ce compte ont été fermées. Connectez-vous avec votre nouveau mot de passe.</translation>
+    </message>
+    <message>
+        <source>Send the code</source>
+        <translation>Envoyer le code</translation>
+    </message>
+    <message>
+        <source>Change the password</source>
+        <translation>Changer le mot de passe</translation>
+    </message>
+    <message>
+        <source>Send a new code</source>
+        <translation>Recevoir un nouveau code</translation>
+    </message>
+    <message>
+        <source>Sign in</source>
+        <translation>Se connecter</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordChangeRequiredDialog</name>
+    <message>
+        <source>Choose your password</source>
+        <translation>Choisissez votre mot de passe</translation>
+    </message>
+    <message>
+        <source>You signed in with a temporary password given by your administrator. Choose your own password to continue.</source>
+        <translation>Vous vous êtes connecté avec un mot de passe temporaire remis par votre administrateur. Choisissez votre propre mot de passe pour continuer.</translation>
+    </message>
+    <message>
+        <source>The two passwords differ.</source>
+        <translation>Les deux mots de passe sont différents.</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation>Nouveau mot de passe</translation>
+    </message>
+    <message>
+        <source>At least 8 characters, different from the temporary password.</source>
+        <translation>Au moins 8 caractères, différent du mot de passe temporaire.</translation>
+    </message>
+    <message>
+        <source>Confirm the new password</source>
+        <translation>Confirmez le nouveau mot de passe</translation>
+    </message>
+    <message>
+        <source>Save and continue</source>
+        <translation>Enregistrer et continuer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>RememberMeSwitch</name>
+    <message>
+        <source>Remember me on this device</source>
+        <translation>Se souvenir de moi sur cet appareil</translation>
+    </message>
+    <message>
+        <source>Only on a device you do not share. Signing out forgets the session.</source>
+        <translation>Uniquement sur un appareil que vous ne partagez pas. La déconnexion efface la session mémorisée.</translation>
+    </message>
+    <message>
+        <source>Not available on this device: the session is never stored without the system&apos;s secure storage.</source>
+        <translation>Indisponible sur cet appareil : la session n&apos;est jamais conservée sans le stockage sécurisé du système.</translation>
     </message>
 </context>
 </TS>

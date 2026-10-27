@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
             auto s = nh::jobs::runAll(env);
             std::cout << "codes rotated: " << s.codesRotated << " (failures " << s.codeRotationFailures << "), reminders: "
                       << s.remindersSent << ", grace: " << s.enteredGrace << ", suspended: " << s.suspended
-                      << ", emails: " << s.emailsSent << "\n";
+                      << ", emails: " << s.emailsSent << " (failures " << s.emailFailures << ")\n";
             return s.codeRotationFailures > 0 ? 1 : 0;
         }
         if (cmd == "admin-bootstrap") {
@@ -198,12 +198,19 @@ int main(int argc, char** argv) {
                 }
             });
         }
+        // E-mails are sent by their own worker, right after they are queued (recovery codes).
+        std::thread mailer([&] { nh::jobs::runEmailWorker(env); });
+        if (cfg.emailTransport != "smtp")
+            nh::log::info("e-mail transport '" + cfg.emailTransport +
+                          "': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp");
         nh::log::info(std::string("Nhill server ") + nhill::kProductVersion + " listening on " + cfg.listenAddress +
                       ":" + std::to_string(cfg.listenPort));
         bool ok = app.listen(cfg.listenAddress, cfg.listenPort);
         gStop = true;
         gStopCv.notify_all();
+        nh::jobs::stopEmailWorker();
         if (scheduler.joinable()) scheduler.join();
+        if (mailer.joinable()) mailer.join();
         if (!ok && !gStop) throw std::runtime_error("cannot listen on the configured address");
         return 0;
     } catch (const std::exception& e) {

@@ -2303,6 +2303,10 @@
         <source>Activate my access</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Password changed. Sign in to choose your business.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Labels</name>
@@ -2890,6 +2894,10 @@
         <source>Help requests</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Must differ from the temporary password.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginPage</name>
@@ -2917,6 +2925,10 @@
         <source>Enter a valid e-mail address (for example name@company.cd).</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Forgot your password?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Main</name>
@@ -2926,6 +2938,10 @@
     </message>
     <message>
         <source>This version of Nhill (%1) is no longer supported. Please install version %2 or later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This device could not keep your session (system secure storage unavailable): you will sign in again at the next start.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4036,6 +4052,10 @@
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Forgot your password?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PosMain</name>
@@ -4045,6 +4065,10 @@
     </message>
     <message>
         <source>Your session has expired. Please sign in again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This device could not keep your session (system secure storage unavailable): you will sign in again at the next start.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5548,6 +5572,26 @@
         <source>Sign out</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remember me on this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not available on this device: the session is never stored without the system&apos;s secure storage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The system&apos;s secure storage refused to keep the session: you will sign in again at the next start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When on, Nhill reopens signed in, using a token kept in the system&apos;s secure storage (never your password). Turn it off on a shared device.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCode</name>
@@ -6639,6 +6683,38 @@
     </message>
     <message>
         <source>Re-enable access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset the password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Temporary password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nhill creates a temporary password for this person. Their open sessions are closed now, and they will choose their own password at the next sign-in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make sure it is really them who asked (in person or by phone on their usual number).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shown only once. Give it in person or by phone — not by e-mail or in a group chat. Nhill keeps no readable copy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid until %1. At the next sign-in, %2 must choose a new password of at least 8 characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a temporary password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7806,6 +7882,34 @@
         <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Incorrect or expired code. Use the code of the last e-mail received, or ask for a new one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This step has expired. Sign in again with the temporary password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This temporary password has expired. Ask your administrator for a new one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose your own password first: sign in with the temporary password given by your administrator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This account is also used in another business: the person resets it with &quot;Forgot your password?&quot; on the sign-in screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re-enable this person&apos;s access first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a password different from the temporary one.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FbTextField</name>
@@ -7815,6 +7919,139 @@
     </message>
     <message>
         <source>Show password</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PasswordRecoveryDialog</name>
+    <message>
+        <source>Forgot your password?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a valid e-mail address (for example name@company.cd).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The code has 8 digits (for example 1234-5678).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The two passwords differ.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You work in a business that uses Nhill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ask the owner or an administrator of your business. In Nhill Business (Settings › Team) they give you a temporary password; you choose your own when you sign in.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are the owner or an administrator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the e-mail address of your account: we send it a one-time code, valid for a few minutes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If an account uses %1, an e-mail has just been sent to it: a code for owners and administrators, otherwise the person to contact. Check the spam folder too.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code received by e-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least 8 characters. A short sentence is easy to remember.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm the new password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password changed. For your security, every open session of this account was closed. Sign in with your new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send the code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send a new code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sign in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PasswordChangeRequiredDialog</name>
+    <message>
+        <source>Choose your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You signed in with a temporary password given by your administrator. Choose your own password to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The two passwords differ.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At least 8 characters, different from the temporary password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm the new password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save and continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RememberMeSwitch</name>
+    <message>
+        <source>Remember me on this device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only on a device you do not share. Signing out forgets the session.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not available on this device: the session is never stored without the system&apos;s secure storage.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

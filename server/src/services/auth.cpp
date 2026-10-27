@@ -1,4 +1,5 @@
 // User authentication, sessions (access + refresh tokens) and profile.
+#include <algorithm>
 #include <mutex>
 
 #include "nhill/validation.hpp"
@@ -19,6 +20,30 @@ const std::string& dummyHash(Env& env) {
     static std::string h;
     std::call_once(once, [&] { h = crypto::hashPassword("nhill-dummy-password", env.cfg.argon2); });
     return h;
+}
+
+// Recovery codes are 8 digits: only an HMAC under a server key is stored, bound to the
+// account, so that a copy of the database does not allow guessing them offline.
+std::string resetCodeHash(const Env& env, const std::string& userId, const std::string& code) {
+    return crypto::hmacSha256Hex(env.cfg.resetKey, userId + ":" + code);
+}
+
+std::string digitsOf(const std::string& s) {
+    std::string out;
+    for (char c : s)
+        if (c >= '0' && c <= '9') out.push_back(c);
+    return out;
+}
+
+std::string requirePasswordField(const json& b, const std::string& key) {
+    if (!b.contains(key) || !b[key].is_string()) throw invalid(key, "required");
+    return b[key].get<std::string>();
+}
+
+void checkNewPassword(const std::string& password, const std::string& email, const std::string& field) {
+    auto issue = nhill::validation::checkPassword(password, email);
+    if (issue != nhill::validation::PasswordIssue::None)
+        throw invalid(field, nhill::validation::passwordIssueCode(issue));
 }
 
 json permissionsFor(const std::string& role) {
@@ -51,6 +76,19 @@ json createSession(Env& env, db::Tx& tx, const std::string& userId, const std::s
             {"refresh_token", refresh},
             {"refresh_expires_at", db::str(row[2])},
             {"establishment_id", establishmentId}};
+}
+
+void applyNewPassword(db::Tx& tx, const std::string& userId, const std::string& passwordHash,
+                      const std::string& reason, const std::optional<std::string>& keepSessionId) {
+    tx.q("UPDATE users SET password_hash = $2, password_changed_at = now(), must_change_password = false, "
+         "temporary_password_expires_at = NULL WHERE id = $1",
+         userId, passwordHash);
+    // Every pending recovery secret becomes unusable, and every other session is closed.
+    tx.q("UPDATE password_resets SET revoked_at = now() WHERE user_id = $1 AND used_at IS NULL AND revoked_at IS NULL",
+         userId);
+    tx.q("UPDATE sessions SET revoked_at = now(), revoke_reason = $2 WHERE user_id = $1 AND revoked_at IS NULL "
+         "AND ($3::uuid IS NULL OR id <> $3::uuid)",
+         userId, reason, keepSessionId);
 }
 
 void authenticateUser(Env& env, Ctx& ctx) {
@@ -92,7 +130,11 @@ json doLogin(Env& env, Ctx& ctx, const std::string& email, const std::string& pa
     throttle(env.pool, "login:email:" + email, 8);
     throttle(env.pool, "login:ip:" + ctx.actor.ip, 40);
     json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
-        auto user = tx.opt("SELECT id, password_hash, status FROM users WHERE email = $1", email);
+        auto user = tx.opt(
+            "SELECT id, password_hash, status, must_change_password, "
+            "(temporary_password_expires_at IS NOT NULL AND temporary_password_expires_at <= now()) "
+            "FROM users WHERE email = $1",
+            email);
         bool ok = false;
         if (user) {
             ok = crypto::verifyPassword(db::str((*user)[1]), password) && db::str((*user)[2]) == "active";
@@ -101,6 +143,23 @@ json doLogin(Env& env, Ctx& ctx, const std::string& email, const std::string& pa
         }
         if (!ok) return {{"_failed", true}};
         const std::string userId = db::str((*user)[0]);
+        if (db::boolean((*user)[3])) {
+            // Temporary password given by an administrator: no session, only a one-time
+            // ticket to choose a new password (POST /auth/password/change-required).
+            if (db::boolean((*user)[4])) return {{"_expired", userId}};
+            tx.q("UPDATE password_resets SET revoked_at = now() WHERE user_id = $1 AND purpose = 'forced_change' "
+                 "AND used_at IS NULL AND revoked_at IS NULL",
+                 userId);
+            std::string ticket = crypto::randomToken(32);
+            auto t = tx.one(
+                "INSERT INTO password_resets (user_id, purpose, secret_hash, expires_at, ip) "
+                "VALUES ($1, 'forced_change', decode($2,'hex'), now() + interval '15 minutes', $3) "
+                "RETURNING nh_iso(expires_at)",
+                userId, crypto::sha256Hex(ticket), ctx.actor.ip);
+            auditSystem(tx, establishmentId, "auth.password_change_required", "user", userId, {{"ip", ctx.actor.ip}},
+                        "user", userId);
+            return {{"password_change_required", true}, {"change_token", ticket}, {"expires_at", db::str(t[0])}};
+        }
         if (crypto::passwordNeedsRehash(db::str((*user)[1]), env.cfg.argon2))
             tx.q("UPDATE users SET password_hash = $2 WHERE id = $1", userId,
                  crypto::hashPassword(password, env.cfg.argon2));
@@ -134,6 +193,15 @@ json doLogin(Env& env, Ctx& ctx, const std::string& email, const std::string& pa
             auditSystem(tx, establishmentId, "auth.login_failed", "user", "", {{"ip", ctx.actor.ip}}, "anonymous");
         });
         throw unauthorized("invalid_credentials");
+    }
+    if (out.contains("_expired")) {
+        std::string userId = out["_expired"];
+        db::run(env.pool, std::nullopt, [&](db::Tx& tx) {
+            auditSystem(tx, establishmentId, "auth.temporary_password_expired", "user", userId, {{"ip", ctx.actor.ip}},
+                        "user", userId);
+        });
+        // The caller proved the temporary password: telling it has expired reveals nothing more.
+        throw unauthorized("temporary_password_expired");
     }
     return out;
 }
@@ -270,23 +338,142 @@ void registerAuthRoutes(App& app, Env& env) {
         if (!b.contains("current_password") || !b["current_password"].is_string()) throw invalid("current_password", "required");
         if (!b.contains("new_password") || !b["new_password"].is_string()) throw invalid("new_password", "required");
         std::string np = b["new_password"];
-        auto issue = nhill::validation::checkPassword(np, ctx.actor.email);
-        if (issue != nhill::validation::PasswordIssue::None)
-            throw invalid("new_password", nhill::validation::passwordIssueCode(issue));
+        checkNewPassword(np, ctx.actor.email, "new_password");
         throttle(env.pool, "pwchange:" + ctx.actor.userId, 5);
         db::run(env.pool, std::nullopt, [&](db::Tx& tx) {
             auto row = tx.one("SELECT password_hash FROM users WHERE id = $1", ctx.actor.userId);
             if (!crypto::verifyPassword(db::str(row[0]), b["current_password"].get<std::string>()))
                 throw unauthorized("invalid_credentials");
-            tx.q("UPDATE users SET password_hash = $2, password_changed_at = now() WHERE id = $1", ctx.actor.userId,
-                 crypto::hashPassword(np, env.cfg.argon2));
-            // Every other session of this user is closed.
-            tx.q("UPDATE sessions SET revoked_at = now(), revoke_reason = 'password_changed' "
-                 "WHERE user_id = $1 AND id <> $2 AND revoked_at IS NULL",
-                 ctx.actor.userId, ctx.actor.sessionId);
+            // Every other session of this user is closed, pending recovery secrets are revoked.
+            applyNewPassword(tx, ctx.actor.userId, crypto::hashPassword(np, env.cfg.argon2), "password_changed",
+                             ctx.actor.sessionId);
             audit(tx, ctx.actor, "auth.password_changed", "user", ctx.actor.userId);
+            emailUser(tx, ctx.actor.userId, "password_changed");
         });
+        jobs::kickEmails();
         ctx.noContent();
+    });
+
+    // ---------------------------------------------------------------- forgotten password
+    // Members of an establishment are helped by its administrator (temporary password,
+    // POST /members/:id/password-reset). Accounts that no single establishment can reset
+    // — owners and administrators, accounts used in several establishments — receive a
+    // one-time code by e-mail. The answer is identical whether the address exists or not.
+    app.post("/api/v1/auth/password/forgot", {Access::Public}, [&env](Ctx& ctx) {
+        std::string email = in::reqEmail(ctx.body(), "email");
+        throttle(env.pool, "pwforgot:ip:" + ctx.actor.ip, 10, 60);
+        throttle(env.pool, "pwforgot:email:" + email, 3, 60);
+        db::run(env.pool, std::nullopt, [&](db::Tx& tx) {
+            auto u = tx.opt(
+                "SELECT u.id, COALESCE(bool_or(m.role IN ('owner','admin') AND e.id IS NOT NULL), false), count(e.id), "
+                "min(e.trade_name) FROM users u "
+                "LEFT JOIN memberships m ON m.user_id = u.id AND m.status = 'active' "
+                "LEFT JOIN establishments e ON e.id = m.establishment_id AND e.status <> 'closed' "
+                "WHERE u.email = $1 AND u.status = 'active' GROUP BY u.id",
+                email);
+            if (!u) return;  // unknown or disabled account: same answer, nothing is sent
+            const std::string userId = db::str((*u)[0]);
+            const bool manager = db::boolean((*u)[1]);
+            const int establishments = (*u)[2].as<int>();
+            if (manager || establishments >= 2) {
+                tx.q("UPDATE password_resets SET revoked_at = now() WHERE user_id = $1 AND purpose = 'email_code' "
+                     "AND used_at IS NULL AND revoked_at IS NULL",
+                     userId);
+                const std::string code = crypto::randomDigits(8);
+                const int minutes = std::clamp(setting(tx, "password_reset_minutes", 20), 5, 60);
+                auto r = tx.one(
+                    "INSERT INTO password_resets (user_id, purpose, secret_hash, expires_at, ip) "
+                    "VALUES ($1, 'email_code', decode($2,'hex'), now() + make_interval(mins => $3), $4) "
+                    "RETURNING nh_iso(expires_at)",
+                    userId, resetCodeHash(env, userId, code), minutes, ctx.actor.ip);
+                // The code travels sealed in the outbox and is erased once sent.
+                auto sealed = crypto::seal(env.cfg.dataKey, code);
+                emailUser(tx, userId, "password_reset_code",
+                          {{"code_box", crypto::toHex(sealed.cipher)}, {"code_nonce", crypto::toHex(sealed.nonce)},
+                           {"minutes", minutes}, {"expires_at", db::str(r[0])}});
+                auditSystem(tx, std::nullopt, "auth.password_reset_requested", "user", userId,
+                            {{"ip", ctx.actor.ip}, {"delivery", "email_code"}}, "anonymous");
+            } else if (establishments == 1) {
+                emailUser(tx, userId, "password_reset_contact_admin", {{"establishment", db::str((*u)[3])}});
+                auditSystem(tx, std::nullopt, "auth.password_reset_requested", "user", userId,
+                            {{"ip", ctx.actor.ip}, {"delivery", "contact_admin"}}, "anonymous");
+            }
+        });
+        jobs::kickEmails();
+        ctx.json(202, {{"status", "accepted"}});
+    });
+
+    app.post("/api/v1/auth/password/reset", {Access::Public}, [&env](Ctx& ctx) {
+        const auto& b = ctx.body();
+        std::string email = in::reqEmail(b, "email");
+        std::string code = digitsOf(in::reqStr(b, "code", 20));
+        std::string np = requirePasswordField(b, "new_password");
+        checkNewPassword(np, email, "new_password");
+        throttle(env.pool, "pwreset:ip:" + ctx.actor.ip, 20);
+        throttle(env.pool, "pwreset:email:" + email, 10);
+        // Hashed before looking anything up: the time taken does not depend on the account.
+        const std::string newHash = crypto::hashPassword(np, env.cfg.argon2);
+        json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
+            auto u = tx.opt("SELECT id FROM users WHERE email = $1 AND status = 'active'", email);
+            const std::string userId = u ? db::str((*u)[0]) : std::string("00000000-0000-0000-0000-000000000000");
+            const std::string presented = resetCodeHash(env, userId, code);
+            if (!u || code.size() != 8) return {{"_failed", true}};
+            auto r = tx.opt(
+                "SELECT id, encode(secret_hash,'hex') FROM password_resets WHERE user_id = $1 AND purpose = 'email_code' "
+                "AND used_at IS NULL AND revoked_at IS NULL AND expires_at > now() "
+                "ORDER BY created_at DESC LIMIT 1 FOR UPDATE",
+                userId);
+            if (!r) return {{"_failed", true}};
+            const std::string resetId = db::str((*r)[0]);
+            if (!crypto::constantTimeEquals(db::str((*r)[1]), presented)) {
+                // Each wrong code counts; the code is revoked after the allowed number of attempts.
+                const int maxAttempts = std::clamp(setting(tx, "password_reset_max_attempts", 5), 1, 10);
+                tx.q("UPDATE password_resets SET attempts = attempts + 1, "
+                     "revoked_at = CASE WHEN attempts + 1 >= $2 THEN now() ELSE revoked_at END WHERE id = $1",
+                     resetId, maxAttempts);
+                auditSystem(tx, std::nullopt, "auth.password_reset_failed", "user", userId, {{"ip", ctx.actor.ip}},
+                            "anonymous");
+                return {{"_failed", true}};
+            }
+            tx.q("UPDATE password_resets SET used_at = now() WHERE id = $1", resetId);
+            applyNewPassword(tx, userId, newHash, "password_reset");
+            auditSystem(tx, std::nullopt, "auth.password_reset", "user", userId,
+                        {{"ip", ctx.actor.ip}, {"method", "email_code"}}, "user", userId);
+            emailUser(tx, userId, "password_changed");
+            return {{"ok", true}};
+        });
+        if (out.contains("_failed")) throw badRequest("invalid_reset_code", "invalid or expired code");
+        jobs::kickEmails();
+        ctx.noContent();
+    });
+
+    // Sign-in with a temporary password: the ticket returned by /auth/login is exchanged,
+    // with a new password, for the normal sign-in answer (session or establishment choice).
+    app.post("/api/v1/auth/password/change-required", {Access::Public}, [&env](Ctx& ctx) {
+        const auto& b = ctx.body();
+        std::string ticket = in::reqStr(b, "change_token", 100);
+        std::string np = requirePasswordField(b, "new_password");
+        auto est = in::optUuid(b, "establishment_id");
+        throttle(env.pool, "pwforced:ip:" + ctx.actor.ip, 20);
+        json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
+            auto r = tx.opt(
+                "SELECT p.id, u.id, u.email, u.password_hash FROM password_resets p JOIN users u ON u.id = p.user_id "
+                "WHERE p.secret_hash = decode($1,'hex') AND p.purpose = 'forced_change' AND p.used_at IS NULL "
+                "AND p.revoked_at IS NULL AND p.expires_at > now() AND u.status = 'active' AND u.must_change_password "
+                "FOR UPDATE OF p",
+                crypto::sha256Hex(ticket));
+            if (!r) return {{"_failed", true}};
+            const std::string userId = db::str((*r)[1]), email = db::str((*r)[2]);
+            checkNewPassword(np, email, "new_password");
+            if (crypto::verifyPassword(db::str((*r)[3]), np)) throw invalid("new_password", "password_reused");
+            tx.q("UPDATE password_resets SET used_at = now() WHERE id = $1", db::str((*r)[0]));
+            applyNewPassword(tx, userId, crypto::hashPassword(np, env.cfg.argon2), "password_changed");
+            auditSystem(tx, std::nullopt, "auth.password_changed", "user", userId,
+                        {{"ip", ctx.actor.ip}, {"method", "temporary_password"}}, "user", userId);
+            return {{"email", email}};
+        });
+        if (out.contains("_failed")) throw badRequest("invalid_change_token", "invalid or expired ticket");
+        ctx.json(200, doLogin(env, ctx, out["email"].get<std::string>(), np, est));
     });
 
     app.post("/api/v1/me/switch", {Access::User}, [&env](Ctx& ctx) {

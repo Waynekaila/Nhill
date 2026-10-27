@@ -10,4 +10,5 @@ endif()
 
 if(NHILL_BUILD_CLIENT)
     add_subdirectory(client)
+    add_subdirectory(keychain)
 endif()

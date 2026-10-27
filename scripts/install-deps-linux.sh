@@ -63,7 +63,7 @@ check_disk "$ROOT" 6
 
 # ------------------------------------------------------------------ packages
 BASE=(build-essential cmake ninja-build pkg-config git ca-certificates file)
-SERVER=(libpqxx-dev libsodium-dev libpng-dev libcpp-httplib-dev nlohmann-json3-dev libhpdf-dev libssl-dev zlib1g-dev)
+SERVER=(libpqxx-dev libsodium-dev libpng-dev libcpp-httplib-dev nlohmann-json3-dev libhpdf-dev libssl-dev zlib1g-dev libcurl4-openssl-dev)
 TESTS=(libgtest-dev postgresql poppler-utils python3)
 CLIENT=(qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev qt6-l10n-tools qt6-tools-dev-tools
         qtkeychain-qt6-dev libgl-dev

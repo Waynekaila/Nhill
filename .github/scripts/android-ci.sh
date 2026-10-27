@@ -39,5 +39,8 @@ sudo apt-get install -y -q ninja-build >/dev/null
 export ANDROID_SDK_ROOT="$SDK" ANDROID_NDK_ROOT="$SDK/ndk/$NDK_VER"
 export QT_ANDROID="$QT_DIR/$QT_VER/android_arm64_v8a" QT_HOST="$QT_DIR/$QT_VER/gcc_64"
 [[ -d "$QT_HOST" ]] || QT_HOST="$(ls -d "$QT_DIR/$QT_VER"/*gcc_64 | head -n1)"
+echo "== QtKeychain 0.17.0 pour Android (source vérifiée)"
+export KEYCHAIN_PREFIX="${RUNNER_TEMP:-/tmp}/qtkeychain-android"
+packaging/android/build-qtkeychain-android.sh "$KEYCHAIN_PREFIX"
 echo "== Construction (QT_HOST=$QT_HOST, QT_ANDROID=$QT_ANDROID)"
 scripts/build-android.sh --force "$@"

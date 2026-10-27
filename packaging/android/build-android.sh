@@ -12,8 +12,9 @@
 #     ou : pip install aqtinstall && aqt install-qt linux android 6.5.3 android_arm64_v8a
 #          && aqt install-qt linux desktop 6.5.3 gcc_64)
 #   - CMake >= 3.21, Ninja
-#   - facultatif : QtKeychain compilé pour Android (mémorisation de la session dans le
-#     Keystore) ; sans lui l'application fonctionne mais redemande la connexion.
+#   - QtKeychain compilé pour Android (« Se souvenir de moi » : session chiffrée par une clé
+#     du Keystore Android) : KEYCHAIN_PREFIX=… (packaging/android/build-qtkeychain-android.sh).
+#     Obligatoire ; ALLOW_NO_KEYCHAIN=1 construit sans (la session n'est jamais mémorisée).
 #
 # Utilisation :
 #   QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
@@ -48,8 +49,16 @@ BUILD="${BUILD:-$PWD/build-android}"
 OUT="${OUT:-$PWD/dist}"
 mkdir -p "$OUT"
 ARGS=(-S "$SRC" -B "$BUILD" -G Ninja -DCMAKE_BUILD_TYPE=Release -DQT_HOST_PATH="$QT_HOST"
-      -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" -DANDROID_NDK_ROOT="$ANDROID_NDK_ROOT" -DQT_ANDROID_ABIS=arm64-v8a)
+      -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" -DANDROID_NDK_ROOT="$ANDROID_NDK_ROOT" -DQT_ANDROID_ABIS="${ANDROID_ABI:-arm64-v8a}")
 [[ -n "$SERVER_URL" ]] && ARGS+=(-DNHILL_SERVER_URL="$SERVER_URL")
+if [[ -n "${KEYCHAIN_PREFIX:-}" ]]; then
+  KC_CONFIG="$KEYCHAIN_PREFIX/lib/cmake/Qt6Keychain"
+  [[ -f "$KC_CONFIG/Qt6KeychainConfig.cmake" ]] || die "QtKeychain introuvable dans $KEYCHAIN_PREFIX"
+  ARGS+=(-DQt6Keychain_DIR:PATH="$KC_CONFIG")
+elif [[ "${ALLOW_NO_KEYCHAIN:-0}" != 1 ]]; then
+  die "KEYCHAIN_PREFIX non défini : construisez QtKeychain (packaging/android/build-qtkeychain-android.sh) ou ALLOW_NO_KEYCHAIN=1"
+fi
+[[ -n "${EXTRA_CMAKE_ARGS:-}" ]] && read -r -a EXTRA <<<"$EXTRA_CMAKE_ARGS" && ARGS+=("${EXTRA[@]}")
 if [[ -n "${KEYSTORE:-}" ]]; then
   [[ -f "$KEYSTORE" ]] || die "keystore introuvable : $KEYSTORE"
   : "${KEYSTORE_ALIAS:?KEYSTORE_ALIAS requis}" "${KEYSTORE_PASS:?KEYSTORE_PASS requis}"
@@ -58,7 +67,14 @@ if [[ -n "${KEYSTORE:-}" ]]; then
          QT_ANDROID_KEYSTORE_STORE_PASS="$KEYSTORE_PASS" QT_ANDROID_KEYSTORE_KEY_PASS="${KEYSTORE_KEY_PASS:-$KEYSTORE_PASS}"
 fi
 "$QT_ANDROID/bin/qt-cmake" "${ARGS[@]}" || die "configuration CMake échouée"
-cmake --build "$BUILD" --parallel --target apk || die "construction de l'APK échouée"
+if ! grep -E '^Qt6Keychain_DIR:[A-Z]+=.+' "$BUILD/CMakeCache.txt" | grep -vq NOTFOUND; then
+  [[ "${ALLOW_NO_KEYCHAIN:-0}" == 1 ]] || die "QtKeychain non trouvé par CMake : la session ne pourrait pas être mémorisée"
+  echo "attention : APK SANS QtKeychain, la session ne sera jamais mémorisée" >&2
+else
+  echo "QtKeychain : session mémorisée, chiffrée par le Keystore Android"
+fi
+cmake --build "$BUILD" --parallel --target "${APK_TARGET:-apk}" || die "construction de l'APK échouée"
+[[ -n "${SKIP_FINAL_APK:-}" ]] && { echo "APK de test construit dans $BUILD"; exit 0; }
 APK="$(find "$BUILD" -name '*.apk' -path '*outputs/apk*' -newer "$BUILD/CMakeCache.txt" | head -n1)"
 [[ -n "$APK" ]] || die "aucun APK produit"
 BT="$(ls -d "$ANDROID_SDK_ROOT"/build-tools/* | sort -V | tail -n1)"
@@ -83,4 +99,12 @@ else
   echo "attention : APK signé avec la clé de DÉBOGAGE (installable, non publiable)" >&2
 fi
 "$BT/apksigner" verify --print-certs "$FINAL" >/dev/null || die "signature de l'APK invalide"
+if [[ "${ALLOW_NO_KEYCHAIN:-0}" != 1 ]]; then
+  # QtKeychain est lié statiquement : son code Keystore doit figurer dans la bibliothèque de l'application.
+  LIBTMP="$(mktemp -d)"
+  unzip -q -o "$FINAL" 'lib/arm64-v8a/libnhill-business*.so' -d "$LIBTMP" || die "bibliothèque de l'application absente de l'APK"
+  grep -aq 'android/security/keystore/KeyGenParameterSpec' "$LIBTMP"/lib/arm64-v8a/libnhill-business*.so || die "QtKeychain (AndroidKeyStore) absent de l'APK"
+  rm -rf "$LIBTMP"
+  echo "APK : QtKeychain (Keystore Android) présent"
+fi
 echo "APK : $FINAL  (installation : adb install -r \"$FINAL\")"

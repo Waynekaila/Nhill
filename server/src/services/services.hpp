@@ -2,6 +2,7 @@
 
 #include "http/app.hpp"
 #include "services/common.hpp"
+#include "util/mailer.hpp"
 
 namespace nh {
 
@@ -42,6 +43,10 @@ void authenticateAdmin(Env& env, Ctx& ctx);
 json createSession(Env& env, db::Tx& tx, const std::string& userId, const std::string& establishmentId,
                    const Actor& a);
 // Password login restricted to one establishment (used by the join flow).
+// Sets a new password hash, clears the temporary-password state, revokes pending recovery
+// secrets and closes every session of the user except `keepSessionId`.
+void applyNewPassword(db::Tx& tx, const std::string& userId, const std::string& passwordHash,
+                      const std::string& reason, const std::optional<std::string>& keepSessionId = std::nullopt);
 json loginForEstablishment(Env& env, Ctx& ctx, const std::string& email, const std::string& password,
                            const std::string& establishmentId);
 
@@ -107,6 +112,7 @@ struct Stats {
     int enteredGrace = 0;
     int suspended = 0;
     int emailsSent = 0;
+    int emailFailures = 0;
     int planChanges = 0;
     int ordersExpired = 0;
 };
@@ -114,6 +120,14 @@ Stats rotateCodes(Env& env);
 Stats subscriptionLifecycle(Env& env);
 Stats dispatchEmails(Env& env);
 Stats runAll(Env& env);
+// Subject and body of a queued e-mail (sealed secrets opened). Exposed for tests.
+mail::Message renderEmail(const Env& env, const std::string& to, const std::string& lang, const std::string& tmpl,
+                          const json& params);
+// E-mail worker of `serve`: sends queued messages as soon as kickEmails() is called
+// (and every minute for retries) until stopEmailWorker().
+void kickEmails();
+void runEmailWorker(Env& env);
+void stopEmailWorker();
 }  // namespace jobs
 
 // Logo validation (establishments.cpp): returns {mime, width, height} or throws 422.

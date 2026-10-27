@@ -18,6 +18,8 @@ void randomFill(uint8_t* out, size_t n);
 std::string randomToken(size_t nBytes = 32);
 // Decimal activation code of `digits` digits (uniform).
 std::string randomDigits(int digits);
+// `n` characters drawn uniformly from `alphabet` (temporary passwords).
+std::string randomFromAlphabet(std::string_view alphabet, size_t n);
 
 std::string toHex(std::string_view bytes);
 std::optional<std::string> fromHex(std::string_view hex);

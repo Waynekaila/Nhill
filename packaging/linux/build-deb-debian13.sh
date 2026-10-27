@@ -44,7 +44,7 @@ trap 'rm -rf --one-file-system -- "$TMP"' EXIT
 # Bibliothèques à embarquer (absentes de Debian 13 dans ces versions) : motif de soname
 BUNDLE_RE='^(libjpeg\.so\.8|libQt6[A-Za-z0-9]*\.so\.6|libqt6keychain\.so\.1|libicu(uc|i18n|data)\.so\.74|libpqxx-7\.8\.so|libcpp-httplib\.so\.0\.14)$'
 # Paquets attendus sous ces noms dans Debian 13 (vérifiés sur l'archive trixie, voir README)
-TRIXIE_OK_RE='^(libc6|libstdc\+\+6|libgcc-s1|zlib1g|libzstd1|libb2-1|libdouble-conversion3|libpcre2-16-0|libpcre2-8-0|libmd4c0|libglib2\.0-0t64|libfreetype6|libfontconfig1|libharfbuzz0b|libpng16-16t64|libdbus-1-3|libsecret-1-0|libx11-6|libx11-xcb1|libxcb[a-z0-9-]*|libxkbcommon0|libxkbcommon-x11-0|libsm6|libice6|libegl1|libgl1|libglx0|libopengl0|libssl3t64|libpq5|libsodium23|libhpdf-2\.3\.0|libgssapi-krb5-2|libproxy1v5|libbrotli1|libmtdev1t64|libinput10|libudev1|libts0t64|libxrender1|libxi6|libxext6|libdrm2|libgbm1|libwayland-[a-z0-9-]*|adduser|systemd)$'
+TRIXIE_OK_RE='^(libc6|libstdc\+\+6|libgcc-s1|zlib1g|libzstd1|libb2-1|libdouble-conversion3|libpcre2-16-0|libpcre2-8-0|libmd4c0|libglib2\.0-0t64|libfreetype6|libfontconfig1|libharfbuzz0b|libpng16-16t64|libdbus-1-3|libsecret-1-0|libx11-6|libx11-xcb1|libxcb[a-z0-9-]*|libxkbcommon0|libxkbcommon-x11-0|libsm6|libice6|libegl1|libgl1|libglx0|libopengl0|libssl3t64|libcurl4t64|libpq5|libsodium23|libhpdf-2\.3\.0|libgssapi-krb5-2|libproxy1v5|libbrotli1|libmtdev1t64|libinput10|libudev1|libts0t64|libxrender1|libxi6|libxext6|libdrm2|libgbm1|libwayland-[a-z0-9-]*|adduser|systemd)$'
 
 needed() { readelf -d "$1" 2>/dev/null | sed -n 's/.*(NEEDED).*\[\(.*\)\]/\1/p'; }
 resolve() {  # soname -> chemin système

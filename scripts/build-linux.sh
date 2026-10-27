@@ -46,7 +46,7 @@ if [[ "$CLIENT" == ON ]]; then
     || die "Qt 6 (qt6-declarative-dev) introuvable : lancez scripts/install-deps-linux.sh" 3
 fi
 if [[ "$SERVER" == ON ]]; then
-  pkg-config --exists libpqxx libsodium || die "libpqxx-dev / libsodium-dev introuvables : lancez scripts/install-deps-linux.sh" 3
+  pkg-config --exists libpqxx libsodium libcurl || die "libpqxx-dev / libsodium-dev / libcurl4-openssl-dev introuvables : lancez scripts/install-deps-linux.sh" 3
 fi
 check_disk "$(dirname "$BUILD")" 3
 VERSION="$(project_version)"

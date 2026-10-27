@@ -9,5 +9,6 @@ qt_add_qml_module(nhill_ui
         Field.qml FbCard.qml FbChip.qml FbDialog.qml FbConfirm.qml Notifier.qml EmptyState.qml Banner.qml
         SectionTitle.qml KpiTile.qml SearchField.qml MoneyField.qml DateField.qml DataTable.qml FbPage.qml
         ConnectionBadge.qml TabStrip.qml SupportCenter.qml
+        PasswordRecoveryDialog.qml PasswordChangeRequiredDialog.qml RememberMeSwitch.qml
 )
 target_link_libraries(nhill_ui PRIVATE Qt6::Quick Qt6::QuickControls2)

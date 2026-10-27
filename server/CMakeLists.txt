@@ -6,6 +6,8 @@ find_package(OpenSSL REQUIRED)
 find_package(nlohmann_json 3.10 REQUIRED)
 find_package(Threads REQUIRED)
 pkg_check_modules(HTTPLIB REQUIRED IMPORTED_TARGET cpp-httplib)
+# SMTP delivery of e-mails (password recovery codes, notices): libcurl with TLS.
+pkg_check_modules(CURL REQUIRED IMPORTED_TARGET libcurl)
 find_path(HPDF_INCLUDE_DIR hpdf.h REQUIRED)
 find_library(HPDF_LIBRARY NAMES hpdf REQUIRED)
 
@@ -21,6 +23,7 @@ add_library(nhill_server_core STATIC
     src/routes.cpp
     src/http/app.cpp
     src/util/crypto.cpp
+    src/util/mailer.cpp
     src/pdf/pdf.cpp
     src/jobs/jobs.cpp
     src/services/common.cpp
@@ -52,6 +55,7 @@ target_link_libraries(nhill_server_core PUBLIC
     PkgConfig::SODIUM
     PkgConfig::HTTPLIB
     PkgConfig::PNG
+    PkgConfig::CURL
     OpenSSL::Crypto
     nlohmann_json::nlohmann_json
     ${HPDF_LIBRARY}

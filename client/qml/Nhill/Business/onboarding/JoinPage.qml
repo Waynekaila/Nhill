@@ -32,6 +32,8 @@ OnboardingFrame {
             ApplicationWindow.window.fail(r)
             return
         }
+        if (r.data.password_change_required) { changeRequired.start(r.data.change_token, email.text.trim(), ""); return }
+        if (r.data.choose_establishment) { ApplicationWindow.window.openLogin(qsTr("Password changed. Sign in to choose your business.")); return }
         Session.start(r.data, function(ok) { if (ok) ApplicationWindow.window.openShell() })
     }
     function login() {
@@ -122,5 +124,9 @@ OnboardingFrame {
             Field { id: confirmField; label: qsTr("Confirm the password"); FbTextField { id: confirmPassword; echoMode: TextInput.Password; onTextChanged: confirmField.error = "" } }
             FbButton { text: qsTr("Activate my access"); Layout.fillWidth: true; busy: page.busy; onClicked: page.activate() }
         }
+    }
+    PasswordChangeRequiredDialog {
+        id: changeRequired
+        onCompleted: function(data) { page.finish({ ok: true, data: data }) }
     }
 }

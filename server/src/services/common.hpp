@@ -93,8 +93,12 @@ void auditSystem(db::Tx& tx, const std::optional<std::string>& establishmentId, 
                  const std::string& actorType = "system", const std::optional<std::string>& actorId = std::nullopt);
 void notify(db::Tx& tx, const std::string& establishmentId, const std::optional<std::string>& userId,
             const std::string& kind, const json& params = json::object());
-// Queues an e-mail to every active owner/admin of the establishment.
+// Queues an e-mail to every active owner/admin of the establishment (its trade name is
+// added to the parameters as "establishment").
 void emailManagers(db::Tx& tx, const std::string& establishmentId, const std::string& tmpl, const json& params);
+// Queues an e-mail to one user, in their preferred language. Secret parameters must be
+// sealed by the caller (see auth.cpp): the outbox is never a store of clear-text secrets.
+void emailUser(db::Tx& tx, const std::string& userId, const std::string& tmpl, const json& params = json::object());
 
 // Idempotent execution of a write. The key and the response are stored in the
 // same transaction as the operation itself. `fn` returns {status, body}.

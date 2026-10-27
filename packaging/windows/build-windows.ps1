@@ -2,16 +2,20 @@
 # installateur .exe par application (NSIS). À exécuter sous Windows dans
 # « x64 Native Tools Command Prompt for VS 2022 » puis PowerShell :
 #   powershell -ExecutionPolicy Bypass -File build-windows.ps1 -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 `
-#       [-VcpkgRoot C:\vcpkg] [-ServerUrl https://api.exemple.com] [-BuildDir C:\build\nhill-win]
-# Prérequis (vérifiés ci-dessous) : Visual Studio 2022 (C++), CMake >= 3.21, Ninja, Qt 6.5+ MSVC 64 bits
-# (Qt Quick, Qt Svg, Qt Linguist), NSIS 3 (makensis), facultatif : QtKeychain via vcpkg
-# (vcpkg install qtkeychain-qt6:x64-windows) pour mémoriser la session.
+#       [-KeychainDir C:\build\qtkeychain] [-ServerUrl https://api.exemple.com] [-BuildDir C:\build\nhill-win]
+# Prérequis (vérifiés ci-dessous) : Visual Studio 2022 (C++), CMake >= 3.21, Ninja, Git, Qt 6.5+ MSVC 64 bits
+# (Qt Quick, Qt Svg, Qt Linguist, Qt Test), NSIS 3 (makensis).
+# QtKeychain (session mémorisée dans le Gestionnaire d'identification Windows) est obligatoire :
+# sans -KeychainDir, il est compilé depuis sa source vérifiée par build-qtkeychain.ps1.
+# -AllowNoKeychain construit quand même sans lui (la session n'est alors jamais mémorisée).
 param(
   [Parameter(Mandatory = $true)][string]$Source,
   [Parameter(Mandatory = $true)][string]$QtDir,
+  [string]$KeychainDir = "",
   [string]$VcpkgRoot = "",
   [string]$ServerUrl = "",
-  [string]$BuildDir = "$PSScriptRoot\build-windows"
+  [string]$BuildDir = "$PSScriptRoot\build-windows",
+  [switch]$AllowNoKeychain
 )
 $ErrorActionPreference = "Stop"
 function Fail($msg) { Write-Host "ERREUR : $msg" -ForegroundColor Red; exit 1 }
@@ -31,14 +35,37 @@ if (-not $makensis) { Fail "NSIS 3 introuvable (winget install NSIS.NSIS)." }
 $cm = Get-Content "$Source\CMakeLists.txt" -Raw
 if ($cm -match 'project\(nhill\s+VERSION\s+([0-9]+\.[0-9]+\.[0-9]+)') { $Version = $Matches[1] } else { Fail "version introuvable dans CMakeLists.txt" }
 Write-Host "Nhill $Version"
+# ---- QtKeychain (Gestionnaire d'identification Windows)
+$keychainDll = ""
+if (-not $KeychainDir -and -not $VcpkgRoot -and -not $AllowNoKeychain) {
+  $KeychainDir = Join-Path $BuildDir "deps\qtkeychain"
+  & powershell -ExecutionPolicy Bypass -File "$PSScriptRoot\build-qtkeychain.ps1" -QtDir $QtDir -Prefix $KeychainDir -WorkDir (Join-Path $BuildDir "deps\qtkeychain-work")
+  if ($LASTEXITCODE) { Fail "QtKeychain n'a pas pu être construit (voir ci-dessus) ; -AllowNoKeychain pour construire sans mémorisation de session" }
+}
+$prefixPath = $QtDir
+if ($KeychainDir) {
+  if (-not (Test-Path "$KeychainDir\lib\cmake\Qt6Keychain\Qt6KeychainConfig.cmake")) { Fail "QtKeychain introuvable dans $KeychainDir" }
+  $prefixPath = "$QtDir;$KeychainDir"
+  $keychainDll = "$KeychainDir\bin\qt6keychain.dll"
+} elseif ($VcpkgRoot) {
+  $keychainDll = "$VcpkgRoot\installed\x64-windows\bin\qt6keychain.dll"
+}
 $cmakeArgs = @("-S", $Source, "-B", $BuildDir, "-G", "Ninja", "-DCMAKE_BUILD_TYPE=Release",
-          "-DCMAKE_PREFIX_PATH=$QtDir", "-DNHILL_BUILD_SERVER=OFF", "-DNHILL_BUILD_TESTS=OFF")
+          "-DCMAKE_PREFIX_PATH=$prefixPath", "-DNHILL_BUILD_SERVER=OFF", "-DNHILL_BUILD_TESTS=OFF",
+          "-DNHILL_BUILD_KEYCHAIN_TEST=ON")
 if ($ServerUrl) { $cmakeArgs += "-DNHILL_SERVER_URL=$ServerUrl" }
 if ($VcpkgRoot) {
   $cmakeArgs += "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot\scripts\buildsystems\vcpkg.cmake"
   $cmakeArgs += "-DVCPKG_TARGET_TRIPLET=x64-windows"
-} else { Write-Host "Attention : sans QtKeychain (vcpkg), la session ne sera pas mémorisée." -ForegroundColor Yellow }
+}
 & cmake @cmakeArgs; if ($LASTEXITCODE) { Fail "configuration CMake échouée" }
+$cache = Get-Content (Join-Path $BuildDir "CMakeCache.txt") -Raw
+$haveKeychain = $cache -match 'Qt6Keychain_DIR:[A-Z]+=(?!.*NOTFOUND).+'
+if (-not $haveKeychain) {
+  if (-not $AllowNoKeychain) { Fail "QtKeychain non trouvé par CMake : la session ne pourrait pas être mémorisée" }
+  Write-Host "Attention : construction SANS QtKeychain, la session ne sera jamais mémorisée." -ForegroundColor Yellow
+  $keychainDll = ""
+} else { Write-Host "QtKeychain : session mémorisée dans le Gestionnaire d'identification Windows" }
 & cmake --build $BuildDir --parallel; if ($LASTEXITCODE) { Fail "compilation échouée" }
 
 $dist = Join-Path $BuildDir "dist"
@@ -53,7 +80,10 @@ foreach ($app in @("nhill-business", "nhill-console", "nhill-pos")) {
   Copy-Item "$Source\assets\icons\$app.ico" $dir
   & "$QtDir\bin\windeployqt.exe" --release --qmldir "$Source\client\qml" --no-translations "$dir\$app.exe"
   if ($LASTEXITCODE) { Fail "windeployqt a échoué pour $app" }
-  if ($VcpkgRoot) { Copy-Item "$VcpkgRoot\installed\x64-windows\bin\qt6keychain.dll" $dir -ErrorAction SilentlyContinue }
+  if ($keychainDll) {
+    if (-not (Test-Path $keychainDll)) { Fail "qt6keychain.dll introuvable : $keychainDll" }
+    Copy-Item $keychainDll $dir
+  }
   & $makensis "/DAPP_ID=$app" "/DAPP_VERSION=$Version" "/DSOURCE_DIR=$dir" "/DOUTPUT_DIR=$dist" "$PSScriptRoot\nhill-installer.nsi"
   if ($LASTEXITCODE) { Fail "makensis a échoué pour $app" }
 }
