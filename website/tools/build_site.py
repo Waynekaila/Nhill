@@ -39,19 +39,20 @@ FOOT = {
                            ("contact", "?sujet=formule#question", "Discuter d'une formule"), ("contact", "#question", "Contacter l'équipe")],
            "privacy": ("confidentialite", "Politique de confidentialité"), "terms": ("conditions", "Conditions d'utilisation"),
            "notice": ("mentions-legales", "Mentions légales"),
-           "tagline": "Le logiciel de gestion et de caisse des commerçants et des PME, à Kinshasa et au-delà.",
-           "fine": "Nhill est un logiciel de gestion commerciale : vos factures normalisées restent émises par votre "
-                   "dispositif fiscal agréé par la DGI. Les captures d'écran montrent l'application réelle, avec des "
-                   "données de démonstration.",
+           "tagline": "Le logiciel de gestion et de caisse des indépendants, des commerces et des PME, en français et en anglais.",
+           "fine": "Nhill est un logiciel de gestion commerciale. Il ne remplace pas une caisse ou un dispositif de "
+                   "facturation certifié lorsque la loi de votre pays en exige un (par exemple la facture normalisée "
+                   "de la DGI en RDC). Les captures d'écran montrent l'application réelle, avec des données de démonstration.",
            "skip": "Aller au contenu", "menu": "Menu", "lang": "English", "home": "Accueil"},
     "en": {"product": "Product", "start": "Get started", "legal": "Legal information",
            "start_links": [("contact", "#demonstration", "Book a demo"), ("free-trial", "", "Free assisted trial"),
                            ("contact", "?topic=plan#question", "Discuss a plan"), ("contact", "#question", "Contact the team")],
            "privacy": ("privacy", "Privacy policy"), "terms": ("terms", "Terms of use"),
            "notice": ("legal-notice", "Legal notice"),
-           "tagline": "Business management and point of sale for shops and SMEs, in Kinshasa and beyond.",
-           "fine": "Nhill is business management software: your standardised invoices are still issued by your "
-                   "DGI-approved fiscal device. Screenshots show the real application with demo data.",
+           "tagline": "Business management and point of sale for freelancers, shops and SMEs, in English and French.",
+           "fine": "Nhill is business management software. It does not replace a certified till or invoicing device "
+                   "where the law of your country requires one (for example the DGI standardised invoice in the DRC). "
+                   "Screenshots show the real application with demo data.",
            "skip": "Skip to content", "menu": "Menu", "lang": "Français", "home": "Home"},
 }
 
@@ -130,7 +131,9 @@ def render(lang, slug, meta, body, base_url):
         nav_items.append(f'<a href="{L(out_path(lang, s_))}"{cur}>{html.escape(label)}</a>')
     cta_page, cta_anchor, cta_label = CTA[lang]
     cta = f'<a class="btn btn-gold btn-small head-cta" href="{L(out_path(lang, cta_page))}{cta_anchor}">{html.escape(cta_label)}</a>'
-    lang_link = f'<a class="lang" href="{L(pair_path)}" lang="{other}" hreflang="{other}">{f["lang"]}</a>'
+    # Sélecteur de langue hors du menu : visible sur ordinateur comme sur téléphone.
+    lang_link = (f'<a class="lang" href="{L(pair_path)}" lang="{other}" hreflang="{other}" '
+                 f'data-lang="{other}">{f["lang"]}</a>')
     foot_product = "".join(f'<li><a href="{L(out_path(lang, s_))}">{html.escape(label)}</a></li>'
                            for key, s_, label in NAV[lang] if key not in ("trial", "start"))
     foot_start = "".join(f'<li><a href="{L(out_path(lang, pg))}{suffix}">{html.escape(label)}</a></li>'
@@ -173,7 +176,8 @@ def render(lang, slug, meta, body, base_url):
 <meta property="og:description" content="{html.escape(meta['description'])}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{base_url}/assets/images/{og_image}">
-<meta property="og:locale" content="{'fr_CD' if lang == 'fr' else 'en'}">
+<meta property="og:locale" content="{'fr_FR' if lang == 'fr' else 'en_US'}">
+<meta property="og:locale:alternate" content="{'en_US' if lang == 'fr' else 'fr_FR'}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E2236">
 <link rel="icon" href="{root}/assets/images/nhill-mark.svg" type="image/svg+xml">
@@ -189,8 +193,8 @@ def render(lang, slug, meta, body, base_url):
     <a class="brand" href="{L(out_path(lang, 'index'))}"><img src="{root}/assets/images/nhill-mark-reverse.svg" alt="" width="30" height="30"><span>Nhill</span></a>
     <nav id="nav" class="nav" aria-label="{'Navigation principale' if lang == 'fr' else 'Main navigation'}">
       {chr(10).join('      ' + n for n in nav_items).strip()}
-      {lang_link}
     </nav>
+    {lang_link}
     {cta}
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">{f['menu']}</button>
   </div>

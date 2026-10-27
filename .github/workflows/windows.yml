@@ -86,17 +86,21 @@ jobs:
       - name: Session mémorisée — test réel du Gestionnaire d'identification (2 processus)
         shell: pwsh
         run: |
-          # Exécutable de test lié à la même bibliothèque QtKeychain statique que les applications.
-          $t = "$env:RUNNER_TEMP\keychain-test"
-          New-Item -ItemType Directory -Force -Path $t | Out-Null
-          Copy-Item build-windows\tests\keychain\test_keychain.exe $t
-          & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --no-translations "$t\test_keychain.exe"
-          if ($LASTEXITCODE) { throw "windeployqt a échoué pour test_keychain" }
+          # Exécutable de test lié à la même bibliothèque QtKeychain statique que les applications ;
+          # QCoreApplication seulement : les DLL de Qt suffisent (PATH), sans greffon ni windeployqt.
+          $log = "$env:GITHUB_WORKSPACE\keychain-test-log.txt"
+          "== test_keychain (Gestionnaire d'identification Windows)" | Out-File -FilePath $log -Encoding utf8
+          $exe = "$env:GITHUB_WORKSPACE\build-windows\tests\keychain\test_keychain.exe"
+          if (-not (Test-Path $exe)) { "test_keychain.exe absent : $exe" | Out-File -FilePath $log -Append; throw "test_keychain.exe absent" }
+          $env:PATH = "$env:QT_ROOT_DIR\bin;$env:PATH"
           $env:NHILL_KEYCHAIN_REQUIRED = '1'
           $env:QT_QPA_PLATFORM = 'offscreen'
-          & "$t\test_keychain.exe" -v2 2>&1 | Tee-Object -FilePath keychain-test-log.txt
-          if ($LASTEXITCODE -ne 0) { throw "test_keychain a échoué (code $LASTEXITCODE)" }
-          if (Select-String -Path keychain-test-log.txt -Pattern '^SKIP' -Quiet) { throw "test_keychain ignoré : stockage sécurisé indisponible" }
+          & $exe -v2 2>&1 | ForEach-Object { "$_" } | Tee-Object -FilePath $log -Append
+          $code = $LASTEXITCODE
+          "== code de sortie : $code" | Out-File -FilePath $log -Append
+          if ($code -ne 0) { throw "test_keychain a échoué (code $code)" }
+          if (Select-String -Path $log -Pattern '^SKIP' -Quiet) { throw "test_keychain ignoré : stockage sécurisé indisponible" }
+          if (-not (Select-String -Path $log -Pattern 'Totals: \d+ passed, 0 failed, 0 skipped' -Quiet)) { throw "bilan du test introuvable" }
       - name: Installation silencieuse et désinstallation (Nhill POS, Nhill Business)
         shell: pwsh
         run: |

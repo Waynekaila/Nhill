@@ -83,19 +83,19 @@ p { text-wrap: pretty; }
 .nav { margin-left: auto; display: flex; gap: 2px 18px; flex-wrap: wrap; align-items: center; }
 .nav a { color: var(--on-night); text-decoration: none; font-size: var(--fs-sm); padding: 10px 0; border-bottom: 2px solid transparent; min-height: 44px; display: inline-flex; align-items: center; }
 .nav a:hover, .nav a[aria-current="page"] { border-bottom-color: var(--gold); color: #FFFFFF; }
-.nav .lang { border: 1px solid #44617E; border-radius: 6px; padding: 6px 12px; min-height: 36px; margin-left: 6px; }
-.nav .lang:hover { border-color: var(--on-night); }
+.site-head .lang { color: var(--on-night); text-decoration: none; font-size: var(--fs-sm); border: 1px solid #44617E; border-radius: 6px; padding: 8px 12px; min-height: 44px; display: inline-flex; align-items: center; }
+.site-head .lang:hover { border-color: var(--on-night); color: #FFFFFF; }
 .head-cta { white-space: nowrap; }
 .nav-toggle { display: none; background: none; color: #FFFFFF; border: 1px solid #44617E; border-radius: 6px; padding: 8px 14px; font: inherit; font-size: var(--fs-sm); min-height: 44px; cursor: pointer; }
 @media (max-width: 1020px) {
   .site-head .wrap { gap: 10px 14px; }
   .nav-toggle { display: inline-block; }
-  .head-cta { margin-left: auto; }
+  .site-head .lang { margin-left: auto; }
   .nav { order: 5; display: none; width: 100%; flex-direction: column; align-items: stretch; padding: 4px 0 16px; margin-left: 0; }
   .nav.open { display: flex; }
   .nav a { border-bottom: 1px solid #1E3A56; padding: 12px 2px; }
-  .nav .lang { margin: 12px 0 0; align-self: flex-start; }
 }
+@media (max-width: 520px) { .site-head .head-cta { display: none; } }
 @media (max-width: 400px) { .brand span { display: none; } }
 
 /* ---------------------------------------------------------------- boutons */
@@ -247,6 +247,19 @@ figure { margin: 0; }
 .paths .btn { justify-self: start; margin-top: 6px; }
 @media (max-width: 760px) { .paths { grid-template-columns: 1fr; } }
 
+/* Pour qui (accueil) */
+.who { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 clamp(24px, 4vw, 48px); list-style: none; margin: 0; padding: 0; }
+.who li { border-top: 2px solid var(--night); padding: 18px 0 28px; display: grid; gap: 10px; align-content: start; }
+.who h3 { margin: 0; font-size: var(--fs-md); letter-spacing: -0.01em; }
+.who p { color: var(--muted); margin: 0; }
+@media (max-width: 860px) { .who { grid-template-columns: 1fr; } }
+
+/* Comparaison (accueil) */
+table.compare { max-width: none; background: var(--paper); }
+table.compare thead th:nth-child(2) { background: var(--night); color: #FFFFFF; }
+table.compare tbody th { width: 18%; }
+table.compare td { width: 41%; }
+
 /* Ticket en ligne (sections d'explication de la clôture) */
 .receipt { background: var(--ticket); color: #1E2329; font-family: "Plex Mono", ui-monospace, monospace; font-size: 0.92rem; padding: 22px 22px 28px; max-width: 360px; border: 1px solid var(--line);
   box-shadow: 0 14px 34px rgba(14, 34, 54, 0.12);
@@ -329,3 +342,5 @@ table.plain tbody th { font-weight: 600; }
 .yes { color: var(--ok); font-weight: 600; }
 
 @media print { .site-head, .site-foot, .summit, .actions, .band { display: none; } body { font-size: 11pt; } .hero, .page-head { background: none; color: #000; } }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
