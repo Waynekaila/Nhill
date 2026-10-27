@@ -47,7 +47,7 @@ jobs:
           powershell -ExecutionPolicy Bypass -File packaging\windows\build-qtkeychain.ps1 `
             -QtDir "$env:QT_ROOT_DIR" -Prefix "$env:RUNNER_TEMP\qtkeychain" -WorkDir "$env:RUNNER_TEMP\qtkeychain-work" 2>&1 |
             Tee-Object -FilePath qtkeychain-log.txt
-          if (-not (Test-Path "$env:RUNNER_TEMP\qtkeychain\bin\qt6keychain.dll")) { throw "QtKeychain non construit" }
+          if (-not (Test-Path "$env:RUNNER_TEMP\qtkeychain\lib\qt6keychain.lib")) { throw "QtKeychain (statique) non construit" }
       - name: Compilation + installateurs
         shell: pwsh
         run: |
@@ -71,20 +71,25 @@ jobs:
           if ($files.Count -ne 3) { throw "3 installateurs attendus, $($files.Count) trouvés" }
           foreach ($f in $files) { $b = [IO.File]::ReadAllBytes($f.FullName)[0..1]; if ([Text.Encoding]::ASCII.GetString($b) -ne 'MZ') { throw "$f invalide" } }
           Get-Content build-windows\dist\SHA256SUMS
-      - name: QtKeychain livré avec chaque application
+      - name: QtKeychain lié à chaque application (statique, Gestionnaire d'identification)
         shell: pwsh
         run: |
           foreach ($app in @('nhill-business', 'nhill-console', 'nhill-pos')) {
-            if (-not (Test-Path "build-windows\dist\$app\qt6keychain.dll")) { throw "$app : qt6keychain.dll absent" }
+            $imports = (& dumpbin.exe /nologo /imports "build-windows\dist\$app\$app.exe") -join "`n"
+            foreach ($fn in @('CredReadW', 'CredWriteW', 'CredDeleteW')) {
+              if ($imports -notmatch "\b$fn\b") { throw "$app : $fn non importé (QtKeychain absent)" }
+            }
+            if ($imports -match '(?i)qt6keychain') { throw "$app : dépendance à une DLL QtKeychain" }
+            if (Get-ChildItem "build-windows\dist\$app" -Filter '*keychain*.dll') { throw "$app : DLL QtKeychain inattendue" }
+            Write-Host "$app : CredReadW, CredWriteW, CredDeleteW importés d'ADVAPI32 ; aucune DLL QtKeychain"
           }
       - name: Session mémorisée — test réel du Gestionnaire d'identification (2 processus)
         shell: pwsh
         run: |
-          # Exécutable de test déployé comme les applications, avec la DLL QtKeychain livrée.
+          # Exécutable de test lié à la même bibliothèque QtKeychain statique que les applications.
           $t = "$env:RUNNER_TEMP\keychain-test"
           New-Item -ItemType Directory -Force -Path $t | Out-Null
           Copy-Item build-windows\tests\keychain\test_keychain.exe $t
-          Copy-Item build-windows\dist\nhill-business\qt6keychain.dll $t   # la DLL livrée dans l'installateur
           & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --no-translations "$t\test_keychain.exe"
           if ($LASTEXITCODE) { throw "windeployqt a échoué pour test_keychain" }
           $env:NHILL_KEYCHAIN_REQUIRED = '1'
@@ -100,7 +105,10 @@ jobs:
             Start-Process $setup.FullName -ArgumentList '/S' -Wait
             $dir = "$env:ProgramFiles\$($pair[1])"
             if (-not (Test-Path "$dir\$($pair[0]).exe")) { throw "$($pair[1]) : installation silencieuse échouée" }
-            if (-not (Test-Path "$dir\qt6keychain.dll")) { throw "$($pair[1]) : qt6keychain.dll non installé" }
+            # Le binaire installé est bien celui dont la liaison QtKeychain a été vérifiée.
+            $h1 = (Get-FileHash "$dir\$($pair[0]).exe" -Algorithm SHA256).Hash
+            $h2 = (Get-FileHash "build-windows\dist\$($pair[0])\$($pair[0]).exe" -Algorithm SHA256).Hash
+            if ($h1 -ne $h2) { throw "$($pair[1]) : exécutable installé différent de celui construit" }
             Start-Process "$dir\uninstall.exe" -ArgumentList '/S' -Wait
           }
       - uses: actions/upload-artifact@v4

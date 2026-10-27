@@ -1,4 +1,4 @@
-# Nhill 2.0 — Configuration guide
+# Nhill 2.1 — Configuration guide
 
 *Français : [../fr/guide-configuration.md](../fr/guide-configuration.md)*
 
@@ -37,7 +37,14 @@ tests only). Every key can also be given as an environment variable. After a cha
 | `NH_ARGON2_OPS` | `3` | Argon2id cost (iterations) |
 | `NH_ARGON2_MEM_KIB` | `65536` | Argon2id memory (64 MiB) |
 | `NH_JOBS_INTERVAL_SECONDS` | `300` | background jobs (code rotation, subscriptions); `0` disables them |
-| `NH_EMAIL_TRANSPORT` | `log` | only transport available: e-mails are written to the log, **nothing is sent** |
+| `NH_EMAIL_TRANSPORT` | `log` | `smtp`: real delivery through your relay (2.1); `log`: nothing is sent, a masked line is written to the log (development; **password reset codes are then never delivered**); `disabled`: no e-mail |
+| `NH_SMTP_URL` | — | SMTP relay: `smtps://smtp.example.com:465` (implicit TLS) or `smtp://smtp.example.com:587` (STARTTLS **required**); never put credentials in the URL |
+| `NH_SMTP_USERNAME` | — | relay account (optional, depending on the relay) |
+| `NH_SMTP_PASSWORD_FILE` | — | file (mode 600) holding the relay password; otherwise `NH_SMTP_PASSWORD` in `server.env` (mode 600). Never logged |
+| `NH_SMTP_FROM` | — | sender, for example `Nhill <no-reply@example.com>` (an address the relay accepts: SPF/DKIM of the domain) |
+| `NH_SMTP_TLS` | `required` | `off` is accepted **only** for a local relay (`127.0.0.1`, `::1`); refused at start-up otherwise |
+| `NH_SMTP_CA_FILE` | — | certificate authorities to use instead of the system ones (internal relay) |
+| `NH_SMTP_TIMEOUT_SECONDS` | `20` | relay connection timeout |
 | `NH_PROFILE_DIR`, `NH_I18N_DIR`, `NH_FONT_DIR`, `NH_MIGRATIONS_DIR` | `/usr/share/nhill/…` | data files installed by the package |
 | `NH_SETUP_DB_PASSWORD` | — | only for command-line `nhill-server setup`; never kept |
 
@@ -91,7 +98,7 @@ start from the available screen.
 
 | Screen | Settings |
 |---|---|
-| Platform settings | trial length (30 days by default), grace period, reminder, establishment code rotation (30 days), limits, payment instructions |
+| Platform settings | trial length (30 days by default), grace period, reminder, establishment code rotation (30 days), limits, payment instructions; 2.1: `password_reset_minutes` (validity of the e-mailed code, 20 min, 5 to 60), `password_reset_max_attempts` (wrong codes before the code is cancelled, 5, 1 to 10), `temporary_password_hours` (validity of a temporary password, 72 h, 1 to 168) |
 | Plans and prices | plans, limits (users, POS tills, warehouses), features, **prices per duration and currency** |
 | Promo codes | launch or partnership discounts |
 | Payment providers | credentials (encrypted, never shown again), test/production mode, webhook address |
@@ -103,7 +110,7 @@ start from the available screen.
 | Business | identity, legal identifiers, logo, document language, payment terms, tax rounding, footer, negative stock |
 | Taxes and accounts | tax rates (16 % VAT in the DRC profile; a rate cannot be edited), cash and bank accounts, dated exchange rates |
 | Point of sale | tills, authorised cashiers, payment methods, maximum discount without approval, 58/80 mm receipt |
-| Team | roles and invitations |
+| Team | roles, invitations, resetting a member's password |
 
 ### 3.3 Country profiles and templates
 
@@ -112,7 +119,7 @@ database at start-up. An issued document keeps the version of the profile applie
 Details: `docs/modeles-et-profils.md` (French). The tax values of the profiles must be
 checked by a professional before use (see [legal-parameters.md](legal-parameters.md)).
 
-## 4. Password rule (2.0)
+## 4. Password rule (2.0, unchanged in 2.1)
 
 | Item | Value | Where |
 |---|---|---|
@@ -122,7 +129,24 @@ checked by a professional before use (see [legal-parameters.md](legal-parameters
 | Periodic expiry | **none** | — |
 | Storage | Argon2id (libsodium), never in plain text | server |
 | Two-factor authentication | mandatory for Nhill Console; not imposed on businesses | — |
+| Temporary password (2.1) | 12 characters drawn from an unambiguous alphabet (`xxxx-xxxx-xxxx`), shown once to the administrator, valid `temporary_password_hours`; the next sign-in requires a new password, which must differ from it | `server/src/services/members.cpp` |
 
 The same function is called by the applications (before sending) and by the server
 (which decides). Changing the rule requires rebuilding the server **and** the
 applications.
+
+## 5. Forgotten password and remembered session (2.1)
+
+| Item | Behaviour | Setting |
+|---|---|---|
+| Employee of an establishment | the administrator gives a temporary password (Settings › Team); change required at the next sign-in; the member's sessions are closed | `temporary_password_hours` |
+| Owner, administrator, account of several establishments | 8-digit one-time code by e-mail, same answer whatever the address | `password_reset_minutes`, `password_reset_max_attempts` |
+| Rate limits | code requests: 3 per hour per address, 10 per hour per IP address; checks: 10 per 15 min per address, 20 per IP; resets by an administrator: 10 per 15 min | fixed (server) |
+| E-mails | code, "contact your administrator" instructions, notices of reset and of password change, in French or English according to the account | `NH_EMAIL_TRANSPORT=smtp` and `NH_SMTP_*` |
+| "Remember me" | refresh token kept by QtKeychain: Windows Credential Manager, Android Keystore, Secret Service/KWallet on Linux; never a plain-text fallback; the yes/no preference is kept in the application settings | tick box at sign-in, Settings › My account |
+
+**Enabling mail**: without `NH_EMAIL_TRANSPORT=smtp`, owners and administrators cannot
+recover a forgotten password by themselves (the server says so at start-up). Check the
+configuration with a test account: "Forgot your password?" must deliver a code within
+seconds; on failure, the relay's error (without the password) appears in the server log
+and in `email_outbox.last_error`.

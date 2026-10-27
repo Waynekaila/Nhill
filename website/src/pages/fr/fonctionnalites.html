@@ -1,108 +1,150 @@
-<!--{"title": "Fonctionnalités", "description": "Ventes, factures, caisse, stock, achats, dépenses, paiements, rapports et équipe : ce que font Nhill Business et Nhill POS, et ce qu'ils ne font pas encore.", "nav": "features", "pair": "features"}-->
+<!--{"title": "Fonctionnalités : caisse, factures, stock, rapports", "description": "Caisse avec clôture et écart, factures en PDF, stock par dépôt, achats, dépenses, crédits clients, rapports et contrôle de l'équipe : tout ce que fait Nhill.", "nav": "features", "pair": "features"}-->
 <section class="page-head">
   <div class="wrap">
-    <h1>Ce que font Nhill Business et Nhill POS</h1>
-    <p class="lede">Cette page décrit les fonctions disponibles dans la version 2.0.0. Ce qui n'existe pas encore est indiqué en bas de page.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap split">
-    <div class="prose">
-      <h2>Ventes et factures</h2>
-      <ul>
-        <li>Devis, bons de commande, factures et avoirs, numérotés sans trou ni doublon par le serveur.</li>
-        <li>Conversion d'un devis en facture, avoir sur une facture avec remise en stock.</li>
-        <li>Remises par ligne, taxes par ligne (profil RDC : TVA 16 %, 0 %, exonéré), arrondis exacts.</li>
-        <li>Documents en CDF, USD, EUR ou autre devise, avec le taux de change enregistré.</li>
-        <li>PDF avec vos mentions légales et votre logo, en français ou en anglais.</li>
-        <li>Une facture émise ne se modifie plus : on la corrige par un avoir, comme en comptabilité.</li>
-        <li>Pour les assujettis à la TVA : champ pour noter la référence de la facture normalisée émise par votre dispositif fiscal.</li>
-      </ul>
+    <h1>Tout ce qu'il faut pour vendre, suivre et décider</h1>
+    <p class="lede">Nhill réunit la caisse, les factures, le stock, les paiements et les rapports. Voici ce que chaque partie fait pour vous, avec des captures de l'application réelle.</p>
+    <div class="actions">
+      <a class="btn btn-gold" href="{{p:contact}}#demonstration">Demander une démonstration</a>
+      <a class="btn btn-ghost" href="{{p:essai-gratuit}}">Essayer gratuitement</a>
     </div>
-    <figure class="shot">
-      <img src="{{root}}/assets/images/capture-facture.webp" width="1280" height="707" loading="lazy" alt="Facture FA-2026-000002 dans Nhill Business : client, lignes, totaux hors taxe, taxes, total, montant payé et solde, historique des statuts.">
-      <figcaption>Une facture payée en partie. Capture réelle, données de démonstration.</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section section-mist">
-  <div class="wrap split reverse">
-    <div class="prose">
-      <h2>Caisse : Nhill POS</h2>
-      <ul>
-        <li>Chaque caissier se connecte avec son propre compte et ne voit que sa caisse et sa session.</li>
-        <li>Ouverture avec fond de caisse, vente au toucher ou au lecteur de codes-barres (USB, comme un clavier).</li>
-        <li>Paiement en plusieurs moyens (espèces, carte, Mobile Money…) et monnaie rendue calculée.</li>
-        <li>Remise au-delà du plafond fixé : accord d'un superviseur avec son mot de passe, valable une fois.</li>
-        <li>Retours et annulations par avoir, remise en stock, remboursement en espèces.</li>
-        <li>Entrées et sorties d'espèces motivées, lecture X en cours de journée, clôture avec écart et rapport Z.</li>
-        <li>Tickets PDF au format rouleau 58 ou 80 mm. Raccourcis clavier : F2 pour scanner, F9 pour encaisser.</li>
-      </ul>
+<section class="section" id="caisse">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>Encaisser vite, clôturer juste</h2>
+        <p class="lede">Nhill POS est fait pour le comptoir : peu de gestes par vente, et une clôture qui s'appuie sur des chiffres.</p>
+        <ul class="prose">
+          <li>Chaque caissier se connecte avec son propre compte et ne voit que sa caisse et sa session.</li>
+          <li>Ouverture avec fond de caisse ; vente au toucher ou au lecteur de codes-barres USB.</li>
+          <li>Plusieurs moyens de paiement sur un même ticket (espèces, carte, Mobile Money) et monnaie rendue calculée.</li>
+          <li>Remise au-delà du plafond, retour ou annulation : accord d'un responsable, avec son propre mot de passe, valable une fois.</li>
+          <li>Entrées et sorties d'espèces motivées, lecture X en cours de journée.</li>
+          <li>Clôture : le caissier compte son tiroir sans voir le montant attendu ; Nhill calcule l'écart et le garde dans le rapport Z.</li>
+          <li>Tickets PDF au format 58 ou 80 mm ; raccourcis clavier F2 (scanner) et F9 (encaisser).</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="{{root}}/assets/images/capture-session-caisse.webp" width="1280" height="800" loading="lazy" alt="Session de caisse dans Nhill POS : ventes, retours, ventes nettes, espèces attendues et liste des tickets de la session."><figcaption>Le suivi d'une session de caisse. Capture réelle, données de démonstration.</figcaption></figure>
     </div>
-    <figure class="shot">
-      <img src="{{root}}/assets/images/capture-session-caisse.webp" width="1280" height="800" loading="lazy" alt="Session de caisse dans Nhill POS : ventes, retours, ventes nettes, espèces attendues et liste des tickets de la session.">
-      <figcaption>Le suivi d'une session de caisse. Capture réelle, données de démonstration.</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap split">
-    <div class="prose">
-      <h2>Stock, achats et dépenses</h2>
-      <ul>
-        <li>Produits et services, références, codes-barres, catégories, prix de vente et d'achat.</li>
-        <li>Stock par dépôt, seuils d'alerte, mouvements tracés (vente, achat reçu, ajustement avec motif, transfert).</li>
-        <li>Import et export du catalogue en CSV.</li>
-        <li>Achats fournisseurs : réception de marchandise qui met à jour le stock, montant restant à payer.</li>
-        <li>Dépenses avec catégorie et justificatif (photo ou PDF).</li>
-      </ul>
-      <h2>Paiements et rapports</h2>
-      <ul>
-        <li>Paiements reçus et versés, rattachés aux factures, achats et dépenses ; comptes de caisse et de banque.</li>
-        <li>Journal des ventes, paiements, dépenses, ventes par produit avec marge estimée, mouvements de stock, créances clients, montants à payer.</li>
-        <li>Export PDF et CSV.</li>
-      </ul>
+<section class="section section-mist" id="factures">
+  <div class="wrap">
+    <div class="split reverse">
+      <div>
+        <h2>Des factures propres, des crédits suivis</h2>
+        <p class="lede">Vos documents sortent à votre nom, et chaque client a un solde à jour.</p>
+        <ul class="prose">
+          <li>Devis, bons de commande, factures et avoirs, numérotés par le serveur sans trou ni doublon.</li>
+          <li>Un devis devient facture en un clic ; un avoir corrige une facture et remet en stock.</li>
+          <li>Remises et taxes par ligne (profil RDC : TVA 16 %, 0 %, exonéré), calculs exacts.</li>
+          <li>Documents en CDF, en USD, en EUR ou dans une autre devise, avec le taux de change enregistré.</li>
+          <li>PDF avec votre logo et vos mentions légales, en français ou en anglais.</li>
+          <li>Paiements partiels rattachés à la bonne facture ; liste de ce que chaque client vous doit, par devise.</li>
+          <li>Pour les assujettis à la TVA : un champ garde la référence de la facture normalisée émise par votre dispositif fiscal.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="{{root}}/assets/images/capture-facture.webp" width="1280" height="707" loading="lazy" alt="Facture FA-2026-000002 dans Nhill Business : client, lignes, totaux hors taxe, taxes, total, montant payé et solde, historique des statuts."><figcaption>Une facture payée en partie. Capture réelle, données de démonstration.</figcaption></figure>
     </div>
-    <figure class="shot">
-      <img src="{{root}}/assets/images/capture-stock.webp" width="1280" height="707" loading="lazy" alt="Écran Stock de Nhill Business : quantités par produit, seuils et valeur estimée.">
-      <figcaption>Les niveaux de stock. Capture réelle, données de démonstration.</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section section-mist">
-  <div class="wrap split reverse">
-    <div class="prose">
-      <h2>Équipe, accès et traçabilité</h2>
-      <ul>
-        <li>Rôles : propriétaire, administrateur, gérant, vendeur, comptable, lecture seule, responsable de caisse, caissier.</li>
-        <li>Les employés rejoignent l'entreprise avec un code d'établissement et une invitation ; le code se renouvelle tous les 30 jours.</li>
-        <li>Journal d'activité : qui a fait quoi et quand, non modifiable, exportable.</li>
-        <li>Mot de passe d'au moins 8 caractères ; changer son mot de passe ferme ses autres sessions.</li>
-        <li>Plusieurs établissements pour une même personne, avec un accès séparé pour chacun.</li>
-      </ul>
+<section class="section" id="stock">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>Un stock juste, sans inventaire permanent</h2>
+        <p class="lede">Les quantités bougent seulement par des mouvements enregistrés : vous savez toujours pourquoi un chiffre a changé.</p>
+        <ul class="prose">
+          <li>Produits et services, références, codes-barres, catégories, prix de vente et d'achat.</li>
+          <li>Stock par dépôt et transferts entre dépôts.</li>
+          <li>Mouvements tracés : vente, achat reçu, ajustement avec motif, retour.</li>
+          <li>Alertes sur les produits sous leur seuil, valeur du stock estimée.</li>
+          <li>Import et export du catalogue en CSV pour démarrer vite.</li>
+          <li>Achats fournisseurs : la réception met le stock à jour et garde le montant restant à payer.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="{{root}}/assets/images/capture-stock.webp" width="1280" height="707" loading="lazy" alt="Écran Stock de Nhill Business : quantités par produit, seuils et valeur estimée."><figcaption>Les niveaux de stock. Capture réelle, données de démonstration.</figcaption></figure>
     </div>
-    <figure class="shot">
-      <img src="{{root}}/assets/images/capture-equipe.webp" width="1280" height="707" loading="lazy" alt="Paramètres de l'équipe dans Nhill Business : membres, adresse e-mail, rôle, statut et dernière activité.">
-      <figcaption>La gestion de l'équipe. Capture réelle, données de démonstration.</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap prose">
-    <h2>Ce que Nhill ne fait pas encore</h2>
-    <ul>
-      <li>Pas de facture normalisée homologuée par la DGI (pas de connexion à un dispositif électronique fiscal).</li>
-      <li>Pas de mode hors ligne : une connexion internet est nécessaire.</li>
-      <li>Pas de liaison directe avec les opérateurs de Mobile Money ni de paiement en ligne réel activé.</li>
-      <li>Pas de comptabilité générale (plan OHADA, grand livre) : les exports CSV servent à votre comptable.</li>
-      <li>Pas d'export Excel (CSV et PDF seulement), pas d'envoi d'e-mails ni de SMS depuis l'application.</li>
-      <li>Nhill POS et Nhill Console n'existent pas sur Android ; seul Nhill Business y est prévu.</li>
+<section class="section section-mist" id="rapports">
+  <div class="wrap">
+    <div class="split reverse">
+      <div>
+        <h2>Des chiffres prêts pour vous et pour votre comptable</h2>
+        <p class="lede">Les rapports sont calculés par le serveur à partir des documents enregistrés : tout le monde lit les mêmes chiffres.</p>
+        <ul class="prose">
+          <li>Journal des ventes, paiements, dépenses, ventes par produit avec marge estimée.</li>
+          <li>Mouvements de stock, créances clients, montants à payer aux fournisseurs.</li>
+          <li>Dépenses par catégorie avec leurs justificatifs (photo ou PDF).</li>
+          <li>Comptes de caisse et de banque ; paiements reçus et versés.</li>
+          <li>Export PDF et CSV de chaque rapport.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="{{root}}/assets/images/capture-rapports.webp" width="1280" height="707" loading="lazy" alt="Rapports de Nhill Business : journal des ventes du mois avec date, numéro, client, devise, montant hors taxe et taxes, export PDF et CSV."><figcaption>Le journal des ventes. Capture réelle, données de démonstration.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="equipe">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>Une équipe, des rôles, un journal</h2>
+        <p class="lede">Chacun travaille avec son propre accès ; vous gardez la main sur qui fait quoi.</p>
+        <ul class="prose">
+          <li>Rôles : propriétaire, administrateur, gérant, vendeur, comptable, lecture seule, responsable de caisse, caissier.</li>
+          <li>Les employés rejoignent l'entreprise avec le code d'établissement et une invitation ; le code se renouvelle tous les 30 jours.</li>
+          <li>Journal d'activité : qui a fait quoi et quand, non modifiable, exportable.</li>
+          <li>Mot de passe oublié : l'administrateur donne un mot de passe temporaire à l'employé, qui en choisit un nouveau à la connexion ; propriétaires et administrateurs reçoivent un code par e-mail.</li>
+          <li>« Se souvenir de moi » : sur un appareil personnel, la session est gardée dans le stockage sécurisé du système, jamais le mot de passe.</li>
+          <li>Une même personne peut travailler pour plusieurs établissements, avec un accès séparé pour chacun.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="{{root}}/assets/images/capture-equipe.webp" width="1280" height="707" loading="lazy" alt="Paramètres de l'équipe dans Nhill Business : membres, adresse e-mail, rôle, statut et dernière activité."><figcaption>La gestion de l'équipe. Capture réelle, données de démonstration.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section section-mist" id="appareils">
+  <div class="wrap">
+    <div class="split reverse">
+      <div>
+        <h2>Sur vos ordinateurs et vos téléphones</h2>
+        <ul class="prose">
+          <li>Nhill Business : Windows 10 et 11 (64 bits), Linux (Debian 13, Ubuntu 24.04), téléphones et tablettes Android 7 et plus récents.</li>
+          <li>Nhill POS : Windows 10 et 11 (64 bits), Linux, avec un lecteur de codes-barres USB si vous le souhaitez.</li>
+          <li>Interface, documents et rapports en français ou en anglais, au choix de chaque utilisateur.</li>
+          <li>Une connexion internet, même mobile, suffit : une opération interrompue par une coupure se renvoie sans être comptée deux fois.</li>
+        </ul>
+        <p><a class="more" href="{{p:demarrer}}#appareils">Voir le tableau des appareils compatibles</a></p>
+      </div>
+      <figure class="phone"><img src="{{root}}/assets/images/capture-telephone-tableau-de-bord.webp" width="390" height="844" loading="lazy" alt="Nhill Business sur téléphone : tableau de bord avec le chiffre d'affaires, les factures impayées, les dépenses, les alertes de stock et les ventes récentes."></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bon-a-savoir">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Bon à savoir avant de choisir</h2>
+      <p>Pour décider en connaissance de cause, voici le périmètre exact de Nhill aujourd'hui.</p>
+    </div>
+    <ul class="good-to-know">
+      <li><strong>Facture normalisée DGI</strong>Nhill est un logiciel de gestion ; il n'est pas relié à un dispositif électronique fiscal. Si vous êtes assujetti à la TVA, vos factures normalisées restent émises par votre dispositif, et Nhill en garde la référence.</li>
+      <li><strong>Connexion internet</strong>Nhill enregistre tout sur un serveur sécurisé : il faut une connexion pour vendre et facturer. Une connexion mobile suffit.</li>
+      <li><strong>Mobile Money</strong>Les paiements Mobile Money sont enregistrés après vérification sur le téléphone ou le terminal ; Nhill n'est pas relié directement aux opérateurs.</li>
+      <li><strong>Comptabilité</strong>Nhill ne tient pas la comptabilité générale (plan OHADA, grand livre) : les exports CSV et PDF servent à votre comptable.</li>
+      <li><strong>Envoi des documents</strong>Les factures et tickets se partagent en PDF ; l'envoi direct par e-mail ou par SMS depuis l'application n'est pas encore disponible.</li>
     </ul>
-    <p>Ces limites sont publiques parce qu'elles comptent pour décider. Le programme pilote sert aussi à choisir lesquelles lever en premier.</p>
+    <div class="actions">
+      <a class="btn btn-blue" href="{{p:contact}}#demonstration">Voir Nhill sur votre cas</a>
+      <a class="btn btn-line" href="{{p:faq}}">Lire les questions fréquentes</a>
+    </div>
   </div>
 </section>

@@ -4,6 +4,56 @@
 
 Format inspiré de « Keep a Changelog » ; numérotation sémantique.
 
+## [2.1.0] — non publiée (branche `release/2.1.0`)
+
+Deux corrections demandées : la session mémorisée sous Windows et Android, et la
+récupération d'un mot de passe oublié. **Une migration (0011)**, quatre points d'accès
+ajoutés à l'API `v1` (aucun modifié), clients 2.0 acceptés.
+
+### Session mémorisée (« Se souvenir de moi »)
+
+- Case « Se souvenir de moi » à la connexion (Nhill Business, Nhill POS) et réglage
+  « Cet appareil » dans Paramètres › Mon compte ; décochée par défaut.
+- Seul le jeton de renouvellement est gardé, jamais le mot de passe, par QtKeychain :
+  Gestionnaire d'identification Windows, Keystore Android, Secret Service/KWallet sous Linux.
+  Sans stockage sécurisé, la session n'est pas mémorisée et un message le dit : aucun
+  repli en clair. « Se déconnecter » et le décochage effacent l'entrée.
+- Windows : QtKeychain 0.17.0 compilé depuis sa source officielle (commit vérifié) par
+  `packaging/windows/build-qtkeychain.ps1`, **lié statiquement** ; contrôle des imports
+  `CredReadW`/`CredWriteW`/`CredDeleteW` ; notice de licence installée avec chaque
+  application (`THIRD-PARTY-NOTICES.txt`).
+- Android : QtKeychain 0.17.0 statique (`packaging/android/build-qtkeychain-android.sh`,
+  `KEYCHAIN_PREFIX`), présence du code Keystore vérifiée dans l'APK.
+- Test réel `tests/keychain` (écriture puis relecture dans un second processus,
+  déconnexion, absence de stockage sans la case) : Gestionnaire d'identification en CI
+  Windows, émulateur Android 11, gnome-keyring sous Linux.
+
+### Mot de passe oublié
+
+- **Employé** : l'administrateur de l'établissement donne un mot de passe temporaire
+  (Paramètres › Équipe › « Réinitialiser le mot de passe ») ; 12 caractères, affiché une fois,
+  valable 72 h ; changement obligatoire à la connexion suivante ; sessions fermées ;
+  e-mail d'avis au membre. Limité aux membres de son établissement, ni soi-même, ni le
+  propriétaire, ni un compte actif dans un autre établissement.
+- **Propriétaire, administrateur** (et compte de plusieurs établissements) : « Mot de
+  passe oublié ? » envoie un code à 8 chiffres par e-mail (20 min, 5 essais, usage
+  unique) ; réponse identique que l'adresse existe ou non ; un employé reçoit la consigne
+  de contacter son administrateur ; toutes les sessions sont fermées après la
+  réinitialisation.
+- Limites de fréquence par adresse, par adresse IP et par administrateur ; journal
+  d'activité sans mot de passe ni code ; codes hachés (HMAC-SHA-256) et effacés de la file
+  d'envoi après l'envoi.
+- **Envoi réel des e-mails** : transport `smtp` (libcurl, TLS obligatoire, mot de passe du
+  relais dans un fichier) ; `log` et `disabled` restent possibles.
+- Paramètres de la plateforme : `password_reset_minutes`, `password_reset_max_attempts`,
+  `temporary_password_hours`.
+- Tests : 16 tests serveur (dont un faux relais SMTP local).
+
+### Divers
+
+- Gabarits d'e-mail complétés (signature, corps des rappels d'abonnement).
+- Version 2.1.0 (code de version Android 20100).
+
 ## [2.0.0] — 2026-10-26
 
 Version majeure : refonte de l'interface, nouvelle règle des mots de passe,

@@ -1,8 +1,8 @@
-# Nhill 2.0 — Guide de compilation et de livraison
+# Nhill 2.1 — Guide de compilation et de livraison
 
 *English: [../en/build-guide.md](../en/build-guide.md)*
 
-Comment produire, vérifier et assembler les livrables de la version 2.0.0 sur une machine
+Comment produire, vérifier et assembler les livrables de la version 2.1.0 sur une machine
 **neuve**. Tous les scripts sont dans `scripts/`, écrits en Bash strict
 (`set -Eeuo pipefail`), et partagent `scripts/lib/common.sh`.
 
@@ -17,7 +17,7 @@ Comment produire, vérifier et assembler les livrables de la version 2.0.0 sur u
 | PDF de la documentation | toute machine avec pandoc + moteur PDF | `build-docs-pdf.sh` | `docs/pdf/`, `legal/pdf/`, `marketing/pdf/`, `README*.pdf` |
 | Site vitrine (archive) | toute machine avec Python 3 | `build-website.sh` | `dist/website/` |
 | Contrôle des livrables | — | `verify-build.sh` | `build/logs/verify-build-*.log` |
-| Dossier de livraison | — | `package-release.sh` | `release/V2.0.0/` |
+| Dossier de livraison | — | `package-release.sh` | `release/V2.1.0/` |
 | Tout ce qui est possible ici | — | `build-all.sh` | résumé réussi / ignoré / échoué |
 
 Un paquet `.deb` dépend des versions de bibliothèques de sa distribution : ne copiez pas un
@@ -72,21 +72,23 @@ scripts/build-linux.sh --client-only --no-tests --server-url https://api.exemple
 
 ```bash
 scripts/build-deb.sh --server-url https://api.exemple.cd
-# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_2.0.0-1_amd64.deb
+# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_2.1.0-1_amd64.deb
 #    (ou dist/linux/debian-13/ sur Debian 13)
 ```
 
 Les dépendances de chaque paquet sont calculées par `dpkg-shlibdeps` ; `lintian` contrôle
 les paquets. Contrôle d'installation sur une machine propre :
-`sudo apt install ./dist/linux/<distribution>/nhill-business_2.0.0-1_amd64.deb`.
+`sudo apt install ./dist/linux/<distribution>/nhill-business_2.1.0-1_amd64.deb`.
 
 ## 4. Windows
 
 ### 4.1 Sur Windows (méthode recommandée)
 
-Prérequis : Visual Studio 2022 (charge « Développement C++ »), CMake ≥ 3.21, Ninja,
-Qt 6.5.3 MSVC 2019 64 bits, NSIS 3, QtKeychain (vcpkg) si la mémorisation de session est
-voulue.
+Prérequis : Visual Studio 2022 (charge « Développement C++ »), CMake ≥ 3.21, Ninja, Git,
+Qt 6.5.3 MSVC 2019 64 bits, NSIS 3. QtKeychain (« Se souvenir de moi », Gestionnaire
+d'identification Windows) n'a pas à être installé : le script le compile depuis sa source
+officielle (étiquette 0.17.0, commit vérifié) avec `packaging\windows\build-qtkeychain.ps1`,
+en bibliothèque **statique**.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
@@ -95,8 +97,30 @@ powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
 ```
 
 `-ExecutionPolicy Bypass` ne s'applique qu'à cette commande ; ne modifiez pas la stratégie
-d'exécution de la machine. Résultat, dans `build-windows\dist\` : `nhill-business-2.0.0-setup.exe`,
-`nhill-pos-2.0.0-setup.exe`, `nhill-console-2.0.0-setup.exe` et `SHA256SUMS`.
+d'exécution de la machine. Résultat, dans `build-windows\dist\` : `nhill-business-2.1.0-setup.exe`,
+`nhill-pos-2.1.0-setup.exe`, `nhill-console-2.1.0-setup.exe` et `SHA256SUMS`.
+
+QtKeychain sous Windows :
+
+| Option | Effet |
+|---|---|
+| (aucune) | QtKeychain est compilé dans `<BuildDir>\deps\qtkeychain` à la première construction, puis réutilisé |
+| `-KeychainDir C:\build\qtkeychain` | utilise une construction statique existante (produite par `build-qtkeychain.ps1 -QtDir … -Prefix …`) |
+| `-AllowNoKeychain` | construit sans QtKeychain : la session n'est **jamais** mémorisée (aucun repli en clair) |
+
+Pourquoi une bibliothèque statique : `windeployqt` traite toute DLL nommée `Qt6*.dll` comme
+un module Qt et la cherche uniquement dans le dossier de Qt ; une `qt6keychain.dll` livrée
+à côté de l'application fait donc échouer le déploiement. Liée statiquement, QtKeychain
+est incluse dans chaque `.exe`. Après la compilation, le script vérifie avec `dumpbin`
+que chaque application importe `CredReadW`, `CredWriteW` et `CredDeleteW` d'`ADVAPI32` et
+ne dépend d'aucune DLL QtKeychain. Le paquet vcpkg de QtKeychain (une DLL) n'est donc pas
+utilisé, même avec `-VcpkgRoot`.
+
+Test réel du stockage sécurisé : `-DNHILL_BUILD_KEYCHAIN_TEST=ON` (activé par le script)
+produit `build-windows\tests\keychain\test_keychain.exe` ; déployé avec `windeployqt`, il
+écrit une session factice dans le Gestionnaire d'identification, la relit depuis un second
+processus, puis l'efface (`NHILL_KEYCHAIN_REQUIRED=1` transforme l'absence de stockage en
+échec au lieu d'un test ignoré).
 
 ### 4.2 Depuis Linux (compilation croisée)
 
@@ -105,6 +129,10 @@ scripts/install-deps-linux.sh --with-windows-cross --yes
 packaging/windows/build-qt-mingw.sh               # Qt pour Windows (plusieurs heures)
 scripts/build-windows.sh --qt-prefix /opt/nhill-win/qt6
 ```
+
+Limite : la compilation croisée MinGW n'intègre pas QtKeychain ; les applications ainsi
+produites ne mémorisent jamais la session (elles restent sûres, l'option est simplement
+indisponible). Pour livrer « Se souvenir de moi » sous Windows, utilisez la méthode 4.1.
 
 ### 4.3 Signature
 
@@ -118,8 +146,25 @@ signature, SmartScreen avertit l'utilisateur (voir le guide d'installation).
 QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
 scripts/build-android.sh --server-url https://api.exemple.cd
-# -> dist/android/nhill-business-2.0.0-arm64-v8a.apk
+# -> dist/android/nhill-business-2.1.0-arm64-v8a.apk
 ```
+
+QtKeychain (« Se souvenir de moi », Keystore Android) est obligatoire. Construisez-le une
+fois depuis sa source vérifiée (étiquette 0.17.0, bibliothèque statique), puis indiquez
+son préfixe :
+
+```bash
+QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a packaging/android/build-qtkeychain-android.sh ~/build/qtkeychain-android
+KEYCHAIN_PREFIX=~/build/qtkeychain-android QT_ANDROID=… QT_HOST=… ANDROID_SDK_ROOT=… ANDROID_NDK_ROOT=… \
+scripts/build-android.sh --server-url https://api.exemple.cd
+```
+
+Sans `KEYCHAIN_PREFIX`, la construction s'arrête ; `ALLOW_NO_KEYCHAIN=1` produit un APK qui
+ne mémorise jamais la session. Le script vérifie que le code Keystore de QtKeychain
+(`KeyGenParameterSpec`) figure dans la bibliothèque de l'application. Le test réel
+(`.github/scripts/android-keychain-emulator.sh`) installe `test_keychain` sur un émulateur
+Android 11 x86_64 et vérifie l'écriture, la relecture après redémarrage de l'application,
+la déconnexion et l'effacement.
 
 Le SDK, le NDK et Qt pour Android ne viennent pas d'`apt` : installez-les depuis leurs
 sources officielles (sdkmanager de Google, installateur en ligne de Qt) et vérifiez les
@@ -144,7 +189,7 @@ source et de chaque PDF. Ne modifiez jamais un PDF à la main.
 Les plateformes impossibles à construire sur votre machine se construisent dans la CI :
 
 1. Poussez le dépôt sur un dépôt GitHub **privé**.
-2. Déclenchez les workflows : étiquette `git tag v2.0.0 && git push origin v2.0.0`, ou
+2. Déclenchez les workflows : étiquette `git tag v2.1.0 && git push origin v2.1.0`, ou
    « Run workflow » (onglet Actions) pour `linux-packages`, `windows`, `android`,
    `docs-website`.
 3. Téléchargez les artefacts : `nhill-deb-ubuntu-24.04`, `nhill-deb-debian-13`,
@@ -158,13 +203,13 @@ Avec l'outil `gh` : `gh run download <id> -n nhill-windows-installers -D dist/wi
 
 ```bash
 scripts/verify-build.sh --require linux,docs        # contrôle de ce qui existe
-scripts/package-release.sh --force                  # assemble release/V2.0.0/
+scripts/package-release.sh --force                  # assemble release/V2.1.0/
 ```
 
 `verify-build.sh` vérifie, pour chaque plateforme présente : le format réel des fichiers
 (paquet Debian, exécutable PE, APK), la version 2.x, les sommes `SHA256SUMS`, la présence
 et la fraîcheur des PDF. `package-release.sh` copie uniquement ce qui existe dans
-`release/V2.0.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
+`release/V2.1.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
 et liste ce qui manque dans `checksums/MISSING.txt` — jamais de fichier factice.
 
 ## 9. Construction reproductible : points d'attention

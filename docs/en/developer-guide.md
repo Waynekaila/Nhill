@@ -1,4 +1,4 @@
-# Nhill 2.0 — Developer guide
+# Nhill 2.1 — Developer guide
 
 *Français : [../fr/guide-developpement.md](../fr/guide-developpement.md)*
 
@@ -41,7 +41,7 @@ Invariants never to break:
 | `common/` | C++ library shared by server and clients: amounts, establishment codes, validation (including the password rule), version |
 | `server/src/` | `http/` (application, routing), `services/` (domains), `setup.*`, `jobs/`, `pdf/`, `migrate.*`, `db.*`, `config.*` |
 | `server/profiles/`, `server/i18n/` | country tax profiles, server FR/EN labels (PDF, activity log) |
-| `db/migrations/` | `0001` … `0010`, digests checked at start-up |
+| `db/migrations/` | `0001` … `0011`, digests checked at start-up; a published migration is never modified |
 | `client/src/` | `core/` (ApiClient, Session, Validator, AppContext), `business/`, `console/`, `pos/` |
 | `client/qml/Nhill/` | `Ui/` (design system), `Business/`, `Console/`, `Pos/` |
 | `client/i18n/` | `nhill_fr.ts`, `nhill_en.ts` |
@@ -73,14 +73,15 @@ NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh stop
 
 ## 4. Tests
 
-| Suite | Command | Count (2.0.0) | Dependencies |
+| Suite | Command | Count (2.1.0) | Dependencies |
 |---|---|---|---|
-| `common` | `ctest -R common` or `scripts/test-common-standalone.sh` | 20 | none (the standalone script uses `tests/support/minigtest`) |
-| `server` | `ctest -R server` | 84 | local PostgreSQL 15+ (`initdb`, `pg_ctl`) |
+| `common` | `ctest -R common` or `scripts/test-common-standalone.sh` | 22 | none (the standalone script uses `tests/support/minigtest`) |
+| `server` | `ctest -R server` | 100 (16 of them for the forgotten password, with a fake local SMTP relay) | local PostgreSQL 15+ (`initdb`, `pg_ctl`) |
 | `setup` | `ctest -R setup` | 6 | PostgreSQL |
 | `client` | `ctest -R client` | 13 | Qt 6 |
+| `keychain` | `ctest -R keychain` (real storage: `dbus-run-session` + `gnome-keyring-daemon` on Linux; `NHILL_KEYCHAIN_REQUIRED=1` to fail instead of skipping) | 3 (write and read back in two processes, sign-out, without "Remember me") | Qt 6, QtKeychain, a system keychain |
 | Website backend | `cd website/backend && python3 -m unittest discover -s tests` | 13 | Python 3 (SQLite); PostgreSQL in CI |
-| QML (static) | `python3 scripts/qa/qml-check.py` | 95 files | Node.js |
+| QML (static) | `python3 scripts/qa/qml-check.py` | 98 files | Node.js |
 | Website (static) | `python3 website/tools/check_site.py website` | 24 pages | Python 3 |
 
 Server tests start a throwaway PostgreSQL; as root they use the `postgres` user. A test

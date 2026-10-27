@@ -1,50 +1,77 @@
-# Nhill 2.0.0 — notes de version / release notes
+# Nhill 2.1.0 — notes de version / release notes
 
-Date : 27 octobre 2026 · API `v1` inchangée · schéma de base inchangé (migrations 0001-0010)
+API `v1` (quatre points d'accès ajoutés, aucun modifié) · schéma de base : migrations
+0001-0011 (une migration ajoutée) · clients 2.0 acceptés
 
 ## Français
 
-**Nouveautés** : mots de passe de 8 caractères minimum partout (TOTP conservé pour la
-console), interface refaite (fenêtres adaptées à l'écran, tableaux défilants, contrastes,
-focus clavier, afficher/masquer le mot de passe, raccourcis F2/F9 en caisse), paquets
-Debian 13 natifs, installateurs Windows, APK Android, site vitrine FR/EN avec backend de
-formulaires, documentation, dossiers juridique et commercial FR/EN.
+**Nouveautés** :
+- **« Se souvenir de moi »** : la session est retrouvée après la fermeture de
+  l'application, sous Windows (Gestionnaire d'identification), Android (Keystore) et Linux
+  (Secret Service/KWallet). Seul le jeton de session est gardé, jamais le mot de passe ;
+  sans stockage sécurisé, rien n'est mémorisé.
+- **Mot de passe oublié** : l'administrateur d'un établissement donne un mot de passe
+  temporaire à un employé, qui le remplace à la connexion suivante ; propriétaires et
+  administrateurs reçoivent un code à usage unique par e-mail.
+- **Envoi réel des e-mails** par un relais SMTP avec TLS.
+
 Détail : `docs/fr/changelog.md`.
 
-**Livrables de ce dossier** : seuls des fichiers réellement construits et vérifiés y
-figurent ; une plateforme absente est listée dans `checksums/MISSING.txt`. Vérifier les
-empreintes (`checksums/SHA256SUMS`) avant installation.
+**Avant la mise à jour** : sauvegarder la base ; configurer le relais SMTP
+(`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`) ; mettre à jour les applications avant
+d'utiliser la réinitialisation par l'administrateur (un client 2.0 ne sait pas afficher le
+changement obligatoire). Guide : `docs/fr/guide-installation.md` § 5.
+
+**Livrables** : seuls des fichiers réellement construits et vérifiés figurent dans le
+dossier de livraison ; une plateforme absente est listée dans `checksums/MISSING.txt`.
+Vérifier les empreintes (`checksums/SHA256SUMS`) avant installation.
 
 **À savoir avant de distribuer** :
 - les installateurs Windows et l'APK ne sont **pas signés** par un certificat d'éditeur ;
   l'APK est signé avec une clé de **débogage** (essais uniquement) ;
-- l'APK et les installateurs Windows n'ont pas été testés sur un appareil ou un poste
-  d'utilisateur réel (seulement construction et, pour Windows, installation silencieuse en CI) ;
+- la mémorisation de session a été testée sur un poste Windows Server 2022 de CI et sur un
+  émulateur Android 11 x86_64, pas encore sur un poste d'utilisateur ni sur un téléphone
+  arm64 réel ;
+- le Gestionnaire d'identification Windows conserve la session après une désinstallation
+  tant que l'utilisateur ne s'est pas déconnecté ;
+- l'envoi SMTP a été testé avec un relais local de test, pas avec un fournisseur réel ;
 - Nhill n'est pas un logiciel de facturation homologué par la DGI ;
-- pas de réinitialisation de mot de passe oublié ;
 - cpp-httplib 0.14 : CVE-2025-46728 et CVE-2025-53629, atténuées par le proxy Caddy.
 
 Rapport complet : `documentation/fr/rapport-validation.md`.
 
 ## English
 
-**What's new**: 8-character minimum password everywhere (TOTP kept for the console),
-redesigned interface (screen-fitted windows, scrollable tables, contrast, keyboard focus,
-show/hide password, F2/F9 till shortcuts), native Debian 13 packages, Windows installers,
-Android APK, FR/EN website with a form backend, FR/EN documentation, legal and commercial
-files. Details: `docs/en/changelog.md`.
+**What's new**:
+- **"Remember me"**: the session comes back after the application is closed, on Windows
+  (Credential Manager), Android (Keystore) and Linux (Secret Service/KWallet). Only the
+  session token is kept, never the password; without secure storage, nothing is
+  remembered.
+- **Forgotten password**: an establishment administrator gives an employee a temporary
+  password, replaced at the next sign-in; owners and administrators receive a one-time
+  code by e-mail.
+- **Real e-mail delivery** through an SMTP relay with TLS.
 
-**Deliverables in this folder**: only files actually built and checked are included; a
-missing platform is listed in `checksums/MISSING.txt`. Check the digests
+Details: `docs/en/changelog.md`.
+
+**Before upgrading**: back up the database; configure the SMTP relay
+(`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`); update the applications before using the reset
+by an administrator (a 2.0 client cannot show the required change). Guide:
+`docs/en/installation-guide.md` § 5.
+
+**Deliverables**: only files actually built and checked are included in the release
+folder; a missing platform is listed in `checksums/MISSING.txt`. Check the digests
 (`checksums/SHA256SUMS`) before installing.
 
 **Before distributing**:
 - the Windows installers and the APK are **not signed** with a publisher certificate; the
   APK is signed with a **debug** key (trials only);
-- the APK and Windows installers have not been tested on a real user device or computer
-  (build only and, for Windows, a silent install in CI);
+- the remembered session was tested on a Windows Server 2022 CI machine and on an
+  Android 11 x86_64 emulator, not yet on a user's computer or a real arm64 phone;
+- Windows Credential Manager keeps the session after uninstalling as long as the user has
+  not signed out;
+- SMTP delivery was tested with a local test relay, not with a real provider;
 - Nhill is not invoicing software certified by the DGI;
-- no forgotten-password reset;
 - cpp-httplib 0.14: CVE-2025-46728 and CVE-2025-53629, mitigated by the Caddy proxy.
 
 Full report: `documentation/en/validation-report.md`.

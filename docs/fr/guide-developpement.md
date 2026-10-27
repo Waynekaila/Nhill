@@ -1,4 +1,4 @@
-# Nhill 2.0 — Guide du développeur
+# Nhill 2.1 — Guide du développeur
 
 *English: [../en/developer-guide.md](../en/developer-guide.md)*
 
@@ -41,7 +41,7 @@ Invariants à ne jamais rompre :
 | `common/` | bibliothèque C++ partagée serveur/clients : montants, codes d'établissement, validations (dont la règle des mots de passe), version |
 | `server/src/` | `http/` (application, routage), `services/` (domaines), `setup.*`, `jobs/`, `pdf/`, `migrate.*`, `db.*`, `config.*` |
 | `server/profiles/`, `server/i18n/` | profils fiscaux pays, libellés FR/EN du serveur (PDF, journal) |
-| `db/migrations/` | `0001` … `0010`, empreintes vérifiées au démarrage |
+| `db/migrations/` | `0001` … `0011`, empreintes vérifiées au démarrage ; une migration publiée ne se modifie jamais |
 | `client/src/` | `core/` (ApiClient, Session, Validator, AppContext), `business/`, `console/`, `pos/` |
 | `client/qml/Nhill/` | `Ui/` (système de conception), `Business/`, `Console/`, `Pos/` |
 | `client/i18n/` | `nhill_fr.ts`, `nhill_en.ts` |
@@ -74,14 +74,15 @@ NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh stop
 
 ## 4. Tests
 
-| Suite | Commande | Nombre (2.0.0) | Dépendances |
+| Suite | Commande | Nombre (2.1.0) | Dépendances |
 |---|---|---|---|
-| `common` | `ctest -R common` ou `scripts/test-common-standalone.sh` | 20 | aucune (le script autonome utilise `tests/support/minigtest`) |
-| `server` | `ctest -R server` | 84 | PostgreSQL 15+ local (`initdb`, `pg_ctl`) |
+| `common` | `ctest -R common` ou `scripts/test-common-standalone.sh` | 22 | aucune (le script autonome utilise `tests/support/minigtest`) |
+| `server` | `ctest -R server` | 100 (dont 16 pour le mot de passe oublié, avec un faux relais SMTP local) | PostgreSQL 15+ local (`initdb`, `pg_ctl`) |
 | `setup` | `ctest -R setup` | 6 | PostgreSQL |
 | `client` | `ctest -R client` | 13 | Qt 6 |
+| `keychain` | `ctest -R keychain` (stockage réel : `dbus-run-session` + `gnome-keyring-daemon` sous Linux ; `NHILL_KEYCHAIN_REQUIRED=1` pour échouer au lieu d'ignorer) | 3 (écriture et relecture dans deux processus, déconnexion, sans « Se souvenir de moi ») | Qt 6, QtKeychain, un trousseau du système |
 | Site : backend | `cd website/backend && python3 -m unittest discover -s tests` | 13 | Python 3 (SQLite) ; PostgreSQL en CI |
-| QML (statique) | `python3 scripts/qa/qml-check.py` | 95 fichiers | Node.js |
+| QML (statique) | `python3 scripts/qa/qml-check.py` | 98 fichiers | Node.js |
 | Site (statique) | `python3 website/tools/check_site.py website` | 24 pages | Python 3 |
 
 Les tests serveur démarrent un PostgreSQL jetable ; en root ils utilisent l'utilisateur

@@ -1,4 +1,4 @@
-# Nhill 2.0 — User guide
+# Nhill 2.1 — User guide
 
 *Français : [../fr/guide-utilisateur.md](../fr/guide-utilisateur.md)*
 
@@ -14,10 +14,22 @@ and English; the labels below are the English ones.
 
 ---
 
-## 0. What is new in 2.0 for users
+## 0. What is new for users
+
+### Version 2.1
+
+- **Remember me** (Nhill Business and Nhill POS, on Windows, Linux and Android): when
+  ticked at sign-in, the application reopens already signed in. Only a session token is
+  kept, in the system's secure storage (Windows Credential Manager, Android Keystore, Linux
+  keyring), **never the password**. Unticked, nothing is kept; signing out also erases the
+  remembered session (§ 10).
+- **Forgotten password**: the establishment's administrator gives an employee a temporary
+  password; owners and administrators receive a code by e-mail (§ 9).
+
+### Version 2.0
 
 - **Passwords**: at least 8 characters everywhere (account creation, invitation, password
-  change, administration console; a future reset feature will apply the same rule). Very common passwords ("12345678", "password",
+  change, reset, administration console). Very common passwords ("12345678", "password",
   "kinshasa"…) are refused. No periodic change is required; change it only if you think
   it was seen or guessed.
 - **Show password**: an eye button in every password field shows or hides what you type
@@ -148,11 +160,11 @@ Amounts are always shown **per currency**, never converted or added across curre
 |---|---|---|
 | Business | Identity, legal identifiers, **logo**, document language, payment terms, tax rounding, payment instructions, footer, negative stock | Owner, administrator |
 | Establishment code | Show/hide, copy, **renew now** | Owner, administrator, manager (read) |
-| Team | Members, roles, deactivation, **invitations** (activation code shown **only once**: hand it over in person, by phone or SMS) | Owner, administrator |
+| Team | Members, roles, deactivation, **invitations** (activation code shown **only once**: hand it over in person, by phone or SMS), **password reset** of a member (§ 9) | Owner, administrator |
 | Subscription | Plan, end date, plans by duration and currency, promo code, payment, history | Owner, administrator |
 | Taxes and accounts | Tax rates (cannot be edited: create a new code), cash and bank accounts, **exchange rates** | Owner, administrator |
 | Point of sale | Tills and cashiers, payment methods, maximum discount, receipt, till promo codes, sessions and X/Z reports | Owner, administrator; manager and accountant: sessions and reports |
-| My account | Name, phone, language, theme, **password** (changing it signs out your other devices), sign out | Everyone |
+| My account | Name, phone, language, theme, **password** (changing it signs out your other devices), **Remember me on this device**, sign out | Everyone |
 
 Roles: **Owner**, **Administrator**, **Manager**, **Sales / cashier**, **Accountant**,
 **Till supervisor**, **Cashier**, **Read only**.
@@ -177,14 +189,48 @@ Roles: **Owner**, **Administrator**, **Manager**, **Sales / cashier**, **Account
 **Help and support** menu: send a question or a bug report to the Nhill team and follow
 the answers. Never include a password, an establishment code or a card number.
 
-**Forgotten password**: version 2.0 offers **no reset** (neither by e-mail nor through
-support); this is a known limitation planned for a later version. Keep your password in a
-password manager. Changing your password while signed in remains possible (Settings › My
-account).
+### Forgotten password
+
+The Nhill team does not know your password and will never ask for it. Depending on your
+role:
+
+**You are an employee (sales, cashier, accountant, manager…).** Ask the administrator or
+the owner of your establishment. In **Settings › Team**, they choose your name, then
+**Reset the password**: Nhill creates a temporary password (12 characters, for example
+`k7Rm-x2Qa-Hp9w`), shown **only once**, which they give you **in person or by phone**
+(never by e-mail or in a group chat). Your open sessions are closed immediately. At your
+next sign-in with this temporary password, Nhill asks you to choose a new one (at least
+8 characters, different from the temporary one) before opening the application. The
+temporary password expires after 72 hours: after that, ask for another one.
+
+An administrator can only reset accounts of **their** establishment, never the owner's
+nor their own; only the owner can reset an administrator. If your account is also used in
+**another** business, none of its administrators can reset it: use the e-mail procedure
+below.
+
+**You are the owner or an administrator** (or your account is used in several
+businesses). On the sign-in screen, choose **Forgot your password?**, enter your e-mail
+address, then **Send the code**. You receive an 8-digit code (`1234-5678`), valid for
+**20 minutes** and usable **once**; enter it with your new password. After 5 wrong codes
+the code is cancelled: ask for a new one. A new request cancels the previous code. The
+message shown is the same whether or not the address matches an account (so nobody can
+find out who uses Nhill); if yours is an employee account, the e-mail you receive tells
+you whom to contact. Once the password is changed, **all your sessions are closed** and an
+e-mail informs you of the change.
+
+Changing your password while signed in remains possible (Settings › My account).
 
 ## 10. Sign-in and security
 
-- The session is stored in the device's secure keychain (never in plain text).
+- **Remember me**: tick it at sign-in, only on a device you do not share. The application
+  then reopens signed in; the session token is kept in the system's secure storage
+  (Windows Credential Manager, Android Keystore, Secret Service or KWallet keyring on
+  Linux), never in plain text and never the password. **Signing out** erases this session;
+  unticking the option (at sign-in or in Settings › My account) erases it too. If the
+  system refuses to keep it (for example Linux without a keyring), the application says so
+  and will ask you to sign in again.
+- Lost or stolen device: change your password from another device (every other session is
+  closed) or ask your administrator to reset your access.
 - Offline: viewing and writing are suspended; nothing is lost.
 - Several businesses with the same account: choose at sign-in.
 - After several wrong sign-in attempts, the server slows further attempts down.
@@ -251,6 +297,8 @@ cashier signs in with **their own account** (Cashier or Till supervisor role).
 ## 2. Open the till
 
 Sign in, choose the till, **count the opening float**, **Open the session**.
+"Remember me" and "Forgot your password?" work as in Nhill Business (Part A, § 9 and § 10);
+on a till computer shared by several cashiers, leave "Remember me" unticked.
 
 ## 3. Sell
 

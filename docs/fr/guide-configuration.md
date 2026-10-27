@@ -1,4 +1,4 @@
-# Nhill 2.0 — Guide de configuration
+# Nhill 2.1 — Guide de configuration
 
 *English: [../en/configuration-guide.md](../en/configuration-guide.md)*
 
@@ -37,7 +37,14 @@ d'environnement. Après modification : `sudo systemctl restart nhill-server` pui
 | `NH_ARGON2_OPS` | `3` | coût Argon2id (itérations) |
 | `NH_ARGON2_MEM_KIB` | `65536` | mémoire Argon2id (64 Mio) |
 | `NH_JOBS_INTERVAL_SECONDS` | `300` | tâches de fond (rotation des codes, abonnements) ; `0` les désactive |
-| `NH_EMAIL_TRANSPORT` | `log` | seul transport disponible : les e-mails sont écrits dans le journal, **aucun envoi réel** |
+| `NH_EMAIL_TRANSPORT` | `log` | `smtp` : envoi réel par votre relais (2.1) ; `log` : rien n'est envoyé, une ligne masquée est écrite dans le journal (développement ; **les codes de réinitialisation ne sont alors jamais remis**) ; `disabled` : aucun e-mail |
+| `NH_SMTP_URL` | — | relais SMTP : `smtps://smtp.exemple.com:465` (TLS implicite) ou `smtp://smtp.exemple.com:587` (STARTTLS **obligatoire**) ; jamais d'identifiant dans l'adresse |
+| `NH_SMTP_USERNAME` | — | compte du relais (facultatif selon le relais) |
+| `NH_SMTP_PASSWORD_FILE` | — | fichier (mode 600) contenant le mot de passe du relais ; à défaut `NH_SMTP_PASSWORD` dans `server.env` (mode 600). Jamais journalisé |
+| `NH_SMTP_FROM` | — | expéditeur, par exemple `Nhill <no-reply@exemple.com>` (adresse autorisée par le relais : SPF/DKIM du domaine) |
+| `NH_SMTP_TLS` | `required` | `off` accepté **uniquement** pour un relais local (`127.0.0.1`, `::1`) ; refusé au démarrage sinon |
+| `NH_SMTP_CA_FILE` | — | autorités de certification à utiliser au lieu de celles du système (relais interne) |
+| `NH_SMTP_TIMEOUT_SECONDS` | `20` | délai de connexion au relais |
 | `NH_PROFILE_DIR`, `NH_I18N_DIR`, `NH_FONT_DIR`, `NH_MIGRATIONS_DIR` | `/usr/share/nhill/…` | fichiers de données installés par le paquet |
 | `NH_SETUP_DB_PASSWORD` | — | uniquement pour `nhill-server setup` en ligne de commande ; jamais conservé |
 
@@ -91,7 +98,7 @@ calculées à chaque ouverture en fonction de l'écran disponible.
 
 | Écran | Réglages |
 |---|---|
-| Paramètres de la plateforme | durée d'essai (30 j par défaut), période de grâce, rappel, rotation des codes d'établissement (30 j), limites, instructions de paiement |
+| Paramètres de la plateforme | durée d'essai (30 j par défaut), période de grâce, rappel, rotation des codes d'établissement (30 j), limites, instructions de paiement ; 2.1 : `password_reset_minutes` (validité du code envoyé par e-mail, 20 min, 5 à 60), `password_reset_max_attempts` (codes erronés avant annulation, 5, 1 à 10), `temporary_password_hours` (validité d'un mot de passe temporaire, 72 h, 1 à 168) |
 | Offres et tarifs | offres, plafonds (utilisateurs, caisses POS, dépôts), fonctionnalités, **prix par durée et par devise** |
 | Codes promo | remises de lancement ou de partenariat |
 | Prestataires de paiement | identifiants (chiffrés, jamais réaffichés), mode test/production, adresse de webhook |
@@ -103,7 +110,7 @@ calculées à chaque ouverture en fonction de l'écran disponible.
 | Établissement | identité, identifiants légaux, logo, langue des documents, délai de paiement, arrondi des taxes, pied de page, stock négatif |
 | Taxes et comptes | taux de taxe (TVA 16 % en RDC selon le profil ; un taux ne se modifie pas), caisses et comptes bancaires, taux de change datés |
 | Point de vente | caisses, caissiers autorisés, moyens de paiement, remise maximale sans validation, ticket 58/80 mm |
-| Équipe | rôles et invitations |
+| Équipe | rôles, invitations, réinitialisation du mot de passe d'un membre |
 
 ### 3.3 Profils pays et modèles
 
@@ -112,7 +119,7 @@ base au démarrage. Un document émis garde la version du profil appliqué. Dét
 `docs/modeles-et-profils.md`. Les valeurs fiscales des profils doivent être vérifiées par
 un professionnel avant usage (voir [parametres-legaux.md](parametres-legaux.md)).
 
-## 4. Règle des mots de passe (2.0)
+## 4. Règle des mots de passe (2.0, inchangée en 2.1)
 
 | Élément | Valeur | Où |
 |---|---|---|
@@ -122,6 +129,23 @@ un professionnel avant usage (voir [parametres-legaux.md](parametres-legaux.md))
 | Expiration périodique | **aucune** | — |
 | Stockage | Argon2id (libsodium), jamais en clair | serveur |
 | Double authentification | obligatoire pour Nhill Console ; non imposée aux établissements | — |
+| Mot de passe temporaire (2.1) | 12 caractères tirés d'un alphabet sans caractères ambigus (`xxxx-xxxx-xxxx`), affiché une seule fois à l'administrateur, valable `temporary_password_hours` ; la connexion suivante impose un nouveau mot de passe, différent de celui-ci | `server/src/services/members.cpp` |
 
 La même fonction est appelée par les applications (avant l'envoi) et par le serveur (qui
 décide). Modifier la règle impose de reconstruire serveur **et** applications.
+
+## 5. Mot de passe oublié et session mémorisée (2.1)
+
+| Élément | Comportement | Réglage |
+|---|---|---|
+| Employé d'un établissement | l'administrateur donne un mot de passe temporaire (Paramètres › Équipe) ; changement obligatoire à la connexion suivante ; sessions du membre fermées | `temporary_password_hours` |
+| Propriétaire, administrateur, compte de plusieurs établissements | code à 8 chiffres par e-mail, usage unique, réponse identique pour toute adresse | `password_reset_minutes`, `password_reset_max_attempts` |
+| Limites de fréquence | demandes de code : 3 par heure et par adresse, 10 par heure et par adresse IP ; vérifications : 10 par 15 min et par adresse, 20 par IP ; réinitialisations par un administrateur : 10 par 15 min | fixes (serveur) |
+| E-mails | code, consignes « contactez votre administrateur », avis de réinitialisation et de changement de mot de passe, en français ou en anglais selon le compte | `NH_EMAIL_TRANSPORT=smtp` et `NH_SMTP_*` |
+| « Se souvenir de moi » | jeton de renouvellement gardé par QtKeychain : Gestionnaire d'identification Windows, Keystore Android, Secret Service/KWallet sous Linux ; jamais de repli en clair ; préférence (oui/non) dans les réglages de l'application | case à cocher à la connexion, Paramètres › Mon compte |
+
+**Mise en service du courrier** : sans `NH_EMAIL_TRANSPORT=smtp`, les propriétaires et
+administrateurs ne peuvent pas récupérer un mot de passe oublié par eux-mêmes (le serveur
+l'écrit au démarrage). Vérifiez la configuration avec un compte de test : « Mot de passe
+oublié ? » doit remettre un code en quelques secondes ; en cas d'échec, l'erreur du relais
+(sans le mot de passe) apparaît dans le journal du serveur et dans `email_outbox.last_error`.

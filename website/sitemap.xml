@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.nhill.example/en/access.html</loc></url>
   <url><loc>https://www.nhill.example/en/contact.html</loc></url>
   <url><loc>https://www.nhill.example/en/faq.html</loc></url>
   <url><loc>https://www.nhill.example/en/features.html</loc></url>
+  <url><loc>https://www.nhill.example/en/free-trial.html</loc></url>
+  <url><loc>https://www.nhill.example/en/get-started.html</loc></url>
   <url><loc>https://www.nhill.example/en/</loc></url>
-  <url><loc>https://www.nhill.example/en/legal-notice.html</loc></url>
   <url><loc>https://www.nhill.example/en/partners.html</loc></url>
-  <url><loc>https://www.nhill.example/en/pilot-programme.html</loc></url>
-  <url><loc>https://www.nhill.example/en/privacy.html</loc></url>
-  <url><loc>https://www.nhill.example/en/terms.html</loc></url>
   <url><loc>https://www.nhill.example/en/use-cases.html</loc></url>
   <url><loc>https://www.nhill.example/</loc></url>
-  <url><loc>https://www.nhill.example/pages/acces.html</loc></url>
   <url><loc>https://www.nhill.example/pages/cas-usage.html</loc></url>
-  <url><loc>https://www.nhill.example/pages/conditions.html</loc></url>
-  <url><loc>https://www.nhill.example/pages/confidentialite.html</loc></url>
   <url><loc>https://www.nhill.example/pages/contact.html</loc></url>
+  <url><loc>https://www.nhill.example/pages/demarrer.html</loc></url>
+  <url><loc>https://www.nhill.example/pages/essai-gratuit.html</loc></url>
   <url><loc>https://www.nhill.example/pages/faq.html</loc></url>
   <url><loc>https://www.nhill.example/pages/fonctionnalites.html</loc></url>
-  <url><loc>https://www.nhill.example/pages/mentions-legales.html</loc></url>
   <url><loc>https://www.nhill.example/pages/partenaires.html</loc></url>
-  <url><loc>https://www.nhill.example/pages/programme-pilote.html</loc></url>
 </urlset>

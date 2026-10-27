@@ -521,7 +521,9 @@ void registerAdminRoutes(App& app, Env& env) {
         static const std::map<std::string, std::pair<int, int>> intKeys = {
             {"trial_days", {0, 365}},           {"grace_days", {0, 60}},         {"reminder_days_before", {1, 60}},
             {"code_rotation_days", {1, 365}},   {"code_check_max_per_15min", {3, 100}},
-            {"login_max_per_15min", {3, 100}},  {"invitation_days", {1, 60}},   {"trial_max_users", {1, 1000}}};
+            {"login_max_per_15min", {3, 100}},  {"invitation_days", {1, 60}},   {"trial_max_users", {1, 1000}},
+            {"password_reset_minutes", {5, 60}}, {"password_reset_max_attempts", {1, 10}},
+            {"temporary_password_hours", {1, 168}}};
         const auto& b = ctx.body();
         if (!b.contains("value")) throw invalid("value", "required");
         json value = b["value"];

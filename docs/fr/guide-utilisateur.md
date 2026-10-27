@@ -1,4 +1,4 @@
-# Nhill 2.0 — Guide utilisateur
+# Nhill 2.1 — Guide utilisateur
 
 *English: [../en/user-guide.md](../en/user-guide.md)*
 
@@ -13,11 +13,23 @@ la même organisation, avec les améliorations décrites au § 0).
 
 ---
 
-## 0. Nouveautés de la version 2.0 pour l'utilisateur
+## 0. Nouveautés pour l'utilisateur
+
+### Version 2.1
+
+- **Se souvenir de moi** (Nhill Business et Nhill POS, sur Windows, Linux et Android) :
+  cochée à la connexion, l'application se rouvre déjà connectée. Seul un jeton de session
+  est gardé, dans le stockage sécurisé du système (Gestionnaire d'identification de
+  Windows, Keystore d'Android, trousseau Linux), **jamais le mot de passe**. Décochée, rien
+  n'est gardé ; la déconnexion efface aussi la session mémorisée (§ 10).
+- **Mot de passe oublié** : l'administrateur de l'établissement donne un mot de passe
+  temporaire à un employé ; propriétaires et administrateurs reçoivent un code par e-mail
+  (§ 9).
+
+### Version 2.0
 
 - **Mots de passe** : 8 caractères minimum partout (création de compte, invitation,
-  changement de mot de passe, console d'administration ; une future réinitialisation
-  appliquera la même règle). Les mots de passe trop courants
+  changement de mot de passe, réinitialisation, console d'administration). Les mots de passe trop courants
   (« 12345678 », « password », « kinshasa »…) sont refusés. Aucun changement périodique
   n'est imposé ; changez-le seulement si vous pensez qu'il a été vu ou deviné.
 - **Afficher le mot de passe** : un bouton en forme d'œil, dans chaque champ de mot de
@@ -155,11 +167,11 @@ ni additionnés entre devises.
 |---|---|---|
 | Établissement | Identité, identifiants légaux, **logo**, langue des documents, délai de paiement, arrondi des taxes, instructions de paiement, pied de page, stock négatif | Propriétaire, administrateur |
 | Code d'établissement | Afficher/masquer, copier, **renouveler maintenant** | Propriétaire, administrateur, gérant (lecture) |
-| Équipe | Membres, rôles, désactivation, **invitations** (code d'activation affiché **une seule fois** : remettez-le en main propre, par téléphone ou SMS) | Propriétaire, administrateur |
+| Équipe | Membres, rôles, désactivation, **invitations** (code d'activation affiché **une seule fois** : remettez-le en main propre, par téléphone ou SMS), **réinitialisation du mot de passe** d'un membre (§ 9) | Propriétaire, administrateur |
 | Abonnement | Offre, échéance, offres par durée et devise, code promo, paiement, historique | Propriétaire, administrateur |
 | Taxes et comptes | Taux de taxe (non modifiables : créer un nouveau code), caisses et comptes, **taux de change** | Propriétaire, administrateur |
 | Point de vente | Caisses et caissiers, moyens de paiement, remise maximale, ticket, codes promo de caisse, sessions et rapports X/Z | Propriétaire, administrateur ; gérant et comptable : sessions et rapports |
-| Mon compte | Nom, téléphone, langue, thème, **mot de passe** (le changer déconnecte vos autres appareils), déconnexion | Tous |
+| Mon compte | Nom, téléphone, langue, thème, **mot de passe** (le changer déconnecte vos autres appareils), **Se souvenir de moi sur cet appareil**, déconnexion | Tous |
 
 Rôles : **Propriétaire**, **Administrateur**, **Gérant**, **Vendeur / caissier**,
 **Comptable**, **Responsable de caisse**, **Caissier**, **Lecture seule**.
@@ -185,14 +197,51 @@ Menu **Aide et assistance** : envoyer une question ou un signalement à l'équip
 suivre les réponses. N'y indiquez jamais de mot de passe, de code d'établissement ni de
 numéro de carte.
 
-**Mot de passe oublié** : la version 2.0 ne propose **aucune réinitialisation** (ni par
-e-mail ni par l'assistance) ; c'est une limite connue, prévue dans une version ultérieure.
-Conservez votre mot de passe dans un gestionnaire de mots de passe. Changer de mot de
-passe en étant connecté reste possible (Paramètres › Mon compte).
+### Mot de passe oublié
+
+L'équipe Nhill ne connaît pas votre mot de passe et ne vous le demandera jamais. Selon
+votre rôle :
+
+**Vous êtes employé (vendeur, caissier, comptable, gérant…).** Demandez à l'administrateur
+ou au propriétaire de votre établissement. Dans **Paramètres › Équipe**, il choisit votre
+nom puis **Réinitialiser le mot de passe** : Nhill crée un mot de passe temporaire
+(12 caractères, par exemple `k7Rm-x2Qa-Hp9w`), affiché **une seule fois**, qu'il vous
+remet **en personne ou par téléphone** (jamais par e-mail ni dans un groupe de discussion).
+Vos sessions ouvertes sont fermées immédiatement. À la connexion suivante, avec ce mot de
+passe temporaire, Nhill vous demande d'en choisir un nouveau (8 caractères minimum,
+différent du temporaire) avant d'ouvrir l'application. Le mot de passe temporaire expire
+après 72 heures : passé ce délai, demandez-en un autre.
+
+Un administrateur ne peut réinitialiser que les comptes de **son** établissement, jamais
+celui du propriétaire ni le sien ; seul le propriétaire peut réinitialiser un
+administrateur. Si votre compte sert aussi dans une **autre** entreprise, aucun de ses
+administrateurs ne peut le réinitialiser : utilisez la procédure par e-mail ci-dessous.
+
+**Vous êtes propriétaire ou administrateur** (ou votre compte sert dans plusieurs
+entreprises). Sur l'écran de connexion, choisissez **Mot de passe oublié ?**, saisissez
+votre adresse e-mail puis **Envoyer le code**. Vous recevez un code à 8 chiffres
+(`1234-5678`), valable **20 minutes** et utilisable **une seule fois** ; saisissez-le avec
+votre nouveau mot de passe. Après 5 codes erronés, le code est annulé : demandez-en un
+nouveau. Une nouvelle demande annule le code précédent. Le message affiché est le même que
+l'adresse corresponde à un compte ou non (personne ne peut ainsi découvrir qui utilise
+Nhill) ; si votre compte est un compte d'employé, l'e-mail reçu vous indique qui contacter.
+Une fois le mot de passe changé, **toutes vos sessions sont fermées** et un e-mail vous
+prévient du changement.
+
+Changer de mot de passe en étant connecté reste possible (Paramètres › Mon compte).
 
 ## 10. Connexion et sécurité
 
-- La session est mémorisée dans le trousseau sécurisé de l'appareil (jamais en clair).
+- **Se souvenir de moi** : à cocher à la connexion, uniquement sur un appareil que vous ne
+  partagez pas. L'application se rouvre alors connectée ; le jeton de session est gardé
+  dans le stockage sécurisé du système (Gestionnaire d'identification de Windows, Keystore
+  d'Android, trousseau Secret Service ou KWallet sous Linux), jamais en clair et jamais le
+  mot de passe. **Se déconnecter** efface cette session ; décocher l'option (à la connexion
+  ou dans Paramètres › Mon compte) l'efface aussi. Si le système refuse de la garder (par
+  exemple un Linux sans trousseau), l'application le signale et redemandera la connexion.
+- Un appareil perdu ou volé : changez votre mot de passe depuis un autre appareil (toutes
+  les autres sessions sont fermées) ou demandez à votre administrateur de réinitialiser
+  votre accès.
 - Hors ligne : la consultation et les écritures sont suspendues ; rien n'est perdu.
 - Plusieurs entreprises avec le même compte : choix à la connexion.
 - Après plusieurs essais de connexion erronés, le serveur ralentit les tentatives.
@@ -261,6 +310,9 @@ caissier se connecte avec **son propre compte** (rôle Caissier ou Responsable d
 ## 2. Ouvrir la caisse
 
 Se connecter, choisir sa caisse, **compter le fond de caisse**, **Ouvrir la session**.
+« Se souvenir de moi » et « Mot de passe oublié ? » fonctionnent comme dans Nhill Business
+(Partie A, § 9 et § 10) ; sur un poste de caisse partagé par plusieurs caissiers, laissez
+« Se souvenir de moi » décoché.
 
 ## 3. Vendre
 

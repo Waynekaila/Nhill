@@ -1,15 +1,15 @@
-# Nhill 2.0 — Guide d'installation
+# Nhill 2.1 — Guide d'installation
 
 *English: [../en/installation-guide.md](../en/installation-guide.md)*
 
 Ce guide couvre l'installation des **applications** (Linux, Windows, Android), du
-**serveur** (Linux) et la mise à jour depuis la 0.1.0. Construction des paquets :
+**serveur** (Linux) et la mise à jour depuis la 2.0 ou la 0.1.0. Construction des paquets :
 [guide-compilation.md](guide-compilation.md). Réglages : [guide-configuration.md](guide-configuration.md).
 Site vitrine : [`website/README.md`](../../website/README.md).
 
-> **État des livrables 2.0.0.** Chaque fichier livré dans `release/V2.0.0/` a été
+> **État des livrables.** Chaque fichier livré dans `release/V<version>/` a été
 > réellement construit ; une plateforme absente est listée dans
-> `release/V2.0.0/checksums/MISSING.txt`. Le rapport de validation
+> `release/V<version>/checksums/MISSING.txt`. Le rapport de validation
 > ([rapport-validation.md](rapport-validation.md)) dit ce qui a été testé et sur quelle
 > machine. Les installateurs Windows et l'APK ne sont **pas signés** par un certificat
 > d'éditeur tant que les créateurs n'en ont pas acquis un.
@@ -23,7 +23,7 @@ Avant toute installation, comparez l'empreinte SHA-256 du fichier avec celle de
 sha256sum -c SHA256SUMS --ignore-missing          # Linux
 ```
 ```powershell
-Get-FileHash .\nhill-business-2.0.0-setup.exe -Algorithm SHA256   # Windows : comparer à la main
+Get-FileHash .\nhill-business-2.1.0-setup.exe -Algorithm SHA256   # Windows : comparer à la main
 ```
 
 Si l'empreinte diffère, n'installez pas le fichier.
@@ -47,8 +47,8 @@ Les paquets sont construits **pour une distribution précise** : prenez ceux du 
 votre système (`linux/debian-13/` ou `linux/ubuntu-24.04/`).
 
 ```bash
-sudo apt install ./nhill-business_2.0.0-1_amd64.deb ./nhill-pos_2.0.0-1_amd64.deb
-sudo apt install ./nhill-console_2.0.0-1_amd64.deb     # réservé aux créateurs de Nhill
+sudo apt install ./nhill-business_2.1.0-1_amd64.deb ./nhill-pos_2.1.0-1_amd64.deb
+sudo apt install ./nhill-console_2.1.0-1_amd64.deb     # réservé aux créateurs de Nhill
 ```
 
 `apt` installe les bibliothèques nécessaires depuis les dépôts officiels. Les applications
@@ -59,7 +59,7 @@ Désinstallation : `sudo apt remove nhill-business nhill-pos nhill-console`.
 
 ### 3.2 Windows 10/11
 
-1. Vérifiez l'empreinte (§ 1), puis lancez `nhill-business-2.0.0-setup.exe` (ou
+1. Vérifiez l'empreinte (§ 1), puis lancez `nhill-business-2.1.0-setup.exe` (ou
    `nhill-pos-…`, `nhill-console-…`). L'installation demande les droits d'administrateur
    (installation dans `Program Files`).
 2. Tant que l'installateur n'est pas signé, Windows SmartScreen peut afficher « Windows a
@@ -68,11 +68,11 @@ Désinstallation : `sudo apt remove nhill-business nhill-pos nhill-console`.
    « Exécuter quand même ». Ne désactivez jamais SmartScreen ni l'antivirus.
 3. Raccourcis créés dans le menu Démarrer ; désinstallation par Paramètres → Applications.
 
-Installation silencieuse (parc de postes) : `nhill-pos-2.0.0-setup.exe /S`.
+Installation silencieuse (parc de postes) : `nhill-pos-2.1.0-setup.exe /S`.
 
 ### 3.3 Android
 
-1. Vérifiez l'empreinte de `nhill-business-2.0.0-arm64-v8a.apk`.
+1. Vérifiez l'empreinte de `nhill-business-2.1.0-arm64-v8a.apk`.
 2. Ouvrez le fichier sur le téléphone ; Android demande d'autoriser **cette application**
    (gestionnaire de fichiers ou navigateur) à installer des applications. Autorisez-la
    pour cette installation, puis retirez l'autorisation (Paramètres → Applications →
@@ -104,7 +104,7 @@ un serveur de production public avec TLS : faites-la d'abord sur un serveur de r
 ### 4.2 Paquet
 
 ```bash
-sudo apt install ./nhill-server_2.0.0-1_amd64.deb
+sudo apt install ./nhill-server_2.1.0-1_amd64.deb
 curl -s http://127.0.0.1:8080/health     # {"database":false,"status":"setup"}
 ```
 
@@ -158,23 +158,39 @@ Dans `/etc/nhill/server.env` : `NH_PUBLIC_BASE_URL=https://api.<domaine>`,
 - Nhill Console → **Premier accès** (jeton 30 min, mot de passe de 8 caractères minimum,
   TOTP obligatoire).
 - **Offres et tarifs** : aucun prix n'est préconfiguré.
+- **Courrier** (2.1) : relais SMTP avec TLS (`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`) ; sans
+  lui, propriétaires et administrateurs ne peuvent pas récupérer un mot de passe oublié.
 - **Prestataires de paiement** : rester en mode test jusqu'à un paiement de test réussi
   avec le compte du prestataire.
 
-## 5. Mise à jour depuis la 0.1.0
+## 5. Mise à jour vers la 2.1.0
+
+Depuis la 2.0.x :
 
 1. **Sauvegarder** la base : `sudo systemctl start nhill-backup.service`.
-2. Serveur : `sudo apt install ./nhill-server_2.0.0-1_amd64.deb` ; le service applique les
-   migrations au démarrage (la 2.0.0 n'ajoute **aucune migration** : schéma 0001–0010).
-3. Applications : installer les nouveaux paquets / installateurs / APK. Les clients 0.1.x
-   restent acceptés par un serveur 2.0 (API `v1` inchangée, `min_client_version` 0.1.0) ;
-   un client 2.0 fonctionne aussi avec un serveur 0.1.x, mais ce serveur impose encore
-   10 caractères (14 pour la console) ; les clients 0.1.x, eux, refusent localement les
-   mots de passe de moins de 10 caractères. Mettez à jour serveur et clients ensemble.
-4. Mots de passe existants : **aucun changement imposé**. La règle de 8 caractères
-   s'applique aux nouveaux mots de passe.
+2. Serveur : `sudo apt install ./nhill-server_2.1.0-1_amd64.deb` ; au démarrage, le service
+   applique la migration **0011** (mot de passe oublié : deux colonnes dans `users`, table
+   `password_resets`, trois paramètres de la plateforme). Schéma : 0001–0011.
+3. Courrier : renseignez `NH_EMAIL_TRANSPORT=smtp` et les variables `NH_SMTP_*`
+   ([guide-configuration.md](guide-configuration.md) § 1 et § 5), puis
+   `sudo -u nhill nhill-server --config /etc/nhill/server.env check` et un essai de
+   « Mot de passe oublié ? » avec un compte de test.
+4. Applications : installez les nouvelles versions **avant** d'utiliser la réinitialisation
+   par l'administrateur. Un client 2.0 reste accepté par le serveur 2.1 (API `v1`), mais
+   il ne sait pas afficher le changement obligatoire d'un mot de passe temporaire : le
+   membre concerné ne pourrait pas se connecter depuis ce poste.
+5. Session mémorisée : un utilisateur dont la session était déjà gardée par la 2.0 (Linux)
+   la conserve ; ailleurs, « Se souvenir de moi » s'active à la prochaine connexion.
 
-Retour arrière : réinstaller le paquet 0.1.0 (pas de migration à annuler en 2.0.0).
+Depuis la 0.1.0 : mêmes étapes ; la 2.0 n'ajoutait aucune migration (la règle de
+8 caractères s'applique aux nouveaux mots de passe, sans changement imposé aux
+existants). Mettez à jour serveur et clients ensemble (les clients 0.1.x refusent
+localement les mots de passe de moins de 10 caractères).
+
+Retour arrière vers la 2.0 : restaurer la sauvegarde de l'étape 1 est la méthode sûre.
+Réinstaller seulement le paquet 2.0 laisse la migration 0011 en place (le serveur 2.0
+ignore les colonnes et la table ajoutées) ; ce cas n'a pas été testé, et un mot de passe
+temporaire déjà donné y fonctionnerait comme un mot de passe ordinaire.
 
 ## 6. Dépannage
 
@@ -182,6 +198,8 @@ Retour arrière : réinstaller le paquet 0.1.0 (pas de migration à annuler en 2
 |---|---|
 | « Problème serveur » dans l'application | `curl https://api.<domaine>/health` ; `journalctl -u nhill-server` |
 | Session non mémorisée sous Linux | installer/déverrouiller GNOME Keyring ou KWallet |
+| Session non mémorisée sous Windows ou Android | vérifier que « Se souvenir de moi » est coché (Paramètres › Mon compte › Cet appareil) ; Android : définir un verrouillage d'écran ; un message « stockage sécurisé indisponible » s'affiche si le système refuse l'enregistrement |
+| « Mot de passe oublié ? » : aucun code reçu | serveur : `NH_EMAIL_TRANSPORT=smtp` ? erreur du relais dans `journalctl -u nhill-server` ; utilisateur : dossier des indésirables ; un employé d'un seul établissement reçoit la consigne de contacter son administrateur, pas un code |
 | « Mise à jour obligatoire » | installer la version demandée par le serveur |
 | Android : « Application non installée » | APK d'une autre signature déjà présent : le désinstaller |
 | Windows : application qui ne démarre pas | réinstaller ; vérifier que l'antivirus n'a pas mis un fichier en quarantaine |

@@ -33,3 +33,10 @@ CREATE INDEX password_resets_user_open ON password_resets (user_id, purpose)
 CREATE UNIQUE INDEX password_resets_ticket ON password_resets (secret_hash) WHERE purpose = 'forced_change';
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON password_resets TO nhill_app;
+
+-- Settings of the recovery procedures (Nhill Console › Platform settings, superadmin).
+INSERT INTO platform_settings (key, value, description) VALUES
+    ('password_reset_minutes',       '20', 'Validité d''un code de réinitialisation envoyé par e-mail (minutes, 5 à 60)'),
+    ('password_reset_max_attempts',  '5',  'Codes erronés acceptés avant l''annulation du code (1 à 10)'),
+    ('temporary_password_hours',     '72', 'Validité d''un mot de passe temporaire donné par un administrateur (heures, 1 à 168)')
+ON CONFLICT (key) DO NOTHING;

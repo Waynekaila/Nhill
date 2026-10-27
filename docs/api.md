@@ -1,9 +1,10 @@
 # Nhill — Référence de l'API v1
 
 > Référence de l'API `v1`, inchangée en 2.0 (sauf longueur minimale des mots de passe : 8 caractères).
+> 2.1 : quatre points d'accès ajoutés pour le mot de passe oublié (marqués « 2.1 »), sans changement des existants.
 
 Générée à partir des déclarations de routes du serveur (`server/src/services/*.cpp`)
-le 25 octobre 2026 : 126 points d'accès.
+le 25 octobre 2026 : 126 points d'accès ; 130 en 2.1.
 
 ## Conventions
 
@@ -45,9 +46,12 @@ rapports, journal ; lecture seule — aucune écriture.
 
 | Méthode | Chemin | Accès | Permission | Description |
 |---|---|---|---|---|
-| POST | `/api/v1/auth/login` | Public | — | Connexion (e-mail, mot de passe, établissement si plusieurs) |
+| POST | `/api/v1/auth/login` | Public | — | Connexion (e-mail, mot de passe, établissement si plusieurs). 2.1 : avec un mot de passe temporaire, renvoie `{"password_change_required":true,"change_token","expires_at"}` au lieu d'une session ; temporaire expiré → `401 temporary_password_expired` |
 | POST | `/api/v1/auth/refresh` | Public | — | Rotation du jeton de rafraîchissement (réutilisation détectée → révocation) |
 | POST | `/api/v1/auth/logout` | User | — | Fermeture de la session courante |
+| POST | `/api/v1/auth/password/forgot` | Public | — | 2.1 — Mot de passe oublié : `{email}` → **toujours** `202 {"status":"accepted"}`. Code à 8 chiffres par e-mail pour un propriétaire, un administrateur ou un compte de plusieurs établissements ; consigne « contactez votre administrateur » pour un employé d'un seul établissement ; rien pour une adresse inconnue. 3 demandes/heure/adresse, 10/heure/IP |
+| POST | `/api/v1/auth/password/reset` | Public | — | 2.1 — `{email, code, new_password}` → 204 ; code faux, expiré ou épuisé → `400 invalid_reset_code` (même erreur dans tous les cas). Toutes les sessions sont fermées |
+| POST | `/api/v1/auth/password/change-required` | Public | — | 2.1 — `{change_token, new_password}` après une connexion qui a renvoyé `{"password_change_required":true,"change_token","expires_at"}` (mot de passe temporaire) ; ticket 15 min, usage unique (`400 invalid_change_token`) ; `422 password_reused` si identique au temporaire ; renvoie la même réponse qu'une connexion |
 | GET | `/api/v1/me` | User | — | Utilisateur, rôle, permissions, établissement, abonnement, autres établissements |
 | PATCH | `/api/v1/me` | User | — | Nom, téléphone, langue |
 | POST | `/api/v1/me/password` | User | — | Changement de mot de passe (ferme les autres sessions) |
@@ -56,6 +60,7 @@ rapports, journal ; lecture seule — aucune écriture.
 | POST | `/api/v1/notifications/:id/read` | User | — | Marquer une notification comme lue |
 | GET | `/api/v1/members` | User | users.manage | Membres, invitations en attente, limite d'utilisateurs de l'offre |
 | PATCH | `/api/v1/members/:id` | User | users.manage | Changer le rôle ou désactiver un membre (sessions révoquées) |
+| POST | `/api/v1/members/:id/password-reset` | User | users.manage | 2.1 — Mot de passe temporaire pour un membre de **cet** établissement → `{temporary_password, expires_at, must_change_password:true}`, affiché une seule fois ; refusé pour soi-même (`cannot_modify_self`), le propriétaire (`owner_immutable`), un administrateur si l'auteur n'est pas propriétaire (`owner_required`), un membre désactivé (`409 member_disabled`), un compte actif dans un autre établissement (`409 account_shared`) ; membre d'un autre établissement → 404. 10 par 15 min et par auteur |
 
 ## Établissement, équipe, abonnement
 
@@ -250,7 +255,7 @@ avec `approval_token`.
 | GET | `/api/v1/admin/announcements` | Admin | — | Annonces |
 | POST | `/api/v1/admin/announcements` | Admin | — | Publier une annonce (support) |
 | GET | `/api/v1/admin/settings` | Admin | — | Paramètres de plateforme |
-| PUT | `/api/v1/admin/settings/:key` | Admin | — | Modifier un paramètre (superadmin, liste blanche) |
+| PUT | `/api/v1/admin/settings/:key` | Admin | — | Modifier un paramètre (superadmin, liste blanche ; 2.1 : `password_reset_minutes` 5–60, `password_reset_max_attempts` 1–10, `temporary_password_hours` 1–168) |
 | GET | `/api/v1/admin/attachment-requests` | Admin | — | Demandes de rattachement (support) |
 | POST | `/api/v1/admin/attachment-requests/:id/resolve` | Admin | — | Accepter/refuser avec note (support) |
 | GET | `/api/v1/admin/establishments/:id/stats` | Admin | — | Statistiques **agrégées** sur une période (billing, auditor) ; consultation auditée et visible par l'établissement |

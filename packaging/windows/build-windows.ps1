@@ -6,7 +6,9 @@
 # Prérequis (vérifiés ci-dessous) : Visual Studio 2022 (C++), CMake >= 3.21, Ninja, Git, Qt 6.5+ MSVC 64 bits
 # (Qt Quick, Qt Svg, Qt Linguist, Qt Test), NSIS 3 (makensis).
 # QtKeychain (session mémorisée dans le Gestionnaire d'identification Windows) est obligatoire :
-# sans -KeychainDir, il est compilé depuis sa source vérifiée par build-qtkeychain.ps1.
+# sans -KeychainDir, il est compilé depuis sa source vérifiée par build-qtkeychain.ps1, en
+# bibliothèque statique (aucune DLL à livrer ; voir ce script). Chaque .exe est ensuite contrôlé :
+# il doit importer CredReadW, CredWriteW et CredDeleteW d'ADVAPI32 (dumpbin).
 # -AllowNoKeychain construit quand même sans lui (la session n'est alors jamais mémorisée).
 param(
   [Parameter(Mandatory = $true)][string]$Source,
@@ -35,24 +37,27 @@ if (-not $makensis) { Fail "NSIS 3 introuvable (winget install NSIS.NSIS)." }
 $cm = Get-Content "$Source\CMakeLists.txt" -Raw
 if ($cm -match 'project\(nhill\s+VERSION\s+([0-9]+\.[0-9]+\.[0-9]+)') { $Version = $Matches[1] } else { Fail "version introuvable dans CMakeLists.txt" }
 Write-Host "Nhill $Version"
-# ---- QtKeychain (Gestionnaire d'identification Windows)
-$keychainDll = ""
-if (-not $KeychainDir -and -not $VcpkgRoot -and -not $AllowNoKeychain) {
+# ---- QtKeychain statique (Gestionnaire d'identification Windows)
+# Le paquet vcpkg de QtKeychain est une DLL (qt6keychain.dll) que windeployqt ne sait pas
+# déployer : même avec -VcpkgRoot, QtKeychain est construit depuis sa source vérifiée.
+if (-not $KeychainDir -and -not $AllowNoKeychain) {
   $KeychainDir = Join-Path $BuildDir "deps\qtkeychain"
   & powershell -ExecutionPolicy Bypass -File "$PSScriptRoot\build-qtkeychain.ps1" -QtDir $QtDir -Prefix $KeychainDir -WorkDir (Join-Path $BuildDir "deps\qtkeychain-work")
   if ($LASTEXITCODE) { Fail "QtKeychain n'a pas pu être construit (voir ci-dessus) ; -AllowNoKeychain pour construire sans mémorisation de session" }
 }
 $prefixPath = $QtDir
+$keychainArgs = @()
 if ($KeychainDir) {
   if (-not (Test-Path "$KeychainDir\lib\cmake\Qt6Keychain\Qt6KeychainConfig.cmake")) { Fail "QtKeychain introuvable dans $KeychainDir" }
+  if (-not (Test-Path "$KeychainDir\lib\qt6keychain.lib") -or (Test-Path "$KeychainDir\bin\qt6keychain.dll")) {
+    Fail "$KeychainDir n'est pas une construction statique de QtKeychain : relancez build-qtkeychain.ps1 dans un dossier vide"
+  }
   $prefixPath = "$QtDir;$KeychainDir"
-  $keychainDll = "$KeychainDir\bin\qt6keychain.dll"
-} elseif ($VcpkgRoot) {
-  $keychainDll = "$VcpkgRoot\installed\x64-windows\bin\qt6keychain.dll"
+  $keychainArgs = @("-DQt6Keychain_DIR:PATH=$KeychainDir\lib\cmake\Qt6Keychain")
 }
 $cmakeArgs = @("-S", $Source, "-B", $BuildDir, "-G", "Ninja", "-DCMAKE_BUILD_TYPE=Release",
           "-DCMAKE_PREFIX_PATH=$prefixPath", "-DNHILL_BUILD_SERVER=OFF", "-DNHILL_BUILD_TESTS=OFF",
-          "-DNHILL_BUILD_KEYCHAIN_TEST=ON")
+          "-DNHILL_BUILD_KEYCHAIN_TEST=ON") + $keychainArgs
 if ($ServerUrl) { $cmakeArgs += "-DNHILL_SERVER_URL=$ServerUrl" }
 if ($VcpkgRoot) {
   $cmakeArgs += "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot\scripts\buildsystems\vcpkg.cmake"
@@ -64,9 +69,21 @@ $haveKeychain = $cache -match 'Qt6Keychain_DIR:[A-Z]+=(?!.*NOTFOUND).+'
 if (-not $haveKeychain) {
   if (-not $AllowNoKeychain) { Fail "QtKeychain non trouvé par CMake : la session ne pourrait pas être mémorisée" }
   Write-Host "Attention : construction SANS QtKeychain, la session ne sera jamais mémorisée." -ForegroundColor Yellow
-  $keychainDll = ""
-} else { Write-Host "QtKeychain : session mémorisée dans le Gestionnaire d'identification Windows" }
+} else {
+  Need dumpbin.exe "dumpbin (outils Visual Studio C++) sert à vérifier la liaison de QtKeychain."
+  Write-Host "QtKeychain : session mémorisée dans le Gestionnaire d'identification Windows"
+}
 & cmake --build $BuildDir --parallel; if ($LASTEXITCODE) { Fail "compilation échouée" }
+
+# Contrôle de la liaison : le stockage sécurisé est dans l'exécutable, aucune DLL QtKeychain.
+function Test-CredentialStoreLinked([string]$Exe) {
+  $imports = (& dumpbin.exe /nologo /imports $Exe) -join "`n"
+  if ($LASTEXITCODE) { Fail "dumpbin a échoué pour $Exe" }
+  foreach ($fn in @("CredReadW", "CredWriteW", "CredDeleteW")) {
+    if ($imports -notmatch "\b$fn\b") { Fail "$(Split-Path -Leaf $Exe) n'importe pas $fn : QtKeychain (Gestionnaire d'identification) non lié" }
+  }
+  if ($imports -match "(?i)qt6keychain") { Fail "$(Split-Path -Leaf $Exe) dépend d'une DLL QtKeychain (liaison statique attendue)" }
+}
 
 $dist = Join-Path $BuildDir "dist"
 New-Item -ItemType Directory -Force -Path $dist | Out-Null
@@ -78,11 +95,10 @@ foreach ($app in @("nhill-business", "nhill-console", "nhill-pos")) {
   New-Item -ItemType Directory -Force -Path $dir | Out-Null
   Copy-Item $exe $dir
   Copy-Item "$Source\assets\icons\$app.ico" $dir
-  # QtKeychain d'abord : windeployqt cherche les dépendances non Qt à côté de l'exécutable.
-  if ($keychainDll) {
-    if (-not (Test-Path $keychainDll)) { Fail "qt6keychain.dll introuvable : $keychainDll" }
-    Copy-Item $keychainDll $dir
-  }
+  # Notices des composants tiers (QtKeychain est liée statiquement : sa licence BSD impose
+  # de reproduire sa notice avec le binaire ; Qt LGPL ; polices).
+  Copy-Item "$Source\packaging\notices\THIRD-PARTY-NOTICES.txt" $dir
+  if ($haveKeychain) { Test-CredentialStoreLinked (Join-Path $dir "$app.exe") }
   & "$QtDir\bin\windeployqt.exe" --release --qmldir "$Source\client\qml" --no-translations "$dir\$app.exe"
   if ($LASTEXITCODE) { Fail "windeployqt a échoué pour $app" }
   & $makensis "/DAPP_ID=$app" "/DAPP_VERSION=$Version" "/DSOURCE_DIR=$dir" "/DOUTPUT_DIR=$dist" "$PSScriptRoot\nhill-installer.nsi"

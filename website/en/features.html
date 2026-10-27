@@ -3,21 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Features — Nhill</title>
-<meta name="description" content="Sales, invoices, cash register, stock, purchases, expenses, payments, reports and team: what Nhill Business and Nhill POS do, and what they do not do yet.">
+<title>Features: till, invoices, stock, reports — Nhill</title>
+<meta name="description" content="Till with closing and variance, PDF invoices, stock per warehouse, purchases, expenses, customer credit, reports and team control: everything Nhill does.">
 
 <link rel="canonical" href="https://www.nhill.example/en/features.html">
 <link rel="alternate" hreflang="en" href="https://www.nhill.example/en/features.html">
 <link rel="alternate" hreflang="fr" href="https://www.nhill.example/pages/fonctionnalites.html">
+<link rel="alternate" hreflang="x-default" href="https://www.nhill.example/pages/fonctionnalites.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Features">
-<meta property="og:description" content="Sales, invoices, cash register, stock, purchases, expenses, payments, reports and team: what Nhill Business and Nhill POS do, and what they do not do yet.">
+<meta property="og:site_name" content="Nhill">
+<meta property="og:title" content="Features: till, invoices, stock, reports">
+<meta property="og:description" content="Till with closing and variance, PDF invoices, stock per warehouse, purchases, expenses, customer credit, reports and team control: everything Nhill does.">
 <meta property="og:url" content="https://www.nhill.example/en/features.html">
 <meta property="og:image" content="https://www.nhill.example/assets/images/capture-caisse-ticket.webp">
 <meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E2236">
 <link rel="icon" href="../assets/images/nhill-mark.svg" type="image/svg+xml">
-<link rel="preload" href="../assets/fonts/IBMPlexSans-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="../assets/fonts/IBMPlexSans-SemiBold.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="../assets/fonts/IBMPlexSans-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="../assets/css/site.css">
 
 </head>
@@ -26,136 +30,179 @@
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html"><img src="../assets/images/nhill-mark-reverse.svg" alt="" width="30" height="30"><span>Nhill</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav id="nav" class="nav" aria-label="Main navigation">
       <a href="features.html" aria-current="page">Features</a>
       <a href="use-cases.html">Use cases</a>
-      <a href="pilot-programme.html">Pilot programme</a>
+      <a href="free-trial.html">Free trial</a>
+      <a href="get-started.html">Get started</a>
       <a href="partners.html">Partners</a>
-      <a href="access.html">Access and pricing</a>
       <a href="faq.html">Questions</a>
-      <a href="contact.html">Contact</a>
       <a class="lang" href="../pages/fonctionnalites.html" lang="fr" hreflang="fr">Français</a>
     </nav>
+    <a class="btn btn-gold btn-small head-cta" href="contact.html#demonstration">Book a demo</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
 <main id="contenu">
 <section class="page-head">
   <div class="wrap">
-    <h1>What Nhill Business and Nhill POS do</h1>
-    <p class="lede">This page describes the functions available in version 2.0.0. What does not exist yet is listed at the bottom of the page.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap split">
-    <div class="prose">
-      <h2>Sales and invoices</h2>
-      <ul>
-        <li>Quotes, purchase orders, invoices and credit notes, numbered by the server without gaps or duplicates.</li>
-        <li>Quote converted into an invoice, credit note on an invoice with goods returned to stock.</li>
-        <li>Per-line discounts and taxes (DRC profile: 16 % VAT, 0 %, exempt), exact rounding.</li>
-        <li>Documents in CDF, USD, EUR or another currency, with the exchange rate recorded.</li>
-        <li>PDF with your legal details and logo, in French or English.</li>
-        <li>An issued invoice can no longer be changed: it is corrected by a credit note, as in accounting.</li>
-        <li>For VAT-registered businesses: a field to record the reference of the standardised invoice issued by your fiscal device.</li>
-      </ul>
+    <h1>Everything you need to sell, follow and decide</h1>
+    <p class="lede">Nhill brings together the till, invoices, stock, payments and reports. Here is what each part does for you, with screenshots of the real application.</p>
+    <div class="actions">
+      <a class="btn btn-gold" href="contact.html#demonstration">Book a demo</a>
+      <a class="btn btn-ghost" href="free-trial.html">Try it free</a>
     </div>
-    <figure class="shot">
-      <img src="../assets/images/capture-facture.webp" width="1280" height="707" loading="lazy" alt="Invoice FA-2026-000002 in Nhill Business: customer, lines, totals before tax, taxes, total, amount paid and balance, status history.">
-      <figcaption>A partly paid invoice. Real screenshot, demo data (French interface).</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section section-mist">
-  <div class="wrap split reverse">
-    <div class="prose">
-      <h2>Cash register: Nhill POS</h2>
-      <ul>
-        <li>Each cashier signs in with their own account and only sees their register and session.</li>
-        <li>Opening with a float, selling by touch or with a barcode scanner (USB, works like a keyboard).</li>
-        <li>Payment with several methods (cash, card, Mobile Money…) and change computed.</li>
-        <li>Discount above the set limit: a supervisor approves with their password, valid once.</li>
-        <li>Returns and voids through credit notes, goods back in stock, cash refund.</li>
-        <li>Justified cash in and out, X reading during the day, closing with variance and Z report.</li>
-        <li>PDF receipts in 58 or 80 mm roll format. Keyboard shortcuts: F2 to scan, F9 to pay.</li>
-      </ul>
+<section class="section" id="till">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>Take payments fast, close the till right</h2>
+        <p class="lede">Nhill POS is made for the counter: few steps per sale, and a closing based on figures.</p>
+        <ul class="prose">
+          <li>Each cashier signs in with their own account and only sees their register and session.</li>
+          <li>Opening with a float; sell by touch or with a USB barcode scanner.</li>
+          <li>Several payment methods on one ticket (cash, card, Mobile Money) and change computed for you.</li>
+          <li>Discount above the limit, return or void: approval by a supervisor with their own password, valid once.</li>
+          <li>Cash in and cash out with a reason, X reading during the day.</li>
+          <li>Closing: the cashier counts the drawer without seeing the expected amount; Nhill computes the variance and keeps it in the Z report.</li>
+          <li>PDF tickets in 58 or 80 mm roll format; keyboard shortcuts F2 (scan) and F9 (pay).</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="../assets/images/capture-session-caisse.webp" width="1280" height="800" loading="lazy" alt="Till session in Nhill POS: sales, returns, net sales, expected cash and the list of tickets of the session."><figcaption>Following a till session. Real screenshot, demo data.</figcaption></figure>
     </div>
-    <figure class="shot">
-      <img src="../assets/images/capture-session-caisse.webp" width="1280" height="800" loading="lazy" alt="Cash session in Nhill POS: sales, returns, net sales, expected cash and the list of receipts of the session.">
-      <figcaption>Following a cash session. Real screenshot, demo data (French interface).</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap split">
-    <div class="prose">
-      <h2>Stock, purchases and expenses</h2>
-      <ul>
-        <li>Products and services, references, barcodes, categories, sale and purchase prices.</li>
-        <li>Stock per warehouse, alert thresholds, traced movements (sale, received purchase, justified adjustment, transfer).</li>
-        <li>Catalogue import and export as CSV.</li>
-        <li>Supplier purchases: receiving goods updates the stock, amount left to pay.</li>
-        <li>Expenses with a category and a receipt (photo or PDF).</li>
-      </ul>
-      <h2>Payments and reports</h2>
-      <ul>
-        <li>Payments received and made, attached to invoices, purchases and expenses; cash and bank accounts.</li>
-        <li>Sales journal, payments, expenses, sales by product with estimated margin, stock movements, customer receivables, amounts to pay.</li>
-        <li>PDF and CSV export.</li>
-      </ul>
+<section class="section section-mist" id="invoices">
+  <div class="wrap">
+    <div class="split reverse">
+      <div>
+        <h2>Clean invoices, credit under control</h2>
+        <p class="lede">Your documents go out in your name, and every customer has an up-to-date balance.</p>
+        <ul class="prose">
+          <li>Quotes, purchase orders, invoices and credit notes, numbered by the server with no gaps or duplicates.</li>
+          <li>A quote becomes an invoice in one click; a credit note corrects an invoice and puts goods back in stock.</li>
+          <li>Discounts and taxes per line (DRC profile: 16 % VAT, 0 %, exempt), exact calculations.</li>
+          <li>Documents in CDF, USD, EUR or another currency, with the exchange rate saved.</li>
+          <li>PDF with your logo and legal details, in French or English.</li>
+          <li>Partial payments attached to the right invoice; a list of what each customer owes you, per currency.</li>
+          <li>For VAT-registered businesses: a field keeps the reference of the standardised invoice issued by your fiscal device.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="../assets/images/capture-facture.webp" width="1280" height="707" loading="lazy" alt="Invoice FA-2026-000002 in Nhill Business: customer, lines, totals before tax, taxes, total, amount paid and balance, status history."><figcaption>A partly paid invoice. Real screenshot, demo data.</figcaption></figure>
     </div>
-    <figure class="shot">
-      <img src="../assets/images/capture-stock.webp" width="1280" height="707" loading="lazy" alt="Stock screen of Nhill Business: quantities per product, thresholds and estimated value.">
-      <figcaption>Stock levels. Real screenshot, demo data (French interface).</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section section-mist">
-  <div class="wrap split reverse">
-    <div class="prose">
-      <h2>Team, access and traceability</h2>
-      <ul>
-        <li>Roles: owner, administrator, manager, salesperson, accountant, read-only, cash manager, cashier.</li>
-        <li>Employees join the business with an establishment code and an invitation; the code is renewed every 30 days.</li>
-        <li>Activity log: who did what and when, cannot be edited, can be exported.</li>
-        <li>Passwords of at least 8 characters; changing your password closes your other sessions.</li>
-        <li>Several establishments for the same person, with separate access to each.</li>
-      </ul>
+<section class="section" id="stock">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>Accurate stock without constant counting</h2>
+        <p class="lede">Quantities only change through recorded movements: you always know why a figure moved.</p>
+        <ul class="prose">
+          <li>Products and services, references, barcodes, categories, sale and purchase prices.</li>
+          <li>Stock per warehouse and transfers between warehouses.</li>
+          <li>Tracked movements: sale, received purchase, adjustment with a reason, return.</li>
+          <li>Alerts for products below their threshold, estimated stock value.</li>
+          <li>Catalogue import and export as CSV to get started quickly.</li>
+          <li>Supplier purchases: receiving goods updates stock and keeps the amount left to pay.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="../assets/images/capture-stock.webp" width="1280" height="707" loading="lazy" alt="Stock screen in Nhill Business: quantities per product, thresholds and estimated value."><figcaption>Stock levels. Real screenshot, demo data.</figcaption></figure>
     </div>
-    <figure class="shot">
-      <img src="../assets/images/capture-equipe.webp" width="1280" height="707" loading="lazy" alt="Team settings in Nhill Business: members, e-mail address, role, status and last activity.">
-      <figcaption>Managing the team. Real screenshot, demo data (French interface).</figcaption>
-    </figure>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap prose">
-    <h2>What Nhill does not do yet</h2>
-    <ul>
-      <li>No standardised invoice homologated by the DGI (no connection to an electronic fiscal device).</li>
-      <li>No offline mode: an Internet connection is required.</li>
-      <li>No direct link with Mobile Money operators and no live online payment activated.</li>
-      <li>No general ledger accounting (OHADA chart of accounts): the CSV exports are for your accountant.</li>
-      <li>No Excel export (CSV and PDF only), no e-mail or SMS sending from the application.</li>
-      <li>Nhill POS and Nhill Console do not exist on Android; only Nhill Business is planned there.</li>
+<section class="section section-mist" id="reports">
+  <div class="wrap">
+    <div class="split reverse">
+      <div>
+        <h2>Figures ready for you and your accountant</h2>
+        <p class="lede">Reports are computed by the server from the recorded documents: everyone reads the same figures.</p>
+        <ul class="prose">
+          <li>Sales journal, payments, expenses, sales per product with estimated margin.</li>
+          <li>Stock movements, customer receivables, amounts owed to suppliers.</li>
+          <li>Expenses per category with their receipts (photo or PDF).</li>
+          <li>Cash and bank accounts; payments received and made.</li>
+          <li>PDF and CSV export of every report.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="../assets/images/capture-rapports.webp" width="1280" height="707" loading="lazy" alt="Nhill Business reports: sales journal of the month with date, number, customer, currency, amount before tax and taxes, PDF and CSV export."><figcaption>The sales journal. Real screenshot, demo data.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="team">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <h2>A team, roles and a log</h2>
+        <p class="lede">Everyone works with their own access; you stay in charge of who does what.</p>
+        <ul class="prose">
+          <li>Roles: owner, administrator, manager, sales, accountant, read-only, cash manager, cashier.</li>
+          <li>Employees join the business with the establishment code and an invitation; the code is renewed every 30 days.</li>
+          <li>Activity log: who did what and when, tamper-proof, exportable.</li>
+          <li>Forgotten password: the administrator gives the employee a temporary password, replaced at the next sign-in; owners and administrators receive a code by e-mail.</li>
+          <li>"Remember me": on a personal device, the session is kept in the system's secure storage, never the password.</li>
+          <li>One person can work for several establishments, with separate access for each.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="../assets/images/capture-equipe.webp" width="1280" height="707" loading="lazy" alt="Team settings in Nhill Business: members, e-mail address, role, status and last activity."><figcaption>Team management. Real screenshot, demo data.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section section-mist" id="devices">
+  <div class="wrap">
+    <div class="split reverse">
+      <div>
+        <h2>On your computers and phones</h2>
+        <ul class="prose">
+          <li>Nhill Business: Windows 10 and 11 (64-bit), Linux (Debian 13, Ubuntu 24.04), Android 7 and later phones and tablets.</li>
+          <li>Nhill POS: Windows 10 and 11 (64-bit), Linux, with a USB barcode scanner if you like.</li>
+          <li>Interface, documents and reports in French or English, chosen by each user.</li>
+          <li>An internet connection, even mobile, is enough: an operation cut by a network drop is sent again without being counted twice.</li>
+        </ul>
+        <p><a class="more" href="get-started.html#devices">See the table of supported devices</a></p>
+      </div>
+      <figure class="phone"><img src="../assets/images/capture-telephone-tableau-de-bord.webp" width="390" height="844" loading="lazy" alt="Nhill Business on a phone: dashboard with revenue, unpaid invoices, expenses, stock alerts and recent sales."></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="good-to-know">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Good to know before you choose</h2>
+      <p>To decide with all the facts, here is the exact scope of Nhill today.</p>
+    </div>
+    <ul class="good-to-know">
+      <li><strong>DGI standardised invoices</strong>Nhill is management software; it is not connected to an electronic fiscal device. If you are VAT-registered, your standardised invoices are still issued by your device, and Nhill keeps their reference.</li>
+      <li><strong>Internet connection</strong>Nhill records everything on a secure server: you need a connection to sell and invoice. A mobile connection is enough.</li>
+      <li><strong>Mobile Money</strong>Mobile Money payments are recorded after checking them on the phone or terminal; Nhill is not directly connected to the operators.</li>
+      <li><strong>Accounting</strong>Nhill does not keep the general ledger (OHADA chart of accounts): CSV and PDF exports are for your accountant.</li>
+      <li><strong>Sending documents</strong>Invoices and tickets are shared as PDF; sending them by e-mail or SMS directly from the application is not available yet.</li>
     </ul>
-    <p>These limits are public because they matter when you decide. The pilot programme also helps us choose which ones to lift first.</p>
+    <div class="actions">
+      <a class="btn btn-blue" href="contact.html#demonstration">See Nhill on your case</a>
+      <a class="btn btn-line" href="faq.html">Read the FAQ</a>
+    </div>
   </div>
 </section>
 </main>
 <footer class="site-foot">
   <div class="wrap">
     <div class="cols">
-      <div><h2>Nhill</h2><p>Business management and point of sale for shops and SMEs.</p></div>
-      <div><h2>Product</h2><ul><li><a href="features.html">Features</a></li><li><a href="use-cases.html">Use cases</a></li><li><a href="pilot-programme.html">Pilot programme</a></li><li><a href="partners.html">Partners</a></li><li><a href="access.html">Access and pricing</a></li><li><a href="faq.html">Questions</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="foot-brand"><p class="foot-name"><img src="../assets/images/nhill-mark-reverse.svg" alt="" width="26" height="26">Nhill</p><p>Business management and point of sale for shops and SMEs, in Kinshasa and beyond.</p></div>
+      <div><h2>Product</h2><ul><li><a href="features.html">Features</a></li><li><a href="use-cases.html">Use cases</a></li><li><a href="partners.html">Partners</a></li><li><a href="faq.html">Questions</a></li></ul></div>
+      <div><h2>Get started</h2><ul><li><a href="contact.html#demonstration">Book a demo</a></li><li><a href="free-trial.html">Free assisted trial</a></li><li><a href="contact.html?topic=plan#question">Discuss a plan</a></li><li><a href="contact.html#question">Contact the team</a></li></ul></div>
       <div><h2>Legal information</h2><ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms of use</a></li><li><a href="legal-notice.html">Legal notice</a></li></ul></div>
     </div>
-    <p class="fine">Nhill is business management software. It is not a standardised invoicing system homologated by the DRC tax authority (DGI). Screenshots show the real application with demo data.</p>
+    <p class="fine">Nhill is business management software: your standardised invoices are still issued by your DGI-approved fiscal device. Screenshots show the real application with demo data.</p>
   </div>
 </footer>
 <script src="../assets/js/site.js" defer></script>

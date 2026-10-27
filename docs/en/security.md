@@ -1,8 +1,8 @@
-# Nhill 2.0 — Security
+# Nhill 2.1 — Security
 
 *Français : [../fr/securite.md](../fr/securite.md)*
 
-This document summarises the Nhill 2.0 security model, what changed since 0.1.0 and what
+This document summarises the Nhill 2.1 security model, what changed since 0.1.0 and what
 the operator must do. The detailed analysis, with evidence and sources, is in the
 [security audit](03-security-audit.md); the 0.1.0 internal audit (evidence through tests) is
 kept in `docs/securite.md` (French).
@@ -22,19 +22,19 @@ kept in `docs/securite.md` (French).
   renewable code, nor a receipt identifier gives access to anything.
 - **Traceability**: append-only audit log, visible to the business.
 
-## 2. Passwords and authentication (2.0)
+## 2. Passwords and authentication (2.0, extended in 2.1)
 
-| Item | 2.0 rule | Rationale |
+| Item | Rule | Rationale |
 |---|---|---|
-| Minimum length | **8 characters** for every account (creation, invitation, change, console); a future reset feature will apply the same rule | project requirement; NIST SP 800-63B-4 sets 8 with multi-factor authentication and recommends 15 for a password used alone (§ 3) |
+| Minimum length | **8 characters** for every account (creation, invitation, change, console, reset, replacement of a temporary password) | project requirement; NIST SP 800-63B-4 sets 8 with multi-factor authentication and recommends 15 for a password used alone (§ 3) |
 | Validation | the same C++ function in the applications (before sending) and in the server (decision) | one rule, which a modified client cannot bypass |
 | Refused passwords | list of common passwords (40 entries: "12345678", "password", "azerty123", "kinshasa"…), same as the e-mail, repetitive | NIST: refuse known-compromised or expected passwords |
 | Composition rules | **none** (no forced digits or symbols) | NIST: composition rules do not improve real security |
 | Periodic change | **none**; change required only after compromise | NIST: periodic expiry leads to weak passwords |
 | Storage | Argon2id (libsodium, 3 passes, 64 MiB), never in plain text, never in logs | — |
 | Display | show/hide button in every field | fewer typing errors, allows passphrases |
-| Attempts | limited in the database (sign-in: 8 per 15 min per e-mail, 40 per IP address; console: 5 per account, 20 per IP) | slows guessing attacks |
-| Sessions | opaque tokens, 15-minute access, 30-day refresh with rotation and reuse detection; password change = other sessions closed | — |
+| Attempts | limited in the database (sign-in: 8 per 15 min per e-mail, 40 per IP address; console: 5 per account, 20 per IP; forgotten password: 3 code requests per hour per address, 10 per IP; 10 code checks per 15 min per address, 20 per IP; 5 wrong codes cancel the code) | slows guessing attacks |
+| Sessions | opaque tokens, 15-minute access, 30-day refresh with rotation and reuse detection; password change = other sessions closed; reset (code or administrator) = all sessions closed | — |
 | Two-factor authentication | **mandatory for Nhill Console** (TOTP); **not imposed** on businesses | the console gives access to the whole platform: this essential protection is kept |
 
 ## 3. Accepted risk: 8 characters
@@ -60,6 +60,22 @@ password used only for Nhill, a password manager.
 | Activity log: technical fields hidden | fewer internal identifiers displayed |
 | Website: separate database and roles, insert-only web role | a website compromise exposes neither the application nor the submissions already received |
 
+## 4a. Security changes in 2.1
+
+| Change | Effect |
+|---|---|
+| "Remember me": the refresh token (never the password) is kept by QtKeychain — Windows Credential Manager (DPAPI, current user), Android Keystore (non-exportable RSA-2048 key, data encrypted with AES-GCM), Secret Service or KWallet on Linux | when no secure storage is available, the session is **not** remembered: no plain-text fallback. The box is unticked by default; "Sign out" erases the entry |
+| QtKeychain 0.17.0 built from its official source, verified commit (875f77d9…); linked statically on Windows and Android | no third-party DLL next to the application (no DLL substitution); every Windows executable is checked (CredReadW/CredWriteW/CredDeleteW imports) |
+| Temporary password given by an establishment administrator | limited to members of **their** establishment (`users.manage`), not the owner, not oneself, not an account shared with another establishment; 12 random characters, Argon2id, shown once; valid 72 h; sign-in only leads to the required change; the member's sessions are closed; action logged without the password |
+| Required change | signing in with a temporary password only yields a one-time ticket (15 min, SHA-256 hashed); the new password must follow the rule and differ from the temporary one |
+| Forgotten password by e-mail (owner, administrator, account of several establishments) | 8-digit code, hashed with HMAC-SHA-256 under a server key derived from `NH_SECRET_KEY`, valid 20 min, 5 attempts; a new request cancels the previous one; the same 202 answer whether the address exists or not; the code is encrypted in the outbox only until it is sent, then erased |
+| SMTP delivery (libcurl) | TLS required (smtps or STARTTLS) with certificate and host name checks; `NH_SMTP_TLS=off` refused except for a local relay; relay password read from a mode-600 file, never logged; headers protected against injection |
+
+Known limits: Windows Credential Manager keeps the entry after uninstalling as long as
+the user has not signed out; an Android device without a screen lock protects the Keystore
+less; 2.0 applications do not handle the required change (update the devices before using
+the reset by an administrator).
+
 ## 5. Known dependency vulnerabilities
 
 | Dependency | Advisory | Status | Action |
@@ -79,6 +95,9 @@ Before commercial opening:
 - [ ] Monitoring: `/health`, backup failures, certificate expiry, disk, 5xx errors.
 - [ ] Console accounts: minimal role, TOTP on a personal device, long passphrase.
 - [ ] Payment providers in test mode until a real control payment.
+- [ ] SMTP relay configured (`NH_EMAIL_TRANSPORT=smtp`, TLS, SPF/DKIM for the sender
+      domain) and tested: without it, owners and administrators cannot recover a
+      forgotten password.
 - [ ] Personal-data formalities in the DRC (see [legal-parameters.md](legal-parameters.md)).
 - [ ] External penetration test before a wide roll-out.
 - [ ] Sign the Windows installers and the APK with the publisher's certificates.

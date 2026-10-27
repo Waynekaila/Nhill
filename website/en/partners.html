@@ -3,21 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Become a partner — Nhill</title>
-<meta name="description" content="Consultancies, IT providers, trainers, associations and support organisations: recommend, install or train on Nhill.">
+<title>Become a Nhill partner — Nhill</title>
+<meta name="description" content="Consultancies, IT providers, trainers, associations and support organisations: recommend, install or train on Nhill for shopkeepers and SMEs.">
 
 <link rel="canonical" href="https://www.nhill.example/en/partners.html">
 <link rel="alternate" hreflang="en" href="https://www.nhill.example/en/partners.html">
 <link rel="alternate" hreflang="fr" href="https://www.nhill.example/pages/partenaires.html">
+<link rel="alternate" hreflang="x-default" href="https://www.nhill.example/pages/partenaires.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Become a partner">
-<meta property="og:description" content="Consultancies, IT providers, trainers, associations and support organisations: recommend, install or train on Nhill.">
+<meta property="og:site_name" content="Nhill">
+<meta property="og:title" content="Become a Nhill partner">
+<meta property="og:description" content="Consultancies, IT providers, trainers, associations and support organisations: recommend, install or train on Nhill for shopkeepers and SMEs.">
 <meta property="og:url" content="https://www.nhill.example/en/partners.html">
 <meta property="og:image" content="https://www.nhill.example/assets/images/capture-caisse-ticket.webp">
 <meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E2236">
 <link rel="icon" href="../assets/images/nhill-mark.svg" type="image/svg+xml">
-<link rel="preload" href="../assets/fonts/IBMPlexSans-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="../assets/fonts/IBMPlexSans-SemiBold.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="../assets/fonts/IBMPlexSans-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="../assets/css/site.css">
 
 </head>
@@ -26,24 +30,25 @@
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html"><img src="../assets/images/nhill-mark-reverse.svg" alt="" width="30" height="30"><span>Nhill</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav id="nav" class="nav" aria-label="Main navigation">
       <a href="features.html">Features</a>
       <a href="use-cases.html">Use cases</a>
-      <a href="pilot-programme.html">Pilot programme</a>
+      <a href="free-trial.html">Free trial</a>
+      <a href="get-started.html">Get started</a>
       <a href="partners.html" aria-current="page">Partners</a>
-      <a href="access.html">Access and pricing</a>
       <a href="faq.html">Questions</a>
-      <a href="contact.html">Contact</a>
       <a class="lang" href="../pages/partenaires.html" lang="fr" hreflang="fr">Français</a>
     </nav>
+    <a class="btn btn-gold btn-small head-cta" href="contact.html#demonstration">Book a demo</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
 <main id="contenu">
 <section class="page-head">
   <div class="wrap">
-    <h1>Let's work together with entrepreneurs</h1>
-    <p class="lede">Nhill is looking for a few partners who know shopkeepers and SMEs and can advise, equip or train them.</p>
+    <h1>Help the businesses in your network manage better</h1>
+    <p class="lede">You advise, equip or train shopkeepers and SMEs? Nhill is looking for a few trusted partners to support them together.</p>
+    <div class="actions"><a class="btn btn-gold" href="#candidature">Propose a partnership</a></div>
   </div>
 </section>
 
@@ -54,11 +59,11 @@
       <li><strong>Referral</strong><span>You introduce Nhill to businesses in your network. If they become customers, a commission agreed in advance is paid to you. Written referral agreement.</span></li>
       <li><strong>Installation and support</strong><span>IT providers: you install Nhill, import data and provide first-level support, paid by your customers or by Nhill depending on the agreement.</span></li>
       <li><strong>Training</strong><span>Trainers, business schools, business centres: you train users on Nhill with our materials.</span></li>
-      <li><strong>Entrepreneur support</strong><span>Incubators, professional associations, SME support organisations: you offer Nhill to the businesses you follow, for example through the pilot programme.</span></li>
+      <li><strong>Entrepreneur support</strong><span>Incubators, professional associations, SME support organisations: you offer Nhill to the businesses you follow, for example through the free assisted trial.</span></li>
       <li><strong>Reference user</strong><span>A business that uses Nhill and agrees, after the pilot and only if it wishes, to talk about it with other shopkeepers.</span></li>
     </ul>
     <div class="note prose">
-      <p>No partnership is announced publicly without a signed agreement. Commissions, responsibilities, confidentiality rules and termination conditions are set in writing before anything starts.</p>
+      <p>Every partnership rests on a written agreement: commissions, responsibilities, confidentiality and termination conditions are set before anything starts, and no partnership is announced publicly without your agreement.</p>
     </div>
   </div>
 </section>
@@ -66,6 +71,7 @@
 <section class="section section-mist">
   <div class="wrap">
     <h2 id="candidature">Propose a partnership</h2>
+    <div class="form-card">
     <form class="lead" data-kind="partner" novalidate>
       <div class="field"><label for="r-name">Full name *</label><input id="r-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="r-name-err" aria-live="polite"></p></div>
       <div class="field"><label for="r-org">Organisation *</label><input id="r-org" name="organisation" autocomplete="organization" required maxlength="160"><p class="err" id="r-org-err" aria-live="polite"></p></div>
@@ -81,17 +87,19 @@
       <button class="btn btn-blue" type="submit">Send my proposal</button>
       <div class="form-status" role="status" aria-live="polite"></div>
     </form>
+    </div>
   </div>
 </section>
 </main>
 <footer class="site-foot">
   <div class="wrap">
     <div class="cols">
-      <div><h2>Nhill</h2><p>Business management and point of sale for shops and SMEs.</p></div>
-      <div><h2>Product</h2><ul><li><a href="features.html">Features</a></li><li><a href="use-cases.html">Use cases</a></li><li><a href="pilot-programme.html">Pilot programme</a></li><li><a href="partners.html">Partners</a></li><li><a href="access.html">Access and pricing</a></li><li><a href="faq.html">Questions</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="foot-brand"><p class="foot-name"><img src="../assets/images/nhill-mark-reverse.svg" alt="" width="26" height="26">Nhill</p><p>Business management and point of sale for shops and SMEs, in Kinshasa and beyond.</p></div>
+      <div><h2>Product</h2><ul><li><a href="features.html">Features</a></li><li><a href="use-cases.html">Use cases</a></li><li><a href="partners.html">Partners</a></li><li><a href="faq.html">Questions</a></li></ul></div>
+      <div><h2>Get started</h2><ul><li><a href="contact.html#demonstration">Book a demo</a></li><li><a href="free-trial.html">Free assisted trial</a></li><li><a href="contact.html?topic=plan#question">Discuss a plan</a></li><li><a href="contact.html#question">Contact the team</a></li></ul></div>
       <div><h2>Legal information</h2><ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms of use</a></li><li><a href="legal-notice.html">Legal notice</a></li></ul></div>
     </div>
-    <p class="fine">Nhill is business management software. It is not a standardised invoicing system homologated by the DRC tax authority (DGI). Screenshots show the real application with demo data.</p>
+    <p class="fine">Nhill is business management software: your standardised invoices are still issued by your DGI-approved fiscal device. Screenshots show the real application with demo data.</p>
   </div>
 </footer>
 <script src="../assets/js/site.js" defer></script>

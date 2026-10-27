@@ -238,12 +238,20 @@ bool unavailable(const QString& v) {
 
 class KeychainTest : public QObject {
     Q_OBJECT
+    bool m_sessionStored = false;  // the logout phase needs the session left by write + read
 private slots:
     void sessionSurvivesARestartWhenRemembered() {
         NHILL_PHASE("write");
         NHILL_PHASE("read");
+        m_sessionStored = true;
     }
-    void logoutErasesTheStoredSession() { NHILL_PHASE("logout"); }
+    void logoutErasesTheStoredSession() {
+        if (!m_sessionStored) {
+            if (required()) QFAIL("no stored session to sign out from (previous test did not pass)");
+            QSKIP("no stored session to sign out from (secure store unavailable)");
+        }
+        NHILL_PHASE("logout");
+    }
     void nothingIsStoredWithoutRememberMe() { NHILL_PHASE("forget"); }
 };
 

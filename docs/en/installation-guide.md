@@ -1,14 +1,14 @@
-# Nhill 2.0 — Installation guide
+# Nhill 2.1 — Installation guide
 
 *Français : [../fr/guide-installation.md](../fr/guide-installation.md)*
 
 This guide covers installing the **applications** (Linux, Windows, Android), the
-**server** (Linux) and upgrading from 0.1.0. Building the packages:
+**server** (Linux) and upgrading from 2.0 or 0.1.0. Building the packages:
 [build-guide.md](build-guide.md). Settings: [configuration-guide.md](configuration-guide.md).
 Marketing website: [`website/README.en.md`](../../website/README.en.md).
 
-> **State of the 2.0.0 deliverables.** Every file shipped in `release/V2.0.0/` was
-> actually built; a missing platform is listed in `release/V2.0.0/checksums/MISSING.txt`.
+> **State of the deliverables.** Every file shipped in `release/V<version>/` was
+> actually built; a missing platform is listed in `release/V<version>/checksums/MISSING.txt`.
 > The validation report ([validation-report.md](validation-report.md)) says what was
 > tested and on which machine. The Windows installers and the APK are **not signed** with
 > a publisher certificate until the creators acquire one.
@@ -22,7 +22,7 @@ Before installing, compare the file's SHA-256 digest with the one in
 sha256sum -c SHA256SUMS --ignore-missing          # Linux
 ```
 ```powershell
-Get-FileHash .\nhill-business-2.0.0-setup.exe -Algorithm SHA256   # Windows: compare by eye
+Get-FileHash .\nhill-business-2.1.0-setup.exe -Algorithm SHA256   # Windows: compare by eye
 ```
 
 If the digest differs, do not install the file.
@@ -46,8 +46,8 @@ Packages are built **for one specific distribution**: take those from your syste
 folder (`linux/debian-13/` or `linux/ubuntu-24.04/`).
 
 ```bash
-sudo apt install ./nhill-business_2.0.0-1_amd64.deb ./nhill-pos_2.0.0-1_amd64.deb
-sudo apt install ./nhill-console_2.0.0-1_amd64.deb     # for the creators of Nhill only
+sudo apt install ./nhill-business_2.1.0-1_amd64.deb ./nhill-pos_2.1.0-1_amd64.deb
+sudo apt install ./nhill-console_2.1.0-1_amd64.deb     # for the creators of Nhill only
 ```
 
 `apt` installs the required libraries from the official repositories. The applications
@@ -58,7 +58,7 @@ Removal: `sudo apt remove nhill-business nhill-pos nhill-console`.
 
 ### 3.2 Windows 10/11
 
-1. Check the digest (§ 1), then run `nhill-business-2.0.0-setup.exe` (or `nhill-pos-…`,
+1. Check the digest (§ 1), then run `nhill-business-2.1.0-setup.exe` (or `nhill-pos-…`,
    `nhill-console-…`). Installation asks for administrator rights (it installs into
    `Program Files`).
 2. As long as the installer is unsigned, Windows SmartScreen may show "Windows protected
@@ -66,11 +66,11 @@ Removal: `sudo apt remove nhill-business nhill-pos nhill-console`.
    matches**: "More info" → "Run anyway". Never turn off SmartScreen or the antivirus.
 3. Start-menu shortcuts are created; remove through Settings → Apps.
 
-Silent installation (fleet of computers): `nhill-pos-2.0.0-setup.exe /S`.
+Silent installation (fleet of computers): `nhill-pos-2.1.0-setup.exe /S`.
 
 ### 3.3 Android
 
-1. Check the digest of `nhill-business-2.0.0-arm64-v8a.apk`.
+1. Check the digest of `nhill-business-2.1.0-arm64-v8a.apk`.
 2. Open the file on the phone; Android asks you to allow **this app** (file manager or
    browser) to install apps. Allow it for this installation, then withdraw the permission
    (Settings → Apps → Special access → Install unknown apps).
@@ -101,7 +101,7 @@ run on a public production server with TLS: run it on a staging server first.
 ### 4.2 Package
 
 ```bash
-sudo apt install ./nhill-server_2.0.0-1_amd64.deb
+sudo apt install ./nhill-server_2.1.0-1_amd64.deb
 curl -s http://127.0.0.1:8080/health     # {"database":false,"status":"setup"}
 ```
 
@@ -154,23 +154,37 @@ In `/etc/nhill/server.env`: `NH_PUBLIC_BASE_URL=https://api.<domain>`,
 - Nhill Console → **First access** (30-minute token, password of at least 8 characters,
   mandatory TOTP).
 - **Plans and prices**: no price is preconfigured.
+- **Mail** (2.1): SMTP relay with TLS (`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`); without it,
+  owners and administrators cannot recover a forgotten password.
 - **Payment providers**: stay in test mode until a successful test payment with the
   provider's account.
 
-## 5. Upgrading from 0.1.0
+## 5. Upgrading to 2.1.0
+
+From 2.0.x:
 
 1. **Back up** the database: `sudo systemctl start nhill-backup.service`.
-2. Server: `sudo apt install ./nhill-server_2.0.0-1_amd64.deb`; the service applies
-   migrations at start-up (2.0.0 adds **no migration**: schema 0001–0010).
-3. Applications: install the new packages / installers / APK. 0.1.x clients are still
-   accepted by a 2.0 server (API `v1` unchanged, `min_client_version` 0.1.0); a 2.0
-   client also works with a 0.1.x server, but that server still requires 10 characters
-   (14 for the console), and 0.1.x clients reject passwords shorter than 10 characters
-   locally. Upgrade server and clients together.
-4. Existing passwords: **no forced change**. The 8-character rule applies to new
-   passwords.
+2. Server: `sudo apt install ./nhill-server_2.1.0-1_amd64.deb`; at start-up the service
+   applies migration **0011** (forgotten password: two columns in `users`, the
+   `password_resets` table, three platform settings). Schema: 0001–0011.
+3. Mail: set `NH_EMAIL_TRANSPORT=smtp` and the `NH_SMTP_*` variables
+   ([configuration-guide.md](configuration-guide.md) § 1 and § 5), then
+   `sudo -u nhill nhill-server --config /etc/nhill/server.env check` and try
+   "Forgot your password?" with a test account.
+4. Applications: install the new versions **before** using the reset by an administrator.
+   A 2.0 client is still accepted by the 2.1 server (API `v1`), but it cannot show the
+   required change of a temporary password: the member could not sign in from that device.
+5. Remembered session: a user whose session was already kept by 2.0 (Linux) keeps it;
+   elsewhere, "Remember me" takes effect at the next sign-in.
 
-Rollback: reinstall the 0.1.0 package (no migration to undo in 2.0.0).
+From 0.1.0: same steps; 2.0 added no migration (the 8-character rule applies to new
+passwords, with no forced change for existing ones). Upgrade server and clients together
+(0.1.x clients reject passwords shorter than 10 characters locally).
+
+Rollback to 2.0: restoring the backup from step 1 is the safe method. Reinstalling only the
+2.0 package leaves migration 0011 in place (the 2.0 server ignores the added columns and
+table); this case has not been tested, and a temporary password already given would work
+there as an ordinary password.
 
 ## 6. Troubleshooting
 
@@ -178,6 +192,8 @@ Rollback: reinstall the 0.1.0 package (no migration to undo in 2.0.0).
 |---|---|
 | "Server problem" in the application | `curl https://api.<domain>/health`; `journalctl -u nhill-server` |
 | Session not remembered on Linux | install/unlock GNOME Keyring or KWallet |
+| Session not remembered on Windows or Android | check that "Remember me" is ticked (Settings › My account › This device); Android: set a screen lock; a "secure storage unavailable" message appears if the system refuses to save |
+| "Forgot your password?": no code received | server: `NH_EMAIL_TRANSPORT=smtp`? relay error in `journalctl -u nhill-server`; user: spam folder; an employee of a single establishment receives the instruction to contact their administrator, not a code |
 | "Update required" | install the version requested by the server |
 | Android: "App not installed" | an APK with another signature is present: uninstall it |
 | Windows: application does not start | reinstall; check that the antivirus has not quarantined a file |

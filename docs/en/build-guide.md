@@ -1,8 +1,8 @@
-# Nhill 2.0 — Build and release guide
+# Nhill 2.1 — Build and release guide
 
 *Français : [../fr/guide-compilation.md](../fr/guide-compilation.md)*
 
-How to produce, verify and assemble the 2.0.0 deliverables on a **fresh** machine. All
+How to produce, verify and assemble the 2.1.0 deliverables on a **fresh** machine. All
 scripts live in `scripts/`, are written in strict Bash (`set -Eeuo pipefail`) and share
 `scripts/lib/common.sh`.
 
@@ -17,7 +17,7 @@ scripts live in `scripts/`, are written in strict Bash (`set -Eeuo pipefail`) an
 | Documentation PDFs | any machine with pandoc + a PDF engine | `build-docs-pdf.sh` | `docs/pdf/`, `legal/pdf/`, `marketing/pdf/`, `README*.pdf` |
 | Website (archive) | any machine with Python 3 | `build-website.sh` | `dist/website/` |
 | Deliverable check | — | `verify-build.sh` | `build/logs/verify-build-*.log` |
-| Release folder | — | `package-release.sh` | `release/V2.0.0/` |
+| Release folder | — | `package-release.sh` | `release/V2.1.0/` |
 | Everything possible here | — | `build-all.sh` | summary succeeded / skipped / failed |
 
 A `.deb` package depends on its distribution's library versions: do not copy an Ubuntu
@@ -72,21 +72,23 @@ scripts/build-linux.sh --client-only --no-tests --server-url https://api.example
 
 ```bash
 scripts/build-deb.sh --server-url https://api.example.cd
-# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_2.0.0-1_amd64.deb
+# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_2.1.0-1_amd64.deb
 #    (or dist/linux/debian-13/ on Debian 13)
 ```
 
 Each package's dependencies are computed by `dpkg-shlibdeps`; `lintian` checks the
 packages. Installation check on a clean machine:
-`sudo apt install ./dist/linux/<distribution>/nhill-business_2.0.0-1_amd64.deb`.
+`sudo apt install ./dist/linux/<distribution>/nhill-business_2.1.0-1_amd64.deb`.
 
 ## 4. Windows
 
 ### 4.1 On Windows (recommended)
 
 Prerequisites: Visual Studio 2022 ("Desktop development with C++" workload),
-CMake ≥ 3.21, Ninja, Qt 6.5.3 MSVC 2019 64-bit, NSIS 3, QtKeychain (vcpkg) if remembered
-sessions are wanted.
+CMake ≥ 3.21, Ninja, Git, Qt 6.5.3 MSVC 2019 64-bit, NSIS 3. QtKeychain ("Remember me",
+Windows Credential Manager) does not need to be installed: the script builds it from its
+official source (tag 0.17.0, verified commit) with `packaging\windows\build-qtkeychain.ps1`,
+as a **static** library.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
@@ -95,8 +97,29 @@ powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
 ```
 
 `-ExecutionPolicy Bypass` applies to this command only; do not change the machine's
-execution policy. Result, in `build-windows\dist\`: `nhill-business-2.0.0-setup.exe`,
-`nhill-pos-2.0.0-setup.exe`, `nhill-console-2.0.0-setup.exe` and `SHA256SUMS`.
+execution policy. Result, in `build-windows\dist\`: `nhill-business-2.1.0-setup.exe`,
+`nhill-pos-2.1.0-setup.exe`, `nhill-console-2.1.0-setup.exe` and `SHA256SUMS`.
+
+QtKeychain on Windows:
+
+| Option | Effect |
+|---|---|
+| (none) | QtKeychain is built into `<BuildDir>\deps\qtkeychain` on the first build, then reused |
+| `-KeychainDir C:\build\qtkeychain` | uses an existing static build (made by `build-qtkeychain.ps1 -QtDir … -Prefix …`) |
+| `-AllowNoKeychain` | builds without QtKeychain: the session is **never** remembered (no plain-text fallback) |
+
+Why a static library: `windeployqt` treats any DLL named `Qt6*.dll` as a Qt module and only
+looks for it in Qt's folder, so a `qt6keychain.dll` shipped next to the application makes
+the deployment fail. Linked statically, QtKeychain is part of every `.exe`. After the
+build, the script checks with `dumpbin` that each application imports `CredReadW`,
+`CredWriteW` and `CredDeleteW` from `ADVAPI32` and depends on no QtKeychain DLL. The vcpkg
+QtKeychain package (a DLL) is therefore not used, even with `-VcpkgRoot`.
+
+Real test of the secure storage: `-DNHILL_BUILD_KEYCHAIN_TEST=ON` (set by the script)
+produces `build-windows\tests\keychain\test_keychain.exe`; deployed with `windeployqt`, it
+writes a dummy session to Credential Manager, reads it back from a second process, then
+erases it (`NHILL_KEYCHAIN_REQUIRED=1` turns a missing storage into a failure instead of a
+skipped test).
 
 ### 4.2 From Linux (cross-compilation)
 
@@ -105,6 +128,10 @@ scripts/install-deps-linux.sh --with-windows-cross --yes
 packaging/windows/build-qt-mingw.sh               # Qt for Windows (several hours)
 scripts/build-windows.sh --qt-prefix /opt/nhill-win/qt6
 ```
+
+Limit: the MinGW cross-build does not include QtKeychain; applications built this way never
+remember the session (they stay safe, the option is simply unavailable). To ship "Remember
+me" on Windows, use method 4.1.
 
 ### 4.3 Signing
 
@@ -118,8 +145,24 @@ signature, SmartScreen warns the user (see the installation guide).
 QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
 scripts/build-android.sh --server-url https://api.example.cd
-# -> dist/android/nhill-business-2.0.0-arm64-v8a.apk
+# -> dist/android/nhill-business-2.1.0-arm64-v8a.apk
 ```
+
+QtKeychain ("Remember me", Android Keystore) is required. Build it once from its verified
+source (tag 0.17.0, static library), then give its prefix:
+
+```bash
+QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a packaging/android/build-qtkeychain-android.sh ~/build/qtkeychain-android
+KEYCHAIN_PREFIX=~/build/qtkeychain-android QT_ANDROID=… QT_HOST=… ANDROID_SDK_ROOT=… ANDROID_NDK_ROOT=… \
+scripts/build-android.sh --server-url https://api.example.cd
+```
+
+Without `KEYCHAIN_PREFIX` the build stops; `ALLOW_NO_KEYCHAIN=1` produces an APK that never
+remembers the session. The script checks that QtKeychain's Keystore code
+(`KeyGenParameterSpec`) is present in the application library. The real test
+(`.github/scripts/android-keychain-emulator.sh`) installs `test_keychain` on an Android 11
+x86_64 emulator and checks writing, reading back after the application restarts, sign-out
+and erasure.
 
 The SDK, NDK and Qt for Android do not come from `apt`: install them from their official
 sources (Google's sdkmanager, Qt online installer) and check the published digests.
@@ -143,7 +186,7 @@ and each PDF. Never edit a PDF by hand.
 Platforms that cannot be built on your machine are built in CI:
 
 1. Push the repository to a **private** GitHub repository.
-2. Trigger the workflows: tag `git tag v2.0.0 && git push origin v2.0.0`, or "Run
+2. Trigger the workflows: tag `git tag v2.1.0 && git push origin v2.1.0`, or "Run
    workflow" (Actions tab) for `linux-packages`, `windows`, `android`, `docs-website`.
 3. Download the artefacts: `nhill-deb-ubuntu-24.04`, `nhill-deb-debian-13`,
    `nhill-windows-installers`, `nhill-android-apk`, `nhill-docs-and-website`.
@@ -156,13 +199,13 @@ With the `gh` tool: `gh run download <id> -n nhill-windows-installers -D dist/wi
 
 ```bash
 scripts/verify-build.sh --require linux,docs        # check what exists
-scripts/package-release.sh --force                  # assembles release/V2.0.0/
+scripts/package-release.sh --force                  # assembles release/V2.1.0/
 ```
 
 For every platform present, `verify-build.sh` checks the real file format (Debian package,
 PE executable, APK), the 2.x version, the `SHA256SUMS` sums, and the presence and
 freshness of the PDFs. `package-release.sh` copies only what exists into
-`release/V2.0.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
+`release/V2.1.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
 and lists what is missing in `checksums/MISSING.txt` — never a dummy file.
 
 ## 9. Reproducible builds: points of attention

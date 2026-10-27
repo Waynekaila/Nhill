@@ -3,21 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact and demonstration — Nhill</title>
-<meta name="description" content="Ask for a demonstration of Nhill on your own products, or ask the team a question.">
+<title>Book a demo or contact the team — Nhill</title>
+<meta name="description" content="Book a demo of Nhill on your own products, in Kinshasa or online, or ask the sales team your question.">
 
 <link rel="canonical" href="https://www.nhill.example/en/contact.html">
 <link rel="alternate" hreflang="en" href="https://www.nhill.example/en/contact.html">
 <link rel="alternate" hreflang="fr" href="https://www.nhill.example/pages/contact.html">
+<link rel="alternate" hreflang="x-default" href="https://www.nhill.example/pages/contact.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Contact and demonstration">
-<meta property="og:description" content="Ask for a demonstration of Nhill on your own products, or ask the team a question.">
+<meta property="og:site_name" content="Nhill">
+<meta property="og:title" content="Book a demo or contact the team">
+<meta property="og:description" content="Book a demo of Nhill on your own products, in Kinshasa or online, or ask the sales team your question.">
 <meta property="og:url" content="https://www.nhill.example/en/contact.html">
 <meta property="og:image" content="https://www.nhill.example/assets/images/capture-caisse-ticket.webp">
 <meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E2236">
 <link rel="icon" href="../assets/images/nhill-mark.svg" type="image/svg+xml">
-<link rel="preload" href="../assets/fonts/IBMPlexSans-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="../assets/fonts/IBMPlexSans-SemiBold.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="../assets/fonts/IBMPlexSans-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="../assets/css/site.css">
 
 </head>
@@ -26,73 +30,97 @@
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="index.html"><img src="../assets/images/nhill-mark-reverse.svg" alt="" width="30" height="30"><span>Nhill</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav id="nav" class="nav" aria-label="Main navigation">
       <a href="features.html">Features</a>
       <a href="use-cases.html">Use cases</a>
-      <a href="pilot-programme.html">Pilot programme</a>
+      <a href="free-trial.html">Free trial</a>
+      <a href="get-started.html">Get started</a>
       <a href="partners.html">Partners</a>
-      <a href="access.html">Access and pricing</a>
       <a href="faq.html">Questions</a>
-      <a href="contact.html" aria-current="page">Contact</a>
       <a class="lang" href="../pages/contact.html" lang="fr" hreflang="fr">Français</a>
     </nav>
+    <a class="btn btn-gold btn-small head-cta" href="contact.html#demonstration">Book a demo</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
   </div>
 </header>
 <main id="contenu">
 <section class="page-head">
   <div class="wrap">
-    <h1>Ask for a demonstration or write to us</h1>
-    <p class="lede">A demonstration takes about 45 minutes, at your place, at our office or remotely, on your own products.</p>
+    <h1>Let us see together whether Nhill fits your business</h1>
+    <p class="lede">A demo takes about 45 minutes, at your place or online, on your own products. For a simple question, the second form is enough.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <h2 id="demonstration">Ask for a demonstration</h2>
-    <form class="lead" data-kind="demo" novalidate>
-      <div class="field"><label for="d-name">Full name *</label><input id="d-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="d-name-err" aria-live="polite"></p></div>
-      <div class="field"><label for="d-org">Business *</label><input id="d-org" name="organisation" autocomplete="organization" required maxlength="160"><p class="err" id="d-org-err" aria-live="polite"></p></div>
-      <div class="field"><label for="d-email">E-mail *</label><input id="d-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="err" id="d-email-err" aria-live="polite"></p></div>
-      <div class="field"><label for="d-phone">Phone or WhatsApp *</label><input id="d-phone" name="phone" type="tel" autocomplete="tel" required maxlength="30" aria-describedby="d-phone-hint"><p class="hint" id="d-phone-hint">To arrange the meeting. With the country code, for example +243 81 234 5678.</p><p class="err" id="d-phone-err" aria-live="polite"></p></div>
-      <div class="field"><label for="d-city">City *</label><input id="d-city" name="city" required maxlength="80"><p class="err" id="d-city-err" aria-live="polite"></p></div>
-      <div class="field"><label for="d-mode">Preferred place</label>
-        <select id="d-mode" name="meeting_mode"><option value="">No preference</option><option value="onsite">At my place / in my shop</option><option value="remote">Remotely (video call)</option></select><p class="err" id="d-mode-err" aria-live="polite"></p></div>
-      <div class="field"><label for="d-msg">Your business in a few words</label><textarea id="d-msg" name="message" maxlength="2000"></textarea><p class="err" id="d-msg-err" aria-live="polite"></p></div>
-      <div class="hp" aria-hidden="true"><label for="d-website">Leave empty</label><input id="d-website" name="website" class="hp-input" tabindex="-1" autocomplete="off"></div>
-      <div class="check"><input id="d-privacy" name="consent_privacy" type="checkbox" required><label for="d-privacy">I agree that Nhill uses this information to organise the demonstration, as described in the <a href="privacy.html">privacy policy</a>. *</label></div>
-      <p class="err" id="d-privacy-err" aria-live="polite"></p>
-      <button class="btn btn-blue" type="submit">Ask for the demonstration</button>
-      <div class="form-status" role="status" aria-live="polite"></div>
-    </form>
+    <div class="split">
+      <div class="form-aside">
+        <h2 id="demonstration">Book a demo</h2>
+        <p class="lede">We call you back to set an appointment at a day and time that suit you.</p>
+        <ol class="steps vertical">
+          <li><h3>You write to us</h3><p>A few words about your business are enough.</p></li>
+          <li><h3>We call you</h3><p>To set the appointment and prepare your products.</p></li>
+          <li><h3>We show you Nhill</h3><p>On your case, then you decide whether you want to try it.</p></li>
+        </ol>
+      </div>
+      <div class="form-card">
+        <form class="lead" data-kind="demo" novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="d-name">Full name *</label><input id="d-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="d-name-err" aria-live="polite"></p></div>
+            <div class="field"><label for="d-org">Business or activity *</label><input id="d-org" name="organisation" autocomplete="organization" required maxlength="160"><p class="err" id="d-org-err" aria-live="polite"></p></div>
+            <div class="field"><label for="d-email">E-mail *</label><input id="d-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="err" id="d-email-err" aria-live="polite"></p></div>
+            <div class="field"><label for="d-phone">Phone or WhatsApp *</label><input id="d-phone" name="phone" type="tel" autocomplete="tel" required maxlength="30" aria-describedby="d-phone-hint"><p class="hint" id="d-phone-hint">With the country code, for example +243 81 234 5678.</p><p class="err" id="d-phone-err" aria-live="polite"></p></div>
+            <div class="field"><label for="d-city">City *</label><input id="d-city" name="city" autocomplete="address-level2" required maxlength="80"><p class="err" id="d-city-err" aria-live="polite"></p></div>
+            <div class="field"><label for="d-mode">Preferred place</label>
+              <select id="d-mode" name="meeting_mode"><option value="">No preference</option><option value="onsite">At my business</option><option value="remote">Online (video call)</option></select><p class="err" id="d-mode-err" aria-live="polite"></p></div>
+          </div>
+          <div class="field"><label for="d-msg">Your business in a few words</label><textarea id="d-msg" name="message" maxlength="2000" aria-describedby="d-msg-hint"></textarea><p class="hint" id="d-msg-hint">What you sell, how many people work with you, what you want to improve.</p><p class="err" id="d-msg-err" aria-live="polite"></p></div>
+          <div class="hp" aria-hidden="true"><label for="d-website">Do not fill in</label><input id="d-website" name="website" class="hp-input" tabindex="-1" autocomplete="off"></div>
+          <div class="check"><input id="d-privacy" name="consent_privacy" type="checkbox" required><label for="d-privacy">I agree that Nhill uses this information to organise the demo, as described in the <a href="privacy.html">privacy policy</a>. *</label></div>
+          <p class="err" id="d-privacy-err" aria-live="polite"></p>
+          <button class="btn btn-gold" type="submit">Book the demo</button>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="section section-mist">
   <div class="wrap">
-    <h2 id="question">Ask a question</h2>
-    <form class="lead" data-kind="contact" novalidate>
-      <div class="field"><label for="c-name">Full name *</label><input id="c-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="c-name-err" aria-live="polite"></p></div>
-      <div class="field"><label for="c-email">E-mail *</label><input id="c-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="err" id="c-email-err" aria-live="polite"></p></div>
-      <div class="field"><label for="c-msg">Your question *</label><textarea id="c-msg" name="message" required maxlength="2000"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
-      <div class="hp" aria-hidden="true"><label for="c-website">Leave empty</label><input id="c-website" name="website" class="hp-input" tabindex="-1" autocomplete="off"></div>
-      <div class="check"><input id="c-privacy" name="consent_privacy" type="checkbox" required><label for="c-privacy">I agree that Nhill uses this information to answer my question, as described in the <a href="privacy.html">privacy policy</a>. *</label></div>
-      <p class="err" id="c-privacy-err" aria-live="polite"></p>
-      <button class="btn btn-blue" type="submit">Send the question</button>
-      <div class="form-status" role="status" aria-live="polite"></div>
-    </form>
-    <p class="prose">Already using Nhill? For a fault or a question about your account, use "Help &amp; support" in the application: your request goes straight to the team, with the version you use.</p>
+    <div class="split">
+      <div class="form-aside">
+        <h2 id="question">Write to the sales team</h2>
+        <p class="lede">A plan for your business, several shops, a question before you start: we answer.</p>
+        <p class="small">Already using Nhill? For a problem or a question about your account, use "Help and support" in the application: your request reaches the team directly, with the version you use.</p>
+      </div>
+      <div class="form-card">
+        <form class="lead" data-kind="contact" novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="c-name">Full name *</label><input id="c-name" name="name" autocomplete="name" required maxlength="120"><p class="err" id="c-name-err" aria-live="polite"></p></div>
+            <div class="field"><label for="c-email">E-mail *</label><input id="c-email" name="email" type="email" autocomplete="email" required maxlength="200"><p class="err" id="c-email-err" aria-live="polite"></p></div>
+          </div>
+          <div class="field"><label for="c-msg">Your message *</label><textarea id="c-msg" name="message" required maxlength="2000"></textarea><p class="err" id="c-msg-err" aria-live="polite"></p></div>
+          <div class="hp" aria-hidden="true"><label for="c-website">Do not fill in</label><input id="c-website" name="website" class="hp-input" tabindex="-1" autocomplete="off"></div>
+          <div class="check"><input id="c-privacy" name="consent_privacy" type="checkbox" required><label for="c-privacy">I agree that Nhill uses this information to answer my message, as described in the <a href="privacy.html">privacy policy</a>. *</label></div>
+          <p class="err" id="c-privacy-err" aria-live="polite"></p>
+          <button class="btn btn-blue" type="submit">Send the message</button>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 </main>
 <footer class="site-foot">
   <div class="wrap">
     <div class="cols">
-      <div><h2>Nhill</h2><p>Business management and point of sale for shops and SMEs.</p></div>
-      <div><h2>Product</h2><ul><li><a href="features.html">Features</a></li><li><a href="use-cases.html">Use cases</a></li><li><a href="pilot-programme.html">Pilot programme</a></li><li><a href="partners.html">Partners</a></li><li><a href="access.html">Access and pricing</a></li><li><a href="faq.html">Questions</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="foot-brand"><p class="foot-name"><img src="../assets/images/nhill-mark-reverse.svg" alt="" width="26" height="26">Nhill</p><p>Business management and point of sale for shops and SMEs, in Kinshasa and beyond.</p></div>
+      <div><h2>Product</h2><ul><li><a href="features.html">Features</a></li><li><a href="use-cases.html">Use cases</a></li><li><a href="partners.html">Partners</a></li><li><a href="faq.html">Questions</a></li></ul></div>
+      <div><h2>Get started</h2><ul><li><a href="contact.html#demonstration">Book a demo</a></li><li><a href="free-trial.html">Free assisted trial</a></li><li><a href="contact.html?topic=plan#question">Discuss a plan</a></li><li><a href="contact.html#question">Contact the team</a></li></ul></div>
       <div><h2>Legal information</h2><ul><li><a href="privacy.html">Privacy policy</a></li><li><a href="terms.html">Terms of use</a></li><li><a href="legal-notice.html">Legal notice</a></li></ul></div>
     </div>
-    <p class="fine">Nhill is business management software. It is not a standardised invoicing system homologated by the DRC tax authority (DGI). Screenshots show the real application with demo data.</p>
+    <p class="fine">Nhill is business management software: your standardised invoices are still issued by your DGI-approved fiscal device. Screenshots show the real application with demo data.</p>
   </div>
 </footer>
 <script src="../assets/js/site.js" defer></script>

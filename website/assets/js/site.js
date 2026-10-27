@@ -48,6 +48,27 @@
     });
   }
 
+  // ---------------------------------------------------------------- prefilled messages
+  // Links such as contact.html?sujet=formule#question put a first sentence in the message
+  // of the targeted form, so that the visitor only has to complete it. Fixed texts only:
+  // nothing from the address bar is ever inserted in the page.
+  var PREFILL = {
+    fr: { formule: "Je souhaite discuter d'une formule adaptée à mon entreprise : ",
+          boutique: "Activité : boutique avec caisse. ", quincaillerie: "Activité : quincaillerie ou dépôt. ",
+          services: "Activité : prestataire de services. ", pme: "Activité : PME avec plusieurs employés. " },
+    en: { plan: "I would like to discuss a plan suited to my business: ",
+          shop: "Business: shop with a till. ", hardware: "Business: hardware store or depot. ",
+          services: "Business: service provider. ", sme: "Business: SME with several employees. " }
+  }[lang];
+  (function () {
+    var m = /[?&](?:sujet|topic)=([a-z]+)/.exec(location.search);
+    if (!m || !PREFILL[m[1]]) return;
+    var target = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+    var scope = target ? target.closest(".section") || document : document;
+    var area = scope.querySelector("form.lead textarea");
+    if (area && !area.value) area.value = PREFILL[m[1]];
+  })();
+
   // ---------------------------------------------------------------- forms
   var forms = document.querySelectorAll("form.lead");
   if (!forms.length) return;

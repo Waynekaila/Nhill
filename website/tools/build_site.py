@@ -26,27 +26,66 @@ SITE = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 NAV = {
     "fr": [("features", "fonctionnalites", "Fonctionnalités"), ("uses", "cas-usage", "Cas d'usage"),
-           ("pilot", "programme-pilote", "Programme pilote"), ("partners", "partenaires", "Partenaires"),
-           ("access", "acces", "Accès et tarifs"), ("faq", "faq", "Questions"), ("contact", "contact", "Contact")],
+           ("trial", "essai-gratuit", "Essai gratuit"), ("start", "demarrer", "Démarrer"),
+           ("partners", "partenaires", "Partenaires"), ("faq", "faq", "Questions")],
     "en": [("features", "features", "Features"), ("uses", "use-cases", "Use cases"),
-           ("pilot", "pilot-programme", "Pilot programme"), ("partners", "partners", "Partners"),
-           ("access", "access", "Access and pricing"), ("faq", "faq", "Questions"), ("contact", "contact", "Contact")],
+           ("trial", "free-trial", "Free trial"), ("start", "get-started", "Get started"),
+           ("partners", "partners", "Partners"), ("faq", "faq", "Questions")],
 }
+CTA = {"fr": ("contact", "#demonstration", "Demander une démo"), "en": ("contact", "#demonstration", "Book a demo")}
 FOOT = {
-    "fr": {"product": "Produit", "company": "Nhill", "legal": "Informations légales",
+    "fr": {"product": "Produit", "start": "Démarrer", "legal": "Informations légales",
+           "start_links": [("contact", "#demonstration", "Demander une démonstration"), ("essai-gratuit", "", "Essai gratuit accompagné"),
+                           ("contact", "?sujet=formule#question", "Discuter d'une formule"), ("contact", "#question", "Contacter l'équipe")],
            "privacy": ("confidentialite", "Politique de confidentialité"), "terms": ("conditions", "Conditions d'utilisation"),
            "notice": ("mentions-legales", "Mentions légales"),
-           "fine": "Nhill est un logiciel de gestion commerciale. Il n'est pas un système de facturation "
-                   "normalisée homologué par la DGI. Les captures d'écran montrent l'application réelle avec des "
+           "tagline": "Le logiciel de gestion et de caisse des commerçants et des PME, à Kinshasa et au-delà.",
+           "fine": "Nhill est un logiciel de gestion commerciale : vos factures normalisées restent émises par votre "
+                   "dispositif fiscal agréé par la DGI. Les captures d'écran montrent l'application réelle, avec des "
                    "données de démonstration.",
            "skip": "Aller au contenu", "menu": "Menu", "lang": "English", "home": "Accueil"},
-    "en": {"product": "Product", "company": "Nhill", "legal": "Legal information",
+    "en": {"product": "Product", "start": "Get started", "legal": "Legal information",
+           "start_links": [("contact", "#demonstration", "Book a demo"), ("free-trial", "", "Free assisted trial"),
+                           ("contact", "?topic=plan#question", "Discuss a plan"), ("contact", "#question", "Contact the team")],
            "privacy": ("privacy", "Privacy policy"), "terms": ("terms", "Terms of use"),
            "notice": ("legal-notice", "Legal notice"),
-           "fine": "Nhill is business management software. It is not a standardised invoicing system "
-                   "homologated by the DRC tax authority (DGI). Screenshots show the real application with demo data.",
+           "tagline": "Business management and point of sale for shops and SMEs, in Kinshasa and beyond.",
+           "fine": "Nhill is business management software: your standardised invoices are still issued by your "
+                   "DGI-approved fiscal device. Screenshots show the real application with demo data.",
            "skip": "Skip to content", "menu": "Menu", "lang": "Français", "home": "Home"},
 }
+
+
+def product_version():
+    """Version of the product, read from the root CMakeLists.txt (single source)."""
+    try:
+        text = open(os.path.join(SITE, "..", "CMakeLists.txt"), encoding="utf-8").read()
+        m = re.search(r"project\(nhill\s+VERSION\s+([0-9.]+)", text)
+        return m.group(1) if m else None
+    except OSError:
+        return None
+
+
+def french_spacing(markup):
+    """French typography in text nodes: no-break space before : ; ? ! and inside « », so that
+    a line never starts with a colon or a closing guillemet. Tags and attributes are left alone."""
+    parts = re.split(r"(<[^>]+>)", markup)
+    for i, part in enumerate(parts):
+        if part.startswith("<"):
+            continue
+        part = re.sub(r" ([:;?!»])", "\u00a0\\1", part)
+        part = re.sub(r"« ", "«\u00a0", part)
+        parts[i] = part
+    return "".join(parts)
+
+
+def faq_items(body):
+    """Question/answer pairs of the <details> blocks, for FAQPage structured data (same text as shown)."""
+    items = []
+    for q, a in re.findall(r"<details[^>]*>\s*<summary>(.*?)</summary>\s*(.*?)</details>", body, re.S):
+        plain = lambda t: html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", t))).strip()
+        items.append({"@type": "Question", "name": plain(q), "acceptedAnswer": {"@type": "Answer", "text": plain(a)}})
+    return items
 
 
 def out_path(lang, slug):
@@ -76,28 +115,46 @@ def render(lang, slug, meta, body, base_url):
         return "/" + target_path if slug == "404" else href(path, target_path)
     link = lambda target: L(out_path(lang, target))
     body = re.sub(r"\{\{p:([a-z0-9-]+)\}\}", lambda m: link(m.group(1)), body)
+    if lang == "fr":
+        body = french_spacing(body)
     f = FOOT[lang]
     other = "en" if lang == "fr" else "fr"
     pair = meta.get("pair", slug)
     pair_path = out_path(other, pair)
     canonical = f"{base_url}/{path}".replace("/index.html", "/")
     alt_url = f"{base_url}/{pair_path}".replace("/index.html", "/")
+    fr_url = canonical if lang == "fr" else alt_url
     nav_items = []
-    for key, s, label in NAV[lang]:
+    for key, s_, label in NAV[lang]:
         cur = ' aria-current="page"' if meta.get("nav") == key else ""
-        nav_items.append(f'<a href="{L(out_path(lang, s))}"{cur}>{html.escape(label)}</a>')
-    nav_items.append(f'<a class="lang" href="{L(pair_path)}" lang="{other}" hreflang="{other}">{f["lang"]}</a>')
-    foot_product = "".join(f'<li><a href="{L(out_path(lang, s))}">{html.escape(label)}</a></li>' for _, s, label in NAV[lang])
+        nav_items.append(f'<a href="{L(out_path(lang, s_))}"{cur}>{html.escape(label)}</a>')
+    cta_page, cta_anchor, cta_label = CTA[lang]
+    cta = f'<a class="btn btn-gold btn-small head-cta" href="{L(out_path(lang, cta_page))}{cta_anchor}">{html.escape(cta_label)}</a>'
+    lang_link = f'<a class="lang" href="{L(pair_path)}" lang="{other}" hreflang="{other}">{f["lang"]}</a>'
+    foot_product = "".join(f'<li><a href="{L(out_path(lang, s_))}">{html.escape(label)}</a></li>'
+                           for key, s_, label in NAV[lang] if key not in ("trial", "start"))
+    foot_start = "".join(f'<li><a href="{L(out_path(lang, pg))}{suffix}">{html.escape(label)}</a></li>'
+                         for pg, suffix, label in f["start_links"])
     legal = "".join(f'<li><a href="{L(out_path(lang, f[k][0]))}">{html.escape(f[k][1])}</a></li>' for k in ("privacy", "terms", "notice"))
     title = meta["title"] if slug == "index" else f'{meta["title"]} — Nhill'
     robots = '<meta name="robots" content="noindex">' if meta.get("noindex") else ""
-    ld = ""
+    ld = []
     if slug == "index":
-        ld = ('<script type="application/ld+json">' + json.dumps({
-            "@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Nhill",
-            "applicationCategory": "BusinessApplication", "operatingSystem": "Windows, Linux, Android",
-            "softwareVersion": "2.0.0", "inLanguage": ["fr", "en"],
-            "description": meta["description"], "url": canonical}, ensure_ascii=False) + "</script>")
+        app = {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "Nhill",
+               "applicationCategory": "BusinessApplication", "applicationSubCategory": "Point of sale, invoicing, inventory",
+               "operatingSystem": "Windows 10, Windows 11, Linux, Android", "inLanguage": ["fr", "en"],
+               "description": meta["description"], "url": canonical,
+               "screenshot": f"{base_url}/assets/images/capture-caisse-ticket.webp",
+               "featureList": meta.get("features", [])}
+        version = product_version()
+        if version:
+            app["softwareVersion"] = version
+        ld.append(app)
+    faq = faq_items(body) if meta.get("faq_schema") else []
+    if faq:
+        ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faq})
+    ld_html = "".join('<script type="application/ld+json">' + json.dumps(x, ensure_ascii=False) + "</script>" for x in ld)
+    og_image = meta.get("og_image", "capture-caisse-ticket.webp")
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -109,27 +166,33 @@ def render(lang, slug, meta, body, base_url):
 <link rel="canonical" href="{canonical}">
 <link rel="alternate" hreflang="{lang}" href="{canonical}">
 <link rel="alternate" hreflang="{other}" href="{alt_url}">
+<link rel="alternate" hreflang="x-default" href="{fr_url}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Nhill">
 <meta property="og:title" content="{html.escape(meta['title'])}">
 <meta property="og:description" content="{html.escape(meta['description'])}">
 <meta property="og:url" content="{canonical}">
-<meta property="og:image" content="{base_url}/assets/images/capture-caisse-ticket.webp">
+<meta property="og:image" content="{base_url}/assets/images/{og_image}">
 <meta property="og:locale" content="{'fr_CD' if lang == 'fr' else 'en'}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0E2236">
 <link rel="icon" href="{root}/assets/images/nhill-mark.svg" type="image/svg+xml">
-<link rel="preload" href="{root}/assets/fonts/IBMPlexSans-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="{root}/assets/fonts/IBMPlexSans-SemiBold.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="{root}/assets/fonts/IBMPlexSans-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="{root}/assets/css/site.css">
-{ld}
+{ld_html}
 </head>
 <body data-root="{root}">
 <a class="skip" href="#contenu">{f['skip']}</a>
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="{L(out_path(lang, 'index'))}"><img src="{root}/assets/images/nhill-mark-reverse.svg" alt="" width="30" height="30"><span>Nhill</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">{f['menu']}</button>
     <nav id="nav" class="nav" aria-label="{'Navigation principale' if lang == 'fr' else 'Main navigation'}">
       {chr(10).join('      ' + n for n in nav_items).strip()}
+      {lang_link}
     </nav>
+    {cta}
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">{f['menu']}</button>
   </div>
 </header>
 <main id="contenu">
@@ -138,8 +201,9 @@ def render(lang, slug, meta, body, base_url):
 <footer class="site-foot">
   <div class="wrap">
     <div class="cols">
-      <div><h2>Nhill</h2><p>{html.escape(meta.get('footer_tagline') or ('Gestion commerciale et caisse pour les commerçants et les PME.' if lang == 'fr' else 'Business management and point of sale for shops and SMEs.'))}</p></div>
+      <div class="foot-brand"><p class="foot-name"><img src="{root}/assets/images/nhill-mark-reverse.svg" alt="" width="26" height="26">Nhill</p><p>{html.escape(meta.get('footer_tagline') or f['tagline'])}</p></div>
       <div><h2>{f['product']}</h2><ul>{foot_product}</ul></div>
+      <div><h2>{f['start']}</h2><ul>{foot_start}</ul></div>
       <div><h2>{f['legal']}</h2><ul>{legal}</ul></div>
     </div>
     <p class="fine">{html.escape(f['fine'])}</p>
@@ -169,6 +233,7 @@ def main():
     if not base:
         raise SystemExit("adresse publique du site inconnue : --base-url, SITE_PUBLIC_BASE_URL ou config/site.json")
     outputs = {}
+    noindex = set()
     for lang in ("fr", "en"):
         d = os.path.join(SITE, "src", "pages", lang)
         for fn in sorted(os.listdir(d)):
@@ -176,7 +241,10 @@ def main():
                 meta, body = parse(os.path.join(d, fn))
                 slug = fn[:-5]
                 outputs[out_path(lang, slug)] = render(lang, slug, meta, body, base)
-    urls = [p for p in outputs if not p.endswith("404.html")]
+                if meta.get("noindex"):
+                    noindex.add(out_path(lang, slug))
+    # The sitemap lists only indexable pages (never a noindex page nor the 404 page).
+    urls = [p for p in outputs if not p.endswith("404.html") and p not in noindex]
     outputs["sitemap.xml"] = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                               + "".join(f"  <url><loc>{base}/{p}</loc></url>\n".replace("/index.html<", "/<") for p in sorted(urls))
                               + "</urlset>\n")

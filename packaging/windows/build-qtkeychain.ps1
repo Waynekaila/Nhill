@@ -4,7 +4,12 @@
 # vérifié avant toute compilation (aucun binaire téléchargé).
 #   powershell -ExecutionPolicy Bypass -File build-qtkeychain.ps1 -QtDir C:\Qt\6.5.3\msvc2019_64 -Prefix C:\build\qtkeychain
 # À lancer dans « x64 Native Tools Command Prompt for VS 2022 » (cl.exe, cmake, ninja, git).
-# Résultat : <Prefix>\bin\qt6keychain.dll et <Prefix>\lib\cmake\Qt6Keychain (pour CMAKE_PREFIX_PATH).
+# Résultat : <Prefix>\lib\qt6keychain.lib (bibliothèque STATIQUE) et <Prefix>\lib\cmake\Qt6Keychain.
+# Pourquoi statique : windeployqt considère toute DLL nommée « Qt6*.dll » comme un module Qt et
+# ne la cherche que dans le dossier de Qt ; une qt6keychain.dll livrée à côté de l'application
+# fait donc échouer le déploiement. Liée statiquement, QtKeychain est incluse dans chaque .exe
+# (aucune DLL supplémentaire à livrer ni à remplacer) ; seules crypt32 et advapi32, DLL du
+# système, sont importées.
 param(
   [Parameter(Mandatory = $true)][string]$QtDir,
   [Parameter(Mandatory = $true)][string]$Prefix,
@@ -18,7 +23,12 @@ foreach ($c in @("git.exe", "cmake.exe", "ninja.exe", "cl.exe")) {
   if (-not (Get-Command $c -ErrorAction SilentlyContinue)) { Fail "$c introuvable (Visual Studio 2022 C++, CMake, Ninja, Git requis)." }
 }
 if (-not (Test-Path "$QtDir\lib\cmake\Qt6\Qt6Config.cmake")) { Fail "Qt 6 introuvable dans $QtDir" }
-if (Test-Path "$Prefix\bin\qt6keychain.dll") { Write-Host "QtKeychain déjà présent : $Prefix"; exit 0 }
+$lib = "$Prefix\lib\qt6keychain.lib"
+$config = "$Prefix\lib\cmake\Qt6Keychain\Qt6KeychainConfig.cmake"
+if (Test-Path "$Prefix\bin\qt6keychain.dll") {
+  Fail "$Prefix contient une construction partagée de QtKeychain (qt6keychain.dll) : supprimez ce dossier, puis relancez"
+}
+if ((Test-Path $lib) -and (Test-Path $config)) { Write-Host "QtKeychain (statique) déjà présent : $Prefix"; exit 0 }
 
 $src = Join-Path $WorkDir "src"
 Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue
@@ -31,11 +41,12 @@ Write-Host "QtKeychain $Tag ($Commit) vérifié"
 
 $build = Join-Path $WorkDir "build"
 & cmake -S $src -B $build -G Ninja -DCMAKE_BUILD_TYPE=Release "-DCMAKE_PREFIX_PATH=$QtDir" "-DCMAKE_INSTALL_PREFIX=$Prefix" `
-  -DBUILD_WITH_QT5=OFF -DBUILD_SHARED_LIBS=ON -DBUILD_TRANSLATIONS=OFF -DBUILD_TEST_APPLICATION=OFF -DBUILD_TESTING=OFF `
+  -DBUILD_WITH_QT5=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_TRANSLATIONS=OFF -DBUILD_TEST_APPLICATION=OFF -DBUILD_TESTING=OFF `
   -DUSE_CREDENTIAL_STORE=ON
 if ($LASTEXITCODE) { Fail "configuration de QtKeychain échouée" }
 & cmake --build $build --parallel; if ($LASTEXITCODE) { Fail "compilation de QtKeychain échouée" }
 & cmake --install $build; if ($LASTEXITCODE) { Fail "installation de QtKeychain échouée" }
-if (-not (Test-Path "$Prefix\bin\qt6keychain.dll")) { Fail "qt6keychain.dll absent après installation" }
-if (-not (Test-Path "$Prefix\lib\cmake\Qt6Keychain\Qt6KeychainConfig.cmake")) { Fail "configuration CMake Qt6Keychain absente" }
-Write-Host "QtKeychain installé dans $Prefix" -ForegroundColor Green
+if (-not (Test-Path $lib)) { Fail "qt6keychain.lib absent après installation" }
+if (-not (Test-Path $config)) { Fail "configuration CMake Qt6Keychain absente" }
+if (Test-Path "$Prefix\bin\qt6keychain.dll") { Fail "une DLL QtKeychain a été produite alors qu'une bibliothèque statique était attendue" }
+Write-Host "QtKeychain (statique, Gestionnaire d'identification) installé dans $Prefix" -ForegroundColor Green

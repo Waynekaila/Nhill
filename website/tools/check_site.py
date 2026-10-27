@@ -10,7 +10,8 @@ Vérifie :
   * attribut alt sur chaque image ; libellé <label for> pour chaque champ de formulaire ;
   * paires de langue (hreflang) existantes ;
   * aucun secret dans les fichiers publics (motifs de mots de passe, clés, .env) ;
-  * config/site.json sans clé secrète.
+  * config/site.json sans clé secrète ;
+  * aucune grille ni mention de tarifs sur les pages publiques (choix commercial).
 Code de sortie 1 au premier défaut trouvé (tous les défauts sont listés).
 """
 import html.parser
@@ -23,6 +24,8 @@ import urllib.parse
 
 SITE = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), ".."))
 PUBLIC_EXT = (".html", ".css", ".js", ".json", ".txt", ".xml", ".svg")
+PRICING_RE = re.compile(r"(?i)\btarifs?\b|\btarifaire|\bpricing\b|\bprice list\b|"
+                        r"\d[\d\s.,]*\s?(?:CDF|USD|FC|EUR|\$|€)\s?(?:/|par|per|a|an)\s?(?:mois|month|an|year|utilisateur|user)\b")
 SECRET_RE = re.compile(r"(?i)(password\s*[:=]\s*['\"][^'\"\[]{4,}|secret\s*[:=]\s*['\"][^'\"\[]{4,}|sk_(live|test)_|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY|SITE_DATABASE_PASSWORD\s*=\s*\S+)")
 
 
@@ -106,8 +109,15 @@ def main():
     for p, pg in parsed.items():
         if p.endswith("404.html"):
             for link in pg.links:
-                if link.startswith("/") and not os.path.exists(os.path.join(SITE, link.lstrip("/"))):
+                path = urllib.parse.urlparse(link).path
+                if link.startswith("/") and not os.path.exists(os.path.join(SITE, path.lstrip("/"))):
                     problems.append(f"{os.path.relpath(p, SITE)}: lien absolu cassé {link}")
+    # Commercial choice: no price list on the public site (offers are discussed with the sales team).
+    for p in parsed:
+        text = open(p, encoding="utf-8").read()
+        m = PRICING_RE.search(re.sub(r"<[^>]+>", " ", text))
+        if m:
+            problems.append(f"{os.path.relpath(p, SITE)}: mention de tarifs interdite ({m.group(0)})")
     for d, dirs, files in os.walk(SITE):
         dirs[:] = [x for x in dirs if x not in ("backend", "node_modules", "__pycache__")]
         for f in files:

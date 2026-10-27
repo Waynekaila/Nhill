@@ -4,6 +4,54 @@
 
 Format inspired by "Keep a Changelog"; semantic versioning.
 
+## [2.1.0] — unreleased (branch `release/2.1.0`)
+
+Two requested fixes: the remembered session on Windows and Android, and recovery of a
+forgotten password. **One migration (0011)**, four endpoints added to API `v1` (none
+changed), 2.0 clients accepted.
+
+### Remembered session ("Remember me")
+
+- "Remember me" box at sign-in (Nhill Business, Nhill POS) and a "This device" setting in
+  Settings › My account; unticked by default.
+- Only the refresh token is kept, never the password, by QtKeychain: Windows Credential
+  Manager, Android Keystore, Secret Service/KWallet on Linux. Without secure storage the
+  session is not remembered and a message says so: no plain-text fallback. "Sign out" and
+  unticking erase the entry.
+- Windows: QtKeychain 0.17.0 built from its official source (verified commit) by
+  `packaging/windows/build-qtkeychain.ps1`, **linked statically**; `CredReadW`/`CredWriteW`/
+  `CredDeleteW` imports checked; licence notice installed with each application
+  (`THIRD-PARTY-NOTICES.txt`).
+- Android: static QtKeychain 0.17.0 (`packaging/android/build-qtkeychain-android.sh`,
+  `KEYCHAIN_PREFIX`); presence of the Keystore code checked in the APK.
+- Real test `tests/keychain` (write then read back in a second process, sign-out, nothing
+  stored without the box): Credential Manager in Windows CI, Android 11 emulator,
+  gnome-keyring on Linux.
+
+### Forgotten password
+
+- **Employee**: the establishment administrator gives a temporary password (Settings ›
+  Team › "Reset the password"); 12 characters, shown once, valid 72 h; change required at the
+  next sign-in; sessions closed; notice e-mailed to the member. Limited to members of the
+  administrator's establishment, not oneself, not the owner, not an account active in
+  another establishment.
+- **Owner, administrator** (and account of several establishments): "Forgot your
+  password?" e-mails an 8-digit code (20 min, 5 attempts, single use); the same answer
+  whether the address exists or not; an employee receives the instruction to contact
+  their administrator; all sessions are closed after the reset.
+- Rate limits per address, per IP address and per administrator; activity log without
+  password or code; codes hashed (HMAC-SHA-256) and erased from the outbox after sending.
+- **Real e-mail delivery**: `smtp` transport (libcurl, TLS required, relay password in a
+  file); `log` and `disabled` remain available.
+- Platform settings: `password_reset_minutes`, `password_reset_max_attempts`,
+  `temporary_password_hours`.
+- Tests: 16 server tests (including a fake local SMTP relay).
+
+### Other
+
+- E-mail templates completed (signature, subscription reminder bodies).
+- Version 2.1.0 (Android version code 20100).
+
 ## [2.0.0] — 2026-10-26
 
 Major release: interface redesign, new password rule, industrialised builds and packages,
