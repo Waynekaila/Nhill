@@ -95,8 +95,12 @@ jobs:
           $env:PATH = "$env:QT_ROOT_DIR\bin;$env:PATH"
           $env:NHILL_KEYCHAIN_REQUIRED = '1'
           $env:QT_QPA_PLATFORM = 'offscreen'
-          & $exe -v2 2>&1 | ForEach-Object { "$_" } | Tee-Object -FilePath $log -Append
-          $code = $LASTEXITCODE
+          # Résultats écrits aussi dans un fichier par QtTest (indépendant de la console).
+          $qtlog = "$env:GITHUB_WORKSPACE\keychain-qtest.txt"
+          $p = Start-Process -FilePath $exe -ArgumentList @('-v2', '-o', "$qtlog,txt") -NoNewWindow -PassThru -Wait
+          $code = $p.ExitCode
+          if (Test-Path $qtlog) { Get-Content $qtlog | Tee-Object -FilePath $log -Append }
+          else { "aucun journal QtTest produit" | Out-File -FilePath $log -Append }
           "== code de sortie : $code" | Out-File -FilePath $log -Append
           if ($code -ne 0) { throw "test_keychain a échoué (code $code)" }
           if (Select-String -Path $log -Pattern '^SKIP' -Quiet) { throw "test_keychain ignoré : stockage sécurisé indisponible" }
