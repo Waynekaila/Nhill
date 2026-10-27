@@ -57,6 +57,8 @@ jobs:
   install-test:
     name: Installation propre ${{ matrix.name }}
     needs: deb
+    # Chaque distribution est testée même si l'autre a échoué (artefact absent = échec de ce job).
+    if: ${{ !cancelled() }}
     strategy:
       fail-fast: false
       matrix:

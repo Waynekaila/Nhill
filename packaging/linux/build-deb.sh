@@ -418,7 +418,7 @@ deps_from_elves() {
     (cd "$work" && dpkg-shlibdeps -O -x"$pkg" "${elves[@]}" 2>"$work/err") \
         | sed -n 's/^shlibs:Depends=//p' || { cat "$work/err" >&2; die "dpkg-shlibdeps a échoué pour $pkg"; }
 }
-pkg_of_path() { dpkg -S "$1" 2>/dev/null | head -n1 | cut -d: -f1; }
+pkg_of_path() { dpkg -S "$1" 2>/dev/null | head -n1 | cut -d: -f1 || true; }   # vide si aucun paquet
 ensure_qml_module() {
     # Module QML requis indirectement mais absent : paquet Debian déduit de la convention
     # qml6-module-<module>, vérifié dans APT puis installé.
@@ -436,7 +436,7 @@ qml_runtime_deps() {
     # Paquet fournissant chaque module QML importé par le code, avec ses dépendances
     # transitives déclarées dans les qmldir (import, default import, depends ; les
     # « optional import » sont ignorés), résolu par dpkg -S.
-    local qmlroot="/usr/lib/$MULTIARCH/qt6/qml" queue=("${QML_IMPORTS[@]}") seen=" " m dir p out=() dep
+    local qmlroot="/usr/lib/$MULTIARCH/qt6/qml" queue=("${QML_IMPORTS[@]}") seen=" " m dir p out=() dep cand
     while (( ${#queue[@]} )); do
         m="${queue[0]}"; queue=("${queue[@]:1}")
         [[ "$seen" == *" $m "* ]] && continue
@@ -451,7 +451,19 @@ qml_runtime_deps() {
     done
     # Greffon de plateforme (X11) et format d'image SVG utilisés au lancement
     p="$(pkg_of_path "/usr/lib/$MULTIARCH/qt6/plugins/platforms/libqxcb.so")"; [[ -n "$p" ]] && out+=("$p")
-    p="$(pkg_of_path "/usr/lib/$MULTIARCH/qt6/plugins/imageformats/libqsvg.so")"; [[ -n "$p" ]] && out+=("$p")
+    # Le greffon SVG est dans un paquet séparé sur Debian 13 (qt6-svg-plugins) : installé
+    # si absent, car les icônes de l'interface sont en SVG.
+    local svg="/usr/lib/$MULTIARCH/qt6/plugins/imageformats/libqsvg.so"
+    if [[ ! -f "$svg" ]] && (( INSTALL_DEPS )); then
+        cand="$(apt-cache policy qt6-svg-plugins 2>/dev/null | awk '/Candidate:/ {print $2}')"
+        if [[ -n "$cand" && "$cand" != "(none)" ]]; then
+            log "greffon SVG absent : installation de qt6-svg-plugins"
+            as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends qt6-svg-plugins >&2 \
+                || die "installation de qt6-svg-plugins échouée"
+        fi
+    fi
+    p="$(pkg_of_path "$svg")"
+    if [[ -n "$p" ]]; then out+=("$p"); else warn "greffon SVG introuvable ($svg) : les icônes pourraient ne pas s'afficher"; fi
     printf '%s\n' "${out[@]}" | sed 's/:.*//' | sort -u | paste -sd, - | sed 's/,/, /g'
 }
 deps_from_scripts() {

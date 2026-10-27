@@ -1,4 +1,4 @@
-# Construit Nhill Business, Nhill Console et Nhill POS pour Windows 10/11 x64, puis un
+﻿# Construit Nhill Business, Nhill Console et Nhill POS pour Windows 10/11 x64, puis un
 # installateur .exe par application (NSIS). À exécuter sous Windows dans
 # « x64 Native Tools Command Prompt for VS 2022 » puis PowerShell :
 #   powershell -ExecutionPolicy Bypass -File build-windows.ps1 -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 `
@@ -57,5 +57,13 @@ foreach ($app in @("nhill-business", "nhill-console", "nhill-pos")) {
   & $makensis "/DAPP_ID=$app" "/DAPP_VERSION=$Version" "/DSOURCE_DIR=$dir" "/DOUTPUT_DIR=$dist" "$PSScriptRoot\nhill-installer.nsi"
   if ($LASTEXITCODE) { Fail "makensis a échoué pour $app" }
 }
-Get-ChildItem "$dist\*-setup.exe" | Get-FileHash -Algorithm SHA256 | ForEach-Object { "{0}  {1}" -f $_.Hash.ToLower(), (Split-Path $_.Path -Leaf) } | Set-Content "$dist\SHA256SUMS"
+# SHA-256 par .NET (Get-FileHash peut manquer quand Windows PowerShell est lancé depuis pwsh)
+function Get-Sha256Hex([string]$Path) {
+  $sha = [System.Security.Cryptography.SHA256]::Create()
+  $fs = [System.IO.File]::OpenRead($Path)
+  try { return (($sha.ComputeHash($fs) | ForEach-Object { $_.ToString("x2") }) -join "") }
+  finally { $fs.Dispose(); $sha.Dispose() }
+}
+Get-ChildItem "$dist\*-setup.exe" | ForEach-Object { "{0}  {1}" -f (Get-Sha256Hex $_.FullName), $_.Name } |
+  Set-Content -Encoding ASCII "$dist\SHA256SUMS"
 Write-Host "Installateurs : $dist\*-setup.exe (signez-les avec signtool avant distribution)." -ForegroundColor Green

@@ -14,6 +14,17 @@ SDKMANAGER="$(ls "$SDK"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | sort | tail
 echo "== SDK : $SDK ($SDKMANAGER)"
 yes | "$SDKMANAGER" --licenses >/dev/null || true
 "$SDKMANAGER" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools" "ndk;$NDK_VER"
+# Qt 6.5 choisit la plateforme Android la plus récente installée ; son greffon Gradle
+# (AGP 7.x) ne sait pas lire les plateformes 35+ préinstallées sur le runner : on les
+# retire pour que la compilation se fasse contre android-34 (cible déclarée de l'APK).
+for d in "$SDK"/platforms/android-*; do
+  n="$(basename "$d" | sed -E 's/^android-([0-9]+).*/\1/')"
+  if [[ "$n" =~ ^[0-9]+$ ]] && (( n > 34 )); then
+    echo "retrait de la plateforme $(basename "$d") (plus récente que android-34)"
+    "$SDKMANAGER" --uninstall "platforms;$(basename "$d")" || rm -rf -- "$d"
+  fi
+done
+ls "$SDK/platforms"
 echo "== aqtinstall"
 python3 -m pip install --user --break-system-packages -q "aqtinstall>=3.1,<4" 2>/dev/null \
   || python3 -m pip install --user -q "aqtinstall>=3.1,<4"
