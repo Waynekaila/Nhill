@@ -123,7 +123,9 @@ bool check(const A& a, const B& b, Op op, const char* sa, const char* sb, const 
 #define ASSERT_TRUE(c) MG_BOOL(c, true, true)
 #define ASSERT_FALSE(c) MG_BOOL(c, false, true)
 
-// Entry point (the CMake build links GTest::gtest_main instead).
+// Entry point (the CMake build links GTest::gtest_main instead). Define
+// MINIGTEST_NO_MAIN in every test file but one when several are linked together.
+#ifndef MINIGTEST_NO_MAIN
 int main() {
     int passed = 0;
     for (auto& t : ::minigtest::registry()) {
@@ -147,3 +149,4 @@ int main() {
               << ::minigtest::failures() << " failed\n";
     return ::minigtest::failures() == 0 ? 0 : 1;
 }
+#endif  // MINIGTEST_NO_MAIN

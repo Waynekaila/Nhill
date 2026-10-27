@@ -22,8 +22,9 @@ done
 CXX="${CXX:-g++}"
 command -v "$CXX" >/dev/null || { echo "Compilateur C++ introuvable ($CXX). Installez build-essential." >&2; exit 2; }
 mkdir -p "$OUT"
-SRCS=("$ROOT"/common/src/*.cpp "$ROOT/tests/common/test_common.cpp")
-FLAGS=(-std=c++17 -O1 -g -Wall -Wextra -I"$ROOT/common/include")
+SRCS=("$ROOT"/common/src/*.cpp "$ROOT/tests/common/test_common.cpp" "$ROOT/tests/common/test_int128.cpp")
+read -ra EXTRA_FLAGS <<<"${CXXFLAGS:-}"   # ex. CXXFLAGS=-DNHILL_PORTABLE_INT128 : chemin Windows (sans __int128)
+FLAGS=(-std=c++17 -O1 -g -Wall -Wextra -I"$ROOT/common/include" "${EXTRA_FLAGS[@]}")
 if [ "$MODE" = auto ]; then
   if pkg-config --exists gtest_main 2>/dev/null; then MODE=system; else MODE=shim; fi
 fi

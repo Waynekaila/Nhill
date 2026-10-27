@@ -1,4 +1,5 @@
 #include "nhill/money.hpp"
+#include "nhill/int128.hpp"
 
 #include <algorithm>
 #include <array>
@@ -23,22 +24,22 @@ constexpr std::array<CurrencyInfo, 22> kCurrencies{{
     {"AED", 2}, {"NGN", 2}, {"GHS", 2}, {"MAD", 2},
 }};
 
-constexpr __int128 kI64Max = std::numeric_limits<int64_t>::max();
-constexpr __int128 kI64Min = std::numeric_limits<int64_t>::min();
+constexpr i128 kI64Max = std::numeric_limits<int64_t>::max();
+constexpr i128 kI64Min = std::numeric_limits<int64_t>::min();
 
-__int128 pow10i(int n) {
-    __int128 v = 1;
+i128 pow10i(int n) {
+    i128 v = 1;
     for (int i = 0; i < n; ++i) v *= 10;
     return v;
 }
 
 // Rounded division of a signed 128-bit numerator by a positive divisor.
-__int128 roundDiv(__int128 num, __int128 den, Rounding r) {
+i128 roundDiv(i128 num, i128 den, Rounding r) {
     bool neg = num < 0;
-    __int128 a = neg ? -num : num;
-    __int128 q = a / den;
-    __int128 rem = a % den;
-    __int128 twice = rem * 2;
+    i128 a = neg ? -num : num;
+    i128 q = a / den;
+    i128 rem = a % den;
+    i128 twice = rem * 2;
     if (twice > den) {
         ++q;
     } else if (twice == den) {
@@ -47,7 +48,7 @@ __int128 roundDiv(__int128 num, __int128 den, Rounding r) {
     return neg ? -q : q;
 }
 
-std::optional<int64_t> narrow(__int128 v) {
+std::optional<int64_t> narrow(i128 v) {
     if (v > kI64Max || v < kI64Min) return std::nullopt;
     return static_cast<int64_t>(v);
 }
@@ -78,7 +79,7 @@ bool isValidCurrencyCode(std::string_view code) {
 
 std::optional<int64_t> mulDiv(int64_t a, int64_t b, int64_t c, Rounding r) {
     if (c <= 0) return std::nullopt;
-    __int128 num = static_cast<__int128>(a) * static_cast<__int128>(b);
+    i128 num = i128(a) * i128(b);
     return narrow(roundDiv(num, c, r));
 }
 
@@ -110,8 +111,8 @@ std::optional<int64_t> parseDecimal(std::string_view text, int scale) {
     }
     if (pos >= s.size()) return std::nullopt;
 
-    __int128 intPart = 0;
-    __int128 frac = 0;
+    i128 intPart = 0;
+    i128 frac = 0;
     int fracDigits = 0;
     bool seenSep = false;
     bool anyDigit = false;
@@ -139,18 +140,18 @@ std::optional<int64_t> parseDecimal(std::string_view text, int scale) {
         }
     }
     if (!anyDigit) return std::nullopt;
-    __int128 value = intPart * pow10i(scale) + frac * pow10i(scale - fracDigits);
+    i128 value = intPart * pow10i(scale) + frac * pow10i(scale - fracDigits);
     if (neg) value = -value;
     return narrow(value);
 }
 
 std::string toPlainDecimal(int64_t value, int scale) {
     bool neg = value < 0;
-    unsigned __int128 a = neg ? static_cast<unsigned __int128>(-static_cast<__int128>(value))
-                              : static_cast<unsigned __int128>(value);
-    unsigned __int128 p = static_cast<unsigned __int128>(pow10i(scale));
-    unsigned __int128 ip = a / p;
-    unsigned __int128 fp = a % p;
+    // |INT64_MIN| fits in a signed 128-bit integer.
+    i128 a = neg ? -i128(value) : i128(value);
+    i128 p = pow10i(scale);
+    i128 ip = a / p;
+    i128 fp = a % p;
     std::string is;
     if (ip == 0) is = "0";
     while (ip > 0) {
@@ -213,7 +214,7 @@ std::optional<LineAmounts> computeLine(const LineInput& in) {
     auto tax = mulDiv(out.netMinor, in.taxRateBp, 10000);
     if (!tax) return std::nullopt;
     out.taxMinor = *tax;
-    __int128 total = static_cast<__int128>(out.netMinor) + out.taxMinor;
+    i128 total = i128(out.netMinor) + out.taxMinor;
     auto t = narrow(total);
     if (!t) return std::nullopt;
     out.totalMinor = *t;
@@ -222,8 +223,8 @@ std::optional<LineAmounts> computeLine(const LineInput& in) {
 
 std::optional<DocumentTotals> computeDocument(const std::vector<LineInput>& lines, TaxRounding mode) {
     DocumentTotals doc;
-    std::map<int32_t, std::pair<__int128, __int128>> buckets;  // rate -> (base, per-line tax sum)
-    __int128 gross = 0, disc = 0, net = 0;
+    std::map<int32_t, std::pair<i128, i128>> buckets;  // rate -> (base, per-line tax sum)
+    i128 gross = 0, disc = 0, net = 0;
     for (const auto& li : lines) {
         auto la = computeLine(li);
         if (!la) return std::nullopt;
@@ -235,7 +236,7 @@ std::optional<DocumentTotals> computeDocument(const std::vector<LineInput>& line
         b.first += la->netMinor;
         b.second += la->taxMinor;
     }
-    __int128 taxTotal = 0;
+    i128 taxTotal = 0;
     for (auto& [rate, b] : buckets) {
         TaxBucket tb;
         tb.rateBp = rate;
@@ -273,7 +274,7 @@ std::optional<ExchangeRate> ExchangeRate::parse(std::string_view text) {
 }
 
 std::string ExchangeRate::toString() const {
-    std::string s = toPlainDecimal(static_cast<int64_t>(scaled), 10);
+    std::string s = toPlainDecimal(scaled, 10);
     while (!s.empty() && s.back() == '0') s.pop_back();
     if (!s.empty() && s.back() == '.') s.pop_back();
     return s;
@@ -284,12 +285,12 @@ std::optional<int64_t> convert(int64_t amountMinor, int fromMinorUnits, int toMi
     if (fromMinorUnits < 0 || toMinorUnits < 0 || rate.scaled <= 0) return std::nullopt;
     if (fromMinorUnits > 6 || toMinorUnits > 6) return std::nullopt;
     // result_to_minor = amount / 10^from * rate * 10^to
-    const __int128 factor = rate.scaled * pow10i(toMinorUnits);  // <= ~9.2e24, fits
-    const __int128 absAmount = amountMinor < 0 ? -static_cast<__int128>(amountMinor) : amountMinor;
-    constexpr __int128 kI128Max = static_cast<__int128>((~static_cast<unsigned __int128>(0)) >> 1);
+    const i128 factor = rate.scaled * pow10i(toMinorUnits);  // <= ~9.2e24, fits
+    const i128 absAmount = amountMinor < 0 ? -i128(amountMinor) : amountMinor;
+    constexpr i128 kI128Max = i128Max();
     if (absAmount != 0 && factor > kI128Max / absAmount) return std::nullopt;
-    __int128 num = static_cast<__int128>(amountMinor) * factor;
-    __int128 den = pow10i(10) * pow10i(fromMinorUnits);
+    i128 num = i128(amountMinor) * factor;
+    i128 den = pow10i(10) * pow10i(fromMinorUnits);
     return narrow(roundDiv(num, den, Rounding::HalfUp));
 }
 

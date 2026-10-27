@@ -54,7 +54,8 @@ case "$NH_OS_ID-$NH_OS_VERSION" in
 esac
 [[ "$EMBEDDED" == 0 || "$TARGET" == ubuntu-24.04 ]] || die "--debian13-embedded ne s'utilise que sur Ubuntu 24.04 (sur Debian 13 les paquets natifs sont préférables)" 2
 OUT="${OUT:-$ROOT/dist/linux/$TARGET}"
-BUILD_DIR="${BUILD_DIR:-$ROOT/build/deb-$TARGET}"
+# Compilation HORS du code source (exigence de packaging/linux/build-deb.sh)
+BUILD_DIR="${BUILD_DIR:-${TMPDIR:-/tmp}/nhill-build-deb-$TARGET}"
 prepare_output_dir "$OUT" "$FORCE"
 check_disk "$(dirname "$BUILD_DIR")" 4
 ok "Nhill $VERSION -> paquets $TARGET dans $OUT"

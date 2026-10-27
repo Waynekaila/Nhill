@@ -192,9 +192,11 @@ USES_QT=0; grep -rqsE 'find_package\(Qt6' --include=CMakeLists.txt --include='*.
 ok "projet ${PROJECT_NAME} ${PROJECT_VERSION} — CMake, langage(s) ${LANGS:-CXX}, C++${CXX_STD:-?}$( ((USES_QT)) && echo ', Qt 6 / QML')"
 DEB_VERSION="${PROJECT_VERSION}-${REVISION}"
 
-# Empreinte du source (doit rester identique)
+# Empreinte du source (doit rester identique). Les dossiers générés et ignorés par git
+# (build/ : journaux, dist/ et release/ : livrables) ne font pas partie du source.
 source_digest() {
-    (cd "$SRC" && find . -path ./.git -prune -o -type f ! -path "./${OUT#"$SRC"/}/*" -print0 \
+    (cd "$SRC" && find . \( -path ./.git -o -path ./build -o -path ./dist -o -path ./release \) -prune \
+        -o -type f ! -path "./${OUT#"$SRC"/}/*" -print0 \
         | LC_ALL=C sort -z | xargs -0 sha256sum) | sha256sum | cut -d' ' -f1
 }
 SRC_DIGEST="$(source_digest)"

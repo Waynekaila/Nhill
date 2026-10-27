@@ -1,6 +1,6 @@
 find_package(GTest REQUIRED)
 
-add_executable(test_common common/test_common.cpp)
+add_executable(test_common common/test_common.cpp common/test_int128.cpp)
 target_link_libraries(test_common PRIVATE nhill_common GTest::gtest_main)
 add_test(NAME common COMMAND test_common)
 

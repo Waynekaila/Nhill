@@ -84,7 +84,7 @@ std::optional<DocumentTotals> computeDocument(const std::vector<LineInput>& line
 
 // Exact decimal exchange rate "1 unit of FROM = rate units of TO", up to 10 decimals.
 struct ExchangeRate {
-    __int128 scaled = 0;  // rate * 10^10
+    int64_t scaled = 0;  // rate * 10^10 (exact; parse() rejects values that do not fit)
     static std::optional<ExchangeRate> parse(std::string_view text);
     std::string toString() const;
 };
