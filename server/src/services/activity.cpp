@@ -24,12 +24,24 @@ std::string detailsSummary(Env& env, const std::string& lang, const json& d) {
     static const std::set<std::string> skip = {"password", "token", "refresh_token", "lines", "legal_ids", "user_id", "action",
                                                "session_id", "register_id", "receipt_id", "approved_by", "promo", "user_ids",
                                                "change_minor"};
+    static const std::set<std::string> kDecimalKeys = {"amount", "total", "rate", "paid", "counted", "expected",
+                                                       "difference", "opening_float", "cash_counted"};
     std::string out;
     for (auto it = d.begin(); it != d.end(); ++it) {
         if (skip.count(it.key()) || it->is_object() || it->is_array() || it->is_null()) continue;
         std::string v = it->is_string() ? it->get<std::string>() : it->dump();
         if (it->is_boolean()) v = env.i18n.t(lang, it->get<bool>() ? "detail.yes" : "detail.no");
-        if (it.key() == "doc_type") v = env.i18n.t(lang, "doctype." + v);
+        if (it.key() == "doc_type" || it.key() == "type") {
+            // Document types are shown in the user's language ("invoice" -> "Facture").
+            std::string t = env.i18n.t(lang, "doctype." + v);
+            if (t != "doctype." + v) v = t;
+        }
+        if (it->is_string() && kDecimalKeys.count(it.key())) {
+            // Amounts and rates are stored as exact decimal strings ("95000.00"): shown with
+            // the user's digit grouping ("95 000,00"), never rounded (2.0.0).
+            const int scale = it.key() == "rate" ? 10 : 2;
+            if (auto n = nhill::parseDecimal(v, scale)) v = nhill::formatDecimal(*n, scale, lang, it.key() == "rate");
+        }
         if (it.key() == "role") v = env.i18n.t(lang, "role." + v);
         if (v.empty()) continue;
         if (v.size() > 60) v = v.substr(0, 57) + "...";

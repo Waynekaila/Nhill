@@ -1,0 +1,10 @@
+workflow : ci
+job      : build-test 
+état     : success
+commit   : 8ff436b57bd14974575e12469646a238c7cb73a9 (refs/heads/main)
+exécution: https://github.com/Waynekaila/Nhill/actions/runs/40459624078
+date UTC : 2026-10-27T06:38:31Z
+
+Captures réelles de Nhill 2.0, produites automatiquement par la CI (scripts/qa/ui-screenshots.sh)
+sur un établissement de DÉMONSTRATION (données fictives « (démo) »), sous Xvfb.
+Real Nhill 2.0 screenshots, produced automatically by CI on a demo business (fictitious data).

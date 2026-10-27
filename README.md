@@ -1,92 +1,89 @@
-# Nhill
+# Nhill 2.0
 
-*Nommé en hommage à Napoleon Hill.* Suite de gestion commerciale multi-établissements,
-trois applications sur un même serveur sécurisé :
+*English: [README.en.md](README.en.md)*
+
+*Nommé en hommage à Napoleon Hill.* Suite de gestion commerciale multi-établissements pour
+les commerçants et PME, trois applications sur un même serveur sécurisé :
 
 | Application | Pour qui | Plateformes |
 |---|---|---|
-| **Nhill Business** | Commerçants, entrepreneurs, PME : ventes (devis, commandes, factures, avoirs), clients et fournisseurs, produits et stock, achats, dépenses, paiements, rapports, équipe et journal « qui a fait quoi », abonnement | Windows, Linux, Android |
-| **Nhill POS** | Caissiers d'un établissement Nhill Business : sessions de caisse, fond de caisse, ventes à plusieurs paiements, remises, retours et annulations autorisés, tickets, entrées/sorties d'espèces, clôture avec écart, rapports X/Z | Windows, Linux |
-| **Nhill Console** | Créateurs de Nhill (privée) : installation du serveur, établissements, abonnements, offres et prix, codes promo, prestataires de paiement, transactions, demandes d'assistance, erreurs, audit, statistiques | Windows, Linux |
+| **Nhill Business** | commerçants, entrepreneurs, PME : ventes (devis, commandes, factures, avoirs), clients et fournisseurs, produits et stock, achats, dépenses, paiements, rapports, équipe et journal « qui a fait quoi », abonnement | Windows, Linux, Android |
+| **Nhill POS** | caissiers : sessions de caisse, ventes à plusieurs paiements, remises contrôlées, retours, tickets 58/80 mm, clôture avec écart, rapports X/Z | Windows, Linux |
+| **Nhill Console** | créateurs de Nhill (privée) : installation du serveur, établissements, abonnements, offres et prix, prestataires de paiement, assistance, audit | Windows, Linux |
 
-* **Serveur** : C++17, API `/api/v1`, PostgreSQL 15+ (**Supabase** ou auto-hébergé) ;
-  isolation des établissements par row-level security forcée, schéma dédié `nhill`,
-  aucune clé `service_role` ni identifiant de base dans les applications.
-* **Applications** : C++17 / Qt 6 Quick (QML), une seule base de code.
-* **Langues** : français et anglais (interfaces, factures, tickets, rapports PDF).
-  **Devises** : CDF, USD, EUR et autres, montants exacts en unités mineures.
+- **Serveur** : C++17, API `/api/v1`, PostgreSQL 15+ (Supabase ou auto-hébergé), isolation
+  des établissements par sécurité au niveau des lignes forcée, aucun identifiant de base
+  dans les applications.
+- **Applications** : C++17 / Qt 6 Quick (QML), une seule base de code ; français et
+  anglais ; CDF, USD, EUR… montants exacts, jamais additionnés entre devises.
+- **Nhill n'est pas un logiciel de facturation homologué par la DGI** : ses documents sont
+  des documents de gestion (voir [docs/fr/parametres-legaux.md](docs/fr/parametres-legaux.md)).
 
-> **État réel (26 octobre 2026)** — détails dans `docs/rapport-tests.md` et
-> `docs/limites.md`.
-> * Linux : tout est compilé et testé (18 + 82 + 6 + 13 tests ; 1 génération d'exemples
->   ignorée par défaut). **Paquets .deb** des quatre composants construits et **installés
->   dans un Ubuntu 24.04 vierge** ; installation de la base par l'API et parcours POS
->   complet vérifiés avec les paquets installés.
-> * **Windows et Android : scripts, installateurs Inno Setup et configuration fournis,
->   non compilés** (ni Qt pour Windows/Android ni SDK Android disponibles ici).
-> * Base Supabase de production initialisée (migrations 0001–0010), conseiller de
->   sécurité Supabase : 0 alerte.
-> * **Paiements** : adaptateurs Stripe (cartes Visa/Mastercard) et PayPal testés
->   **uniquement contre des réponses simulées** ; Payoneer en configuration seulement.
->   Aucun paiement réel effectué.
-> * **Nhill n'est pas un système de facturation ou de caisse homologué** : factures et
->   tickets sont des documents de gestion (`docs/conformite/conformite.md`). La
->   disponibilité juridique du nom « Nhill » n'a pas été vérifiée.
+## État de la version 2.0.0 (27 octobre 2026)
 
-## Arborescence
+| Élément | État réel | Preuve |
+|---|---|---|
+| Compilation + tests (common 22, serveur, installation, client) | réussis sur Ubuntu 24.04 et Debian 13 | GitHub Actions, branches `ci-results/ci`, `ci-results/deb-*` |
+| Paquets `.deb` (4 par distribution) | construits pour **Ubuntu 24.04** et **Debian 13** natifs ; installés puis désinstallés dans des conteneurs propres | `ci-results/deb-*`, `ci-results/install-*` |
+| Installateurs Windows (NSIS, 3 applications) | construits (MSVC 2022, Qt 6.5.3) ; installation et désinstallation silencieuses de Nhill POS testées sur Windows Server 2022 (runner CI) | `ci-results/windows` |
+| APK Android (Nhill Business, arm64-v8a) | construit ; **signé avec une clé de débogage** (installable, non publiable) ; non testé sur appareil | `ci-results/android` |
+| Site vitrine + backend des formulaires | 24 pages contrôlées ; tests du backend sur SQLite et PostgreSQL 16 | `ci-results/site-backend-postgresql` |
+| Signature de code (Authenticode, clé Android de publication) | **non faite** — certificats à acquérir | — |
+| Audit externe, test d'intrusion | **non faits** | [audit de sécurité](docs/fr/03-audit-securite.md) |
 
-```
-CMakeLists.txt            construction globale (NHILL_BUILD_SERVER/CLIENT/TESTS) + paquets (cmake/)
-common/                   bibliothèque C++ partagée : montants exacts, codes, validations
-server/                   API : src/ (http, services, setup, jobs, pdf, util), profiles/, i18n/
-client/                   applications Qt : src/{core,business,console,pos}, qml/Nhill/{Ui,Business,Console,Pos} (+ module C++ Nhill.Core),
-                          i18n/ (fr, en), android/, resources/ (icônes Windows, .desktop)
-db/bootstrap/             création manuelle des rôles (alternative à l'installation par la console)
-db/migrations/            schéma versionné 0001…0010 (empreintes SHA-256 vérifiées)
-tests/                    common/, server/ (API + PostgreSQL jetable, installation), client/
-assets/                   marque (logos SVG/PNG), icônes des trois applications, polices IBM Plex (OFL)
-config/                   server.env.example (aucun secret)
-deploy/                   systemd, Caddy (TLS), sauvegarde/restauration chiffrées, installation
-packaging/                scripts Debian du serveur, installateur Windows (Inno Setup)
-scripts/                  build-linux.sh (--deb), build-windows.ps1, build-android.sh, brand/, dev/
-docs/                     documentation, captures d'écran
-```
+Détails, limites et actions humaines : [rapport de validation](docs/fr/rapport-validation.md).
 
 ## Démarrage rapide (développement, Linux)
 
 ```bash
-scripts/build-linux.sh build --deb                              # compile, teste, construit les .deb
-NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build    # PostgreSQL jetable + API sur 127.0.0.1:8080
-python3 scripts/dev/seed-demo.py --email demo@example.cd        # établissement de DÉMONSTRATION (données fictives)
+scripts/install-deps-linux.sh --with-packaging --with-docs --yes
+scripts/build-linux.sh                                          # compile + tests
+NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build    # PostgreSQL jetable + API 127.0.0.1:8080
+python3 scripts/dev/seed-demo.py --email demo@example.cd        # établissement de DÉMONSTRATION
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-business
-NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-pos
-build/client/nhill-console
 ```
 
-Mise en production : `docs/deploiement-production.md` (paquet serveur → mode
-installation → assistant de Nhill Console avec Supabase ou PostgreSQL).
+Construction de tous les livrables : [guide de compilation](docs/fr/guide-compilation.md)
+(`scripts/build-all.sh`, ou GitHub Actions sur une branche `release/**`).
 
 ## Documentation
 
-| Document | Contenu |
-|---|---|
-| `docs/technique.md` | Architecture, données, calculs, numérotation, abonnements, prestataires, point de vente, installation |
-| `docs/installation.md` | Construction Linux / Windows / Android, paquets, développement |
-| `docs/deploiement-production.md` | Mise en production pas à pas (Supabase ou PostgreSQL) |
-| `docs/guide-utilisateur.md` | Nhill Business, Nhill Console, Nhill POS |
-| `docs/api.md` | Référence de l'API |
-| `docs/securite.md` | Modèle de sécurité et **audit interne** |
-| `docs/sauvegarde-restauration.md` | Sauvegarde et restauration |
-| `docs/mise-a-jour.md` | Mise à jour |
-| `docs/conformite/conformite.md` | RDC, UE, international : méthode, points à valider |
-| `docs/modeles-et-profils.md` | Modèles PDF et profils fiscaux |
-| `docs/brand/identite.md` | Nom, logo, couleurs, typographie |
-| `docs/licences-dependances.md` | Dépendances et licences |
-| `docs/limites.md` | Limites connues et éléments non vérifiés |
-| `docs/rapport-tests.md` | Tests exécutés et résultats observés |
-| `docs/captures/` | Captures (installation `s*`, caisse `pos-*`, Business `business-*`, Console `console-*`) |
+| Document | FR | EN |
+|---|---|---|
+| Guide utilisateur | [docs/fr/guide-utilisateur.md](docs/fr/guide-utilisateur.md) | [docs/en/user-guide.md](docs/en/user-guide.md) |
+| Installation | [docs/fr/guide-installation.md](docs/fr/guide-installation.md) | [docs/en/installation-guide.md](docs/en/installation-guide.md) |
+| Configuration | [docs/fr/guide-configuration.md](docs/fr/guide-configuration.md) | [docs/en/configuration-guide.md](docs/en/configuration-guide.md) |
+| Développement | [docs/fr/guide-developpement.md](docs/fr/guide-developpement.md) | [docs/en/developer-guide.md](docs/en/developer-guide.md) |
+| Compilation et livraison | [docs/fr/guide-compilation.md](docs/fr/guide-compilation.md) | [docs/en/build-guide.md](docs/en/build-guide.md) |
+| Sécurité | [docs/fr/securite.md](docs/fr/securite.md) | [docs/en/security.md](docs/en/security.md) |
+| Paramètres légaux | [docs/fr/parametres-legaux.md](docs/fr/parametres-legaux.md) | [docs/en/legal-parameters.md](docs/en/legal-parameters.md) |
+| Journal des modifications | [docs/fr/changelog.md](docs/fr/changelog.md) | [docs/en/changelog.md](docs/en/changelog.md) |
+| Audits technique, UI/UX, sécurité | [docs/fr/01…03](docs/fr/) | [docs/en/01…03](docs/en/) |
+| Rapport de validation | [docs/fr/rapport-validation.md](docs/fr/rapport-validation.md) | [docs/en/validation-report.md](docs/en/validation-report.md) |
+| Site vitrine | [website/README.md](website/README.md) | [website/README.en.md](website/README.en.md) |
+| Dossier juridique (RDC, 19 modèles) | [legal/fr/](legal/fr/00-recherche-juridique.md) | [legal/en/](legal/en/00-legal-research.md) |
+| Dossier commercial (Kinshasa) | [marketing/fr/](marketing/README.md) | [marketing/en/](marketing/README.md) |
+
+Chaque document Markdown a son PDF généré (`docs/pdf/`, `legal/pdf/`, `marketing/pdf/`,
+`README.pdf`, `README.en.pdf`) par `scripts/build-docs-pdf.sh`. Documents de référence de la
+0.1.0 conservés en français dans `docs/*.md` (technique, API, sauvegarde, conformité…).
+
+## Arborescence
+
+```
+common/      bibliothèque C++ partagée (montants, codes, validations, entier 128 bits portable)
+server/      API C++17 (http, services, setup, jobs, pdf), profils pays, traductions
+client/      applications Qt 6 : src/, qml/Nhill/{Ui,Business,Console,Pos}, i18n/, android/
+db/          migrations 0001-0010 (empreintes vérifiées)
+tests/       common, server (PostgreSQL jetable), client, outil de test autonome
+packaging/   Debian, Windows (NSIS, MinGW), Android
+scripts/     construction, vérification, livraison, QA, i18n, développement
+website/     site vitrine FR/EN et backend des formulaires
+docs/ legal/ marketing/   documentation, dossiers juridique et commercial (FR/EN, MD + PDF)
+.github/     workflows CI (tests, paquets Linux, Windows, Android, documentation et site)
+```
 
 ## Licence
 
-Code du projet : propriétaire (à définir par les créateurs). Dépendances : voir
-`docs/licences-dependances.md` (Qt en LGPL v3 : lien dynamique et notice obligatoires).
+Code du projet : propriétaire (licence à définir par les créateurs). Dépendances :
+`docs/licences-dependances.md` (Qt en LGPL v3 : liaison dynamique et notice obligatoires).

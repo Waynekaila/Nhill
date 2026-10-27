@@ -376,5 +376,6 @@
   "detail.by_owner": "By the session holder",
   "detail.approver": "Approved by",
   "detail.category": "Category",
-  "detail.severity": "Severity"
+  "detail.severity": "Severity",
+  "detail.type": "Type"
 }

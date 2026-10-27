@@ -1,0 +1,2 @@
+﻿id;date_entree;etablissement;secteur;commune;contact_nom;contact_role;telephone;email;consentement_canal;consentement_date;source;score;statut;derniere_action;prochaine_action;date_prochaine_action;motif_perte;notes
+P-0001;2026-11-03;EXEMPLE — Boutique fictive (démo);détail;Limete;Exemple Nom;propriétaire;;;WhatsApp;2026-11-03;terrain;15;démo fixée;visite;démonstration;2026-11-06;;ligne d'exemple à supprimer

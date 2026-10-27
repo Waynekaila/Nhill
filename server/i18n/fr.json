@@ -376,5 +376,6 @@
   "detail.by_owner": "Par le titulaire de la session",
   "detail.approver": "Autorisé par",
   "detail.category": "Catégorie",
-  "detail.severity": "Gravité"
+  "detail.severity": "Gravité",
+  "detail.type": "Type"
 }

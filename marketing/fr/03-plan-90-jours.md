@@ -61,7 +61,7 @@ d'hébergement de production du service.
 | 6 | Partenaires | 2 rencontres partenaires (intégrateur, formateur, association) ; contrat de partenariat (modèle `legal/10`) — B : 1re session de formation des partenaires | 2 partenaires en discussion |
 | 7 | Vague 2 de pilotes | 4 à 6 nouveaux pilotes (dont apportés par les partenaires) ; questionnaire de mi-parcours vague 1 | 10 pilotes au total |
 | 8 | Contenus | vidéo 30 s tournée chez un pilote **avec son accord écrit** (script `11`) ; publication sur WhatsApp Statut et réseaux — B : événement d'entrepreneurs (démo en direct) | vidéo publiée |
-| 9 | Recommandation | demande de recommandation aux pilotes satisfaits (modèle `06` § 6) ; démonstration groupée (A : salle prêtée) | 5 recommandations |
+| 9 | Recommandation | demande de recommandation aux pilotes satisfaits (modèle `06` § 7) ; démonstration groupée (A : salle prêtée) | 5 recommandations |
 | 10 | Mi-parcours vague 2 | questionnaire ; mesures intermédiaires ; préparation de la proposition de prix | taux d'activité des pilotes |
 | 11 | Bilan vague 1 | bilans de fin de pilote ; proposition écrite de suite (prix fixés selon `01` § 6) | 1res décisions des pilotes |
 | 12 | Premiers abonnements | conversion des pilotes satisfaits ; facturation (selon la position fiscale validée) ; bilan des partenaires — B : 2e session de formation des partenaires | 1ers abonnements payants |
