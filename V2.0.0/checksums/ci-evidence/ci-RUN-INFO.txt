@@ -1,0 +1,6 @@
+workflow : ci
+job      : build-test 
+état     : success
+commit   : 1c0f30c2fd33d6ac37b852f1f68adb9b154b2e97 (refs/heads/release/2.0.0)
+exécution: https://github.com/Waynekaila/Nhill/actions/runs/40464011312
+date UTC : 2026-10-27T07:10:54Z

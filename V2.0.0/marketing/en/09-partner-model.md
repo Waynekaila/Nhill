@@ -1,0 +1,52 @@
+# Partner model
+
+*Français : [../fr/09-modele-partenaires.md](../fr/09-modele-partenaires.md)*
+
+Standard agreement: [`legal/en/10-partnership-agreement.md`](../../legal/en/10-partnership-agreement.md).
+Public page: `website/src/pages/en/partners.html`.
+
+## 1. Partner types
+
+| Type | Who | What they do | Proposed remuneration **[to validate]** | What Nhill provides |
+|---|---|---|---|---|
+| Referrer | influential trader, independent accountant, field agent | presents Nhill, records the prospect before any contact by Nhill | [N] % commission on amounts collected for 12 months | partner sheet, video, form link, monthly statement |
+| Integrator | IT service provider, hardware reseller (receipt printers, tablets) | installs, imports the catalogue, first-level support | invoices its services to the customer; possible commission | 2-hour technical training, documentation, demo access |
+| Trainer | business school, training centre, independent trainer | trains users | invoices its training; Nhill materials free | training materials, demo business |
+| Support organisation | traders' association, incubator, SME support body, federation | makes Nhill known, hosts workshops | no commission by default; pilot places, free workshop for members | turnkey workshop, reserved places |
+| Reference user | satisfied pilot | welcomes other traders, **only if they wish** | [discount on their subscription] | — |
+
+## 2. Rules
+
+- No partner is announced publicly without a signed contract and agreement on the use of the
+  name.
+- A partner only promises what Nhill does (list "what Nhill does not do" in
+  `07-demo-script.md`) and never presents Nhill as DGI-certified.
+- A partner never asks a trader for a password; they create their own access if the business
+  invites them.
+- Contacts passed on have the people's consent (`legal/en/16`).
+
+## 3. Partner journey
+
+| Step | Timing |
+|---|---|
+| First conversation (30 min): network, motivation, partnership type | — |
+| Demo and training (2 h) | within 1 week |
+| Contract signed | within 2 weeks |
+| First prospect recorded | within 3 weeks |
+| Monthly review: prospects, conversions, feedback, commission statement | every month |
+
+## 4. Tracking
+
+`marketing/trackers/suivi-partenaires.csv` (English-header copy: `partner-tracker.csv`):
+`id`, `nom` (name), `type`, `commune`, `date_contrat` (contract date),
+`prospects_enregistres` (prospects recorded), `demos`, `pilotes` (pilots), `clients`
+(customers), `encaisse_usd` (collected), `commission_due_usd`, `commission_payee_usd`
+(paid), `derniere_rencontre` (last meeting), `notes`.
+
+## 5. Partner KPIs
+
+| Indicator | 90-day target |
+|---|---|
+| Partners signed | 3 |
+| Share of pilots coming from partners | ≥ 30 % |
+| Average commission payment time | ≤ 10 days after collection |
