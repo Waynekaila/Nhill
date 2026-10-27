@@ -12,6 +12,9 @@ on:
         description: "Adresse d'API compilée dans les applications (vide = choix au premier lancement)"
         required: false
         default: ""
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write   # publication des résultats dans ci-results/* (aucun autre écrit)
 jobs:

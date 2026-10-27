@@ -83,7 +83,10 @@ if(NOT ANDROID)
 endif()
 
 include(GNUInstallDirs)
-install(TARGETS nhill-business RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT business BUNDLE DESTINATION . COMPONENT business)
+# Android : l'application est une bibliothèque empaquetée dans l'APK (cible apk), pas installée.
+if(NOT ANDROID)
+    install(TARGETS nhill-business RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT business BUNDLE DESTINATION . COMPONENT business)
+endif()
 if(TARGET nhill-console)
     install(TARGETS nhill-console RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT console)
 endif()
