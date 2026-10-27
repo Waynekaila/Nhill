@@ -1,6 +1,67 @@
-# Rapport de validation — Nhill 2.0.0
+# Rapport de validation — Nhill 2.1.0
 
 *English: [../en/validation-report.md](../en/validation-report.md)*
+
+## Version 2.1.0 — session mémorisée et mot de passe oublié
+
+| | |
+|---|---|
+| Date | 27 octobre 2026 |
+| Version | 2.1.0 (`project(nhill VERSION 2.1.0)`), branche `release/2.1.0`, non publiée |
+| Commit du code validé | `f8524fdd048c7f8462165925aae30d9b4d4357f1` (les commits suivants ne modifient que la documentation, le site vitrine et les documents commerciaux) |
+
+### Tests exécutés
+
+| Suite | Où | Résultat | Preuve |
+|---|---|---|---|
+| `common` | CI Ubuntu 24.04, espace de travail | **22/22** | [exécution 40541503872](https://github.com/Waynekaila/Nhill/actions/runs/40541503872) |
+| `server` (dont 16 tests du mot de passe oublié : réinitialisation par l'administrateur, code par e-mail, envoi SMTP vers un faux relais local, configuration SMTP) | CI Ubuntu 24.04 (PostgreSQL 16) ; espace de travail | **99 réussis, 1 ignoré** (`Samples.GenerateDocumentSamples`) sur 100 | idem |
+| `setup`, `client` | CI | **6/6**, **13/13** | idem |
+| `keychain` — Secret Service réel (gnome-keyring, deux processus) | CI Ubuntu 24.04 | **5/5** (écriture puis relecture dans un second processus, déconnexion, rien de stocké sans « Se souvenir de moi ») | `ci-results/ci`, `logs/keychain-linux.txt` |
+| `keychain` — Gestionnaire d'identification Windows réel, `NHILL_KEYCHAIN_REQUIRED=1` | CI `windows-2022` | **5/5** | [exécution 40541504066](https://github.com/Waynekaila/Nhill/actions/runs/40541504066), `keychain-test-log.txt` |
+| QtKeychain lié à chaque application Windows | CI `windows-2022` | `CredReadW`, `CredWriteW`, `CredDeleteW` importés d'ADVAPI32 ; aucune DLL QtKeychain | idem |
+| Installation silencieuse et désinstallation (Nhill POS, Nhill Business) | CI `windows-2022` | réussies ; exécutable installé identique à celui vérifié (SHA-256) | idem |
+| `keychain` — Keystore Android réel | émulateur Android 11 x86_64 (CI) | phases `write`, `read` (nouveau lancement), `logout`, `forget` : **OK** | [exécution 40541503866](https://github.com/Waynekaila/Nhill/actions/runs/40541503866), `ci-results/android-keychain` |
+| APK Nhill Business | CI | construit ; code Keystore de QtKeychain présent dans la bibliothèque | idem |
+| Paquets `.deb` Ubuntu 24.04 et Debian 13, installation propre par `apt` puis désinstallation | CI (conteneurs `ubuntu:24.04`, `debian:trixie`) | **réussis** | [exécution 40541504028](https://github.com/Waynekaila/Nhill/actions/runs/40541504028), `ci-results/deb-*`, `ci-results/install-*` |
+| Contrôle statique QML | espace de travail | 98 fichiers, 0 problème, 0 texte non traduit | `scripts/qa/qml-check.py` |
+| Site vitrine | espace de travail | 24 pages, 0 problème ; contraste 0 échec (16 pages × 2 largeurs) | `check_site.py`, sondes d'accessibilité |
+| Modèle financier | espace de travail | documents à jour | `subscription_model.py --check` |
+
+Empreintes des installateurs Windows construits par la CI (`f8524fd`) :
+
+```
+e7b12542145330b7f9f5afc1131bd1ba6ed66660773969462552a88a37108b28  nhill-business-2.1.0-setup.exe
+fd7048f0b4d6ec1031019b21242ea21b16cd6c3a8bded5a53e8a01b3ff2837b0  nhill-console-2.1.0-setup.exe
+64e0493dc921090209b6a459c021da9c76f11ec4835159711a442d5c843278d3  nhill-pos-2.1.0-setup.exe
+```
+
+### Anomalies trouvées et corrigées pendant la validation 2.1
+
+| Anomalie | Correction |
+|---|---|
+| `windeployqt` prenait `qt6keychain.dll` pour un module Qt et la cherchait dans le dossier de Qt | QtKeychain liée statiquement sous Windows ; contrôle des imports |
+| Programme de test Windows sans console (sous-système graphique par défaut de `qt_add_executable`) : résultats perdus | `WIN32_EXECUTABLE FALSE` ; journal QtTest écrit dans un fichier |
+| Cibles importées (OpenGL, DBus, Qt6Keychain) absentes dans `tests/keychain` | mêmes `find_package` que `client/` |
+| `QSKIP` appelé depuis une fonction auxiliaire ; phase « déconnexion » sans session stockée | macro dans la fonction de test ; phase ignorée sauf si le stockage est exigé |
+| Émulateur Android : AVD introuvable | dossier des AVD explicite |
+
+### Non testé
+
+- Téléphone Android réel (arm64) et poste Windows 10/11 d'utilisateur (seulement l'émulateur et le serveur Windows 2022 de la CI).
+- Envoi d'e-mails par un vrai fournisseur SMTP (relais local de test seulement).
+- Mise à jour d'une base 2.0 contenant de vraies données vers la migration 0011 (les tests appliquent 0001–0011 sur une base vide) ; retour arrière vers la 2.0.
+- Client 2.0 face au serveur 2.1 ; parcours complets à l'écran (compilation et contrôle statique seulement pour les nouveaux dialogues).
+
+### Limites connues de la 2.1
+
+- Le Gestionnaire d'identification Windows conserve la session après une désinstallation tant que l'utilisateur ne s'est pas déconnecté.
+- La compilation croisée MinGW ne contient pas QtKeychain : session jamais mémorisée.
+- Notice de licence QtKeychain installée avec les applications Windows, pas encore affichée dans l'APK.
+- Transport `log` : aucun code n'est remis ; `NH_EMAIL_TRANSPORT=smtp` est nécessaire en production.
+- Réinitialisation du mot de passe d'un compte de la console : hors périmètre (procédure existante des créateurs).
+
+# Validation 2.0.0
 
 | | |
 |---|---|

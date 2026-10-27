@@ -1,4 +1,4 @@
-# Nhill 2.0
+# Nhill 2.1
 
 *English: [README.en.md](README.en.md)*
 
@@ -19,14 +19,15 @@ les commerçants et PME, trois applications sur un même serveur sécurisé :
 - **Nhill n'est pas un logiciel de facturation homologué par la DGI** : ses documents sont
   des documents de gestion (voir [docs/fr/parametres-legaux.md](docs/fr/parametres-legaux.md)).
 
-## État de la version 2.0.0 (27 octobre 2026)
+## État de la version 2.1.0 (27 octobre 2026, branche `release/2.1.0`)
 
 | Élément | État réel | Preuve |
 |---|---|---|
-| Compilation + tests (common 22, serveur, installation, client) | réussis sur Ubuntu 24.04 et Debian 13 | GitHub Actions, branches `ci-results/ci`, `ci-results/deb-*` |
+| Compilation + tests (common 22, serveur 100 dont 16 pour le mot de passe oublié, installation, client) | réussis sur Ubuntu 24.04 et Debian 13 | GitHub Actions, branches `ci-results/ci`, `ci-results/deb-*` |
+| « Se souvenir de moi » (QtKeychain) | test réel réussi : Gestionnaire d'identification Windows (CI Windows Server 2022), Keystore d'un émulateur Android 11, Secret Service sous Linux ; pas encore sur un téléphone ou un poste d'utilisateur réel | `ci-results/windows`, `ci-results/android-keychain`, `ci-results/ci` |
 | Paquets `.deb` (4 par distribution) | construits pour **Ubuntu 24.04** et **Debian 13** natifs ; installés puis désinstallés dans des conteneurs propres | `ci-results/deb-*`, `ci-results/install-*` |
-| Installateurs Windows (NSIS, 3 applications) | construits (MSVC 2022, Qt 6.5.3) ; installation et désinstallation silencieuses de Nhill POS testées sur Windows Server 2022 (runner CI) | `ci-results/windows` |
-| APK Android (Nhill Business, arm64-v8a) | construit ; **signé avec une clé de débogage** (installable, non publiable) ; non testé sur appareil | `ci-results/android` |
+| Installateurs Windows (NSIS, 3 applications) | construits (MSVC 2022, Qt 6.5.3, QtKeychain statique) ; installation et désinstallation silencieuses de Nhill POS et Nhill Business testées sur Windows Server 2022 (runner CI) | `ci-results/windows` |
+| APK Android (Nhill Business, arm64-v8a) | construit avec QtKeychain ; **signé avec une clé de débogage** (installable, non publiable) ; non testé sur appareil réel | `ci-results/android` |
 | Site vitrine + backend des formulaires | 24 pages contrôlées ; tests du backend sur SQLite et PostgreSQL 16 | `ci-results/site-backend-postgresql` |
 | Signature de code (Authenticode, clé Android de publication) | **non faite** — certificats à acquérir | — |
 | Audit externe, test d'intrusion | **non faits** | [audit de sécurité](docs/fr/03-audit-securite.md) |
@@ -74,7 +75,7 @@ Chaque document Markdown a son PDF généré (`docs/pdf/`, `legal/pdf/`, `market
 common/      bibliothèque C++ partagée (montants, codes, validations, entier 128 bits portable)
 server/      API C++17 (http, services, setup, jobs, pdf), profils pays, traductions
 client/      applications Qt 6 : src/, qml/Nhill/{Ui,Business,Console,Pos}, i18n/, android/
-db/          migrations 0001-0010 (empreintes vérifiées)
+db/          migrations 0001-0011 (empreintes vérifiées)
 tests/       common, server (PostgreSQL jetable), client, outil de test autonome
 packaging/   Debian, Windows (NSIS, MinGW), Android
 scripts/     construction, vérification, livraison, QA, i18n, développement

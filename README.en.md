@@ -1,4 +1,4 @@
-# Nhill 2.0
+# Nhill 2.1
 
 *Français : [README.md](README.md)*
 
@@ -18,14 +18,15 @@ and SMEs: three applications on one secure server.
 - **Nhill is not invoicing software certified by the DRC tax authority (DGI)**: its
   documents are management documents (see [docs/en/legal-parameters.md](docs/en/legal-parameters.md)).
 
-## State of version 2.0.0 (27 October 2026)
+## State of version 2.1.0 (27 October 2026, branch `release/2.1.0`)
 
 | Item | Real state | Evidence |
 |---|---|---|
-| Build + tests (common 22, server, setup, client) | passed on Ubuntu 24.04 and Debian 13 | GitHub Actions, branches `ci-results/ci`, `ci-results/deb-*` |
+| Build + tests (common 22, server 100 including 16 for the forgotten password, setup, client) | passed on Ubuntu 24.04 and Debian 13 | GitHub Actions, branches `ci-results/ci`, `ci-results/deb-*` |
+| "Remember me" (QtKeychain) | real test passed: Windows Credential Manager (CI Windows Server 2022), Keystore of an Android 11 emulator, Secret Service on Linux; not yet on a real phone or user computer | `ci-results/windows`, `ci-results/android-keychain`, `ci-results/ci` |
 | `.deb` packages (4 per distribution) | built for **Ubuntu 24.04** and native **Debian 13**; installed then removed in clean containers | `ci-results/deb-*`, `ci-results/install-*` |
-| Windows installers (NSIS, 3 applications) | built (MSVC 2022, Qt 6.5.3); silent install and uninstall of Nhill POS tested on Windows Server 2022 (CI runner) | `ci-results/windows` |
-| Android APK (Nhill Business, arm64-v8a) | built; **signed with a debug key** (installable, not publishable); not tested on a device | `ci-results/android` |
+| Windows installers (NSIS, 3 applications) | built (MSVC 2022, Qt 6.5.3, static QtKeychain); silent install and uninstall of Nhill POS and Nhill Business tested on Windows Server 2022 (CI runner) | `ci-results/windows` |
+| Android APK (Nhill Business, arm64-v8a) | built with QtKeychain; **signed with a debug key** (installable, not publishable); not tested on a real device | `ci-results/android` |
 | Website + form backend | 24 pages checked; backend tests on SQLite and PostgreSQL 16 | `ci-results/site-backend-postgresql` |
 | Code signing (Authenticode, Android release key) | **not done** — certificates to acquire | — |
 | External audit, penetration test | **not done** | [security audit](docs/en/03-security-audit.md) |
@@ -73,7 +74,7 @@ documents are kept in French in `docs/*.md` (technical, API, backup, compliance�
 common/      shared C++ library (amounts, codes, validation, portable 128-bit integer)
 server/      C++17 API (http, services, setup, jobs, pdf), country profiles, translations
 client/      Qt 6 applications: src/, qml/Nhill/{Ui,Business,Console,Pos}, i18n/, android/
-db/          migrations 0001–0010 (digests checked)
+db/          migrations 0001–0011 (digests checked)
 tests/       common, server (throwaway PostgreSQL), client, standalone test tool
 packaging/   Debian, Windows (NSIS, MinGW), Android
 scripts/     build, verification, release, QA, i18n, development

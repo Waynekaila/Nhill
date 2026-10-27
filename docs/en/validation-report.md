@@ -1,6 +1,67 @@
-# Validation report — Nhill 2.0.0
+# Validation report — Nhill 2.1.0
 
 *Français : [../fr/rapport-validation.md](../fr/rapport-validation.md)*
+
+## Version 2.1.0 — remembered session and forgotten password
+
+| | |
+|---|---|
+| Date | 27 October 2026 |
+| Version | 2.1.0 (`project(nhill VERSION 2.1.0)`), branch `release/2.1.0`, unreleased |
+| Validated code commit | `f8524fdd048c7f8462165925aae30d9b4d4357f1` (later commits change only the documentation, the marketing website and the commercial documents) |
+
+### Tests run
+
+| Suite | Where | Result | Evidence |
+|---|---|---|---|
+| `common` | CI Ubuntu 24.04, workspace | **22/22** | [run 40541503872](https://github.com/Waynekaila/Nhill/actions/runs/40541503872) |
+| `server` (including 16 forgotten-password tests: reset by the administrator, e-mailed code, SMTP delivery to a local fake relay, SMTP configuration) | CI Ubuntu 24.04 (PostgreSQL 16); workspace | **99 passed, 1 skipped** (`Samples.GenerateDocumentSamples`) out of 100 | same |
+| `setup`, `client` | CI | **6/6**, **13/13** | same |
+| `keychain` — real Secret Service (gnome-keyring, two processes) | CI Ubuntu 24.04 | **5/5** (write then read back in a second process, sign-out, nothing stored without "Remember me") | `ci-results/ci`, `logs/keychain-linux.txt` |
+| `keychain` — real Windows Credential Manager, `NHILL_KEYCHAIN_REQUIRED=1` | CI `windows-2022` | **5/5** | [run 40541504066](https://github.com/Waynekaila/Nhill/actions/runs/40541504066), `keychain-test-log.txt` |
+| QtKeychain linked into each Windows application | CI `windows-2022` | `CredReadW`, `CredWriteW`, `CredDeleteW` imported from ADVAPI32; no QtKeychain DLL | same |
+| Silent install and uninstall (Nhill POS, Nhill Business) | CI `windows-2022` | passed; installed executable identical to the checked one (SHA-256) | same |
+| `keychain` — real Android Keystore | Android 11 x86_64 emulator (CI) | phases `write`, `read` (new launch), `logout`, `forget`: **OK** | [run 40541503866](https://github.com/Waynekaila/Nhill/actions/runs/40541503866), `ci-results/android-keychain` |
+| Nhill Business APK | CI | built; QtKeychain Keystore code present in the library | same |
+| Ubuntu 24.04 and Debian 13 `.deb` packages, clean install with `apt` then removal | CI (`ubuntu:24.04`, `debian:trixie` containers) | **passed** | [run 40541504028](https://github.com/Waynekaila/Nhill/actions/runs/40541504028), `ci-results/deb-*`, `ci-results/install-*` |
+| QML static check | workspace | 98 files, 0 problems, 0 untranslated text | `scripts/qa/qml-check.py` |
+| Marketing website | workspace | 24 pages, 0 problems; contrast 0 failures (16 pages × 2 widths) | `check_site.py`, accessibility probes |
+| Financial model | workspace | documents up to date | `subscription_model.py --check` |
+
+Digests of the Windows installers built by the CI (`f8524fd`):
+
+```
+e7b12542145330b7f9f5afc1131bd1ba6ed66660773969462552a88a37108b28  nhill-business-2.1.0-setup.exe
+fd7048f0b4d6ec1031019b21242ea21b16cd6c3a8bded5a53e8a01b3ff2837b0  nhill-console-2.1.0-setup.exe
+64e0493dc921090209b6a459c021da9c76f11ec4835159711a442d5c843278d3  nhill-pos-2.1.0-setup.exe
+```
+
+### Defects found and fixed during the 2.1 validation
+
+| Defect | Fix |
+|---|---|
+| `windeployqt` treated `qt6keychain.dll` as a Qt module and looked for it in Qt's folder | QtKeychain linked statically on Windows; imports checked |
+| Windows test program without a console (`qt_add_executable` defaults to the GUI subsystem): results lost | `WIN32_EXECUTABLE FALSE`; QtTest log written to a file |
+| Imported targets (OpenGL, DBus, Qt6Keychain) missing in `tests/keychain` | same `find_package` calls as `client/` |
+| `QSKIP` called from a helper; "sign-out" phase without a stored session | macro in the test function; phase skipped unless storage is required |
+| Android emulator: AVD not found | explicit AVD folder |
+
+### Not tested
+
+- Real Android phone (arm64) and a user's Windows 10/11 computer (only the emulator and the CI's Windows Server 2022).
+- E-mail delivery through a real SMTP provider (local test relay only).
+- Upgrading a 2.0 database holding real data to migration 0011 (tests apply 0001–0011 to an empty database); rollback to 2.0.
+- 2.0 client against the 2.1 server; complete on-screen flows (build and static check only for the new dialogs).
+
+### Known limits of 2.1
+
+- Windows Credential Manager keeps the session after uninstalling as long as the user has not signed out.
+- The MinGW cross-build does not include QtKeychain: the session is never remembered.
+- QtKeychain licence notice installed with the Windows applications, not yet shown in the APK.
+- `log` transport: no code is delivered; `NH_EMAIL_TRANSPORT=smtp` is needed in production.
+- Resetting a console account's password: out of scope (existing creators' procedure).
+
+# Validation 2.0.0
 
 | | |
 |---|---|
