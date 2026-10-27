@@ -1,5 +1,7 @@
 # Nhill — Sécurité et audit
 
+> **Audit interne de la version 0.1.0**, conservé pour ses preuves. Pour la 2.0 : [docs/fr/securite.md](fr/securite.md), [docs/fr/03-audit-securite.md](fr/03-audit-securite.md) (EN : [security](en/security.md), [security audit](en/03-security-audit.md)). Les longueurs de mot de passe citées ci-dessous (10 et 14 caractères) sont celles de la 0.1.0 ; la 2.0 impose 8 caractères partout.
+
 Ce document décrit le modèle de sécurité de Nhill (serveur, Nhill Business, Nhill POS,
 Nhill Console) et consigne l'**audit interne** réalisé le 26 octobre 2026 : points
 contrôlés, preuves (tests automatisés, requêtes de vérification), défauts trouvés et

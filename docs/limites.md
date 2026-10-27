@@ -1,5 +1,7 @@
 # Limites connues — Nhill 0.1.0
 
+> **Limites de la version 0.1.0.** Pour la 2.0 : [rapport de validation](fr/rapport-validation.md) § 5-6 (EN : [validation report](en/validation-report.md)).
+
 Ce qui n'est **pas** fait ou **pas** vérifié, à lire avant toute mise en service.
 
 ## Plateformes

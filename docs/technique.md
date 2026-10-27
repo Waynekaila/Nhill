@@ -1,5 +1,7 @@
 # Nhill — Documentation technique
 
+> Référence technique rédigée pour la 0.1.0 et toujours valable en 2.0 (API `v1` et schéma inchangés). Nouveautés 2.0 : [guide du développeur](fr/guide-developpement.md) (EN : [developer guide](en/developer-guide.md)).
+
 Version 0.1.0 — API `v1` — 26 octobre 2026.
 
 ## 1. Vue d'ensemble

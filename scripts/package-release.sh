@@ -51,8 +51,13 @@ for lang in fr en; do
   for f in "$ROOT"/marketing/"$lang"/*.md "$ROOT"/marketing/pdf/"$lang"/*.pdf; do run cp "$f" "$REL/marketing/$lang/"; done
 done
 for f in "$ROOT"/README.md "$ROOT"/README.en.md "$ROOT"/README.pdf "$ROOT"/README.en.pdf; do [[ -f "$f" ]] && run cp "$f" "$REL/documentation/"; done
-[[ -d "$ROOT/marketing/assets" ]] && run cp -a "$ROOT/marketing/assets" "$REL/marketing/"
-[[ -d "$ROOT/marketing/tracking" ]] && run cp -a "$ROOT/marketing/tracking" "$REL/marketing/"
+[[ -f "$ROOT/docs/pdf/RELEASE-NOTES.pdf" ]] && run cp "$ROOT/docs/pdf/RELEASE-NOTES.pdf" "$REL/RELEASE-NOTES.pdf"
+[[ -d "$ROOT/marketing/visuals" ]] && run cp -a "$ROOT/marketing/visuals" "$REL/marketing/"
+[[ -d "$ROOT/marketing/trackers" ]] && run cp -a "$ROOT/marketing/trackers" "$REL/marketing/"
+[[ -f "$ROOT/marketing/README.md" ]] && run cp "$ROOT/marketing/README.md" "$REL/marketing/"
+[[ -d "$ROOT/docs/assets/v2" ]] && { run mkdir -p "$REL/documentation/captures-2.0"; run cp -a "$ROOT/docs/assets/v2/." "$REL/documentation/captures-2.0/"; }
+# Preuves de construction (fichiers RUN-INFO des jobs de CI qui ont produit les livrables)
+[[ -d "$DIST/ci-evidence" ]] && { run mkdir -p "$REL/checksums/ci-evidence"; run cp -a "$DIST/ci-evidence/." "$REL/checksums/ci-evidence/"; }
 step "Code source"
 run mkdir -p "$REL/source"
 if git -C "$ROOT" rev-parse --git-dir >/dev/null 2>&1; then
@@ -66,6 +71,6 @@ step "Sommes de contrôle"
 mkdir -p "$REL/checksums"
 ( cd "$REL" && find . -type f ! -path './checksums/*' -printf '%P\n' | sort | xargs -d '\n' sha256sum ) > "$REL/checksums/SHA256SUMS"
 ok "$(wc -l < "$REL/checksums/SHA256SUMS") fichiers dans checksums/SHA256SUMS"
-{ echo "# Livrables absents de cette livraison (non construits dans l'environnement de préparation)"
-  printf '%s\n' "${MISSING[@]}"; } > "$REL/checksums/MISSING.txt"
+{ echo "# Livrables absents de cette livraison / deliverables missing from this release"
+  if (( ${#MISSING[@]} )); then printf '%s\n' "${MISSING[@]}"; else echo "aucun / none"; fi; } > "$REL/checksums/MISSING.txt"
 log "Livraison : $REL  (vérification : cd $REL && sha256sum -c checksums/SHA256SUMS)"

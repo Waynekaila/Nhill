@@ -1,5 +1,7 @@
 # Nhill — Guide utilisateur
 
+> **Document de la version 0.1.0, remplacé** par [docs/fr/guide-utilisateur.md](fr/guide-utilisateur.md) (FR) et [docs/en/user-guide.md](en/user-guide.md) (EN) pour la 2.0. Changement principal : mots de passe de 8 caractères minimum, y compris pour la console.
+
 Partie A : Nhill Business, l'application de l'établissement (Windows, Linux, Android).
 Partie B : Nhill Console, la console d'administration des créateurs de Nhill.
 Partie C : Nhill POS, la caisse reliée à un établissement (Windows, Linux).

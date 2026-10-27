@@ -1,5 +1,7 @@
 # Rapport de tests — Nhill 0.1.0
 
+> **Tests de la version 0.1.0.** Pour la 2.0 : [rapport de validation](fr/rapport-validation.md) (EN : [validation report](en/validation-report.md)).
+
 Date : 26 octobre 2026. Environnement : Ubuntu 24.04, GCC 13.2, Qt 6.4.2, PostgreSQL
 16.15 (tests) et Supabase PostgreSQL 17.6 (base de production), rendu hors écran
 (`QT_QPA_PLATFORM=offscreen`).

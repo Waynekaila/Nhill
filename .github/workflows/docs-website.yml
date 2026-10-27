@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: pandoc + WeasyPrint
-        run: scripts/install-deps-linux.sh --with-docs --yes || sudo apt-get install -y -q pandoc python3-weasyprint
+        run: scripts/install-deps-linux.sh --with-docs --yes || (sudo apt-get update -q && sudo apt-get install -y -q pandoc weasyprint)
       - name: Les PDF versionnés correspondent-ils aux Markdown ?
         run: scripts/build-docs-pdf.sh --check
       - name: Régénération des PDF

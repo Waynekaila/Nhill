@@ -1,5 +1,7 @@
 # Guide d'installation et de construction
 
+> **Document de la version 0.1.0, remplacé** par [docs/fr/guide-compilation.md](fr/guide-compilation.md) et [docs/fr/guide-installation.md](fr/guide-installation.md) (EN : [build-guide](en/build-guide.md), [installation-guide](en/installation-guide.md)).
+
 | Plateforme | Composant | État vérifié |
 |---|---|---|
 | Linux (Ubuntu 24.04, GCC 13, Qt 6.4.2) | Serveur, Nhill Business, Nhill Console, Nhill POS, tests | **Compilé et testé ; paquets .deb construits et installés dans un Ubuntu 24.04 vierge** |

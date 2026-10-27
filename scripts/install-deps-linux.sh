@@ -73,7 +73,7 @@ CLIENT=(qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-tools-dev qt6-l10n-tool
         qml6-module-qt-labs-folderlistmodel qt6-qpa-plugins)
 PKG=() ; DOCS=() ; GUI=() ; WIN=() ; ANDROID=()
 [[ "$WITH_PKG" == 1 ]] && PKG=(dpkg-dev fakeroot lintian debhelper)
-[[ "$WITH_DOCS" == 1 ]] && DOCS=(pandoc python3-weasyprint fonts-dejavu-core)
+[[ "$WITH_DOCS" == 1 ]] && DOCS=(pandoc weasyprint fonts-dejavu-core)   # paquet « weasyprint » (Debian 13, Ubuntu 24.04 universe)
 [[ "$WITH_GUI" == 1 ]] && GUI=(xvfb xauth imagemagick fonts-dejavu-core)
 [[ "$WITH_WIN" == 1 ]] && WIN=(g++-mingw-w64-x86-64-posix mingw-w64-tools nsis)
 if [[ "$WITH_ANDROID" == 1 ]]; then

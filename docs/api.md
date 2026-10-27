@@ -1,5 +1,7 @@
 # Nhill — Référence de l'API v1
 
+> Référence de l'API `v1`, inchangée en 2.0 (sauf longueur minimale des mots de passe : 8 caractères).
+
 Générée à partir des déclarations de routes du serveur (`server/src/services/*.cpp`)
 le 25 octobre 2026 : 126 points d'accès.
 

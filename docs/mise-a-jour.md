@@ -1,5 +1,7 @@
 # Guide de mise à jour
 
+> Procédure générale toujours valable. Passage de 0.1.0 à 2.0.0 : [guide d'installation](fr/guide-installation.md) § 5 (EN : [installation guide](en/installation-guide.md) § 5).
+
 ## Serveur
 
 1. Lire les notes de version (migrations ajoutées, changements de configuration).
