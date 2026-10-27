@@ -7,7 +7,7 @@
 | Date | 27 October 2026 |
 | Version | 2.0.0 (`project(nhill VERSION 2.0.0)`) |
 | Repository | `Waynekaila/Nhill` (GitHub, private), branches `main` and `release/2.0.0` |
-| Deliverables commit | `1389b46a5b5f97adc5b7e15f7906a470d43f81b2` |
+| Deliverables commit | `1c0f30c2fd33d6ac37b852f1f68adb9b154b2e97` |
 | Principle | this report only mentions what was executed; everything else is under "Not tested" (§ 5) |
 
 ## 1. Where checks took place
@@ -39,18 +39,18 @@ Each job's results are published in `ci-results/*` branches of the repository
 
 | Deliverable | Build | Checks | SHA-256 |
 |---|---|---|---|
-| `linux/ubuntu-24.04/nhill-business_2.0.0-1_amd64.deb` | CI, `ubuntu:24.04` container | lintian 0 errors; `apt` install in a clean container, headless start, removal | `0cf37139440533d5961749118536e0163ab7f018d47db1653b254510988e1995` |
-| `linux/ubuntu-24.04/nhill-console_2.0.0-1_amd64.deb` | same | same | `7545b6883e88cf19dcac418339428df956133fb393b8aa9c5b70a594a5414dc0` |
-| `linux/ubuntu-24.04/nhill-pos_2.0.0-1_amd64.deb` | same | same | `453c3d554b1457a3315e7f5a7487921778dcfb3ab965532d1529708c93a99f77` |
-| `linux/ubuntu-24.04/nhill-server_2.0.0-1_amd64.deb` | same | lintian 0 errors, 7 warnings; installed in the clean container | `a0c75e986e6614b887e9b61cc9356971ca8c652896e572a422d93d5839832c5c` |
-| `linux/debian-13/nhill-business_2.0.0-1_amd64.deb` | CI, `debian:trixie` container (Debian's Qt 6.8) | install, start, removal in a clean container | `5f45dbcf7a730ce20313cb4b1f58f0dfed16b11cf3941847230b794985020fd4` |
-| `linux/debian-13/nhill-console_2.0.0-1_amd64.deb` | same | same | `f7f87e521ac45c284b18db5cf3a330e8640f004d6ed0d410c9b0c2aa96f936f5` |
-| `linux/debian-13/nhill-pos_2.0.0-1_amd64.deb` | same | same | `9f934b74718736a81334c1fd7f6979109afd37977fa3445106b681262c04678f` |
-| `linux/debian-13/nhill-server_2.0.0-1_amd64.deb` | same | installed | `13b582cfcd6e89e9b094cc7125d815194acd6e422834d9baa6319617bed162bb` |
-| `windows/nhill-business-2.0.0-setup.exe` | CI `windows-2022`, MSVC 2022, Qt 6.5.3, NSIS | PE format checked | `1d65aaa1da100550c09d020af2e94a06a99e78a4913e6ef5a862e792892e53e1` |
-| `windows/nhill-console-2.0.0-setup.exe` | same | PE format checked | `48c2434afe25fb48678a6af7c247596d7d669af26595d05c180b4ece0dbcfe26` |
-| `windows/nhill-pos-2.0.0-setup.exe` | same | PE format; **silent install and uninstall succeeded** on the runner | `bc812f9fcb4bcc47d94d69e98544941b91bd4f3c3c3a505ee56c350965d76872` |
-| `android/nhill-business-2.0.0-arm64-v8a.apk` | CI, Qt 6.5.3 for Android, NDK r25c, platform 34 | content (manifest, arm64-v8a libraries), **debug** signature verified by `apksigner` | `a8156401b2a0cc45fddfad7f6be34da419337bcb6fc8f756e85ac5c1c8b9fba8` |
+| `linux/ubuntu-24.04/nhill-business_2.0.0-1_amd64.deb` | CI, `ubuntu:24.04` container | lintian 0 errors; `apt` install in a clean container, headless start, removal | `d46cadeb0701b6ff823ca65e8533116c6b1a372cd6a8bbbe078536cfa06d1c89` |
+| `linux/ubuntu-24.04/nhill-console_2.0.0-1_amd64.deb` | same | same | `f26aa9f414343b8a80156b44f9891cce3e58614a060783caa4f9ccb438103e63` |
+| `linux/ubuntu-24.04/nhill-pos_2.0.0-1_amd64.deb` | same | same | `c67f88b6af4c99bcf1ba3a8a3e6921e21c17e8ced11e41f0d6dbe2d2e1c34d3d` |
+| `linux/ubuntu-24.04/nhill-server_2.0.0-1_amd64.deb` | same | lintian 0 errors, 7 warnings; installed in the clean container | `997c29c8c44cfe444ddc02bb21f2e2a0bcb6224339e76ab0222ecd2f8cba77ae` |
+| `linux/debian-13/nhill-business_2.0.0-1_amd64.deb` | CI, `debian:trixie` container (Debian's Qt 6.8) | install, start, removal in a clean container | `63ce71aad7a5b67208384aaf1e740d4915561d978659183732e4ab949fe1d1d4` |
+| `linux/debian-13/nhill-console_2.0.0-1_amd64.deb` | same | same | `579f363770d21e3c5660e920551d8f3864e03b084e3aea5f2ce8433a37f2bf87` |
+| `linux/debian-13/nhill-pos_2.0.0-1_amd64.deb` | same | same | `ce804cd61b037b515a50d83ff1f513ca204798dea876b9ff58fc35d2a69f55b9` |
+| `linux/debian-13/nhill-server_2.0.0-1_amd64.deb` | same | installed | `dc05552506a6b7cfcfe787d6f7abc9ffd8fb078e0efa4500b58939f154cc13d8` |
+| `windows/nhill-business-2.0.0-setup.exe` | CI `windows-2022`, MSVC 2022, Qt 6.5.3, NSIS | PE format checked | `5a224a1b21f439cf6a63aba074830de8a3df56d6845e1ac80604ada7aeac2a1b` |
+| `windows/nhill-console-2.0.0-setup.exe` | same | PE format checked | `e1f1c768b593a4097598e22e1c1a0e523b82c09de9c30b536638318b6b7e81b9` |
+| `windows/nhill-pos-2.0.0-setup.exe` | same | PE format; **silent install and uninstall succeeded** on the runner | `b95c1dd8fae02f48157606637b1b185486abf8d04e9a5153bb4039027c5cdd07` |
+| `android/nhill-business-2.0.0-arm64-v8a.apk` | CI, Qt 6.5.3 for Android, NDK r25c, platform 34 | content (manifest, arm64-v8a libraries), **debug** signature verified by `apksigner` | `70c9664ad39baeadb61885d8d2ead5a6de19bb33d13d856f50d475e75f2fdf01` |
 | Website (sources + archive) | workspace | checks of § 2 | `release/V2.0.0/checksums/SHA256SUMS` |
 | Documentation, legal and marketing PDFs | workspace (pandoc + Chromium) | `scripts/build-docs-pdf.sh --check` | `docs/pdf/manifest.json` |
 
