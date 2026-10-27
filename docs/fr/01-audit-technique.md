@@ -37,7 +37,7 @@ Les faiblesses principales ne sont pas dans la logique métier mais dans :
 | Données | Solide | 10 migrations, 64 tables, RLS forcée sur 30 tables métier |
 | Tests | Bons | 4 suites (common, server, setup, client) ; 0.1.0 : 119 tests, 1 ignoré |
 | Construction | Fragile | Seul Linux construit ; dépendance à des scripts hors dépôt (corrigé en 2.0.0) |
-| Distribution | Incomplète | Windows/Android non construits ; Debian 13 avec runtime embarqué |
+| Distribution | Incomplète (0.1.0) | Windows/Android non construits ; Debian 13 avec runtime embarqué — corrigé en 2.0.0 : installateurs Windows, APK, paquets Debian 13 natifs construits en CI ([rapport de validation](rapport-validation.md)) |
 | Observabilité | Minimale | `/health`, journal systemd, « Erreurs techniques » de la console |
 
 ## 2. Inventaire

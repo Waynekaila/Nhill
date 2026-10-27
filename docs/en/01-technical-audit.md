@@ -35,7 +35,7 @@ The main weaknesses are not in the business logic but in:
 | Data | Solid | 10 migrations, 64 tables, RLS forced on 30 business tables |
 | Tests | Good | 4 suites (common, server, setup, client); 0.1.0: 119 tests, 1 skipped |
 | Build | Fragile | Only Linux built; reliance on scripts outside the repository (fixed in 2.0.0) |
-| Distribution | Incomplete | Windows/Android not built; Debian 13 with embedded runtime |
+| Distribution | Incomplete (0.1.0) | Windows/Android not built; Debian 13 with embedded runtime — fixed in 2.0.0: Windows installers, APK, native Debian 13 packages built in CI ([validation report](validation-report.md)) |
 | Observability | Minimal | `/health`, systemd journal, console "Technical errors" |
 
 ## 2. Inventory
