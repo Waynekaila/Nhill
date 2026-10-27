@@ -5,9 +5,10 @@ name: linux-packages
 on:
   push:
     tags: ['v*']
+    branches: ['release/**']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write   # publication des résultats dans ci-results/* (aucun autre écrit)
 jobs:
   deb:
     strategy:
@@ -42,6 +43,14 @@ jobs:
           name: nhill-deb-${{ matrix.name }}-logs
           path: build/logs/
           if-no-files-found: ignore
+      - name: Publication des résultats (branche ci-results/deb-${{ matrix.name }})
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ${{ matrix.name }}
+        run: .github/scripts/publish-results.sh ci-results/deb-${{ matrix.name }} dist/linux build/logs
   install-test:
     name: Installation propre ${{ matrix.name }}
     needs: deb
@@ -56,6 +65,11 @@ jobs:
     runs-on: ubuntu-24.04
     container: ${{ matrix.image }}
     steps:
+      - name: Outils de publication
+        run: apt-get update -q && DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends git ca-certificates
+      - uses: actions/checkout@v4
+        with:
+          path: src
       - uses: actions/download-artifact@v4
         with:
           name: nhill-deb-${{ matrix.name }}
@@ -67,10 +81,28 @@ jobs:
           sha256sum -c SHA256SUMS
           DEBIAN_FRONTEND=noninteractive apt-get install -y -q ./nhill-business_*.deb ./nhill-pos_*.deb ./nhill-console_*.deb ./nhill-server_*.deb
       - name: Fichiers installés et démarrage
+        shell: bash
         run: |
-          for b in nhill-business nhill-pos nhill-console nhill-server; do command -v $b; done
-          dpkg -L nhill-pos | grep -E 'applications/nhill-pos.desktop|icons/'
-          QT_QPA_PLATFORM=offscreen timeout 8 nhill-pos || [ $? -eq 124 ]
-          QT_QPA_PLATFORM=offscreen timeout 8 nhill-business || [ $? -eq 124 ]
+          set -o pipefail
+          mkdir -p install-report
+          {
+            dpkg -l 'nhill-*'
+            for b in nhill-business nhill-pos nhill-console nhill-server; do command -v $b; done
+            dpkg -L nhill-pos | grep -E 'applications/nhill-pos.desktop|icons/'
+            QT_QPA_PLATFORM=offscreen timeout 8 nhill-pos || [ $? -eq 124 ]
+            QT_QPA_PLATFORM=offscreen timeout 8 nhill-business || [ $? -eq 124 ]
+            echo "démarrage OK"
+          } 2>&1 | tee install-report/install-test.log
       - name: Désinstallation
-        run: DEBIAN_FRONTEND=noninteractive apt-get remove -y nhill-business nhill-pos nhill-console && ! command -v nhill-pos
+        shell: bash
+        run: |
+          set -o pipefail
+          { DEBIAN_FRONTEND=noninteractive apt-get remove -y nhill-business nhill-pos nhill-console && ! command -v nhill-pos && echo "désinstallation OK"; } 2>&1 | tee -a install-report/install-test.log
+      - name: Publication des résultats (branche ci-results/install-${{ matrix.name }})
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ${{ matrix.name }}
+        run: src/.github/scripts/publish-results.sh ci-results/install-${{ matrix.name }} install-report

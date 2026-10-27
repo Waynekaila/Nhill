@@ -6,9 +6,10 @@ name: android
 on:
   push:
     tags: ['v*']
+    branches: ['release/**']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write   # publication des résultats dans ci-results/* (aucun autre écrit)
 jobs:
   apk:
     runs-on: ubuntu-24.04
@@ -54,12 +55,22 @@ jobs:
         env:
           KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
           KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+        shell: bash
         run: |
+          set -o pipefail
           export QT_ANDROID="$RUNNER_TEMP/qt/Qt/6.5.3/android_arm64_v8a" QT_HOST="$RUNNER_TEMP/qt/Qt/6.5.3/gcc_64"
           export ANDROID_NDK_ROOT="$ANDROID_SDK_ROOT/ndk/25.2.9519653"
           if [ -f "$RUNNER_TEMP/release.keystore" ]; then export KEYSTORE="$RUNNER_TEMP/release.keystore"; fi
-          scripts/build-android.sh --force
+          scripts/build-android.sh --force 2>&1 | tee android-build-log.txt
       - uses: actions/upload-artifact@v4
         with:
           name: nhill-android-apk
           path: dist/android/
+      - name: Publication des résultats (branche ci-results/android)
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/android dist/android build/logs android-build-log.txt

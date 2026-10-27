@@ -3,11 +3,11 @@
 name: docs-website
 on:
   push:
-    branches: [main]
+    branches: [main, 'release/**']
     paths: ['docs/**', 'legal/**', 'marketing/**', 'website/**', 'README*.md', 'scripts/docs/**']
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write   # publication des résultats dans ci-results/* (aucun autre écrit)
 jobs:
   docs-site:
     runs-on: ubuntu-24.04
@@ -30,6 +30,14 @@ jobs:
             marketing/pdf/
             README*.pdf
             dist/website/
+      - name: Publication des résultats (branche ci-results/docs-website)
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/docs-website docs/pdf legal/pdf marketing/pdf README.pdf README.en.pdf dist/website build/logs
   site-backend-postgresql:
     # Mêmes scénarios que les tests SQLite, sur PostgreSQL avec les rôles à privilèges minimaux.
     runs-on: ubuntu-24.04
@@ -71,3 +79,15 @@ jobs:
       - name: Tests du backend sur PostgreSQL
         working-directory: website/backend
         run: python3 -m unittest discover -s tests -v
+      - name: Rapport
+        if: always()
+        shell: bash
+        run: mkdir -p pg-report && echo "${{ job.status }}" > pg-report/status.txt
+      - name: Publication des résultats (branche ci-results/site-backend-postgresql)
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/site-backend-postgresql pg-report

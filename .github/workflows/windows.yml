@@ -5,6 +5,7 @@ name: windows
 on:
   push:
     tags: ['v*']
+    branches: ['release/**']
   workflow_dispatch:
     inputs:
       server_url:
@@ -12,7 +13,7 @@ on:
         required: false
         default: ""
 permissions:
-  contents: read
+  contents: write   # publication des résultats dans ci-results/* (aucun autre écrit)
 jobs:
   installers:
     runs-on: windows-2022
@@ -40,9 +41,18 @@ jobs:
       - name: Compilation + installateurs
         shell: pwsh
         run: |
-          powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
-            -Source "$env:GITHUB_WORKSPACE" -QtDir "$env:QT_ROOT_DIR" -ServerUrl "${{ github.event.inputs.server_url }}" `
-            -BuildDir "$env:GITHUB_WORKSPACE\build-windows"
+          # Journal complet conservé (publié ensuite dans la branche ci-results/windows)
+          $a = @('-ExecutionPolicy', 'Bypass', '-File', 'packaging\windows\build-windows.ps1',
+                 '-Source', "`"$env:GITHUB_WORKSPACE`"", '-QtDir', "`"$env:QT_ROOT_DIR`"",
+                 '-BuildDir', "`"$env:GITHUB_WORKSPACE\build-windows`"")
+          $url = "${{ github.event.inputs.server_url }}"
+          if ($url) { $a += @('-ServerUrl', $url) }
+          $p = Start-Process powershell -ArgumentList $a -NoNewWindow -PassThru `
+                 -RedirectStandardOutput build-windows-log.txt -RedirectStandardError build-windows-err.txt
+          $null = $p.Handle   # garantit la lecture du code de sortie
+          $p.WaitForExit()
+          Get-Content build-windows-log.txt, build-windows-err.txt
+          if ($p.ExitCode -ne 0) { throw "build-windows.ps1 a échoué (code $($p.ExitCode))" }
       - name: Vérification (PE 64 bits, sommes)
         shell: pwsh
         run: |
@@ -63,3 +73,11 @@ jobs:
           path: |
             build-windows/dist/*-setup.exe
             build-windows/dist/SHA256SUMS
+      - name: Publication des résultats (branche ci-results/windows)
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/windows build-windows/dist build-windows-log.txt build-windows-err.txt

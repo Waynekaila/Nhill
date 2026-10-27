@@ -3,11 +3,11 @@
 name: ci
 on:
   push:
-    branches: [main]
+    branches: [main, 'release/**']
   pull_request:
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write   # publication des résultats dans ci-results/* (aucun autre écrit)
 jobs:
   build-test:
     name: Ubuntu 24.04 — build + tests
@@ -37,3 +37,11 @@ jobs:
             build/Testing/
             artifacts/screenshots/
           if-no-files-found: ignore
+      - name: Publication des résultats (branche ci-results/ci)
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/ci build/logs build/Testing artifacts/screenshots
