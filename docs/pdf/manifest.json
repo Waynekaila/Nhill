@@ -131,13 +131,13 @@
    "title": "Nhill 2.1 — Security"
   },
   "docs/pdf/en/user-guide.pdf": {
-   "bytes": 103881,
+   "bytes": 107257,
    "engine": "playwright",
-   "generated": "2026-10-27T12:01:09+00:00",
+   "generated": "2026-10-27T16:25:15+00:00",
    "lang": "en",
-   "pdf_sha256": "bbbab77c3b756e72c316cc2777ca154486b2c28d521113543a8e7ee9abb7a1f5",
+   "pdf_sha256": "bdac8df2aae10891688c43146a7d0a5f67a89e8db317c4a98ac9b4ee2a8e4dc0",
    "source": "docs/en/user-guide.md",
-   "source_sha256": "58b384fd3a6e2cf857b1a50aeddac3deb573b189554c002514d559a01ec88bea",
+   "source_sha256": "c96c9390b7bc890c8aba9a3a9e2e2156dc4bb3c80e89fb448a8520553ee9e92d",
    "title": "Nhill 2.1 — User guide"
   },
   "docs/pdf/en/validation-report.pdf": {
@@ -241,13 +241,13 @@
    "title": "Nhill 2.1 — Guide d'installation"
   },
   "docs/pdf/fr/guide-utilisateur.pdf": {
-   "bytes": 108211,
+   "bytes": 114087,
    "engine": "playwright",
-   "generated": "2026-10-27T12:00:58+00:00",
+   "generated": "2026-10-27T16:25:13+00:00",
    "lang": "fr",
-   "pdf_sha256": "e1716c714eb8d4972972bf302c8f4c800a6ebc240f9f5f1ff14ee9734adc4a6c",
+   "pdf_sha256": "38048201414193e339e17df88decf68d9dd38de9e6c9a70e742b11cd9e16cb3a",
    "source": "docs/fr/guide-utilisateur.md",
-   "source_sha256": "4e6bd378c75576ecdb95140091820eb56357fece086229e6cfb188067b4c85dd",
+   "source_sha256": "6a8373af5708bf2b54293cd9a681179ef7296e044062023305ab5fdab2765d31",
    "title": "Nhill 2.1 — Guide utilisateur"
   },
   "docs/pdf/fr/parametres-legaux.pdf": {

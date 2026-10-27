@@ -246,6 +246,19 @@ Changer de mot de passe en étant connecté reste possible (Paramètres › Mon 
 - Plusieurs entreprises avec le même compte : choix à la connexion.
 - Après plusieurs essais de connexion erronés, le serveur ralentit les tentatives.
 
+## 11. Périmètre de Nhill (à connaître avant de décider)
+
+Ces points sont présentés de façon positive sur le site ; voici leur formulation exacte.
+
+| Sujet | Ce que fait Nhill | Ce qu'il ne fait pas |
+|---|---|---|
+| Obligations fiscales | taux de taxe, identifiants légaux et mentions sur chaque document ; profil `CD` (RDC, brouillon à faire valider par un fiscaliste) et profil `INTL` générique ; référence d'un document officiel (par exemple DEF de la DGI) enregistrée sur la facture Nhill | n'est **certifié dans aucun pays** : ni caisse certifiée, ni facture électronique réglementaire, ni dispositif fiscal |
+| Comptabilité | journaux et exports CSV/PDF (ventes, paiements, dépenses, créances, montants à payer) | ne tient pas la comptabilité générale (grand livre, plan OHADA) |
+| Paiements | espèces, carte, virement, chèque, Mobile Money enregistrés avec leur référence | n'est relié ni aux opérateurs Mobile Money ni aux terminaux de carte : le paiement se vérifie sur le téléphone ou le terminal |
+| Envoi des documents | PDF à partager depuis l'ordinateur ou le téléphone | pas d'envoi direct par e-mail ou SMS depuis l'application |
+| Connexion | une connexion mobile suffit ; une vente interrompue est renvoyée sans doublon | sans connexion, on ne peut ni vendre ni facturer |
+| Appareils | Nhill Business : Windows, Linux, Android ; Nhill POS : Windows, Linux | pas de caisse sur Android ni sur iOS |
+
 ---
 
 # Partie B — Nhill Console (créateurs)

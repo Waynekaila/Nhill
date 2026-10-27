@@ -235,6 +235,19 @@ Changing your password while signed in remains possible (Settings › My account
 - Several businesses with the same account: choose at sign-in.
 - After several wrong sign-in attempts, the server slows further attempts down.
 
+## 11. Scope of Nhill (to know before deciding)
+
+The website presents these points positively; here is their exact wording.
+
+| Topic | What Nhill does | What it does not do |
+|---|---|---|
+| Tax obligations | tax rates, legal identifiers and mentions on every document; `CD` profile (DRC, draft to be validated by a tax adviser) and generic `INTL` profile; reference of an official document (for example the DGI DEF) recorded on the Nhill invoice | is **certified in no country**: not a certified till, not regulatory e-invoicing, not a fiscal device |
+| Accounting | journals and CSV/PDF exports (sales, payments, expenses, receivables, amounts to pay) | does not keep the general ledger (OHADA chart of accounts) |
+| Payments | cash, card, bank transfer, cheque, Mobile Money recorded with their reference | not connected to Mobile Money operators or card terminals: the payment is checked on the phone or terminal |
+| Sending documents | PDFs to share from the computer or phone | no direct sending by e-mail or SMS from the application |
+| Connection | a mobile connection is enough; an interrupted sale is sent again without duplicate | without a connection, you can neither sell nor invoice |
+| Devices | Nhill Business: Windows, Linux, Android; Nhill POS: Windows, Linux | no till on Android or iOS |
+
 ---
 
 # Part B — Nhill Console (creators)

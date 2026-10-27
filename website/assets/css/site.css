@@ -255,10 +255,20 @@ figure { margin: 0; }
 @media (max-width: 860px) { .who { grid-template-columns: 1fr; } }
 
 /* Comparaison (accueil) */
-table.compare { max-width: none; background: var(--paper); }
-table.compare thead th:nth-child(2) { background: var(--night); color: #FFFFFF; }
-table.compare tbody th { width: 18%; }
-table.compare td { width: 41%; }
+table.plain.compare { max-width: none; background: var(--paper); }
+table.plain.compare thead th:nth-child(2) { background: var(--night); color: #FFFFFF; }
+table.plain.compare tbody th { width: 18%; }
+table.plain.compare td { width: 41%; }
+@media (max-width: 700px) {
+  table.plain.compare thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  table.plain.compare, table.plain.compare tbody, table.plain.compare tr, table.plain.compare th, table.plain.compare td { display: block; width: auto; }
+  table.plain.compare { background: transparent; }
+  table.plain.compare tr { border-top: 2px solid var(--night); padding: 6px 0 14px; }
+  table.plain.compare tbody th { width: auto; border: 0; padding: 10px 0 2px; font-size: var(--fs-md); }
+  table.plain.compare tbody td { width: auto; border: 0; padding: 8px 0 0; }
+  table.plain.compare td::before { content: attr(data-label); display: block; font-size: var(--fs-xs); font-weight: 600; color: var(--muted); margin-bottom: 2px; }
+  table.plain.compare td:first-of-type::before { color: var(--gold-ink); }
+}
 
 /* Ticket en ligne (sections d'explication de la clôture) */
 .receipt { background: var(--ticket); color: #1E2329; font-family: "Plex Mono", ui-monospace, monospace; font-size: 0.92rem; padding: 22px 22px 28px; max-width: 360px; border: 1px solid var(--line);

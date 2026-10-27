@@ -40,9 +40,8 @@ FOOT = {
            "privacy": ("confidentialite", "Politique de confidentialité"), "terms": ("conditions", "Conditions d'utilisation"),
            "notice": ("mentions-legales", "Mentions légales"),
            "tagline": "Le logiciel de gestion et de caisse des indépendants, des commerces et des PME, en français et en anglais.",
-           "fine": "Nhill est un logiciel de gestion commerciale. Il ne remplace pas une caisse ou un dispositif de "
-                   "facturation certifié lorsque la loi de votre pays en exige un (par exemple la facture normalisée "
-                   "de la DGI en RDC). Les captures d'écran montrent l'application réelle, avec des données de démonstration.",
+           "fine": "Nhill, logiciel de gestion commerciale et de caisse. Les captures d'écran montrent l'application "
+                   "réelle, avec des données de démonstration.",
            "skip": "Aller au contenu", "menu": "Menu", "lang": "English", "home": "Accueil"},
     "en": {"product": "Product", "start": "Get started", "legal": "Legal information",
            "start_links": [("contact", "#demonstration", "Book a demo"), ("free-trial", "", "Free assisted trial"),
@@ -50,9 +49,8 @@ FOOT = {
            "privacy": ("privacy", "Privacy policy"), "terms": ("terms", "Terms of use"),
            "notice": ("legal-notice", "Legal notice"),
            "tagline": "Business management and point of sale for freelancers, shops and SMEs, in English and French.",
-           "fine": "Nhill is business management software. It does not replace a certified till or invoicing device "
-                   "where the law of your country requires one (for example the DGI standardised invoice in the DRC). "
-                   "Screenshots show the real application with demo data.",
+           "fine": "Nhill, business management and point-of-sale software. Screenshots show the real application "
+                   "with demo data.",
            "skip": "Skip to content", "menu": "Menu", "lang": "Français", "home": "Home"},
 }
 
