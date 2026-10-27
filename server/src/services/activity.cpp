@@ -8,6 +8,7 @@
 #include <regex>
 
 #include "nhill/money.hpp"
+#include "services/entitlements.hpp"
 #include "services/report.hpp"
 #include "services/sales.hpp"
 #include "services/services.hpp"
@@ -96,6 +97,38 @@ constexpr const char* kActivitySelect =
     "LEFT JOIN parties pt ON a.entity = 'party' AND pt.id::text = a.entity_id "
     "LEFT JOIN purchases pu ON a.entity = 'purchase' AND pu.id::text = a.entity_id ";
 
+// Journal entries of features outside the plan are not shown (rule: no data of a feature
+// that is not included, not even indirectly). Parameters from `base`: purchases, expenses,
+// pos, several warehouses, multi-currency (booleans), visible document classes (text[]).
+std::string featureWhere(int base) {
+    auto p = [&](int i) { return "$" + std::to_string(base + i); };
+    return "AND (a.action NOT LIKE 'purchase.%' OR " + p(0) + "::boolean) "
+           "AND (a.action NOT LIKE 'expense%' OR " + p(1) + "::boolean) "
+           "AND (a.action NOT LIKE 'pos.%' OR " + p(2) + "::boolean) "
+           "AND (a.action NOT IN ('warehouse.created', 'stock.transferred') OR " + p(3) + "::boolean) "
+           "AND (a.action NOT LIKE 'exchange_rate.%' OR " + p(4) + "::boolean) "
+           "AND (a.details ->> 'doc_type' IS NULL OR a.details ->> 'doc_type' = ANY(" + p(5) + "::text[]) "
+           "     OR (a.details ->> 'doc_type' = 'credit_note' AND 'pos_credit_note' = ANY(" + p(5) + "::text[]))) "
+           "AND (a.entity IS DISTINCT FROM 'sales_document' OR NOT EXISTS (SELECT 1 FROM sales_documents x WHERE "
+           "x.id::text = a.entity_id AND NOT " + entitlements::docVisibleSql("x", base + 5) + ")) "
+           "AND (a.entity IS DISTINCT FROM 'payment' OR NOT EXISTS (SELECT 1 FROM payments y WHERE y.id::text = a.entity_id "
+           "AND NOT " + entitlements::paymentFilterSql("y", base, base + 1, base + 5) + ")) "
+           // Suppliers exist with purchases or expenses only.
+           "AND (a.entity IS DISTINCT FROM 'party' OR " + p(0) + "::boolean OR " + p(1) + "::boolean OR NOT EXISTS "
+           "(SELECT 1 FROM parties z WHERE z.id::text = a.entity_id AND NOT z.is_customer)) ";
+}
+
+struct FeatureParams {
+    bool purchases, expenses, pos, multiWarehouse, multiCurrency;
+    std::string types;
+};
+FeatureParams featureParams(const Actor& a) {
+    namespace k = entitlements::key;
+    return {a.features.count(k::kPurchases) > 0, a.features.count(k::kExpenses) > 0, a.features.count(k::kPos) > 0,
+            a.features.count(k::kMultiWarehouse) > 0, a.features.count(k::kMultiCurrency) > 0,
+            entitlements::docTypesArray(a)};
+}
+
 std::string actorLabel(Env& env, const std::string& lang, const std::string& type, const std::string& name) {
     if (type == "user") return name;
     return env.i18n.t(lang, "actor." + type);
@@ -114,6 +147,7 @@ void registerActivityRoutes(App& app, Env& env) {
         Filters f = readFilters(ctx, seeAll);
         const std::string format = ctx.query("format").value_or("json");
         const std::string lang = ctx.actor.lang;
+        const FeatureParams fp = featureParams(ctx.actor);
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             if (format == "csv" || format == "pdf") {
                 Report r{"report.activity",
@@ -123,8 +157,10 @@ void registerActivityRoutes(App& app, Env& env) {
                          {},
                          true};
                 // Exports are capped to keep the PDF readable; narrow the period beyond that.
-                for (const auto& row : tx.q(std::string(kActivitySelect) + kActivityWhere + "ORDER BY a.id DESC LIMIT 5000",
-                                            ctx.actor.establishmentId, f.user, f.action, f.from, f.to))
+                for (const auto& row : tx.q(std::string(kActivitySelect) + kActivityWhere + featureWhere(6) +
+                                                "ORDER BY a.id DESC LIMIT 5000",
+                                            ctx.actor.establishmentId, f.user, f.action, f.from, f.to, fp.purchases, fp.expenses,
+                                            fp.pos, fp.multiWarehouse, fp.multiCurrency, fp.types))
                     r.rows.push_back({db::str(row[11]), actorLabel(env, lang, db::str(row[1]), db::str(row[3])),
                                       env.i18n.t(lang, "action." + db::str(row[4])),
                                       db::str(row[5]).empty() ? "" : env.i18n.t(lang, "entity." + db::str(row[5])),
@@ -142,12 +178,15 @@ void registerActivityRoutes(App& app, Env& env) {
                 return;
             }
             auto pg = page(ctx);
-            int total = tx.one(std::string("SELECT count(*) FROM audit_log a ") + kActivityWhere, ctx.actor.establishmentId,
-                               f.user, f.action, f.from, f.to)[0]
+            int total = tx.one(std::string("SELECT count(*) FROM audit_log a ") + kActivityWhere + featureWhere(6),
+                               ctx.actor.establishmentId, f.user, f.action, f.from, f.to, fp.purchases, fp.expenses, fp.pos,
+                               fp.multiWarehouse, fp.multiCurrency, fp.types)[0]
                             .as<int>();
             json items = json::array();
-            for (const auto& row : tx.q(std::string(kActivitySelect) + kActivityWhere + "ORDER BY a.id DESC LIMIT $6 OFFSET $7",
-                                        ctx.actor.establishmentId, f.user, f.action, f.from, f.to, pg.limit, pg.offset)) {
+            for (const auto& row : tx.q(std::string(kActivitySelect) + kActivityWhere + featureWhere(8) +
+                                            "ORDER BY a.id DESC LIMIT $6 OFFSET $7",
+                                        ctx.actor.establishmentId, f.user, f.action, f.from, f.to, pg.limit, pg.offset,
+                                        fp.purchases, fp.expenses, fp.pos, fp.multiWarehouse, fp.multiCurrency, fp.types)) {
                 std::string action = db::str(row[4]);
                 items.push_back({{"id", row[0].as<int64_t>()},
                                  {"actor_type", db::str(row[1])},
@@ -176,9 +215,11 @@ void registerActivityRoutes(App& app, Env& env) {
 
     // What each employee did over a period: documents issued, money recorded,
     // expenses, stock corrections. Amounts per currency, never converted.
-    app.get("/api/v1/reports/staff", {Access::User, "audit.read"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/reports/staff", {Access::User, "audit.read", false, {}, entitlements::key::kAdvancedReports},
+            [&env](Ctx& ctx) {
         Period p = period(ctx);
         const std::string lang = ctx.actor.lang;
+        const FeatureParams fp = featureParams(ctx.actor);
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             struct Person {
                 std::string name, role;
@@ -195,13 +236,15 @@ void registerActivityRoutes(App& app, Env& env) {
                 order.push_back(db::str(m[0]));
             }
             auto has = [&](const pqxx::field& f) { return !f.is_null() && people.count(db::str(f)); };
-            for (const auto& r : tx.q("SELECT issued_by, currency, count(*) FILTER (WHERE doc_type = 'invoice'), "
-                                      "COALESCE(sum(total_minor) FILTER (WHERE doc_type = 'invoice'), 0), "
-                                      "count(*) FILTER (WHERE doc_type = 'credit_note'), "
-                                      "COALESCE(sum(total_minor) FILTER (WHERE doc_type = 'credit_note'), 0) "
-                                      "FROM sales_documents WHERE status <> 'draft' AND doc_type IN ('invoice','credit_note') "
-                                      "AND issue_date BETWEEN $1::date AND $2::date GROUP BY 1, 2",
-                                      p.from, p.to)) {
+            // Sales issued: invoices and till receipts of the plan's features.
+            for (const auto& r : tx.q("SELECT d.issued_by, d.currency, count(*) FILTER (WHERE d.doc_type IN ('invoice','receipt')), "
+                                      "COALESCE(sum(d.total_minor) FILTER (WHERE d.doc_type IN ('invoice','receipt')), 0), "
+                                      "count(*) FILTER (WHERE d.doc_type = 'credit_note'), "
+                                      "COALESCE(sum(d.total_minor) FILTER (WHERE d.doc_type = 'credit_note'), 0) "
+                                      "FROM sales_documents d WHERE d.status <> 'draft' AND d.doc_type IN ('invoice','receipt','credit_note') "
+                                      "AND d.issue_date BETWEEN $1::date AND $2::date AND " + entitlements::docVisibleSql("d", 3) +
+                                          " GROUP BY 1, 2",
+                                      p.from, p.to, fp.types)) {
                 if (!has(r[0])) continue;
                 auto& l = people[db::str(r[0])].byCur[db::str(r[1])];
                 l.invoices = r[2].as<int64_t>();
@@ -209,29 +252,32 @@ void registerActivityRoutes(App& app, Env& env) {
                 l.creditNotes = r[4].as<int64_t>();
                 l.credited = r[5].as<int64_t>();
             }
-            for (const auto& r : tx.q("SELECT created_by, currency, count(*), sum(amount_minor) FROM payments WHERE "
-                                      "direction = 'in' AND paid_at >= nh_local_start($1::date) AND paid_at < nh_local_start($2::date + 1) GROUP BY 1, 2",
-                                      p.from, p.to)) {
+            for (const auto& r : tx.q("SELECT y.created_by, y.currency, count(*), sum(y.amount_minor) FROM payments y WHERE "
+                                      "y.direction = 'in' AND y.paid_at >= nh_local_start($1::date) AND y.paid_at < nh_local_start($2::date + 1) "
+                                      "AND " + entitlements::paymentFilterSql("y", 3, 4, 5) + " GROUP BY 1, 2",
+                                      p.from, p.to, fp.purchases, fp.expenses, fp.types)) {
                 if (!has(r[0])) continue;
                 auto& l = people[db::str(r[0])].byCur[db::str(r[1])];
                 l.paymentsIn = r[2].as<int64_t>();
                 l.paidIn = r[3].as<int64_t>();
             }
             for (const auto& r : tx.q("SELECT created_by, currency, count(*), sum(amount_minor) FROM expenses WHERE "
-                                      "expense_date BETWEEN $1::date AND $2::date GROUP BY 1, 2",
-                                      p.from, p.to)) {
+                                      "expense_date BETWEEN $1::date AND $2::date AND $3::boolean GROUP BY 1, 2",
+                                      p.from, p.to, fp.expenses)) {
                 if (!has(r[0])) continue;
                 auto& l = people[db::str(r[0])].byCur[db::str(r[1])];
                 l.expenses = r[2].as<int64_t>();
                 l.expensesAmount = r[3].as<int64_t>();
             }
-            for (const auto& r : tx.q("SELECT created_by, count(*) FROM sales_documents WHERE created_at >= nh_local_start($1::date) AND "
-                                      "created_at < nh_local_start($2::date + 1) GROUP BY 1",
-                                      p.from, p.to))
+            for (const auto& r : tx.q("SELECT d.created_by, count(*) FROM sales_documents d WHERE d.created_at >= nh_local_start($1::date) AND "
+                                      "d.created_at < nh_local_start($2::date + 1) AND " + entitlements::docVisibleSql("d", 3) +
+                                          " GROUP BY 1",
+                                      p.from, p.to, fp.types))
                 if (has(r[0])) people[db::str(r[0])].created = r[1].as<int64_t>();
-            for (const auto& r : tx.q("SELECT created_by, count(*) FROM stock_movements WHERE source_type IN ('manual', "
-                                      "'transfer') AND created_at >= nh_local_start($1::date) AND created_at < nh_local_start($2::date + 1) GROUP BY 1",
-                                      p.from, p.to))
+            for (const auto& r : tx.q("SELECT created_by, count(*) FROM stock_movements WHERE (source_type = 'manual' OR "
+                                      "(source_type = 'transfer' AND $3::boolean)) AND created_at >= nh_local_start($1::date) "
+                                      "AND created_at < nh_local_start($2::date + 1) GROUP BY 1",
+                                      p.from, p.to, fp.multiWarehouse))
                 if (has(r[0])) people[db::str(r[0])].adjustments = r[1].as<int64_t>();
             for (const auto& r : tx.q("SELECT actor_id, to_char(max(created_at) AT TIME ZONE nh_tz($1::uuid), 'YYYY-MM-DD HH24:MI') "
                                       "FROM audit_log WHERE establishment_id = $1 AND actor_type = 'user' GROUP BY 1",

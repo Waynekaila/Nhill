@@ -3,6 +3,7 @@
 #include <mutex>
 
 #include "nhill/validation.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
 #include "util/log.hpp"
@@ -46,14 +47,18 @@ void checkNewPassword(const std::string& password, const std::string& email, con
         throw invalid(field, nhill::validation::passwordIssueCode(issue));
 }
 
-json permissionsFor(const std::string& role) {
+// Effective rights of the actor: permissions of the role that the plan allows, then one
+// "feature.<key>" entry per enabled plan feature. The applications show an element only
+// when its right is listed here; the server checks the same rights on every route.
+json permissionsFor(const Actor& a) {
     json p = json::array();
     for (const char* perm :
          {"settings.manage", "users.manage", "code.view", "code.rotate", "subscription.manage", "catalog.write",
           "parties.write", "sales.write", "sales.issue", "purchases.write", "stock.adjust", "expenses.write",
           "payments.write", "reports.read", "audit.read", "pos.sell", "pos.refund", "pos.void", "pos.cash",
           "pos.supervise", "pos.manage", "pos.report"})
-        if (App::roleHas(role, perm)) p.push_back(perm);
+        if (App::allowed(a, perm)) p.push_back(perm);
+    for (const auto& f : a.features) p.push_back("feature." + f);
     return p;
 }
 
@@ -118,6 +123,7 @@ void authenticateUser(Env& env, Ctx& ctx) {
         ctx.actor.establishmentKind = db::str(r[7]);
         ctx.actor.establishmentStatus = db::str(r[8]);
         ctx.actor.subscriptionStatus = db::str(r[9]);
+        entitlements::fillActor(tx, ctx.actor);
         if (db::boolean(r[10])) tx.q("UPDATE sessions SET last_seen_at = now() WHERE id = $1", ctx.actor.sessionId);
     });
 }
@@ -295,7 +301,8 @@ void registerAuthRoutes(App& app, Env& env) {
                   {"phone", db::optStr(u[2]) ? json(db::str(u[2])) : json(nullptr)},
                   {"preferred_language", db::str(u[3])}}},
                 {"role", ctx.actor.role},
-                {"permissions", permissionsFor(ctx.actor.role)},
+                {"permissions", permissionsFor(ctx.actor)},
+                {"rights_version", ctx.actor.rightsVersion},
                 {"establishment",
                  {{"id", db::str(e[0])},
                   {"trade_name", db::str(e[1])},
@@ -312,9 +319,11 @@ void registerAuthRoutes(App& app, Env& env) {
                 {"subscription", App::roleHas(ctx.actor.role, "subscription.manage")
                                      ? subscriptions::view(tx, ctx.actor.establishmentId)
                                      : json{{"status", ctx.actor.subscriptionStatus},
-                                            {"write_allowed", ctx.actor.subscriptionStatus == "trialing" ||
-                                                                  ctx.actor.subscriptionStatus == "active" ||
-                                                                  ctx.actor.subscriptionStatus == "past_due"}}},
+                                            {"access", {{"state", ctx.actor.access}, {"reason", ctx.actor.accessReason}}},
+                                            {"write_allowed", ctx.actor.access == "full"}}},
+                {"entitlements", entitlements::toJson(entitlements::load(tx, ctx.actor.establishmentId,
+                                                                          ctx.actor.establishmentKind),
+                                                       entitlements::usage(tx, ctx.actor.establishmentId))},
                 {"other_establishments", other}};
         });
         ctx.json(200, out);
@@ -497,8 +506,11 @@ void registerAuthRoutes(App& app, Env& env) {
             auto r = tx.q(
                 "SELECT id, kind, params, nh_iso(created_at), read_at IS NOT NULL FROM notifications "
                 "WHERE establishment_id = $1 AND (user_id = $2 OR (user_id IS NULL AND $3)) "
+                // Notifications of a feature outside the plan (till variances) are not shown.
+                "AND (kind NOT LIKE 'pos\\_%' OR $4::boolean) "
                 "ORDER BY created_at DESC LIMIT 50",
-                ctx.actor.establishmentId, ctx.actor.userId, manager);
+                ctx.actor.establishmentId, ctx.actor.userId, manager,
+                ctx.actor.features.count(entitlements::key::kPos) > 0);
             json items = json::array();
             for (const auto& n : r)
                 items.push_back({{"id", db::str(n[0])},

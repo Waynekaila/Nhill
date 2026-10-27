@@ -13,6 +13,7 @@
 #include "nhill/money.hpp"
 #include "pdf/pdf.hpp"
 #include "services/sales.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
 
@@ -50,12 +51,20 @@ pqxx::row ensureSettings(db::Tx& tx, const Actor& a) {
     return s;
 }
 
-int registerLimit(db::Tx& tx, const Actor& a) {
-    auto r = tx.one("SELECT s.is_trial OR s.plan_id IS NULL, p.max_registers FROM subscriptions s LEFT JOIN plans p ON "
-                    "p.id = s.plan_id WHERE s.establishment_id = $1",
-                    a.establishmentId);
-    if (db::boolean(r[0])) return setting(tx, "trial_max_registers", 1);
-    return r[1].is_null() ? 100000 : r[1].as<int>();
+// Till limit of the plan (null = unlimited).
+json registerLimitJson(db::Tx& tx, const Actor& a) {
+    auto snap = entitlements::load(tx, a.establishmentId, a.establishmentKind);
+    auto it = snap.limits.find(entitlements::key::kRegisters);
+    return it == snap.limits.end() || !it->second ? json(nullptr) : json(*it->second);
+}
+
+// Without several warehouses in the plan, a till sells from the main warehouse.
+std::string registerWarehouse(db::Tx& tx, const Actor& a, const json& b) {
+    std::string main = db::str(tx.one("SELECT id FROM warehouses WHERE is_default")[0]);
+    if (!b.contains("warehouse_id") || b["warehouse_id"].is_null()) return main;
+    std::string wh = in::reqUuid(b, "warehouse_id");
+    if (wh != main) entitlements::requireFeature(a, entitlements::key::kMultiWarehouse);
+    return wh;
 }
 
 bool assigned(db::Tx& tx, const Actor& a, const std::string& registerId) {
@@ -470,7 +479,7 @@ std::string upperAscii(std::string s) {
 
 void registerPosRoutes(App& app, Env& env) {
     // ---------------------------------------------------------------- configuration
-    app.get("/api/v1/pos/config", {Access::User, "pos.sell"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/config", {Access::User, "pos.sell", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             auto st = ensureSettings(tx, ctx.actor);
             json regs = json::array();
@@ -490,14 +499,14 @@ void registerPosRoutes(App& app, Env& env) {
                     {"my_open_session", mine ? json(db::str((*mine)[0])) : json(nullptr)},
                     {"currency", db::str(e[0])},
                     {"establishment", db::str(e[1])},
-                    {"registers_limit", has(ctx.actor, "pos.manage") ? json(registerLimit(tx, ctx.actor)) : json(nullptr)}};
+                    {"registers_limit", has(ctx.actor, "pos.manage") ? registerLimitJson(tx, ctx.actor) : json(nullptr)}};
         });
         ctx.json(200, out);
     });
 
     // Catalogue for the register: active products with their price, tax and the stock of
     // the register's warehouse (same data as Nhill Business).
-    app.get("/api/v1/pos/catalog", {Access::User, "pos.sell"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/catalog", {Access::User, "pos.sell", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         auto reg = ctx.query("register_id");
         if (!reg || !in::isUuid(*reg)) throw invalid("register_id", "required");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
@@ -521,7 +530,7 @@ void registerPosRoutes(App& app, Env& env) {
     });
 
     // ---------------------------------------------------------------- management (pos.manage)
-    app.get("/api/v1/pos/registers", {Access::User, "pos.report"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/registers", {Access::User, "pos.report", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             ensureSettings(tx, ctx.actor);
             json regs = json::array();
@@ -529,7 +538,7 @@ void registerPosRoutes(App& app, Env& env) {
             int active = tx.one("SELECT count(*) FROM pos_registers WHERE active")[0].as<int>();
             auto st = tx.one("SELECT max_discount_bp, allow_price_override, receipt_footer, receipt_width_mm FROM pos_settings");
             return {{"items", regs},
-                    {"limit", has(ctx.actor, "pos.manage") ? json(registerLimit(tx, ctx.actor)) : json(nullptr)},
+                    {"limit", has(ctx.actor, "pos.manage") ? registerLimitJson(tx, ctx.actor) : json(nullptr)},
                     {"active_count", active},
                     {"payment_methods", methodsJson(tx, false)},
                     {"settings", {{"max_discount_bp", st[0].as<int>()}, {"allow_price_override", db::boolean(st[1])},
@@ -538,18 +547,15 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/pos/registers", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/registers", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string code = upperAscii(in::reqStr(b, "code", 12));
         std::string name = in::reqStr(b, "name", 80);
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             ensureSettings(tx, ctx.actor);
             tx.q("SELECT 1 FROM establishments WHERE id = $1 FOR UPDATE", ctx.actor.establishmentId);
-            int active = tx.one("SELECT count(*) FROM pos_registers WHERE active")[0].as<int>();
-            int limit = registerLimit(tx, ctx.actor);
-            if (active >= limit) throw conflict("plan_register_limit", "the plan does not allow more registers", {{"limit", limit}});
-            std::string wh = b.contains("warehouse_id") ? in::reqUuid(b, "warehouse_id")
-                                                        : db::str(tx.one("SELECT id FROM warehouses WHERE is_default")[0]);
+            entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kRegisters);
+            std::string wh = registerWarehouse(tx, ctx.actor, b);
             auto r = tx.one("INSERT INTO pos_registers (establishment_id, code, name, location, warehouse_id) VALUES "
                             "($1,$2,$3,$4,$5) RETURNING id",
                             ctx.actor.establishmentId, code, name, in::optStr(b, "location", 120).value_or(""), wh);
@@ -559,29 +565,29 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(201, out);
     });
 
-    app.patch("/api/v1/pos/registers/:id", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.patch("/api/v1/pos/registers/:id", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "register");
         const auto& b = ctx.body();
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             auto cur = tx.one("SELECT active FROM pos_registers WHERE id = $1 FOR UPDATE", id);
             std::optional<bool> active;
             if (b.contains("active")) active = in::optBool(b, "active", true);
-            if (active && *active && !db::boolean(cur[0])) {
-                int n = tx.one("SELECT count(*) FROM pos_registers WHERE active")[0].as<int>();
-                if (n >= registerLimit(tx, ctx.actor)) throw conflict("plan_register_limit");
-            }
+            if (active && *active && !db::boolean(cur[0]))
+                entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kRegisters);
+            std::optional<std::string> wh;
+            if (b.contains("warehouse_id")) wh = registerWarehouse(tx, ctx.actor, b);
             if (active && !*active && !tx.q("SELECT 1 FROM pos_sessions WHERE register_id = $1 AND status = 'open'", id).empty())
                 throw conflict("session_open", "close the cash session first");
             tx.q("UPDATE pos_registers SET name = COALESCE($2, name), location = COALESCE($3, location), "
                  "warehouse_id = COALESCE($4, warehouse_id), active = COALESCE($5, active) WHERE id = $1",
-                 id, in::optStr(b, "name", 80), in::optStr(b, "location", 120), in::optUuid(b, "warehouse_id"), active);
+                 id, in::optStr(b, "name", 80), in::optStr(b, "location", 120), wh, active);
             audit(tx, ctx.actor, "pos.register_updated", "pos_register", id, b);
             return registerJson(tx.one(std::string(kRegisterSelect) + "WHERE r.id = $1", id));
         });
         ctx.json(200, out);
     });
 
-    app.put("/api/v1/pos/registers/:id/users", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.put("/api/v1/pos/registers/:id/users", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "register");
         const auto& b = ctx.body();
         if (!b.contains("user_ids") || !b["user_ids"].is_array()) throw invalid("user_ids", "array_required");
@@ -606,7 +612,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/pos/payment-methods", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/payment-methods", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string code = in::reqStr(b, "code", 24);
         for (auto& c : code) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
@@ -623,7 +629,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(201, out);
     });
 
-    app.patch("/api/v1/pos/payment-methods/:id", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.patch("/api/v1/pos/payment-methods/:id", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "method");
         const auto& b = ctx.body();
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
@@ -643,7 +649,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.patch("/api/v1/pos/settings", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.patch("/api/v1/pos/settings", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             ensureSettings(tx, ctx.actor);
@@ -667,7 +673,7 @@ void registerPosRoutes(App& app, Env& env) {
     });
 
     // ---------------------------------------------------------------- sales promo codes
-    app.get("/api/v1/pos/promo-codes", {Access::User, "pos.manage"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/promo-codes", {Access::User, "pos.manage", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             json items = json::array();
             for (const auto& r : tx.q("SELECT p.id, p.code, p.description, p.percent_bp, p.min_amount_minor, p.currency, "
@@ -686,7 +692,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/pos/promo-codes", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/promo-codes", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string code = upperAscii(in::reqStr(b, "code", 32));
         std::optional<std::string> cur;
@@ -696,6 +702,7 @@ void registerPosRoutes(App& app, Env& env) {
             minAmount = in::reqMoney(b, "min_amount", *cur);
         }
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
+            if (cur) entitlements::requireCurrency(tx, ctx.actor, *cur);
             auto r = tx.one("INSERT INTO sales_promo_codes (establishment_id, code, description, percent_bp, min_amount_minor, "
                             "currency, valid_from, valid_until, max_redemptions, created_by) VALUES ($1,$2,$3,$4,COALESCE($5,0),"
                             "$6,COALESCE($7::date::timestamp AT TIME ZONE nh_tz($1), now()),$8::date::timestamp AT TIME ZONE "
@@ -713,7 +720,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(201, out);
     });
 
-    app.patch("/api/v1/pos/promo-codes/:id", {Access::User, "pos.manage", true}, [&env](Ctx& ctx) {
+    app.patch("/api/v1/pos/promo-codes/:id", {Access::User, "pos.manage", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "promo_code");
         const auto& b = ctx.body();
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -730,7 +737,7 @@ void registerPosRoutes(App& app, Env& env) {
 
     // ---------------------------------------------------------------- approvals
     // A supervisor types their own password on the register to authorise one operation.
-    app.post("/api/v1/pos/approvals", {Access::User, "pos.sell"}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/approvals", {Access::User, "pos.sell", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string email = in::reqEmail(b, "email");
         throttle(env.pool, "pos-approval:" + ctx.actor.userId, 10);
@@ -765,7 +772,7 @@ void registerPosRoutes(App& app, Env& env) {
     });
 
     // ---------------------------------------------------------------- sessions
-    app.post("/api/v1/pos/sessions", {Access::User, "pos.sell", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/sessions", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string reg = in::reqUuid(b, "register_id");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
@@ -793,7 +800,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(201, out);
     });
 
-    app.get("/api/v1/pos/sessions", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/sessions", {Access::User, "", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         sellOrReport(ctx.actor);
         auto pg = page(ctx);
         auto reg = ctx.query("register_id");
@@ -815,7 +822,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.get("/api/v1/pos/sessions/:id", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/sessions/:id", {Access::User, "", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         sellOrReport(ctx.actor);
         std::string id = in::uuidParam(ctx.param("id"), "session");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
@@ -839,7 +846,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/pos/sessions/:id/cash-movements", {Access::User, "pos.sell", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/sessions/:id/cash-movements", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "session");
         const auto& b = ctx.body();
         std::string kind = in::reqEnum(b, "kind", {"cash_in", "cash_out"});
@@ -869,7 +876,7 @@ void registerPosRoutes(App& app, Env& env) {
 
     // Closing: the cashier declares the counted amounts; expected amounts and the cash
     // variance are computed by the server (shown to supervisors only).
-    app.post("/api/v1/pos/sessions/:id/close", {Access::User, "pos.sell", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/sessions/:id/close", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "session");
         const auto& b = ctx.body();
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -923,7 +930,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(status, body);
     });
 
-    app.get("/api/v1/pos/sessions/:id/report.pdf", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/sessions/:id/report.pdf", {Access::User, "", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         sellOrReport(ctx.actor);
         std::string id = in::uuidParam(ctx.param("id"), "session");
         std::string pdfBytes, name;
@@ -940,7 +947,7 @@ void registerPosRoutes(App& app, Env& env) {
     });
 
     // ---------------------------------------------------------------- sales
-    app.post("/api/v1/pos/sales", {Access::User, "pos.sell", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/pos/sales", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string sid = in::reqUuid(b, "session_id");
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -1039,7 +1046,7 @@ void registerPosRoutes(App& app, Env& env) {
         ctx.json(status, body);
     });
 
-    app.get("/api/v1/pos/sales/:id/receipt.pdf", {Access::User, "pos.sell"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/sales/:id/receipt.pdf", {Access::User, "pos.sell", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
         std::string bytes, number;
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -1157,11 +1164,11 @@ void registerPosRoutes(App& app, Env& env) {
         });
         ctx.json(status, body);
     };
-    app.post("/api/v1/pos/sales/:id/return", {Access::User, "pos.sell", true}, [refund](Ctx& ctx) { refund(ctx, false); });
-    app.post("/api/v1/pos/sales/:id/void", {Access::User, "pos.sell", true}, [refund](Ctx& ctx) { refund(ctx, true); });
+    app.post("/api/v1/pos/sales/:id/return", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [refund](Ctx& ctx) { refund(ctx, false); });
+    app.post("/api/v1/pos/sales/:id/void", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [refund](Ctx& ctx) { refund(ctx, true); });
 
     // Find a receipt by its number (returns at another register / another day).
-    app.get("/api/v1/pos/receipts", {Access::User, "pos.sell"}, [&env](Ctx& ctx) {
+    app.get("/api/v1/pos/receipts", {Access::User, "pos.sell", false, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         auto number = ctx.query("number");
         if (!number || number->size() < 3) throw invalid("number", "required");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {

@@ -154,9 +154,8 @@ void registerConsoleRoutes(App& app, Env& env) {
     app.post("/api/v1/admin/plans/:id/prices", {Access::Admin, "", false, {"billing"}}, [&env](Ctx& ctx) {
         std::string planId = in::uuidParam(ctx.param("id"), "plan");
         const auto& b = ctx.body();
-        int months = in::optInt(b, "duration_months", 1, 1, 36);
-        static const std::set<int> allowed = {1, 3, 6, 12, 24, 36};
-        if (!allowed.count(months)) throw invalid("duration_months", "unsupported_duration");
+        // Any duration from 1 to 60 months (monthly, quarterly, yearly or another period).
+        int months = in::optInt(b, "duration_months", 1, 1, 60);
         std::string currency = in::reqCurrency(b, "currency");
         int64_t price = in::reqMoney(b, "price", currency);
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
@@ -193,7 +192,8 @@ void registerConsoleRoutes(App& app, Env& env) {
     app.post("/api/v1/admin/establishments/:id/subscription", {Access::Admin, "", false, {"billing"}}, [&env](Ctx& ctx) {
         std::string est = in::uuidParam(ctx.param("id"), "establishment");
         const auto& b = ctx.body();
-        std::string action = in::reqEnum(b, "action", {"extend", "suspend", "reactivate", "cancel", "set_plan"});
+        std::string action =
+            in::reqEnum(b, "action", {"extend", "suspend", "reactivate", "cancel", "set_plan", "assign_plan", "set_dates"});
         std::string why = reasonOf(b);
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             auto s = tx.one("SELECT id, status FROM subscriptions WHERE establishment_id = $1 FOR UPDATE", est);
@@ -206,7 +206,7 @@ void registerConsoleRoutes(App& app, Env& env) {
                 // From the later of now and the current end: suspended time is not given back twice.
                 tx.q("UPDATE subscriptions SET period_end = GREATEST(period_end, now()) + make_interval(months => $2, days => $3), "
                      "status = CASE WHEN status IN ('past_due','suspended') THEN 'active' ELSE status END, grace_until = NULL, "
-                     "reminder_sent_for = NULL, canceled_at = NULL WHERE id = $1",
+                     "reminder_sent_for = NULL, canceled_at = NULL, suspension_reason = NULL, open_ended = false WHERE id = $1",
                      subId, months, days);
                 if (from == "past_due" || from == "suspended" || from == "canceled") to = "active";
                 if (from == "canceled") tx.q("UPDATE subscriptions SET status = 'active' WHERE id = $1", subId);
@@ -214,15 +214,15 @@ void registerConsoleRoutes(App& app, Env& env) {
                 details["months"] = months;
             } else if (action == "suspend") {
                 if (from == "suspended") throw conflict("no_change");
-                tx.q("UPDATE subscriptions SET status = 'suspended' WHERE id = $1", subId);
+                tx.q("UPDATE subscriptions SET status = 'suspended', suspension_reason = 'admin' WHERE id = $1", subId);
                 to = "suspended";
             } else if (action == "reactivate") {
                 if (from != "suspended" && from != "canceled") throw conflict("no_change");
                 auto r = tx.one("UPDATE subscriptions SET status = CASE WHEN period_end > now() THEN "
                                 "CASE WHEN is_trial THEN 'trialing' ELSE 'active' END ELSE 'past_due' END, "
                                 "grace_until = CASE WHEN period_end > now() THEN NULL ELSE now() + "
-                                "make_interval(days => nh_setting_int('grace_days', 7)) END, canceled_at = NULL "
-                                "WHERE id = $1 RETURNING status",
+                                "make_interval(days => nh_setting_int('grace_days', 7)) END, canceled_at = NULL, "
+                                "suspension_reason = NULL WHERE id = $1 RETURNING status",
                                 subId);
                 to = db::str(r[0]);
             } else if (action == "cancel") {
@@ -233,7 +233,7 @@ void registerConsoleRoutes(App& app, Env& env) {
                                           est))
                     subscriptions::releasePromo(tx, db::str(o[0]));
                 to = "canceled";
-            } else {
+            } else if (action == "set_plan") {
                 std::string priceId = in::reqUuid(b, "price_id");
                 auto p = tx.one("SELECT pp.plan_id, p.code FROM plan_prices pp JOIN plans p ON p.id = pp.plan_id WHERE pp.id = $1",
                                 priceId);
@@ -241,6 +241,59 @@ void registerConsoleRoutes(App& app, Env& env) {
                      "WHERE id = $1",
                      subId, db::str(p[0]), priceId);
                 details["plan"] = db::str(p[1]);
+            } else if (action == "assign_plan") {
+                // Any plan (private and custom ones included), as a trial or as an active
+                // period, from now (or a given start) for a duration, until a date, or
+                // open-ended (free and custom plans). Payment is a separate matter: an
+                // assigned plan is not a paid order.
+                std::string planId = in::reqUuid(b, "plan_id");
+                std::string mode = in::optEnum(b, "mode", {"trial", "active"}).value_or("active");
+                auto p = tx.opt("SELECT code, kind, active FROM plans WHERE id = $1", planId);
+                if (!p) throw notFound("plan");
+                if (!db::boolean((*p)[2])) throw conflict("plan_inactive");
+                bool openEnded = in::optBool(b, "open_ended", false);
+                if (openEnded && db::str((*p)[1]) != "free" && db::str((*p)[1]) != "custom")
+                    throw conflict("open_ended_requires_free_plan", "open-ended periods are reserved to free or custom plans");
+                auto start = optTimestamp(b, "start");
+                auto end = optTimestamp(b, "end");
+                int days = in::optInt(b, "days", 0, 0, 3660);
+                int months = in::optInt(b, "months", 0, 0, 120);
+                if (!openEnded && !end && days == 0 && months == 0) throw invalid("end", "required");
+                auto r = tx.one(
+                    "UPDATE subscriptions SET plan_id = $2, price_id = NULL, pending_price_id = NULL, pending_from = NULL, "
+                    "is_trial = $3, status = CASE WHEN $3 THEN 'trialing' ELSE 'active' END, "
+                    "period_start = COALESCE($4::timestamptz, now()), "
+                    "period_end = CASE WHEN $5 THEN COALESCE($4::timestamptz, now()) + interval '100 years' "
+                    "                  WHEN $6::timestamptz IS NOT NULL THEN $6::timestamptz "
+                    "                  ELSE COALESCE($4::timestamptz, now()) + make_interval(months => $7, days => $8) END, "
+                    "open_ended = $5, grace_until = NULL, reminder_sent_for = NULL, canceled_at = NULL, "
+                    "suspension_reason = NULL WHERE id = $1 RETURNING status, period_end > period_start",
+                    subId, planId, mode == "trial", start, openEnded, end, months, days);
+                if (!db::boolean(r[1])) throw invalid("end", "must_follow_start");
+                to = db::str(r[0]);
+                details["plan"] = db::str((*p)[0]);
+                details["mode"] = mode;
+                details["open_ended"] = openEnded;
+                for (const auto& o : tx.q("UPDATE subscription_orders SET status = 'canceled', failure_reason = 'plan_assigned' "
+                                          "WHERE establishment_id = $1 AND status = 'pending' RETURNING id",
+                                          est))
+                    subscriptions::releasePromo(tx, db::str(o[0]));
+            } else {
+                // set_dates: corrects the current period end (and optionally the grace end).
+                auto end = optTimestamp(b, "period_end");
+                if (!end) throw invalid("period_end", "required");
+                auto grace = optTimestamp(b, "grace_until");
+                auto r = tx.one(
+                    "UPDATE subscriptions SET period_end = $2::timestamptz, grace_until = $3::timestamptz, open_ended = false, "
+                    "reminder_sent_for = NULL, status = CASE WHEN status = 'past_due' AND $2::timestamptz > now() "
+                    "THEN CASE WHEN is_trial THEN 'trialing' ELSE 'active' END ELSE status END "
+                    "WHERE id = $1 RETURNING period_end >= period_start, grace_until IS NULL OR grace_until >= period_end, status",
+                    subId, *end, grace);
+                if (!db::boolean(r[0])) throw invalid("period_end", "must_follow_start");
+                if (!db::boolean(r[1])) throw invalid("grace_until", "must_follow_period_end");
+                to = db::str(r[2]);
+                details["period_end"] = *end;
+                if (grace) details["grace_until"] = *grace;
             }
             auto r = tx.one("SELECT period_start, period_end FROM subscriptions WHERE id = $1", subId);
             tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, from_status, to_status, "
@@ -249,7 +302,10 @@ void registerConsoleRoutes(App& app, Env& env) {
             Actor a = ctx.actor;
             a.establishmentId = est;
             audit(tx, a, "admin.subscription_" + action, "subscription", subId, details);
-            notify(tx, est, std::nullopt, "subscription_admin_" + action, {{"reason", why}});
+            notify(tx, est, std::nullopt, "subscription_admin_" + action,
+                   {{"reason", why}, {"plan", details.value("plan", "")}});
+            if (action == "assign_plan" || action == "set_plan")
+                emailManagers(tx, est, "plan_changed", {{"plan", details.value("plan", "")}});
             if (action == "suspend" || action == "cancel")
                 tx.q("UPDATE sessions SET revoked_at = now(), revoke_reason = 'subscription_' || $2 WHERE "
                      "establishment_id = $1 AND revoked_at IS NULL AND $2 = 'cancel'",

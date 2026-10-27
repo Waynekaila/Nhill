@@ -75,7 +75,9 @@ void setGeneratorForTests(std::function<std::string()> gen);
 namespace subscriptions {
 constexpr const char* kPlanCols =
     "id, code, name_fr, name_en, description_fr, description_en, billing_period, price_minor, currency, tax_rate_bp, "
-    "max_users, audience, features, active, sort_order, tier, max_registers, max_warehouses";
+    "max_users, audience, features, active, sort_order, tier, max_registers, max_warehouses, "
+    "kind, visibility, self_service, auto_renew_allowed, grace_days, to_jsonb(reminder_days), trial_days, "
+    "expiry_fallback_plan_id, nh_iso(archived_at)";
 json planJson(db::Tx& tx, const pqxx::row& r, bool activePricesOnly);
 
 struct Quote {

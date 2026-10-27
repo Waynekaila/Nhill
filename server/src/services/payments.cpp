@@ -1,5 +1,6 @@
 // Payments received (invoices) and made (purchases, expenses, refunds), cash accounts, exchange rates.
 #include "nhill/money.hpp"
+#include "services/entitlements.hpp"
 #include "services/sales.hpp"
 #include "services/services.hpp"
 
@@ -47,8 +48,11 @@ void registerPaymentRoutes(App& app, Env& env) {
             for (const auto& r : tx.q(std::string(kPaymentSelect) +
                                           "WHERE ($1::text IS NULL OR y.direction = $1) AND ($2::date IS NULL OR "
                                           "y.paid_at >= nh_local_start($2::date)) AND ($3::date IS NULL OR y.paid_at < nh_local_start($3::date + 1)) "
-                                          "ORDER BY y.paid_at DESC LIMIT $4 OFFSET $5",
-                                      dir, from, to, pg.limit, pg.offset))
+                                          "AND " + entitlements::paymentFilterSql("y", 6, 7, 8) +
+                                          " ORDER BY y.paid_at DESC LIMIT $4 OFFSET $5",
+                                      dir, from, to, pg.limit, pg.offset, ctx.actor.features.count(entitlements::key::kPurchases) > 0,
+                                      ctx.actor.features.count(entitlements::key::kExpenses) > 0,
+                                      entitlements::docTypesArray(ctx.actor)))
                 items.push_back(paymentJson(r));
             return {{"items", items}};
         });
@@ -64,6 +68,8 @@ void registerPaymentRoutes(App& app, Env& env) {
         auto expenseId = in::optUuid(b, "expense_id");
         int targets = (docId ? 1 : 0) + (purchaseId ? 1 : 0) + (expenseId ? 1 : 0);
         if (targets != 1) throw invalid("document_id", "exactly_one_target_required");
+        if (purchaseId) entitlements::requireFeature(ctx.actor, entitlements::key::kPurchases);
+        if (expenseId) entitlements::requireFeature(ctx.actor, entitlements::key::kExpenses);
         std::string method = in::reqEnum(b, "method", {"cash", "mobile_money", "card", "bank_transfer", "cheque", "other"});
         auto account = in::optUuid(b, "account_id");
         std::string reference = in::optStr(b, "reference", 100).value_or("");
@@ -74,10 +80,11 @@ void registerPaymentRoutes(App& app, Env& env) {
                 std::string direction, currency, partyId;
                 int64_t due = 0;
                 if (docId) {
-                    auto d = tx.one("SELECT doc_type, status, currency, total_minor, paid_minor, credited_minor, party_id "
-                                    "FROM sales_documents WHERE id = $1 FOR UPDATE",
+                    auto d = tx.one("SELECT doc_type, status, currency, total_minor, paid_minor, credited_minor, party_id, "
+                                    "pos_session_id IS NOT NULL FROM sales_documents WHERE id = $1 FOR UPDATE",
                                     *docId);
                     std::string type = db::str(d[0]), st = db::str(d[1]);
+                    if (!entitlements::docVisible(ctx.actor, type, db::boolean(d[7]))) throw notFound("document");
                     currency = db::str(d[2]);
                     partyId = db::str(d[6]);
                     if (type == "invoice") {
@@ -151,13 +158,20 @@ void registerPaymentRoutes(App& app, Env& env) {
     });
 
     // ---------------------------------------------------------------- cash accounts
+    // Balances count only the payments of the plan's features; accounts in another currency
+    // than the main one need multi_currency.
     app.get("/api/v1/cash-accounts", {Access::User}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             json items = json::array();
             for (const auto& r : tx.q(
                      "SELECT a.id, a.name, a.kind, a.currency, a.active, COALESCE((SELECT sum(CASE WHEN y.direction = 'in' "
-                     "THEN y.amount_minor ELSE -y.amount_minor END) FROM payments y WHERE y.account_id = a.id), 0) "
-                     "FROM cash_accounts a ORDER BY a.name"))
+                     "THEN y.amount_minor ELSE -y.amount_minor END) FROM payments y WHERE y.account_id = a.id AND " +
+                         entitlements::paymentFilterSql("y", 1, 2, 3) +
+                         "), 0) FROM cash_accounts a WHERE ($4::boolean OR a.currency = "
+                         "(SELECT main_currency FROM establishments WHERE id = a.establishment_id)) ORDER BY a.name",
+                     ctx.actor.features.count(entitlements::key::kPurchases) > 0,
+                     ctx.actor.features.count(entitlements::key::kExpenses) > 0, entitlements::docTypesArray(ctx.actor),
+                     ctx.actor.features.count(entitlements::key::kMultiCurrency) > 0))
                 items.push_back({{"id", db::str(r[0])}, {"name", db::str(r[1])}, {"kind", db::str(r[2])},
                                  {"currency", db::str(r[3])}, {"active", db::boolean(r[4])},
                                  {"recorded_balance", money(r[5].as<int64_t>(), db::str(r[3]))}});
@@ -172,6 +186,7 @@ void registerPaymentRoutes(App& app, Env& env) {
         std::string kind = in::reqEnum(b, "kind", {"cash", "bank", "mobile_money", "other"});
         std::string currency = in::reqCurrency(b, "currency");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
+            entitlements::requireCurrency(tx, ctx.actor, currency);
             auto r = tx.one("INSERT INTO cash_accounts (establishment_id, name, kind, currency) VALUES ($1,$2,$3,$4) RETURNING id",
                             ctx.actor.establishmentId, name, kind, currency);
             audit(tx, ctx.actor, "cash_account.created", "cash_account", db::str(r[0]), b);
@@ -181,7 +196,7 @@ void registerPaymentRoutes(App& app, Env& env) {
     });
 
     // ---------------------------------------------------------------- exchange rates
-    app.get("/api/v1/exchange-rates", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/exchange-rates", {Access::User, "", false, {}, entitlements::key::kMultiCurrency}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             json items = json::array();
             for (const auto& r : tx.q("SELECT id, from_currency, to_currency, rate::text, rate_date::text, source "
@@ -194,7 +209,8 @@ void registerPaymentRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/exchange-rates", {Access::User, "settings.manage", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/exchange-rates", {Access::User, "settings.manage", true, {}, entitlements::key::kMultiCurrency},
+             [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string from = in::reqCurrency(b, "from");
         std::string to = in::reqCurrency(b, "to");

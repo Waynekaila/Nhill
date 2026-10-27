@@ -171,6 +171,30 @@ bool App::roleHas(const std::string& role, const std::string& permission) {
     return it != perms.end() && it->second.count(permission) > 0;
 }
 
+std::string App::permissionFeature(const std::string& permission) {
+    if (permission.rfind("pos.", 0) == 0) return "pos";
+    if (permission.rfind("purchases.", 0) == 0) return "purchases";
+    if (permission.rfind("expenses.", 0) == 0) return "expenses";
+    return "";
+}
+
+bool App::hasFeature(const Actor& a, const std::string& spec) {
+    size_t start = 0;
+    for (;;) {
+        size_t bar = spec.find('|', start);
+        std::string one = spec.substr(start, bar == std::string::npos ? std::string::npos : bar - start);
+        if (!one.empty() && a.features.count(one)) return true;
+        if (bar == std::string::npos) return false;
+        start = bar + 1;
+    }
+}
+
+bool App::allowed(const Actor& a, const std::string& permission) {
+    if (!roleHas(a.role, permission)) return false;
+    std::string f = permissionFeature(permission);
+    return f.empty() || a.features.count(f) > 0;
+}
+
 // --------------------------------------------------------------------- App
 
 App::App(Config& cfg, db::Pool& pool) : cfg_(cfg), pool_(pool) {
@@ -219,15 +243,24 @@ httplib::Server::Handler App::wrap(RouteOpts o, Handler h) {
                     break;
                 case Access::User: {
                     hooks_.authenticateUser(ctx);
+                    if (!ctx.actor.rightsVersion.empty()) res.set_header("X-Nhill-Rights", ctx.actor.rightsVersion);
                     if (!roleHas(ctx.actor.role, o.permission)) throw forbidden("permission_denied");
-                    if (ctx.actor.establishmentStatus == "closed") throw forbidden("establishment_closed");
+                    if (ctx.actor.establishmentStatus == "closed" || ctx.actor.access == "none")
+                        throw forbidden("establishment_closed");
+                    // Plan features: the route itself, then the feature its permission depends on.
+                    if (!o.feature.empty() && !hasFeature(ctx.actor, o.feature))
+                        throw ApiError(403, "feature_not_included", "feature not included in the plan",
+                                       {{"feature", o.feature}});
+                    if (!o.permission.empty() && !allowed(ctx.actor, o.permission))
+                        throw ApiError(403, "feature_not_included", "feature not included in the plan",
+                                       {{"feature", permissionFeature(o.permission)}});
                     if (o.write) {
                         if (ctx.actor.establishmentStatus == "suspended")
                             throw ApiError(403, "establishment_suspended", "establishment suspended by the platform");
-                        const auto& s = ctx.actor.subscriptionStatus;
-                        if (s != "trialing" && s != "active" && s != "past_due")
-                            throw ApiError(402, "subscription_suspended",
-                                           "subscription inactive: read and export only");
+                        // Computed access (dates compared with now), not the stored status alone.
+                        if (ctx.actor.access != "full")
+                            throw ApiError(402, "subscription_suspended", "subscription inactive: read and export only",
+                                           {{"reason", ctx.actor.accessReason}});
                     }
                     break;
                 }

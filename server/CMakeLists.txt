@@ -34,6 +34,7 @@ add_library(nhill_server_core STATIC
     src/services/establishments.cpp
     src/services/members.cpp
     src/services/subscriptions.cpp
+    src/services/entitlements.cpp
     src/services/providers.cpp
     src/services/console.cpp
     src/services/support.cpp

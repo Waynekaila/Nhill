@@ -1,5 +1,6 @@
 // Catalogue: tax rates, categories, products and services (with CSV import/export).
 #include "nhill/money.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/csv.hpp"
 
@@ -252,6 +253,8 @@ void registerCatalogRoutes(App& app, Env& env) {
             ProductInput p = parseProduct(b, currency);
             if (!p.sku) throw invalid("sku", "required");
             if (!p.name) throw invalid("name", "required");
+            entitlements::requireCurrency(tx, ctx.actor, currency);
+            if (p.active.value_or(true)) entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kProducts);
             std::string id = insertProduct(tx, p, ctx.actor.establishmentId);
             audit(tx, ctx.actor, "product.created", "product", id, {{"sku", *p.sku}});
             return productJson(tx.one(std::string(kProductSelect) + "WHERE p.id = $1", id));
@@ -263,11 +266,14 @@ void registerCatalogRoutes(App& app, Env& env) {
         std::string id = in::uuidParam(ctx.param("id"), "product");
         const auto& b = ctx.body();
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
-            auto cur = tx.one("SELECT currency, kind FROM products WHERE id = $1 FOR UPDATE", id);
+            auto cur = tx.one("SELECT currency, kind, active FROM products WHERE id = $1 FOR UPDATE", id);
             if (b.contains("currency") && in::reqCurrency(b, "currency") != db::str(cur[0]))
                 throw invalid("currency", "immutable");
             ProductInput p = parseProduct(b, db::str(cur[0]));
             if (p.kind && *p.kind != db::str(cur[1])) throw invalid("kind", "immutable");
+            // Reactivating a product counts against the plan limit like a new one.
+            if (p.active && *p.active && !db::boolean(cur[2]))
+                entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kProducts);
             tx.q("UPDATE products SET sku = COALESCE($2, sku), barcode = COALESCE($3, barcode), name = COALESCE($4, name), "
                  "description = COALESCE($5, description), category_id = COALESCE($6, category_id), "
                  "unit = COALESCE($7, unit), purchase_price_minor = COALESCE($8, purchase_price_minor), "
@@ -283,7 +289,8 @@ void registerCatalogRoutes(App& app, Env& env) {
     });
 
     // All-or-nothing import, matching existing products on SKU.
-    app.post("/api/v1/products/import", {Access::User, "catalog.write", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/products/import", {Access::User, "catalog.write", true, {}, entitlements::key::kCatalogImport},
+             [&env](Ctx& ctx) {
         auto rows = csv::parse(ctx.req.body);
         if (rows.size() < 2) throw invalid("file", "empty_or_header_only");
         if (rows.size() > 5001) throw invalid("file", "too_many_rows");
@@ -332,6 +339,7 @@ void registerCatalogRoutes(App& app, Env& env) {
                     ProductInput p = parseProduct(b, currency);
                     if (!p.sku) throw invalid("sku", "required");
                     if (!p.name) throw invalid("name", "required");
+                    entitlements::requireCurrency(tx, ctx.actor, currency);
                     auto existing = tx.opt("SELECT id, currency FROM products WHERE sku = $1", *p.sku);
                     if (existing) {
                         if (db::str((*existing)[1]) != currency) throw invalid("currency", "immutable");
@@ -352,6 +360,17 @@ void registerCatalogRoutes(App& app, Env& env) {
                 }
             }
             if (!errors.empty()) throw ApiError(422, "import_failed", "no product was imported", {{"errors", errors}});
+            // The whole file counts against the product limit of the plan (nothing is kept on refusal).
+            if (created > 0) {
+                try {
+                    entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kProducts, 0);
+                } catch (ApiError& e) {
+                    if (e.details.is_object() && e.details.contains("used"))
+                        e.details["used"] = e.details["used"].get<int64_t>() - created;
+                    e.details["adding"] = created;
+                    throw;
+                }
+            }
             audit(tx, ctx.actor, "product.imported", "product", "", {{"created", created}, {"updated", updated}});
             return {{"created", created}, {"updated", updated}};
         });

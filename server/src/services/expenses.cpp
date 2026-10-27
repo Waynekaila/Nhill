@@ -1,4 +1,5 @@
 // Expenses with categories and receipts (justificatifs).
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
 
@@ -35,7 +36,7 @@ json expenseJson(const pqxx::row& r) {
 }  // namespace
 
 void registerExpenseRoutes(App& app, Env& env) {
-    app.get("/api/v1/expense-categories", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/expense-categories", {Access::User, "", false, {}, entitlements::key::kExpenses}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             json items = json::array();
             for (const auto& r : tx.q("SELECT id, name FROM expense_categories ORDER BY lower(name)"))
@@ -45,7 +46,7 @@ void registerExpenseRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/expense-categories", {Access::User, "expenses.write", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/expense-categories", {Access::User, "expenses.write", true, {}, entitlements::key::kExpenses}, [&env](Ctx& ctx) {
         std::string name = in::reqStr(ctx.body(), "name", 80);
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             auto r = tx.one("INSERT INTO expense_categories (establishment_id, name) VALUES ($1,$2) RETURNING id",
@@ -55,7 +56,7 @@ void registerExpenseRoutes(App& app, Env& env) {
         ctx.json(201, out);
     });
 
-    app.get("/api/v1/expenses", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/expenses", {Access::User, "", false, {}, entitlements::key::kExpenses}, [&env](Ctx& ctx) {
         auto pg = page(ctx);
         auto from = ctx.query("from"), to = ctx.query("to");
         if (from && !in::isDate(*from)) from.reset();
@@ -80,7 +81,7 @@ void registerExpenseRoutes(App& app, Env& env) {
 
     // Creates an expense; with "paid": {"method": ..., "account_id": ...} it is
     // recorded as paid in full in the same transaction.
-    app.post("/api/v1/expenses", {Access::User, "expenses.write", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/expenses", {Access::User, "expenses.write", true, {}, entitlements::key::kExpenses}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string currency = in::reqCurrency(b, "currency");
         int64_t amount = in::reqMoney(b, "amount", currency, false);
@@ -100,6 +101,7 @@ void registerExpenseRoutes(App& app, Env& env) {
             return idempotent(tx, ctx, [&]() -> Result {
                 if (!tx.opt("SELECT 1 FROM currencies WHERE code = $1 AND active", currency))
                     throw invalid("currency", "unsupported_currency");
+                entitlements::requireCurrency(tx, ctx.actor, currency);
                 std::string id = db::str(tx.one(
                     "INSERT INTO expenses (establishment_id, category_id, supplier_id, description, amount_minor, tax_minor, "
                     "currency, expense_date, due_date, paid_minor, created_by) VALUES ($1,$2,$3,$4,$5,$6,$7,"
@@ -124,7 +126,7 @@ void registerExpenseRoutes(App& app, Env& env) {
         ctx.json(status, body);
     });
 
-    app.put("/api/v1/expenses/:id/receipt", {Access::User, "expenses.write", true}, [&env](Ctx& ctx) {
+    app.put("/api/v1/expenses/:id/receipt", {Access::User, "expenses.write", true, {}, entitlements::key::kExpenses}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "expense");
         const std::string& data = ctx.req.body;
         std::string mime = ctx.header("Content-Type");
@@ -138,6 +140,7 @@ void registerExpenseRoutes(App& app, Env& env) {
         }
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             tx.one("SELECT id FROM expenses WHERE id = $1 FOR UPDATE", id);
+            entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kStorageMb, static_cast<int64_t>(data.size()));
             std::string oid = db::str(tx.one(
                 "INSERT INTO objects (establishment_id, purpose, mime, byte_size, sha256, data, created_by) "
                 "VALUES ($1,'receipt',$2,$3,$4,decode($5,'hex'),$6) RETURNING id",
@@ -149,7 +152,7 @@ void registerExpenseRoutes(App& app, Env& env) {
         ctx.noContent();
     });
 
-    app.get("/api/v1/expenses/:id/receipt", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/expenses/:id/receipt", {Access::User, "", false, {}, entitlements::key::kExpenses}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "expense");
         auto r = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return tx.opt("SELECT o.mime, encode(o.data,'hex') FROM expenses e JOIN objects o ON o.id = e.receipt_object_id "

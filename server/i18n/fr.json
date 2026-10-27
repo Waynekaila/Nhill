@@ -396,5 +396,7 @@
   "detail.approver": "Autorisé par",
   "detail.category": "Catégorie",
   "detail.severity": "Gravité",
-  "detail.type": "Type"
+  "detail.type": "Type",
+  "email.plan_changed.subject": "Votre formule Nhill a changé",
+  "email.plan_changed.body": "Bonjour,\n\nLa formule Nhill de {establishment} est désormais « {plan} ». Les fonctionnalités disponibles dans Nhill Business et Nhill POS suivent cette formule dès maintenant. Le détail figure dans Nhill Business, Paramètres › Abonnement."
 }

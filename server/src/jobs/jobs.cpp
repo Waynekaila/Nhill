@@ -92,33 +92,53 @@ Stats subscriptionLifecycle(Env& env) {
             notify(tx, est, std::nullopt, "plan_changed", {{"plan", db::str(r[0])}});
             auditSystem(tx, est, "subscription.plan_changed", "subscription", id, {{"plan", db::str(r[0])}});
         });
-    // 1. First reminder N days before the end of the period (trial or paid).
+    // 1. Reminders before the end of the period (trial or paid): the plan's schedule, else
+    //    the platform's (reminder_schedule_days, e.g. 14, 7, 3 and 1 day). When several
+    //    thresholds have passed (job stopped for a while), one reminder is sent: the closest.
+    static const char* kSchedule =
+        "COALESCE(p.reminder_days, (SELECT ARRAY(SELECT jsonb_array_elements_text(value)::int FROM platform_settings "
+        "WHERE key = 'reminder_schedule_days' AND jsonb_typeof(value) = 'array')), "
+        "ARRAY[nh_setting_int('reminder_days_before', 7)])";
     st.remindersSent = drain(
         env,
-        "SELECT id, establishment_id FROM subscriptions WHERE status IN ('trialing','active') AND period_end > now() "
-        "AND period_end - make_interval(days => nh_setting_int('reminder_days_before', 7)) <= now() "
-        "AND reminder_sent_for IS DISTINCT FROM period_end AND NOT (id = ANY($1::uuid[])) LIMIT 1 FOR UPDATE SKIP LOCKED",
+        std::string("SELECT s.id, s.establishment_id FROM subscriptions s WHERE s.id IN (SELECT s2.id FROM subscriptions s2 "
+                    "LEFT JOIN plans p ON p.id = s2.plan_id WHERE s2.status IN ('trialing','active') AND NOT s2.open_ended "
+                    "AND s2.period_end > now() AND EXISTS (SELECT 1 FROM unnest(") + kSchedule +
+            ") d WHERE s2.period_end - make_interval(days => d) <= now() AND NOT EXISTS (SELECT 1 FROM "
+            "subscription_reminders r WHERE r.subscription_id = s2.id AND r.period_end = s2.period_end AND r.days_before = d))) "
+            "AND NOT (s.id = ANY($1::uuid[])) LIMIT 1 FOR UPDATE OF s SKIP LOCKED",
         "subscription_reminder", [&](db::Tx& tx, const std::string& id, const std::string& est) {
-            auto r = tx.one("UPDATE subscriptions SET reminder_sent_for = period_end WHERE id = $1 "
-                            "RETURNING nh_iso(period_end), is_trial, status",
+            auto r = tx.one(std::string("SELECT nh_iso(s.period_end), s.is_trial, s.status, s.period_end, "
+                                        "(SELECT min(d) FROM unnest(") + kSchedule +
+                                ") d WHERE s.period_end - make_interval(days => d) <= now()), "
+                                "GREATEST(0, ceil(extract(epoch FROM (s.period_end - now())) / 86400))::int "
+                                "FROM subscriptions s LEFT JOIN plans p ON p.id = s.plan_id WHERE s.id = $1",
                             id);
-            tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, from_status, to_status, "
-                 "actor_type) VALUES ($1,$2,'reminder_sent',$3,$3,'system')",
-                 id, est, db::str(r[2]));
-            json params = {{"period_end", db::str(r[0])}, {"is_trial", db::boolean(r[1])}};
+            // Every threshold already passed is marked, so that it is not sent later.
+            tx.q(std::string("INSERT INTO subscription_reminders (subscription_id, period_end, days_before) "
+                             "SELECT s.id, s.period_end, d FROM subscriptions s LEFT JOIN plans p ON p.id = s.plan_id, "
+                             "unnest(") + kSchedule +
+                     ") d WHERE s.id = $1 AND s.period_end - make_interval(days => d) <= now() ON CONFLICT DO NOTHING",
+                 id);
+            tx.q("UPDATE subscriptions SET reminder_sent_for = period_end WHERE id = $1", id);
+            tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, from_status, to_status, details, "
+                 "actor_type) VALUES ($1,$2,'reminder_sent',$3,$3,$4::jsonb,'system')",
+                 id, est, db::str(r[2]), json{{"days_before", r[4].is_null() ? 0 : r[4].as<int>()}}.dump());
+            json params = {{"period_end", db::str(r[0])}, {"is_trial", db::boolean(r[1])}, {"days_left", r[5].as<int>()}};
             notify(tx, est, std::nullopt, "subscription_reminder", params);
             emailManagers(tx, est, "subscription_reminder", params);
         });
-    // 2. Due date reached without confirmed payment: grace period, service maintained.
+    // 2. Due date reached without confirmed payment: grace period (the plan's, else the
+    //    platform's), service maintained.
     st.enteredGrace = drain(
         env,
-        "SELECT id, establishment_id FROM subscriptions WHERE status IN ('trialing','active') AND period_end <= now() "
-        "AND NOT (id = ANY($1::uuid[])) LIMIT 1 FOR UPDATE SKIP LOCKED",
+        "SELECT id, establishment_id FROM subscriptions WHERE status IN ('trialing','active') AND NOT open_ended "
+        "AND period_end <= now() AND NOT (id = ANY($1::uuid[])) LIMIT 1 FOR UPDATE SKIP LOCKED",
         "subscription_grace", [&](db::Tx& tx, const std::string& id, const std::string& est) {
             std::string from = db::str(tx.one("SELECT status FROM subscriptions WHERE id = $1", id)[0]);
             auto r = tx.one("UPDATE subscriptions s SET status = 'past_due', grace_until = s.period_end + "
-                            "make_interval(days => nh_setting_int('grace_days', 7)) WHERE id = $1 "
-                            "RETURNING nh_iso(grace_until)",
+                            "make_interval(days => COALESCE((SELECT grace_days FROM plans WHERE id = s.plan_id), "
+                            "nh_setting_int('grace_days', 7))) WHERE id = $1 RETURNING nh_iso(grace_until)",
                             id);
             tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, from_status, to_status, details, "
                  "actor_type) VALUES ($1,$2,'grace_started',$3,'past_due',$4::jsonb,'system')",
@@ -127,13 +147,36 @@ Stats subscriptionLifecycle(Env& env) {
             notify(tx, est, std::nullopt, "subscription_grace", params);
             emailManagers(tx, est, "subscription_grace", params);
         });
-    // 3. End of grace: read-only suspension (policy "read_only", announced in the terms).
+    // 3. End of grace: the plan's fallback plan when it has one (e.g. a free plan), else
+    //    read-only suspension (policy "read_only", announced in the terms).
     st.suspended = drain(
         env,
         "SELECT id, establishment_id FROM subscriptions WHERE status = 'past_due' AND grace_until <= now() "
         "AND NOT (id = ANY($1::uuid[])) LIMIT 1 FOR UPDATE SKIP LOCKED",
         "subscription_suspension", [&](db::Tx& tx, const std::string& id, const std::string& est) {
-            tx.q("UPDATE subscriptions SET status = 'suspended' WHERE id = $1", id);
+            auto fb = tx.opt("SELECT f.id, f.code, f.trial_days FROM subscriptions s JOIN plans p ON p.id = s.plan_id "
+                             "JOIN plans f ON f.id = p.expiry_fallback_plan_id WHERE s.id = $1 AND f.active "
+                             "AND f.archived_at IS NULL",
+                             id);
+            if (fb) {
+                // A fallback plan is open-ended unless it fixes its own duration (trial_days).
+                bool openEnded = (*fb)[2].is_null();
+                auto r = tx.one("UPDATE subscriptions SET plan_id = $2, price_id = NULL, pending_price_id = NULL, "
+                                "pending_from = NULL, status = 'active', is_trial = false, period_start = now(), "
+                                "period_end = now() + CASE WHEN $3 THEN interval '100 years' ELSE make_interval(days => $4) END, "
+                                "open_ended = $3, grace_until = NULL, reminder_sent_for = NULL, suspension_reason = NULL "
+                                "WHERE id = $1 RETURNING period_start, period_end",
+                                id, db::str((*fb)[0]), openEnded, openEnded ? 0 : (*fb)[2].as<int>());
+                tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, from_status, to_status, "
+                     "period_start, period_end, details, actor_type) VALUES ($1,$2,'fallback_plan','past_due','active',$3,$4,"
+                     "$5::jsonb,'system')",
+                     id, est, db::str(r[0]), db::str(r[1]), json{{"plan", db::str((*fb)[1])}}.dump());
+                notify(tx, est, std::nullopt, "plan_changed", {{"plan", db::str((*fb)[1])}});
+                emailManagers(tx, est, "plan_changed", {{"plan", db::str((*fb)[1])}});
+                auditSystem(tx, est, "subscription.fallback_plan", "subscription", id, {{"plan", db::str((*fb)[1])}});
+                return;
+            }
+            tx.q("UPDATE subscriptions SET status = 'suspended', suspension_reason = 'expired' WHERE id = $1", id);
             tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, from_status, to_status, "
                  "actor_type) VALUES ($1,$2,'suspended','past_due','suspended','system')",
                  id, est);

@@ -4,6 +4,7 @@
 #include "nhill/validation.hpp"
 #include "nhill/version.hpp"
 #include "pdf/pdf.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
 #include "util/log.hpp"
@@ -317,7 +318,31 @@ void registerEstablishmentRoutes(App& app, Env& env) {
                 if (tx.opt("SELECT 1 FROM trial_registry WHERE fingerprint = decode($1,'hex')", p)) trialUsed = true;
             int trialDays = setting(tx, "trial_days", 30);
             std::string subId;
-            if (!trialUsed) {
+            // Assignment rules (Nhill Console) decide the first plan; without a matching
+            // rule, the 2.x trial applies (platform settings, no plan).
+            auto rule = entitlements::matchRule(tx, kind, country, !trialUsed);
+            if (rule) {
+                bool trial = rule->mode == "trial";
+                bool openEnded = !trial && !rule->days;
+                subId = db::str(tx.one(
+                    "INSERT INTO subscriptions (establishment_id, plan_id, status, is_trial, period_start, period_end, "
+                    "open_ended, assignment_rule_id) VALUES ($1, $2, $3, $4, now(), now() + CASE WHEN $5 THEN "
+                    "interval '100 years' ELSE make_interval(days => $6) END, $5, $7) RETURNING id",
+                    est, rule->planId, trial ? "trialing" : "active", trial, openEnded, rule->days.value_or(0),
+                    rule->ruleId)[0]);
+                if (trial)
+                    for (const auto& p : prints)
+                        tx.q("INSERT INTO trial_registry (fingerprint, establishment_id) VALUES (decode($1,'hex'), $2) "
+                             "ON CONFLICT DO NOTHING",
+                             p, est);
+                tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, to_status, details, "
+                     "actor_type, actor_id) VALUES ($1, $2, $3, $4, $5::jsonb, 'user', $6)",
+                     subId, est, trial ? "trial_started" : "plan_assigned", trial ? "trialing" : "active",
+                     json{{"rule_id", rule->ruleId}, {"plan", rule->planCode},
+                          {"days", rule->days ? json(*rule->days) : json(nullptr)}, {"open_ended", openEnded}}
+                         .dump(),
+                     userId);
+            } else if (!trialUsed) {
                 subId = db::str(tx.one(
                     "INSERT INTO subscriptions (establishment_id, status, is_trial, period_start, period_end) "
                     "VALUES ($1, 'trialing', true, now(), now() + make_interval(days => $2)) RETURNING id",
@@ -328,23 +353,26 @@ void registerEstablishmentRoutes(App& app, Env& env) {
                          p, est);
             } else {
                 subId = db::str(tx.one(
-                    "INSERT INTO subscriptions (establishment_id, status, is_trial, period_start, period_end) "
-                    "VALUES ($1, 'suspended', false, now(), now()) RETURNING id",
+                    "INSERT INTO subscriptions (establishment_id, status, is_trial, period_start, period_end, "
+                    "suspension_reason) VALUES ($1, 'suspended', false, now(), now(), 'no_trial') RETURNING id",
                     est)[0]);
             }
-            tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, to_status, details, "
-                 "actor_type, actor_id) VALUES ($1, $2, $3, $4, $5::jsonb, 'user', $6)",
-                 subId, est, trialUsed ? "trial_refused" : "trial_started", trialUsed ? "suspended" : "trialing",
-                 json{{"trial_days", trialUsed ? 0 : trialDays}}.dump(), userId);
+            if (!rule)
+                tx.q("INSERT INTO subscription_events (subscription_id, establishment_id, kind, to_status, details, "
+                     "actor_type, actor_id) VALUES ($1, $2, $3, $4, $5::jsonb, 'user', $6)",
+                     subId, est, trialUsed ? "trial_refused" : "trial_started", trialUsed ? "suspended" : "trialing",
+                     json{{"trial_days", trialUsed ? 0 : trialDays}}.dump(), userId);
+            bool granted = rule ? true : !trialUsed;
             Actor a = ctx.actor;
             a.userId = userId;
             a.establishmentId = est;
             audit(tx, a, "establishment.created", "establishment", est,
-                  {{"kind", kind}, {"country", country}, {"trial_granted", !trialUsed}});
+                  {{"kind", kind}, {"country", country}, {"trial_granted", granted},
+                   {"plan", rule ? json(rule->planCode) : json(nullptr)}});
             json session = createSession(env, tx, userId, est, ctx.actor);
             return {{"establishment", {{"id", est}, {"trade_name", tradeName}, {"kind", kind}, {"profile", profileCode}}},
                     {"establishment_code", code},
-                    {"trial_granted", !trialUsed},
+                    {"trial_granted", granted},
                     {"subscription", subscriptions::view(tx, est)},
                     {"session", session}};
         });
@@ -563,6 +591,8 @@ void registerEstablishmentRoutes(App& app, Env& env) {
     app.put("/api/v1/establishment/logo", {Access::User, "settings.manage", true}, [&env](Ctx& ctx) {
         ImageInfo info = validateImage(ctx.req.body, ctx.header("Content-Type"));
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kStorageMb,
+                                          static_cast<int64_t>(ctx.req.body.size()));
             auto old = tx.one("SELECT logo_object_id FROM establishments WHERE id = $1", ctx.actor.establishmentId);
             std::string id = db::str(tx.one(
                 "INSERT INTO objects (establishment_id, purpose, mime, byte_size, sha256, width, height, data, created_by) "
@@ -591,6 +621,8 @@ void registerEstablishmentRoutes(App& app, Env& env) {
 
     app.del("/api/v1/establishment/logo", {Access::User, "settings.manage", true}, [&env](Ctx& ctx) {
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kStorageMb,
+                                          static_cast<int64_t>(ctx.req.body.size()));
             auto old = tx.one("SELECT logo_object_id FROM establishments WHERE id = $1", ctx.actor.establishmentId);
             tx.q("UPDATE establishments SET logo_object_id = NULL WHERE id = $1", ctx.actor.establishmentId);
             if (!old[0].is_null()) tx.q("DELETE FROM objects WHERE id = $1", db::str(old[0]));

@@ -396,5 +396,7 @@
   "detail.approver": "Approved by",
   "detail.category": "Category",
   "detail.severity": "Severity",
-  "detail.type": "Type"
+  "detail.type": "Type",
+  "email.plan_changed.subject": "Your Nhill plan has changed",
+  "email.plan_changed.body": "Hello,\n\nThe Nhill plan of {establishment} is now \"{plan}\". The features available in Nhill Business and Nhill POS follow this plan from now on. Details are in Nhill Business, Settings › Subscription."
 }

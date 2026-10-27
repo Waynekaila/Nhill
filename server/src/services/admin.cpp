@@ -3,10 +3,12 @@
 // Statistics per establishment come from aggregate-only SQL functions
 // (migration 0006): counts and sums per currency, never individual records.
 // Periods are calendar days in the establishment's own time zone.
+#include <algorithm>
 #include <ctime>
 
 #include "nhill/money.hpp"
 #include "nhill/validation.hpp"
+#include "services/entitlements.hpp"
 #include "services/report.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
@@ -38,6 +40,66 @@ std::string reason(const json& b) {
     std::string r = in::reqStr(b, "reason", 500);
     if (r.size() < 5) throw invalid("reason", "too_short");
     return r;
+}
+
+// Conditions of a plan (3.0.0). Only the keys present in `b` are written.
+void applyPlanConditions(db::Tx& tx, const std::string& planId, const json& b) {
+    auto present = [&](const char* k) { return b.contains(k); };
+    std::optional<int> grace, trial;
+    if (present("grace_days") && !b["grace_days"].is_null()) grace = in::optInt(b, "grace_days", 7, 0, 90);
+    if (present("trial_days") && !b["trial_days"].is_null()) trial = in::optInt(b, "trial_days", 30, 1, 365);
+    std::optional<std::string> reminders;
+    if (present("reminder_days") && !b["reminder_days"].is_null()) {
+        const json& a = b["reminder_days"];
+        if (!a.is_array() || a.size() > 6) throw invalid("reminder_days", "array_of_at_most_6_required");
+        std::string lit = "{";
+        for (size_t i = 0; i < a.size(); ++i) {
+            if (!a[i].is_number_integer() || a[i].get<int>() < 0 || a[i].get<int>() > 90)
+                throw invalid("reminder_days", "days_between_0_and_90");
+            lit += (i ? "," : "") + std::to_string(a[i].get<int>());
+        }
+        reminders = lit + "}";
+    }
+    std::optional<std::string> fallback;
+    if (present("expiry_fallback_plan_id") && !b["expiry_fallback_plan_id"].is_null()) {
+        fallback = in::reqUuid(b, "expiry_fallback_plan_id");
+        if (*fallback == planId) throw invalid("expiry_fallback_plan_id", "same_plan");
+        auto f = tx.opt("SELECT kind FROM plans WHERE id = $1", *fallback);
+        if (!f) throw invalid("expiry_fallback_plan_id", "unknown_plan");
+        if (db::str((*f)[0]) != "free" && db::str((*f)[0]) != "custom")
+            throw invalid("expiry_fallback_plan_id", "free_or_custom_plan_required");
+    }
+    std::optional<bool> selfService, autoRenew, archived;
+    if (present("self_service")) selfService = in::optBool(b, "self_service", true);
+    if (present("auto_renew_allowed")) autoRenew = in::optBool(b, "auto_renew_allowed", true);
+    if (present("archived")) archived = in::optBool(b, "archived", false);
+    tx.q("UPDATE plans SET kind = COALESCE($2, kind), visibility = COALESCE($3, visibility), "
+         "self_service = COALESCE($4, self_service), auto_renew_allowed = COALESCE($5, auto_renew_allowed), "
+         "grace_days = CASE WHEN $6 THEN $7::integer ELSE grace_days END, "
+         "reminder_days = CASE WHEN $8 THEN $9::int[] ELSE reminder_days END, "
+         "trial_days = CASE WHEN $10 THEN $11::integer ELSE trial_days END, "
+         "expiry_fallback_plan_id = CASE WHEN $12 THEN $13::uuid ELSE expiry_fallback_plan_id END, "
+         "archived_at = CASE WHEN $14::boolean IS NULL THEN archived_at WHEN $14::boolean THEN COALESCE(archived_at, now()) "
+         "ELSE NULL END, active = CASE WHEN $14::boolean THEN false ELSE active END WHERE id = $1",
+         planId, in::optEnum(b, "kind", {"paid", "trial", "free", "custom"}), in::optEnum(b, "visibility", {"public", "private"}),
+         selfService, autoRenew, present("grace_days"), grace, present("reminder_days"), reminders, present("trial_days"), trial,
+         present("expiry_fallback_plan_id"), fallback, archived);
+}
+
+// Capability values of a plan: "entitlements" replaces them all; the 2.x fields
+// (max_users, max_registers, max_warehouses, features.multi_warehouse) update one each.
+void applyPlanEntitlements(db::Tx& tx, const std::string& planId, const json& b) {
+    if (b.contains("entitlements")) {
+        entitlements::savePlanEntitlements(tx, planId, entitlements::parsePlanEntitlements(tx, b["entitlements"]), true);
+        return;
+    }
+    json legacy = json::object();
+    if (b.contains("max_users")) legacy[entitlements::key::kUsers] = b["max_users"];
+    if (b.contains("max_registers")) legacy[entitlements::key::kRegisters] = b["max_registers"];
+    if (b.contains("max_warehouses")) legacy[entitlements::key::kWarehouses] = b["max_warehouses"];
+    if (b.contains("features") && b["features"].is_object() && b["features"].contains("multi_warehouse"))
+        legacy[entitlements::key::kMultiWarehouse] = b["features"]["multi_warehouse"];
+    if (!legacy.empty()) entitlements::savePlanEntitlements(tx, planId, entitlements::parsePlanEntitlements(tx, legacy), false);
 }
 
 
@@ -215,13 +277,24 @@ void registerAdminRoutes(App& app, Env& env) {
                                  {"ended_at", db::str(r[3])}, {"ended_reason", db::str(r[4])},
                                  {"created_by", db::str(r[5])}});
             json events = json::array();
-            for (const auto& r : tx.q("SELECT kind, from_status, to_status, nh_iso(period_start), nh_iso(period_end), "
-                                      "actor_type, nh_iso(created_at) FROM subscription_events WHERE establishment_id = $1 "
-                                      "ORDER BY id DESC LIMIT 30",
-                                      id))
+            // Full history of the subscription: lifecycle, payments and every administrative action.
+            int limit = 100;
+            if (auto q = ctx.query("events")) {
+                try {
+                    limit = std::max(1, std::min(500, std::stoi(*q)));
+                } catch (const std::exception&) {
+                    throw invalid("events", "integer_required");
+                }
+            }
+            for (const auto& r : tx.q("SELECT ev.kind, ev.from_status, ev.to_status, nh_iso(ev.period_start), nh_iso(ev.period_end), "
+                                      "ev.actor_type, nh_iso(ev.created_at), ev.details, COALESCE(a.full_name, a.email) "
+                                      "FROM subscription_events ev LEFT JOIN admin_users a ON a.id = ev.actor_id AND "
+                                      "ev.actor_type = 'admin' WHERE ev.establishment_id = $1 ORDER BY ev.id DESC LIMIT $2",
+                                      id, limit))
                 events.push_back({{"kind", db::str(r[0])}, {"from", db::str(r[1])}, {"to", db::str(r[2])},
                                   {"period_start", db::str(r[3])}, {"period_end", db::str(r[4])},
-                                  {"actor", db::str(r[5])}, {"at", db::str(r[6])}});
+                                  {"actor", db::str(r[5])}, {"at", db::str(r[6])}, {"details", json::parse(db::str(r[7]))},
+                                  {"admin_name", r[8].is_null() ? json(nullptr) : json(db::str(r[8]))}});
             auto usage = tx.one("SELECT COALESCE(sum(documents_issued),0), COALESCE(sum(payments_recorded),0) FROM usage_daily "
                                 "WHERE establishment_id = $1 AND day > current_date - 30",
                                 id);
@@ -233,6 +306,10 @@ void registerAdminRoutes(App& app, Env& env) {
                       {"status_reason", db::str(e[9])}, {"vat_registered", db::boolean(e[10])},
                       {"profile", db::str(e[11])}, {"created_at", db::str(e[12])}, {"members", members[0].as<int>()}}},
                     {"subscription", subscriptions::view(tx, id)},
+                    {"entitlements", [&] {
+                         json j = entitlements::toJson(entitlements::load(tx, id, db::str(e[3])), entitlements::usage(tx, id));
+                         return j;
+                     }()},
                     {"subscription_events", events},
                     {"codes", codes},
                     {"usage_30_days", {{"documents_issued", usage[0].as<int64_t>()}, {"payments_recorded", usage[1].as<int64_t>()}}}};
@@ -321,8 +398,12 @@ void registerAdminRoutes(App& app, Env& env) {
                             b.contains("max_warehouses") && !b["max_warehouses"].is_null()
                                 ? std::optional<int>(in::optInt(b, "max_warehouses", 1, 1, 1000))
                                 : std::nullopt);
-            audit(tx, ctx.actor, "admin.plan_created", "plan", db::str(r[0]), b);
-            return subscriptions::planJson(tx, r, false);
+            std::string id = db::str(r[0]);
+            applyPlanConditions(tx, id, b);
+            applyPlanEntitlements(tx, id, b);
+            audit(tx, ctx.actor, "admin.plan_created", "plan", id, b);
+            return subscriptions::planJson(tx, tx.one(std::string("SELECT ") + subscriptions::kPlanCols + " FROM plans WHERE id = $1", id),
+                                           false);
         });
         ctx.json(201, out);
     });
@@ -361,8 +442,12 @@ void registerAdminRoutes(App& app, Env& env) {
                             id, in::optStr(b, "name_fr", 80), in::optStr(b, "name_en", 80), in::optStr(b, "description_fr", 1000),
                             in::optStr(b, "description_en", 1000), in::optMoney(b, "price", currency), tax, maxUsers, features,
                             active, sort, clearUsers, tier, clearRegs, regs, clearWhs, whs);
+            (void)r;
+            applyPlanConditions(tx, id, b);
+            applyPlanEntitlements(tx, id, b);
             audit(tx, ctx.actor, "admin.plan_updated", "plan", id, b);
-            return subscriptions::planJson(tx, r, false);
+            return subscriptions::planJson(tx, tx.one(std::string("SELECT ") + subscriptions::kPlanCols + " FROM plans WHERE id = $1", id),
+                                           false);
         });
         ctx.json(200, out);
     });

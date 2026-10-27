@@ -4,6 +4,7 @@
 
 #include "nhill/money.hpp"
 #include "pdf/pdf.hpp"
+#include "services/entitlements.hpp"
 #include "services/sales.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
@@ -411,6 +412,8 @@ json issue(Env& env, db::Tx& tx, const Actor& actor, const std::string& id, cons
         id);
     std::string type = db::str(d[0]);
     if (db::str(d[1]) != "draft") throw conflict("already_issued");
+    // Monthly quota of the plan; credit notes (corrections, returns) are never blocked.
+    if (type != "credit_note") entitlements::requireCapacity(tx, actor, entitlements::key::kDocumentsMonth);
     if (tx.one("SELECT count(*) FROM sales_document_lines WHERE document_id = $1", id)[0].as<int>() == 0)
         throw invalid("lines", "at_least_one_line");
     const std::string cur = db::str(d[2]), mainCur = db::str(d[3]), issueDate = db::str(d[4]);
@@ -524,6 +527,16 @@ json issue(Env& env, db::Tx& tx, const Actor& actor, const std::string& id, cons
 
 }  // namespace sales
 
+namespace {
+
+// A document of a feature outside the plan does not exist for the user (404).
+void requireVisible(db::Tx& tx, const Actor& a, const std::string& id) {
+    auto r = tx.opt("SELECT doc_type, pos_session_id IS NOT NULL FROM sales_documents WHERE id = $1", id);
+    if (!r || !entitlements::docVisible(a, db::str((*r)[0]), db::boolean((*r)[1]))) throw notFound("document");
+}
+
+}  // namespace
+
 void registerSalesRoutes(App& app, Env& env) {
     app.get("/api/v1/sales-documents", {Access::User}, [&env](Ctx& ctx) {
         auto pg = page(ctx);
@@ -544,15 +557,17 @@ void registerSalesRoutes(App& app, Env& env) {
                 "AND ($5::date IS NULL OR d.issue_date <= $5::date) AND ($6::text IS NULL OR d.number ILIKE '%' || $6 || '%' "
                 "OR p.name ILIKE '%' || $6 || '%') ";
             if (overdue) where += "AND d.doc_type = 'invoice' AND d.status IN ('issued','partially_paid') AND d.due_date < nh_local_today() ";
-            int total = tx.one("SELECT count(*) FROM sales_documents d JOIN parties p ON p.id = d.party_id " + where, type,
-                               status, party, from, to, search)[0].as<int>();
+            const std::string types = entitlements::docTypesArray(ctx.actor);
+            int total = tx.one("SELECT count(*) FROM sales_documents d JOIN parties p ON p.id = d.party_id " + where + "AND " +
+                                   entitlements::docVisibleSql("d", 7),
+                               type, status, party, from, to, search, types)[0].as<int>();
             json items = json::array();
             for (const auto& r : tx.q(
                      "SELECT d.id, d.doc_type, d.status, d.number, p.name, d.issue_date::text, d.due_date::text, d.currency, "
                      "d.total_minor, d.paid_minor, d.credited_minor, d.party_id FROM sales_documents d "
-                     "JOIN parties p ON p.id = d.party_id " + where +
-                         "ORDER BY d.issue_date DESC, d.created_at DESC LIMIT $7 OFFSET $8",
-                     type, status, party, from, to, search, pg.limit, pg.offset)) {
+                     "JOIN parties p ON p.id = d.party_id " + where + "AND " + entitlements::docVisibleSql("d", 9) +
+                         " ORDER BY d.issue_date DESC, d.created_at DESC LIMIT $7 OFFSET $8",
+                     type, status, party, from, to, search, pg.limit, pg.offset, types)) {
                 std::string cur = db::str(r[7]);
                 int64_t bal = r[8].as<int64_t>() - r[9].as<int64_t>() - r[10].as<int64_t>();
                 items.push_back({{"id", db::str(r[0])},
@@ -574,13 +589,17 @@ void registerSalesRoutes(App& app, Env& env) {
 
     app.get("/api/v1/sales-documents/:id", {Access::User}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
-        ctx.json(200, db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) { return loadSalesDocument(tx, id); }));
+        ctx.json(200, db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+                     requireVisible(tx, ctx.actor, id);
+                     return loadSalesDocument(tx, id);
+                 }));
     });
 
     app.get("/api/v1/sales-documents/:id/pdf", {Access::User}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
         std::string number;
         std::string bytes = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            requireVisible(tx, ctx.actor, id);
             auto r = tx.one("SELECT COALESCE(number, 'brouillon') FROM sales_documents WHERE id = $1", id);
             number = db::str(r[0]);
             return renderSalesPdf(env, tx, id);
@@ -592,6 +611,7 @@ void registerSalesRoutes(App& app, Env& env) {
     app.post("/api/v1/sales-documents", {Access::User, "sales.write", true}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string type = in::reqEnum(b, "doc_type", {"quote", "order", "invoice"});
+        entitlements::requireFeature(ctx.actor, entitlements::featureOfDocClass(type));
         std::string party = in::reqUuid(b, "party_id");
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
@@ -603,6 +623,7 @@ void registerSalesRoutes(App& app, Env& env) {
                 std::string currency = b.contains("currency") ? in::reqCurrency(b, "currency") : db::str(es[0]);
                 if (!tx.opt("SELECT 1 FROM currencies WHERE code = $1 AND active", currency))
                     throw invalid("currency", "unsupported_currency");
+                entitlements::requireCurrency(tx, ctx.actor, currency);
                 std::string lang = in::optEnum(b, "language", {"fr", "en"}).value_or(db::str(es[1]));
                 std::string rounding = db::str(es[2]);
                 auto [lines, totals] = priceLines(tx, b, currency, rounding);
@@ -630,6 +651,7 @@ void registerSalesRoutes(App& app, Env& env) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
         const auto& b = ctx.body();
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            requireVisible(tx, ctx.actor, id);
             auto d = tx.one("SELECT status, currency, tax_rounding, party_id, doc_type FROM sales_documents WHERE id = $1 "
                             "FOR UPDATE",
                             id);
@@ -639,6 +661,7 @@ void registerSalesRoutes(App& app, Env& env) {
             if (!p || !db::boolean((*p)[0])) throw invalid("party_id", "not_an_active_customer");
             std::string currency = b.contains("currency") ? in::reqCurrency(b, "currency") : db::str(d[1]);
             if (db::str(d[4]) == "credit_note" && currency != db::str(d[1])) throw invalid("currency", "immutable");
+            if (currency != db::str(d[1])) entitlements::requireCurrency(tx, ctx.actor, currency);
             auto [lines, totals] = priceLines(tx, b, currency, db::str(d[2]));
             tx.q("UPDATE sales_documents SET party_id = $2, currency = $3, language = COALESCE($4, language), "
                  "issue_date = COALESCE($5::date, issue_date), due_date = $6, valid_until = $7, gross_minor = $8, "
@@ -659,6 +682,7 @@ void registerSalesRoutes(App& app, Env& env) {
     app.del("/api/v1/sales-documents/:id", {Access::User, "sales.write", true}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
         db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            requireVisible(tx, ctx.actor, id);
             auto d = tx.one("SELECT status, related_document_id FROM sales_documents WHERE id = $1 FOR UPDATE", id);
             if (db::str(d[0]) != "draft") throw conflict("document_immutable", "issued documents are never deleted");
             tx.q("DELETE FROM sales_documents WHERE id = $1", id);
@@ -673,6 +697,7 @@ void registerSalesRoutes(App& app, Env& env) {
         const auto& b = ctx.body();
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
+                requireVisible(tx, ctx.actor, id);
                 auto t = tx.one("SELECT doc_type FROM sales_documents WHERE id = $1", id);
                 if (db::str(t[0]) == "receipt") throw conflict("pos_document", "receipts are issued by Nhill POS");
                 return {200, sales::issue(env, tx, ctx.actor, id, b)};
@@ -686,6 +711,7 @@ void registerSalesRoutes(App& app, Env& env) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
         std::string to = in::reqEnum(ctx.body(), "status", {"accepted", "declined", "canceled"});
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            requireVisible(tx, ctx.actor, id);
             auto d = tx.one("SELECT doc_type, status FROM sales_documents WHERE id = $1 FOR UPDATE", id);
             std::string type = db::str(d[0]), from = db::str(d[1]);
             bool ok = (type == "quote" && from == "sent" && (to == "accepted" || to == "declined")) ||
@@ -703,8 +729,10 @@ void registerSalesRoutes(App& app, Env& env) {
     app.post("/api/v1/sales-documents/:id/convert", {Access::User, "sales.write", true}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "document");
         std::string to = in::reqEnum(ctx.body(), "to", {"order", "invoice"});
+        entitlements::requireFeature(ctx.actor, entitlements::featureOfDocClass(to));
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
+                requireVisible(tx, ctx.actor, id);
                 auto d = tx.one("SELECT doc_type, status, party_id, currency, language, notes, terms, tax_rounding, "
                                 "main_currency, gross_minor, discount_minor, net_minor, tax_minor, total_minor, tax_breakdown "
                                 "FROM sales_documents WHERE id = $1 FOR UPDATE",
@@ -742,6 +770,8 @@ void registerSalesRoutes(App& app, Env& env) {
         const auto& b = ctx.body();
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
+                requireVisible(tx, ctx.actor, id);
+                entitlements::requireFeature(ctx.actor, entitlements::key::kInvoices);
                 auto d = tx.one("SELECT doc_type, status, party_id, currency, language, tax_rounding, main_currency "
                                 "FROM sales_documents WHERE id = $1",
                                 id);
@@ -792,6 +822,7 @@ void registerSalesRoutes(App& app, Env& env) {
                     {"def_auth_code", in::reqStr(b, "def_auth_code", 120)},
                     {"normalized_invoice_number", in::optStr(b, "normalized_invoice_number", 60).value_or("")}};
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
+            requireVisible(tx, ctx.actor, id);
             auto d = tx.one("SELECT doc_type, status FROM sales_documents WHERE id = $1 FOR UPDATE", id);
             if (db::str(d[1]) == "draft" || (db::str(d[0]) != "invoice" && db::str(d[0]) != "credit_note"))
                 throw conflict("not_an_issued_invoice");

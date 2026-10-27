@@ -1,21 +1,25 @@
 // Stock: levels (read-only, maintained by the database), movements, adjustments, transfers.
 #include "nhill/money.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 
 namespace nh {
 
 namespace {
 
-bool multiWarehouseAllowed(db::Tx& tx, const std::string& est) {
-    auto r = tx.one(
-        "SELECT s.is_trial, COALESCE((p.features ->> 'multi_warehouse')::boolean, false) FROM subscriptions s "
-        "LEFT JOIN plans p ON p.id = s.plan_id WHERE s.establishment_id = $1",
-        est);
-    return db::boolean(r[0]) || db::boolean(r[1]);
-}
-
 std::string defaultWarehouse(db::Tx& tx) {
     return db::str(tx.one("SELECT id FROM warehouses WHERE is_default")[0]);
+}
+
+bool multiWarehouse(const Actor& a) { return a.features.count(entitlements::key::kMultiWarehouse) > 0; }
+
+// Without several warehouses in the plan, only the main warehouse exists for the user:
+// any other warehouse (created under a previous plan) is refused.
+std::optional<std::string> visibleWarehouse(db::Tx& tx, const Actor& a, const std::optional<std::string>& requested) {
+    if (multiWarehouse(a)) return requested;
+    std::string main = defaultWarehouse(tx);
+    if (requested && *requested != main) throw notFound("warehouse");
+    return main;
 }
 
 }  // namespace
@@ -24,18 +28,23 @@ void registerStockRoutes(App& app, Env& env) {
     app.get("/api/v1/warehouses", {Access::User}, [&env](Ctx& ctx) {
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             json items = json::array();
-            for (const auto& r : tx.q("SELECT id, name, is_default, active FROM warehouses ORDER BY is_default DESC, name"))
+            bool multi = multiWarehouse(ctx.actor);
+            for (const auto& r : tx.q("SELECT id, name, is_default, active FROM warehouses WHERE ($1 OR is_default) "
+                                      "ORDER BY is_default DESC, name",
+                                      multi))
                 items.push_back({{"id", db::str(r[0])}, {"name", db::str(r[1])}, {"is_default", db::boolean(r[2])},
                                  {"active", db::boolean(r[3])}});
-            return {{"items", items}, {"multi_warehouse", multiWarehouseAllowed(tx, ctx.actor.establishmentId)}};
+            return {{"items", items}, {"multi_warehouse", multi}};
         });
         ctx.json(200, out);
     });
 
-    app.post("/api/v1/warehouses", {Access::User, "stock.adjust", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/warehouses", {Access::User, "stock.adjust", true, {}, entitlements::key::kMultiWarehouse},
+             [&env](Ctx& ctx) {
         std::string name = in::reqStr(ctx.body(), "name", 80);
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
-            if (!multiWarehouseAllowed(tx, ctx.actor.establishmentId)) throw conflict("feature_not_in_plan");
+            tx.q("SELECT 1 FROM establishments WHERE id = $1 FOR UPDATE", ctx.actor.establishmentId);
+            entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kWarehouses);
             auto r = tx.one("INSERT INTO warehouses (establishment_id, name) VALUES ($1, $2) RETURNING id",
                             ctx.actor.establishmentId, name);
             audit(tx, ctx.actor, "warehouse.created", "warehouse", db::str(r[0]), {{"name", name}});
@@ -47,10 +56,11 @@ void registerStockRoutes(App& app, Env& env) {
     app.get("/api/v1/stock", {Access::User}, [&env](Ctx& ctx) {
         auto pg = page(ctx);
         auto search = ctx.query("search");
-        auto warehouse = ctx.query("warehouse_id");
-        if (warehouse && !in::isUuid(*warehouse)) warehouse.reset();
+        auto requested = ctx.query("warehouse_id");
+        if (requested && !in::isUuid(*requested)) requested.reset();
         bool lowOnly = ctx.query("low_stock").value_or("") == "1";
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
+            auto warehouse = visibleWarehouse(tx, ctx.actor, requested);
             std::string sql =
                 "SELECT p.id, p.sku, p.name, p.unit, p.reorder_level_milli, "
                 "COALESCE((SELECT sum(l.quantity_milli) FROM stock_levels l WHERE l.product_id = p.id AND "
@@ -91,14 +101,19 @@ void registerStockRoutes(App& app, Env& env) {
         if (to && !in::isDate(*to)) to.reset();
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             json items = json::array();
+            auto mainOnly = visibleWarehouse(tx, ctx.actor, std::nullopt);
             for (const auto& r : tx.q(
                      "SELECT m.id, m.product_id, p.sku, p.name, w.name, m.quantity_milli, m.kind, m.source_type, "
                      "m.source_id, m.note, COALESCE(u.full_name, ''), nh_iso(m.created_at) FROM stock_movements m "
                      "JOIN products p ON p.id = m.product_id JOIN warehouses w ON w.id = m.warehouse_id "
                      "LEFT JOIN users u ON u.id = m.created_by WHERE ($1::uuid IS NULL OR m.product_id = $1) "
                      "AND ($2::date IS NULL OR m.created_at >= nh_local_start($2::date)) AND ($3::date IS NULL OR m.created_at < nh_local_start($3::date + 1)) "
-                     "ORDER BY m.id DESC LIMIT $4 OFFSET $5",
-                     product, from, to, pg.limit, pg.offset))
+                     "AND ($6::uuid IS NULL OR m.warehouse_id = $6) AND " +
+                         entitlements::movementFilterSql("m", 7, 8, 9) +
+                         " ORDER BY m.id DESC LIMIT $4 OFFSET $5",
+                     product, from, to, pg.limit, pg.offset, mainOnly, multiWarehouse(ctx.actor),
+                     ctx.actor.features.count(entitlements::key::kPurchases) > 0,
+                     entitlements::docTypesArray(ctx.actor)))
                 items.push_back({{"id", r[0].as<int64_t>()},
                                  {"product_id", db::str(r[1])},
                                  {"sku", db::str(r[2])},
@@ -128,7 +143,7 @@ void registerStockRoutes(App& app, Env& env) {
         if (!q || *q == 0) throw invalid("quantity", "invalid_quantity");
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
-                std::string w = warehouse ? *warehouse : defaultWarehouse(tx);
+                std::string w = warehouse ? *visibleWarehouse(tx, ctx.actor, warehouse) : defaultWarehouse(tx);
                 auto r = tx.one("INSERT INTO stock_movements (establishment_id, product_id, warehouse_id, quantity_milli, "
                                 "kind, source_type, note, created_by) VALUES ($1,$2,$3,$4,$5,'manual',$6,$7) RETURNING id",
                                 ctx.actor.establishmentId, product, w, *q, kind, note, ctx.actor.userId);
@@ -141,7 +156,8 @@ void registerStockRoutes(App& app, Env& env) {
         ctx.json(status, body);
     });
 
-    app.post("/api/v1/stock/transfers", {Access::User, "stock.adjust", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/stock/transfers", {Access::User, "stock.adjust", true, {}, entitlements::key::kMultiWarehouse},
+             [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string product = in::reqUuid(b, "product_id");
         std::string from = in::reqUuid(b, "from_warehouse_id");
@@ -152,7 +168,6 @@ void registerStockRoutes(App& app, Env& env) {
         std::string note = in::optStr(b, "note", 300).value_or("");
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
-                if (!multiWarehouseAllowed(tx, ctx.actor.establishmentId)) throw conflict("feature_not_in_plan");
                 tx.q("INSERT INTO stock_movements (establishment_id, product_id, warehouse_id, quantity_milli, kind, "
                      "source_type, note, created_by) VALUES ($1,$2,$3,$4,'transfer_out','transfer',$5,$6)",
                      ctx.actor.establishmentId, product, from, -q, note, ctx.actor.userId);

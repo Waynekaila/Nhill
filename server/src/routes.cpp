@@ -1,6 +1,7 @@
 #include <regex>
 
 #include "nhill/version.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 
 namespace nh {
@@ -37,6 +38,7 @@ void registerAll(App& app, Env& env) {
     registerConsoleRoutes(app, env);
     registerSupportRoutes(app, env);
     registerPosRoutes(app, env);
+    entitlements::registerRoutes(app, env);
 }
 
 }  // namespace nh

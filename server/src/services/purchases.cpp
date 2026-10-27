@@ -1,5 +1,6 @@
 // Purchases from suppliers: draft -> received (stock in) ; payments via /payments.
 #include "nhill/money.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 
 namespace nh {
@@ -95,7 +96,7 @@ void savePurchaseLines(db::Tx& tx, const std::string& est, const std::string& id
 }  // namespace
 
 void registerPurchaseRoutes(App& app, Env& env) {
-    app.get("/api/v1/purchases", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/purchases", {Access::User, "", false, {}, entitlements::key::kPurchases}, [&env](Ctx& ctx) {
         auto pg = page(ctx);
         auto status = ctx.query("status");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
@@ -116,12 +117,12 @@ void registerPurchaseRoutes(App& app, Env& env) {
         ctx.json(200, out);
     });
 
-    app.get("/api/v1/purchases/:id", {Access::User}, [&env](Ctx& ctx) {
+    app.get("/api/v1/purchases/:id", {Access::User, "", false, {}, entitlements::key::kPurchases}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "purchase");
         ctx.json(200, db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) { return loadPurchase(tx, id); }));
     });
 
-    app.post("/api/v1/purchases", {Access::User, "purchases.write", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/purchases", {Access::User, "purchases.write", true, {}, entitlements::key::kPurchases}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string supplier = in::reqUuid(b, "supplier_id");
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -131,8 +132,11 @@ void registerPurchaseRoutes(App& app, Env& env) {
                 std::string currency = b.contains("currency") ? in::reqCurrency(b, "currency")
                                                               : db::str(tx.one("SELECT main_currency FROM establishments WHERE id = $1",
                                                                                ctx.actor.establishmentId)[0]);
+                entitlements::requireCurrency(tx, ctx.actor, currency);
                 auto wh = in::optUuid(b, "warehouse_id");
-                std::string warehouse = wh ? *wh : db::str(tx.one("SELECT id FROM warehouses WHERE is_default")[0]);
+                std::string main = db::str(tx.one("SELECT id FROM warehouses WHERE is_default")[0]);
+                std::string warehouse = wh ? *wh : main;
+                if (warehouse != main) entitlements::requireFeature(ctx.actor, entitlements::key::kMultiWarehouse);
                 std::string id = db::str(tx.one(
                     "INSERT INTO purchases (establishment_id, supplier_id, supplier_reference, purchase_date, due_date, currency, "
                     "warehouse_id, notes, created_by) VALUES ($1,$2,$3,COALESCE($4::date, nh_local_today()),$5::date,$6,$7,$8,$9) "
@@ -148,7 +152,7 @@ void registerPurchaseRoutes(App& app, Env& env) {
         ctx.json(status, body);
     });
 
-    app.put("/api/v1/purchases/:id", {Access::User, "purchases.write", true}, [&env](Ctx& ctx) {
+    app.put("/api/v1/purchases/:id", {Access::User, "purchases.write", true, {}, entitlements::key::kPurchases}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "purchase");
         const auto& b = ctx.body();
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -168,7 +172,7 @@ void registerPurchaseRoutes(App& app, Env& env) {
 
     // Goods received: stock movements for tracked products, optional update of
     // the product purchase price (last cost).
-    app.post("/api/v1/purchases/:id/receive", {Access::User, "purchases.write", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/purchases/:id/receive", {Access::User, "purchases.write", true, {}, entitlements::key::kPurchases}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "purchase");
         bool updateCost = in::optBool(ctx.body(), "update_purchase_prices", true);
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
@@ -195,7 +199,7 @@ void registerPurchaseRoutes(App& app, Env& env) {
         ctx.json(status, body);
     });
 
-    app.post("/api/v1/purchases/:id/cancel", {Access::User, "purchases.write", true}, [&env](Ctx& ctx) {
+    app.post("/api/v1/purchases/:id/cancel", {Access::User, "purchases.write", true, {}, entitlements::key::kPurchases}, [&env](Ctx& ctx) {
         std::string id = in::uuidParam(ctx.param("id"), "purchase");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             auto p = tx.one("SELECT status FROM purchases WHERE id = $1 FOR UPDATE", id);

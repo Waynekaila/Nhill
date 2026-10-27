@@ -3,6 +3,7 @@
 #include <string_view>
 
 #include "nhill/validation.hpp"
+#include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
 
@@ -10,16 +11,16 @@ namespace nh {
 
 namespace {
 
-// Seats allowed: the plan decides; during a trial an individual business has
-// one seat and a company the `trial_max_users` setting (default 5).
-int seatLimit(db::Tx& tx, const std::string& est, const std::string& kind) {
-    auto r = tx.one(
-        "SELECT p.max_users, s.is_trial FROM subscriptions s LEFT JOIN plans p ON p.id = s.plan_id "
-        "WHERE s.establishment_id = $1",
-        est);
-    if (!r[0].is_null()) return r[0].as<int>();
-    if (db::boolean(r[1]) || r[0].is_null()) return kind == "individual" ? 1 : setting(tx, "trial_max_users", 5);
-    return 1000000;
+// Seats allowed: the plan decides (entitlements users.max); nullopt = unlimited.
+std::optional<int64_t> seatLimit(db::Tx& tx, const Actor& a) {
+    auto snap = entitlements::load(tx, a.establishmentId, a.establishmentKind);
+    auto it = snap.limits.find(entitlements::key::kUsers);
+    return it == snap.limits.end() ? std::nullopt : it->second;
+}
+
+// Point-of-sale roles exist only when the plan includes Nhill POS.
+void requireRoleAvailable(const Actor& a, const std::optional<std::string>& role) {
+    if (role && (*role == "cash_manager" || *role == "cashier")) entitlements::requireFeature(a, entitlements::key::kPos);
 }
 
 // Temporary password: 12 characters without look-alikes (0/O, 1/l/I), shown as
@@ -107,8 +108,9 @@ void registerMemberRoutes(App& app, Env& env) {
                      ctx.actor.establishmentId))
                 invitations.push_back({{"id", db::str(r[0])}, {"email", db::str(r[1])}, {"role", db::str(r[2])},
                                        {"expires_at", db::str(r[3])}, {"created_at", db::str(r[4])}});
-            int limit = seatLimit(tx, ctx.actor.establishmentId, ctx.actor.establishmentKind);
-            return {{"members", members}, {"invitations", invitations}, {"seat_limit", limit}};
+            auto limit = seatLimit(tx, ctx.actor);
+            return {{"members", members}, {"invitations", invitations},
+                    {"seat_limit", limit ? json(*limit) : json(nullptr)}};
         });
         ctx.json(200, out);
     });
@@ -120,15 +122,10 @@ void registerMemberRoutes(App& app, Env& env) {
         std::string email = in::reqEmail(b, "email");
         std::string role = in::reqEnum(b, "role", {"admin", "manager", "sales", "accountant", "viewer", "cash_manager", "cashier"});
         if (role == "admin" && ctx.actor.role != "owner") throw forbidden("owner_required");
+        requireRoleAvailable(ctx.actor, role);
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
-            int used = tx.one(
-                "SELECT (SELECT count(*) FROM memberships WHERE establishment_id = $1 AND status = 'active') + "
-                "(SELECT count(*) FROM invitations WHERE establishment_id = $1 AND accepted_at IS NULL AND "
-                " revoked_at IS NULL AND expires_at > now())",
-                ctx.actor.establishmentId)[0].as<int>();
-            int limit = seatLimit(tx, ctx.actor.establishmentId, ctx.actor.establishmentKind);
-            if (used >= limit)
-                throw conflict("user_limit_reached", "the current offer does not allow more users", {{"limit", limit}});
+            // Active members and pending invitations count against users.max.
+            entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kUsers);
             if (tx.opt("SELECT 1 FROM memberships m JOIN users u ON u.id = m.user_id WHERE m.establishment_id = $1 "
                        "AND u.email = $2 AND m.status = 'active'",
                        ctx.actor.establishmentId, email))
@@ -167,11 +164,15 @@ void registerMemberRoutes(App& app, Env& env) {
         const auto& b = ctx.body();
         auto role = in::optEnum(b, "role", {"admin", "manager", "sales", "accountant", "viewer", "cash_manager", "cashier"});
         auto status = in::optEnum(b, "status", {"active", "disabled"});
+        requireRoleAvailable(ctx.actor, role);
         db::run(env.pool, std::nullopt, [&](db::Tx& tx) {
-            auto m = tx.opt("SELECT user_id, role FROM memberships WHERE id = $1 AND establishment_id = $2 FOR UPDATE", id,
-                            ctx.actor.establishmentId);
+            auto m = tx.opt("SELECT user_id, role, status FROM memberships WHERE id = $1 AND establishment_id = $2 FOR UPDATE",
+                            id, ctx.actor.establishmentId);
             if (!m) throw notFound("member");
             std::string current = db::str((*m)[1]);
+            // Re-enabling a member takes a seat again.
+            if (status == "active" && db::str((*m)[2]) != "active")
+                entitlements::requireCapacity(tx, ctx.actor, entitlements::key::kUsers);
             if (current == "owner") throw forbidden("owner_immutable");
             if ((current == "admin" || role == "admin") && ctx.actor.role != "owner") throw forbidden("owner_required");
             if (db::str((*m)[0]) == ctx.actor.userId) throw forbidden("cannot_modify_self");

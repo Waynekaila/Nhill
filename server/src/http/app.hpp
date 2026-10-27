@@ -29,6 +29,12 @@ struct Actor {
     std::string subscriptionStatus;    // trialing | active | past_due | suspended | canceled
     std::string role;
     std::string sessionId;
+    // computed rights (services/entitlements.cpp): access of the establishment, enabled plan
+    // features and a short version of the whole set, sent back in X-Nhill-Rights
+    std::string access;                // full | read_only | none
+    std::string accessReason;          // trial | active | grace | expired | admin | canceled | ...
+    std::set<std::string> features;    // enabled plan features (plan_capabilities keys)
+    std::string rightsVersion;
     // platform administrator
     std::string adminId;
     std::string adminRole;
@@ -69,6 +75,10 @@ struct RouteOpts {
     std::string permission;            // required tenant permission, empty = any member
     bool write = false;                // requires an entitled subscription
     std::set<std::string> adminRoles;  // for Access::Admin; empty = any admin
+    // Plan feature(s) required for Access::User, read and write alike: "pos", or
+    // "purchases|expenses" for any of them. A route of a feature that is not in the
+    // establishment's plan answers 403 feature_not_included.
+    std::string feature;
 };
 
 // Authentication hooks are supplied by the services layer (see routes.cpp).
@@ -97,6 +107,12 @@ public:
     void stop() { server_.stop(); }
 
     static bool roleHas(const std::string& role, const std::string& permission);
+    // Plan feature a tenant permission depends on ("" = none): pos.* -> pos, ...
+    static std::string permissionFeature(const std::string& permission);
+    // Role permission AND, when it depends on one, the plan feature.
+    static bool allowed(const Actor& a, const std::string& permission);
+    // True when the plan grants `spec` ("a" or "a|b": any of them).
+    static bool hasFeature(const Actor& a, const std::string& spec);
 
 private:
     httplib::Server::Handler wrap(RouteOpts o, Handler h);

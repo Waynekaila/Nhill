@@ -14,6 +14,7 @@
 #include <ctime>
 
 #include "nhill/money.hpp"
+#include "services/entitlements.hpp"
 #include "services/providers.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
@@ -60,6 +61,16 @@ json planJson(db::Tx& tx, const pqxx::row& r, bool activePricesOnly) {
             {"tier", r[15].as<int>()},
             {"max_registers", optInt(r[16])},
             {"max_warehouses", optInt(r[17])},
+            {"kind", db::str(r[18])},
+            {"visibility", db::str(r[19])},
+            {"self_service", db::boolean(r[20])},
+            {"auto_renew_allowed", db::boolean(r[21])},
+            {"grace_days", optInt(r[22])},
+            {"reminder_days", r[23].is_null() ? json(nullptr) : json::parse(db::str(r[23]))},
+            {"trial_days", optInt(r[24])},
+            {"expiry_fallback_plan_id", r[25].is_null() ? json(nullptr) : json(db::str(r[25]))},
+            {"archived_at", r[26].is_null() ? json(nullptr) : json(db::str(r[26]))},
+            {"entitlements", entitlements::planEntitlementsJson(tx, db::str(r[0]))},
             {"prices", pricesOf(tx, db::str(r[0]), activePricesOnly)}};
 }
 
@@ -70,7 +81,8 @@ json view(db::Tx& tx, const std::string& est) {
         "s.auto_renew_consent_at IS NOT NULL, "
         "GREATEST(0, ceil(extract(epoch FROM (COALESCE(s.grace_until, s.period_end) - now())) / 86400))::int, "
         "p.tier, p.max_registers, pp.duration_months, pp.currency, pp.price_minor, s.failed_payments, "
-        "np.code, np.name_fr, np.name_en, nh_iso(s.pending_from) "
+        "np.code, np.name_fr, np.name_en, nh_iso(s.pending_from), s.open_ended, p.kind, p.auto_renew_allowed, "
+        "p.self_service, s.suspension_reason "
         "FROM subscriptions s LEFT JOIN plans p ON p.id = s.plan_id LEFT JOIN plan_prices pp ON pp.id = s.price_id "
         "LEFT JOIN plan_prices npp ON npp.id = s.pending_price_id LEFT JOIN plans np ON np.id = npp.plan_id "
         "WHERE s.establishment_id = $1",
@@ -78,6 +90,7 @@ json view(db::Tx& tx, const std::string& est) {
     if (!r) return nullptr;
     const auto& s = *r;
     std::string status = db::str(s[0]);
+    entitlements::Access acc = entitlements::access(tx, est);
     json plan = nullptr;
     if (!s[5].is_null())
         plan = {{"id", db::str(s[5])},           {"code", db::str(s[6])},
@@ -86,7 +99,10 @@ json view(db::Tx& tx, const std::string& est) {
                 {"max_users", s[10].is_null() ? json(nullptr) : json(s[10].as<int>())},
                 {"features", json::parse(db::str(s[11]))},
                 {"tier", s[14].as<int>()},
-                {"max_registers", s[15].is_null() ? json(nullptr) : json(s[15].as<int>())}};
+                {"max_registers", s[15].is_null() ? json(nullptr) : json(s[15].as<int>())},
+                {"kind", db::str(s[25])},
+                {"auto_renew_allowed", db::boolean(s[26])},
+                {"self_service", db::boolean(s[27])}};
     json price = nullptr;
     if (!s[16].is_null())
         price = {{"duration_months", s[16].as<int>()}, {"currency", db::str(s[17])},
@@ -106,7 +122,11 @@ json view(db::Tx& tx, const std::string& est) {
             {"failed_payments", s[19].as<int>()},
             {"auto_renew_consent", db::boolean(s[12])},
             {"days_left", s[13].as<int>()},
-            {"write_allowed", status == "trialing" || status == "active" || status == "past_due"}};
+            {"open_ended", db::boolean(s[24])},
+            {"suspension_reason", s[28].is_null() ? json(nullptr) : json(db::str(s[28]))},
+            // Access is computed (dates compared with now), not read from the stored status.
+            {"access", {{"state", acc.state}, {"reason", acc.reason}, {"until", acc.until ? json(*acc.until) : json(nullptr)}}},
+            {"write_allowed", acc.state == "full"}};
 }
 
 // ------------------------------------------------------------------ quote
@@ -116,7 +136,8 @@ Quote quote(db::Tx& tx, const std::string& est, const std::string& establishment
     auto p = tx.opt(
         "SELECT pp.id, pp.plan_id, pp.duration_months, pp.currency, pp.price_minor, p.code, p.tax_rate_bp, p.max_users, "
         "p.audience, p.tier, p.name_fr, p.name_en "
-        "FROM plan_prices pp JOIN plans p ON p.id = pp.plan_id WHERE pp.id = $1 AND pp.active AND p.active",
+        "FROM plan_prices pp JOIN plans p ON p.id = pp.plan_id WHERE pp.id = $1 AND pp.active AND p.active "
+        "AND p.archived_at IS NULL",
         priceId);
     if (!p) throw notFound("plan");
     q.priceId = db::str((*p)[0]);
@@ -140,7 +161,7 @@ Quote quote(db::Tx& tx, const std::string& est, const std::string& establishment
         "SELECT s.status, s.is_trial, s.plan_id IS NOT NULL, COALESCE(cp.tier, 0), "
         "extract(epoch FROM GREATEST(s.period_end - now(), interval '0'))::bigint, "
         "extract(epoch FROM (s.period_end - s.period_start))::bigint, s.pending_price_id IS NOT NULL, "
-        "nh_iso(s.period_end), nh_iso(GREATEST(now(), s.period_end)) "
+        "nh_iso(s.period_end), nh_iso(GREATEST(now(), s.period_end)), s.open_ended "
         "FROM subscriptions s LEFT JOIN plans cp ON cp.id = s.plan_id WHERE s.establishment_id = $1" +
             std::string(forOrder ? " FOR UPDATE OF s" : ""),
         est);
@@ -150,7 +171,8 @@ Quote quote(db::Tx& tx, const std::string& est, const std::string& establishment
     int curTier = s[3].as<int>();
     int64_t remaining = s[4].as<int64_t>(), total = s[5].as<int64_t>();
     if (db::boolean(s[6])) throw conflict("pending_plan_change", "a plan change is already scheduled");
-    bool running = status == "active" || status == "past_due";
+    // An open-ended free plan is replaced at once by a paid one.
+    bool running = (status == "active" || status == "past_due") && !db::boolean(s[9]);
     if (!hasPlan || trial || !running) q.kind = "new";
     else if (tier > curTier) q.kind = "upgrade";
     else if (tier < curTier) q.kind = "downgrade";
@@ -324,16 +346,16 @@ bool applyPaidOrder(Env&, db::Tx& tx, const std::string& orderId, const std::str
     std::optional<std::string> priceId;
     if (!(*o)[7].is_null()) priceId = db::str((*o)[7]);
 
-    auto s = tx.one("SELECT id, status, is_trial FROM subscriptions WHERE establishment_id = $1 FOR UPDATE", est);
+    auto s = tx.one("SELECT id, status, is_trial, open_ended FROM subscriptions WHERE establishment_id = $1 FOR UPDATE", est);
     std::string subId = db::str(s[0]);
     std::string from = db::str(s[1]);
-    bool running = (from == "active" || from == "past_due") && !db::boolean(s[2]);
+    bool running = (from == "active" || from == "past_due") && !db::boolean(s[2]) && !db::boolean(s[3]);
     pqxx::row upd;
     std::string eventKind;
     if (kind == "upgrade" && running) {
         upd = tx.one("UPDATE subscriptions SET period_start = now(), period_end = now() + make_interval(months => $2), "
                      "status = 'active', plan_id = $3, price_id = $4, grace_until = NULL, reminder_sent_for = NULL, "
-                     "failed_payments = 0, last_failure_at = NULL WHERE id = $1 "
+                     "failed_payments = 0, last_failure_at = NULL, open_ended = false, suspension_reason = NULL WHERE id = $1 "
                      "RETURNING nh_iso(period_start), nh_iso(period_end), period_start, period_end",
                      subId, months, db::str((*o)[1]), priceId);
         eventKind = "upgraded";
@@ -341,7 +363,7 @@ bool applyPaidOrder(Env&, db::Tx& tx, const std::string& orderId, const std::str
         // Paid now, effective when the current (higher) period ends.
         upd = tx.one("UPDATE subscriptions SET pending_price_id = $2, pending_from = period_end, "
                      "period_end = period_end + make_interval(months => $3), status = 'active', grace_until = NULL, "
-                     "reminder_sent_for = NULL, failed_payments = 0, last_failure_at = NULL WHERE id = $1 "
+                     "reminder_sent_for = NULL, failed_payments = 0, last_failure_at = NULL, suspension_reason = NULL WHERE id = $1 "
                      "RETURNING nh_iso(pending_from), nh_iso(period_end), pending_from, period_end",
                      subId, priceId, months);
         eventKind = "downgrade_scheduled";
@@ -352,13 +374,14 @@ bool applyPaidOrder(Env&, db::Tx& tx, const std::string& orderId, const std::str
         //  - suspended/canceled: now (the suspended time is not billed).
         upd = tx.one(
             "UPDATE subscriptions SET "
-            " period_start = CASE WHEN is_trial THEN GREATEST(now(), period_end) "
+            " period_start = CASE WHEN open_ended THEN now() WHEN is_trial THEN GREATEST(now(), period_end) "
             "                     WHEN status IN ('active','past_due') THEN period_end ELSE now() END, "
-            " period_end = (CASE WHEN is_trial THEN GREATEST(now(), period_end) "
+            " period_end = (CASE WHEN open_ended THEN now() WHEN is_trial THEN GREATEST(now(), period_end) "
             "                    WHEN status IN ('active','past_due') THEN period_end ELSE now() END) "
             "              + make_interval(months => $2), "
             " status = 'active', is_trial = false, plan_id = $3, price_id = $4, pending_plan_id = NULL, "
-            " grace_until = NULL, reminder_sent_for = NULL, failed_payments = 0, last_failure_at = NULL "
+            " grace_until = NULL, reminder_sent_for = NULL, failed_payments = 0, last_failure_at = NULL, "
+            " open_ended = false, suspension_reason = NULL "
             "WHERE id = $1 RETURNING nh_iso(period_start), nh_iso(period_end), period_start, period_end",
             subId, months, db::str((*o)[1]), priceId);
         eventKind = running ? "renewed" : "activated";
@@ -415,6 +438,27 @@ std::string resolvePriceId(db::Tx& tx, const json& b) {
     return db::str((*r)[0]);
 }
 
+// Plans an establishment may order by itself: active, public, self-service.
+void requireSelfService(db::Tx& tx, const std::string& priceId) {
+    auto r = tx.opt("SELECT p.visibility = 'public' AND p.self_service FROM plan_prices pp JOIN plans p ON p.id = pp.plan_id "
+                    "WHERE pp.id = $1",
+                    priceId);
+    if (!r || !db::boolean((*r)[0])) throw notFound("plan");
+}
+
+// Public offer: no feature list (a feature outside the establishment's plan is never
+// shown), limits only.
+json publicPlanJson(db::Tx& tx, const pqxx::row& r) {
+    json j = subscriptions::planJson(tx, r, true);
+    json limits = json::object();
+    for (auto it = j["entitlements"].begin(); it != j["entitlements"].end(); ++it)
+        if (!it.value().is_boolean()) limits[it.key()] = it.value();
+    j.erase("entitlements");
+    j.erase("features");
+    j["limits"] = limits;
+    return j;
+}
+
 std::optional<std::string> promoParam(Env& env, const Ctx& ctx, const json& b) {
     auto code = in::optStr(b, "promo_code", 32);
     if (code && !code->empty()) {
@@ -461,8 +505,9 @@ void registerSubscriptionRoutes(App& app, Env& env) {
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             json items = json::array();
             for (const auto& r : tx.q(std::string("SELECT ") + subscriptions::kPlanCols +
-                                      " FROM plans WHERE active ORDER BY tier, sort_order, price_minor"))
-                items.push_back(subscriptions::planJson(tx, r, true));
+                                      " FROM plans WHERE active AND visibility = 'public' AND self_service "
+                                      "AND archived_at IS NULL ORDER BY tier, sort_order, price_minor"))
+                items.push_back(publicPlanJson(tx, r));
             return {{"items", items}};
         });
         ctx.json(200, out);
@@ -500,6 +545,7 @@ void registerSubscriptionRoutes(App& app, Env& env) {
         auto promo = promoParam(env, ctx, b);
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             std::string priceId = resolvePriceId(tx, b);
+            requireSelfService(tx, priceId);
             auto q = subscriptions::quote(tx, ctx.actor.establishmentId, ctx.actor.establishmentKind, priceId, promo, false);
             json j = subscriptions::quoteJson(q);
             j["payment_providers"] = enabledProviders(env, tx, q.currency);
@@ -517,6 +563,7 @@ void registerSubscriptionRoutes(App& app, Env& env) {
         auto providerCode = in::optStr(b, "provider", 40);
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             std::string priceId = resolvePriceId(tx, b);
+            requireSelfService(tx, priceId);
             json created = subscriptions::createOrder(env, tx, ctx.actor, priceId, promo, "user");
             std::string id = created["id"];
             json checkout = nullptr;
@@ -571,6 +618,12 @@ void registerSubscriptionRoutes(App& app, Env& env) {
     app.post("/api/v1/subscription/auto-renew", {Access::User, "subscription.manage"}, [&env](Ctx& ctx) {
         bool consent = in::optBool(ctx.body(), "consent", false);
         db::run(env.pool, std::nullopt, [&](db::Tx& tx) {
+            if (consent) {
+                auto p = tx.opt("SELECT p.auto_renew_allowed FROM subscriptions s JOIN plans p ON p.id = s.plan_id "
+                                "WHERE s.establishment_id = $1",
+                                ctx.actor.establishmentId);
+                if (p && !db::boolean((*p)[0])) throw conflict("auto_renew_not_allowed");
+            }
             tx.q("UPDATE subscriptions SET auto_renew_consent_at = CASE WHEN $2 THEN now() ELSE NULL END "
                  "WHERE establishment_id = $1",
                  ctx.actor.establishmentId, consent);
