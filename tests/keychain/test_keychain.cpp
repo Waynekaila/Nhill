@@ -168,6 +168,7 @@ QString runPhase(const QString& phase) {
         return QStringLiteral("OK");
     }
     if (phase == QLatin1String("logout")) {
+        if (!rig.session.remember()) return QStringLiteral("FAIL remember-me preference lost");
         rig.api.expectedRefresh = QStringLiteral("ref-2");
         rig.api.nextRefresh = QStringLiteral("ref-9");
         if (!rig.restore()) return QStringLiteral("FAIL session not restored before logout");
@@ -183,7 +184,9 @@ QString runPhase(const QString& phase) {
         rig.session.setRemember(true);
         rig.session.start({{QStringLiteral("access_token"), QStringLiteral("acc-3")},
                            {QStringLiteral("refresh_token"), QStringLiteral("ref-3")}});
-        waitFor([&] { return rig.stored().second == QLatin1String("ref-3"); }, 10000);
+        waitFor([&] { return rig.stored().second == QLatin1String("ref-3") || !rig.store.available(); }, 10000);
+        if (!rig.store.available()) return QStringLiteral("UNAVAILABLE ") + rig.store.lastError();
+        if (rig.stored().second != QLatin1String("ref-3")) return QStringLiteral("FAIL refresh token not stored");
         rig.session.setRemember(false);  // unticked: what was stored is erased now
         if (!waitFor([&] { return !rig.stored().first; }, 10000)) return QStringLiteral("FAIL token kept after unticking");
         rig.session.start({{QStringLiteral("access_token"), QStringLiteral("acc-4")},
@@ -203,32 +206,45 @@ bool required() { return qEnvironmentVariable("NHILL_KEYCHAIN_REQUIRED") == QLat
 
 }  // namespace
 
+// Runs one phase in a new process (a real restart of the application) and returns its verdict.
+QString runChild(const QString& name) {
+    QProcess p;
+    p.setProcessChannelMode(QProcess::MergedChannels);
+    p.start(QCoreApplication::applicationFilePath(), {QStringLiteral("--phase"), name});
+    if (!p.waitForFinished(90000)) return QStringLiteral("FAIL phase process timed out");
+    const QString out = QString::fromLocal8Bit(p.readAll());
+    const QString marker = QStringLiteral("NHILL_KEYCHAIN_PHASE %1 ").arg(name);
+    const int at = out.indexOf(marker);
+    if (at < 0) return QStringLiteral("FAIL no verdict: ") + out;
+    const QString verdict = out.mid(at + marker.size()).section(QLatin1Char('\n'), 0, 0).trimmed();
+    if (verdict != QLatin1String("OK")) qWarning("%s", qPrintable(out));
+    return verdict;
+}
+
+bool unavailable(const QString& v) {
+    return v.startsWith(QLatin1String("SKIP")) || v.startsWith(QLatin1String("UNAVAILABLE"));
+}
+
+// QSKIP / QFAIL / QVERIFY return from the calling test function, hence a macro.
+#define NHILL_PHASE(name)                                                                              \
+    do {                                                                                               \
+        const QString v_ = runChild(QStringLiteral(name));                                            \
+        if (unavailable(v_)) {                                                                         \
+            if (required()) QFAIL(qPrintable(QStringLiteral("secure store required but ") + v_));      \
+            QSKIP(qPrintable(v_));                                                                     \
+        }                                                                                              \
+        QVERIFY2(v_ == QLatin1String("OK"), qPrintable(QStringLiteral(name ": ") + v_));               \
+    } while (0)
+
 class KeychainTest : public QObject {
     Q_OBJECT
-private:
-    void phase(const QString& name) {
-        QProcess p;
-        p.setProcessChannelMode(QProcess::MergedChannels);
-        p.start(QCoreApplication::applicationFilePath(), {QStringLiteral("--phase"), name});
-        QVERIFY2(p.waitForFinished(60000), "phase process timed out");
-        const QString out = QString::fromLocal8Bit(p.readAll());
-        const QString marker = QStringLiteral("NHILL_KEYCHAIN_PHASE %1 ").arg(name);
-        const int at = out.indexOf(marker);
-        const QString verdict = at < 0 ? QStringLiteral("FAIL no verdict: ") + out
-                                       : out.mid(at + marker.size()).section(QLatin1Char('\n'), 0, 0).trimmed();
-        if (verdict.startsWith(QLatin1String("SKIP")) || verdict.startsWith(QLatin1String("UNAVAILABLE"))) {
-            if (required()) QFAIL(qPrintable(QStringLiteral("secure store required but ") + verdict));
-            QSKIP(qPrintable(verdict));
-        }
-        QVERIFY2(verdict == QLatin1String("OK"), qPrintable(name + QStringLiteral(": ") + verdict + QStringLiteral("\n") + out));
-    }
 private slots:
     void sessionSurvivesARestartWhenRemembered() {
-        phase(QStringLiteral("write"));
-        phase(QStringLiteral("read"));
+        NHILL_PHASE("write");
+        NHILL_PHASE("read");
     }
-    void logoutErasesTheStoredSession() { phase(QStringLiteral("logout")); }
-    void nothingIsStoredWithoutRememberMe() { phase(QStringLiteral("forget")); }
+    void logoutErasesTheStoredSession() { NHILL_PHASE("logout"); }
+    void nothingIsStoredWithoutRememberMe() { NHILL_PHASE("forget"); }
 };
 
 int main(int argc, char** argv) {

@@ -21,7 +21,8 @@ SDKMANAGER="$(ls "$SDK"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | sort | tail
 AVDMANAGER="$(dirname "$SDKMANAGER")/avdmanager"
 [[ -x "$SDKMANAGER" ]] || { echo "sdkmanager introuvable dans $SDK"; exit 3; }
 yes | "$SDKMANAGER" --licenses >/dev/null || true
-"$SDKMANAGER" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools" "ndk;$NDK_VER" "emulator" "$IMG" >/dev/null
+"$SDKMANAGER" --install "platforms;android-34" "build-tools;34.0.0" "platform-tools" "ndk;$NDK_VER" "emulator" "$IMG" | grep -v '^\[' || true
+ls "$SDK/system-images/android-$API/default/x86_64" >/dev/null || { echo "image système $IMG non installée"; exit 1; }
 for d in "$SDK"/platforms/android-*; do
   n="$(basename "$d" | sed -E 's/^android-([0-9]+).*/\1/')"
   if [[ "$n" =~ ^[0-9]+$ ]] && (( n > 34 )); then "$SDKMANAGER" --uninstall "platforms;$(basename "$d")" || rm -rf -- "$d"; fi
@@ -68,7 +69,13 @@ echo "== Émulateur Android $API x86_64 (KVM)"
 echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules >/dev/null
 sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm || true
 ls -l /dev/kvm || true
-echo no | "$AVDMANAGER" create avd -n nhill -k "$IMG" --force >/dev/null
+export ANDROID_AVD_HOME="${ANDROID_AVD_HOME:-$HOME/.android/avd}"
+mkdir -p "$ANDROID_AVD_HOME"
+env | grep -E '^ANDROID_' | sed 's/=.*TOKEN.*/=***/' || true
+ls -d "$SDK/system-images/android-$API/default/x86_64" || { echo "image système absente"; exit 1; }
+echo no | "$AVDMANAGER" create avd -n nhill -k "$IMG" -p "$ANDROID_AVD_HOME/nhill.avd" --force
+"$AVDMANAGER" list avd
+ls -la "$ANDROID_AVD_HOME"
 ADB="$SDK/platform-tools/adb"
 "$SDK/emulator/emulator" -avd nhill -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect \
   -camera-back none -camera-front none >"$LOGS/emulator.log" 2>&1 &

@@ -84,8 +84,9 @@ jobs:
           $t = "$env:RUNNER_TEMP\keychain-test"
           New-Item -ItemType Directory -Force -Path $t | Out-Null
           Copy-Item build-windows\tests\keychain\test_keychain.exe $t
-          & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --no-translations "$t\test_keychain.exe" | Out-Null
-          Copy-Item build-windows\dist\nhill-business\qt6keychain.dll $t
+          Copy-Item build-windows\dist\nhill-business\qt6keychain.dll $t   # la DLL livrée dans l'installateur
+          & "$env:QT_ROOT_DIR\bin\windeployqt.exe" --release --no-translations "$t\test_keychain.exe"
+          if ($LASTEXITCODE) { throw "windeployqt a échoué pour test_keychain" }
           $env:NHILL_KEYCHAIN_REQUIRED = '1'
           $env:QT_QPA_PLATFORM = 'offscreen'
           & "$t\test_keychain.exe" -v2 2>&1 | Tee-Object -FilePath keychain-test-log.txt

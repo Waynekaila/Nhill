@@ -78,12 +78,13 @@ foreach ($app in @("nhill-business", "nhill-console", "nhill-pos")) {
   New-Item -ItemType Directory -Force -Path $dir | Out-Null
   Copy-Item $exe $dir
   Copy-Item "$Source\assets\icons\$app.ico" $dir
-  & "$QtDir\bin\windeployqt.exe" --release --qmldir "$Source\client\qml" --no-translations "$dir\$app.exe"
-  if ($LASTEXITCODE) { Fail "windeployqt a échoué pour $app" }
+  # QtKeychain d'abord : windeployqt cherche les dépendances non Qt à côté de l'exécutable.
   if ($keychainDll) {
     if (-not (Test-Path $keychainDll)) { Fail "qt6keychain.dll introuvable : $keychainDll" }
     Copy-Item $keychainDll $dir
   }
+  & "$QtDir\bin\windeployqt.exe" --release --qmldir "$Source\client\qml" --no-translations "$dir\$app.exe"
+  if ($LASTEXITCODE) { Fail "windeployqt a échoué pour $app" }
   & $makensis "/DAPP_ID=$app" "/DAPP_VERSION=$Version" "/DSOURCE_DIR=$dir" "/DOUTPUT_DIR=$dist" "$PSScriptRoot\nhill-installer.nsi"
   if ($LASTEXITCODE) { Fail "makensis a échoué pour $app" }
 }
