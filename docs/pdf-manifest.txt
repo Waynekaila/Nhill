@@ -94,6 +94,7 @@ marketing/fr/12-voix-de-marque.md -> marketing/pdf/fr/12-voix-de-marque.pdf
 marketing/fr/13-pitchs.md -> marketing/pdf/fr/13-pitchs.pdf
 marketing/fr/14-presentation-commerciale.md -> marketing/pdf/fr/14-presentation-commerciale.pdf
 marketing/fr/15-faq-commerciale.md -> marketing/pdf/fr/15-faq-commerciale.pdf
+marketing/fr/16-etude-financiere-abonnements.md -> marketing/pdf/fr/16-etude-financiere-abonnements.pdf
 
 # marketing/en
 marketing/en/01-market-study.md -> marketing/pdf/en/01-market-study.pdf
@@ -111,3 +112,4 @@ marketing/en/12-brand-voice.md -> marketing/pdf/en/12-brand-voice.pdf
 marketing/en/13-pitches.md -> marketing/pdf/en/13-pitches.pdf
 marketing/en/14-sales-presentation.md -> marketing/pdf/en/14-sales-presentation.pdf
 marketing/en/15-sales-faq.md -> marketing/pdf/en/15-sales-faq.pdf
+marketing/en/16-subscription-financial-study.md -> marketing/pdf/en/16-subscription-financial-study.pdf

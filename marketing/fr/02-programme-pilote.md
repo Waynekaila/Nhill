@@ -5,7 +5,7 @@
 Objectif : valider, chez **8 à 12 établissements réels**, que Nhill règle un problème qu'ils
 sont prêts à payer, et fixer les prix à partir de mesures, pas d'hypothèses. Contrat :
 [`legal/fr/09-convention-programme-pilote.md`](../../legal/fr/09-convention-programme-pilote.md).
-Page publique : `website/src/pages/fr/programme-pilote.html`.
+Page publique : `website/src/pages/fr/essai-gratuit.html` (« Essai gratuit accompagné »).
 
 ## 1. Offre aux pilotes (identique au site)
 

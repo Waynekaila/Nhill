@@ -17,8 +17,9 @@
 | 13 | [Pitchs](fr/13-pitchs.md) | [Pitches](en/13-pitches.md) |
 | 14 | [Présentation commerciale](fr/14-presentation-commerciale.md) | [Sales presentation](en/14-sales-presentation.md) |
 | 15 | [FAQ commerciale](fr/15-faq-commerciale.md) | [Sales FAQ](en/15-sales-faq.md) |
+| 16 | [Étude financière et marketing des abonnements](fr/16-etude-financiere-abonnements.md) — prix proposés, **non publiés** | [Subscription financial and marketing study](en/16-subscription-financial-study.md) — proposed prices, **not published** |
 
 Suivi / tracking : `trackers/` (`suivi-prospects.csv`, `prospect-tracker.csv`,
 `suivi-partenaires.csv`, `partner-tracker.csv`, `kpi-tableau-de-bord.xlsx` — formules,
-générés par `tools/build_trackers.py`). Visuels / visuals : `visuals/` (voir `visuals/README.md`).
+générés par `tools/build_trackers.py`). Modèle financier / financial model : `tools/subscription_model.py` → `data/etude-abonnements/`, `visuals/etude-abonnements/`. Visuels / visuals : `visuals/` (voir `visuals/README.md`).
 PDF : `pdf/fr`, `pdf/en` (générés depuis le Markdown, `scripts/build-docs-pdf.sh`).

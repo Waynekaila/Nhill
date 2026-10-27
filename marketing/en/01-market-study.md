@@ -81,7 +81,7 @@ a connection to record), "bug-free", unmeasured gains.
 
 ## 6. Pricing (to set after the pilot)
 
-No price is set (website, "Access and pricing" page). Proposed method:
+No price is set or published on the website; costed proposals in the financial study (document 16). Proposed method:
 
 1. During the pilot, measure time saved and differences avoided at each pilot.
 2. Ask pilots about their current spending (stationery, spreadsheet, software) and an

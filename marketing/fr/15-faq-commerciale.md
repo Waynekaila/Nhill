@@ -17,7 +17,7 @@ Réponses validées pour la version 2.0.0. Si une question n'est pas ici, ne pas
 | Où sont hébergées les données ? | [À compléter quand l'hébergeur et la région seront choisis — voir `docs/fr/parametres-legaux.md`.] |
 | Puis-je récupérer mes données ? | Oui, à tout moment : exports CSV et PDF. À la fin du pilote ou de l'abonnement, vous gardez l'export. |
 | Combien d'utilisateurs ? | Autant de comptes que l'offre le permet ; pendant le pilote, [N]. Chaque personne a son propre compte. |
-| J'ai oublié mon mot de passe. | La version 2.0 ne permet pas encore de le réinitialiser : gardez-le dans un gestionnaire de mots de passe. C'est prévu dans une prochaine version. |
+| J'ai oublié mon mot de passe. | Employé : l'administrateur de l'établissement vous donne un mot de passe temporaire (Paramètres › Équipe), à remplacer à la connexion suivante. Propriétaire ou administrateur : « Mot de passe oublié ? » envoie un code à usage unique par e-mail (version 2.1, relais SMTP configuré par l'exploitant). |
 | Le mot de passe doit-il être compliqué ? | Au moins 8 caractères, pas un mot de passe trop courant. Une courte phrase se retient facilement. Pas d'obligation de le changer régulièrement. |
 | Gérez-vous plusieurs magasins ? | Plusieurs caisses et, selon l'offre, plusieurs dépôts avec transferts de stock. |
 | Et la comptabilité ? | Nhill produit journaux des ventes, paiements, dépenses, créances et dettes, exportables pour votre comptable. Ce n'est pas un logiciel de comptabilité générale. |

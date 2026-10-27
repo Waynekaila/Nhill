@@ -17,7 +17,7 @@ and get back to you by [time]."
 | Where is the data hosted? | [To complete once the host and region are chosen — see `docs/en/legal-parameters.md`.] |
 | Can I get my data back? | Yes, at any time: CSV and PDF exports. At the end of the pilot or subscription, you keep the export. |
 | How many users? | As many accounts as the plan allows; during the pilot, [N]. Each person has their own account. |
-| I forgot my password. | Version 2.0 cannot reset it yet: keep it in a password manager. It's planned for a next version. |
+| I forgot my password. | Employee: the establishment administrator gives you a temporary password (Settings › Team), to replace at the next sign-in. Owner or administrator: "Forgot your password?" e-mails a one-time code (version 2.1, SMTP relay configured by the operator). |
 | Must the password be complicated? | At least 8 characters, not a very common password. A short sentence is easy to remember. No obligation to change it regularly. |
 | Do you handle several shops? | Several tills and, depending on the plan, several warehouses with stock transfers. |
 | What about accounting? | Nhill produces sales journals, payments, expenses, receivables and payables, exportable for your accountant. It is not general accounting software. |

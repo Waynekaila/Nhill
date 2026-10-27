@@ -151,13 +151,13 @@
    "title": "Validation report — Nhill 2.0.0"
   },
   "docs/pdf/en/website.pdf": {
-   "bytes": 164155,
+   "bytes": 175741,
    "engine": "playwright",
-   "generated": "2026-10-27T06:59:26+00:00",
+   "generated": "2026-10-27T16:37:44+00:00",
    "lang": "en",
-   "pdf_sha256": "b05ec96b001864ebeb806b45a51f5b62f731a8720726d9298c1ef2475ee45831",
+   "pdf_sha256": "d8e0edbecda6e333adad0f7d05c4622581e247df1cf50f462ee89c17eca2a430",
    "source": "website/README.en.md",
-   "source_sha256": "55cb28c9bc5e0f11760d623e5367f78963eb839dfc94989a98bb32382e6d5e68",
+   "source_sha256": "8cb7fb0da401c146ae16e8b6f64c358da1b26c5f1e26d0dd4cf134cc22ec2c09",
    "title": "Nhill website — deployment and database"
   },
   "docs/pdf/fr/01-audit-technique.pdf": {
@@ -281,13 +281,13 @@
    "title": "Nhill 2.1 — Sécurité"
   },
   "docs/pdf/fr/site-vitrine.pdf": {
-   "bytes": 166713,
+   "bytes": 180005,
    "engine": "playwright",
-   "generated": "2026-10-27T06:59:17+00:00",
+   "generated": "2026-10-27T16:37:42+00:00",
    "lang": "fr",
-   "pdf_sha256": "2bce80796b87ff1cea6f9fcbf533f0d080051c2d045b71c8da0e440c25c93c25",
+   "pdf_sha256": "fd9dc2fdac8b1796f0d32e953d1bd6870bdf0aeefe743635b654e6e5badfe283",
    "source": "website/README.md",
-   "source_sha256": "0b0b407bc4b7f33a9a33af3dc63923e96df4c1dcb3d51959cf06fd06426a4975",
+   "source_sha256": "29f7ddda2c436963fe47b05e0f94935c74fdff539f65662caae48078655a5bdf",
    "title": "Site vitrine Nhill — mise en service et base de données"
   },
   "legal/pdf/en/00-legal-research.pdf": {
@@ -691,23 +691,23 @@
    "title": "19 — Formulaire d'exercice des droits sur les données personnelles"
   },
   "marketing/pdf/en/01-market-study.pdf": {
-   "bytes": 55424,
+   "bytes": 55522,
    "engine": "playwright",
-   "generated": "2026-10-27T07:00:02+00:00",
+   "generated": "2026-10-27T16:37:27+00:00",
    "lang": "en",
-   "pdf_sha256": "6ec4806d395605a7dd04cbd0e8a716f5a2f5bd6bb124e9da5b07c33c7ff5179a",
+   "pdf_sha256": "c0ffddd1d3f5c8fd13c6fc1ae6b118798335278dacdf80be689f1bf38bf84d43",
    "source": "marketing/en/01-market-study.md",
-   "source_sha256": "e7df78a0fb14ce15577af279f6ca601538c451483658669a993b242752966d8e",
+   "source_sha256": "479438254168ea87e75ad81ed3f7690154d25032d3338b107ceae5699cfc9dee",
    "title": "Market study — Nhill in Kinshasa (DRC)"
   },
   "marketing/pdf/en/02-pilot-programme.pdf": {
-   "bytes": 44849,
+   "bytes": 44923,
    "engine": "playwright",
-   "generated": "2026-10-27T07:00:03+00:00",
+   "generated": "2026-10-27T16:37:28+00:00",
    "lang": "en",
-   "pdf_sha256": "582a33c11de1c9ce984d2fed912a73f765fad4dd772fb3a283ccb86b7dd465f6",
+   "pdf_sha256": "534d672e33ba42de48692e5fa1c70cfb95198a4f5133df1893b980a56fab25b0",
    "source": "marketing/en/02-pilot-programme.md",
-   "source_sha256": "8a52a266deb78c0f4f8b5da3cbc1f04600b793c1e33d1d5dbf40ec523929fb3f",
+   "source_sha256": "f4537fb7057def889b0cf81a4dab740a3cf9bf771bae4196150acb4287adb59b",
    "title": "Nhill pilot programme — Kinshasa"
   },
   "marketing/pdf/en/03-90-day-plan.pdf": {
@@ -751,13 +751,13 @@
    "title": "Message templates (WhatsApp, e-mail)"
   },
   "marketing/pdf/en/07-demo-script.pdf": {
-   "bytes": 39523,
+   "bytes": 39923,
    "engine": "playwright",
-   "generated": "2026-10-27T07:00:06+00:00",
+   "generated": "2026-10-27T16:37:31+00:00",
    "lang": "en",
-   "pdf_sha256": "4b73ae3a24a0af5170a2261d2bd19eb259df4620dff19ae5d3670bc2c1f4e53a",
+   "pdf_sha256": "81e5677a890d309e0cb2ff29c214ed271950c440681fa4029abce8ac8a597afc",
    "source": "marketing/en/07-demo-script.md",
-   "source_sha256": "a34ce8803a0c68cb4ab936dc7e3bed70943ccc26f197f07cdade81ab0350672f",
+   "source_sha256": "86849530e9a075ae57e1012b6448ac8f4a7e11732b728e2c36e00d6407de8c24",
    "title": "Demo script (15 to 30 minutes)"
   },
   "marketing/pdf/en/08-sales-process-and-tracking.pdf": {
@@ -831,33 +831,43 @@
    "title": "Sales presentation (10 slides)"
   },
   "marketing/pdf/en/15-sales-faq.pdf": {
-   "bytes": 29737,
+   "bytes": 30077,
    "engine": "playwright",
-   "generated": "2026-10-27T07:00:11+00:00",
+   "generated": "2026-10-27T16:37:34+00:00",
    "lang": "en",
-   "pdf_sha256": "601882c63dd8db5d1a5da0a293761be61da579977a5ba23a42c734338aa5d94d",
+   "pdf_sha256": "56593b0163cc8407483217715bb659f09fc7ddbc101d04738c5c03b6c3ec9bff",
    "source": "marketing/en/15-sales-faq.md",
-   "source_sha256": "638e6d5c61bd28f716d815fee72056823e5760513367be2cc8a6fd132d7b3cea",
+   "source_sha256": "7112e655e81cb71c537e88f616fed0815d879e8ca2beb87b384080162f77f109",
    "title": "Sales FAQ (answers for the team and partners)"
   },
-  "marketing/pdf/fr/01-etude-marche.pdf": {
-   "bytes": 58140,
+  "marketing/pdf/en/16-subscription-financial-study.pdf": {
+   "bytes": 172097,
    "engine": "playwright",
-   "generated": "2026-10-27T06:59:52+00:00",
+   "generated": "2026-10-27T16:36:08+00:00",
+   "lang": "en",
+   "pdf_sha256": "83c4fdf6ce97870ea2b566ebc9b1c98923c5a7ce9adbee244b72b338c7a1393c",
+   "source": "marketing/en/16-subscription-financial-study.md",
+   "source_sha256": "3326c8845dc4a40032bcae07ba39938f7f9bc5529d10387a3f8fdaa0aeeef465",
+   "title": "Nhill subscriptions: financial and marketing study"
+  },
+  "marketing/pdf/fr/01-etude-marche.pdf": {
+   "bytes": 58231,
+   "engine": "playwright",
+   "generated": "2026-10-27T16:37:25+00:00",
    "lang": "fr",
-   "pdf_sha256": "41f70c51280b5bb4b9397c5801b367bb302a5a21812dc68280149c5a2dc9efc4",
+   "pdf_sha256": "d479ef2b12cb458cfad047ff8fb99864fdb7f22099c2bda03a7012504851f906",
    "source": "marketing/fr/01-etude-marche.md",
-   "source_sha256": "eefaa0bc3d214369df895fee607b53e78c0fcaa7fdc2a0f398829f828b01f447",
+   "source_sha256": "c366e81c9eda91dcc69343e1a9dd3f41b745fb4b32f8285c52f30bdb388d34c8",
    "title": "Étude de marché — Nhill à Kinshasa (RDC)"
   },
   "marketing/pdf/fr/02-programme-pilote.pdf": {
-   "bytes": 46468,
+   "bytes": 46560,
    "engine": "playwright",
-   "generated": "2026-10-27T06:59:53+00:00",
+   "generated": "2026-10-27T16:37:26+00:00",
    "lang": "fr",
-   "pdf_sha256": "100c369b292487e5869e91dadefec7ad01c0316d00099ca7b4195540960e5ab7",
+   "pdf_sha256": "57b140a08e4aa9b235aedaea183fbaf945450e817d11718211fc1fac174b37bf",
    "source": "marketing/fr/02-programme-pilote.md",
-   "source_sha256": "6793ee4d9f9888252bb5dc0dea9c535e480c0561c6c345920c29421957f2488f",
+   "source_sha256": "bba7cad9bc7503f5e27cf1d4321b14e29d0ac9b319f43b854b6a787f948909e6",
    "title": "Programme pilote Nhill — Kinshasa"
   },
   "marketing/pdf/fr/03-plan-90-jours.pdf": {
@@ -901,13 +911,13 @@
    "title": "Modèles de messages (WhatsApp, e-mail)"
   },
   "marketing/pdf/fr/07-script-demonstration.pdf": {
-   "bytes": 41415,
+   "bytes": 42182,
    "engine": "playwright",
-   "generated": "2026-10-27T06:59:56+00:00",
+   "generated": "2026-10-27T16:37:30+00:00",
    "lang": "fr",
-   "pdf_sha256": "8ae15be4d6b6cc24681f07d3c1e895a9ce7ee9aa5ce34669a7d04f61204594f4",
+   "pdf_sha256": "f9714bc80833d29c99cd1b7751039bc0258eeb54241766d9799f8afa4c58b39c",
    "source": "marketing/fr/07-script-demonstration.md",
-   "source_sha256": "fd40d4411c101f1d28395ef8c0152cbb74551ba61fe9699eef47ea606ac8d757",
+   "source_sha256": "8b0c8e9d2aaf86df324536d00b468400b50a606f1203a2333e9df2c615959129",
    "title": "Script de démonstration (15 à 30 minutes)"
   },
   "marketing/pdf/fr/08-suivi-et-processus.pdf": {
@@ -981,14 +991,24 @@
    "title": "Présentation commerciale (10 diapositives)"
   },
   "marketing/pdf/fr/15-faq-commerciale.pdf": {
-   "bytes": 33409,
+   "bytes": 33886,
    "engine": "playwright",
-   "generated": "2026-10-27T07:00:01+00:00",
+   "generated": "2026-10-27T16:37:33+00:00",
    "lang": "fr",
-   "pdf_sha256": "09ef983eab5a33fb212225fa2291b84e6156d53f8881d08f2e5b5ebe5eefd412",
+   "pdf_sha256": "152c9b05f06c9374067be3a85b5534186a4aad06c0ade85307aebdd25b7394c2",
    "source": "marketing/fr/15-faq-commerciale.md",
-   "source_sha256": "eba66ba1a6e78b861346d9a897b5ad71de7329753eb5f94633384ec06e271d7c",
+   "source_sha256": "07fa4ef9606a22d817ef0907d0fe79021135cee54c3bf644e274802fbfe810c1",
    "title": "FAQ commerciale (réponses pour l'équipe et les partenaires)"
+  },
+  "marketing/pdf/fr/16-etude-financiere-abonnements.pdf": {
+   "bytes": 177258,
+   "engine": "playwright",
+   "generated": "2026-10-27T16:36:06+00:00",
+   "lang": "fr",
+   "pdf_sha256": "b44e50890ab9ce447f760715debea8ce722d88b1a750f6ef28409a83be62580f",
+   "source": "marketing/fr/16-etude-financiere-abonnements.md",
+   "source_sha256": "9d191d0c522f0b6d83d4ac62ad6e469ed8b63e5cb578e0664c87de51fbf733b6",
+   "title": "Étude financière et marketing des abonnements Nhill"
   }
  }
 }

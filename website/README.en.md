@@ -291,3 +291,24 @@ keep a record of the answer. The command messages are in French.
 - [ ] Encrypted backup and restore tested.
 - [ ] Test submission of each form, then `cli delete` of those tests.
 - [ ] A named person reads the submissions and answers them.
+
+## 10. Content and editorial rules (October 2026)
+
+| Page (FR / EN) | Role |
+|---|---|
+| `index` / `en/index` | home: for whom, everyday gains, two applications, control, multi-currency, comparison with a modular ERP, getting started |
+| `fonctionnalites` / `features` | till, invoices, stock, reports, team, devices, fitting into daily work |
+| `cas-usage` / `use-cases` | shop, hardware store or depot, service provider, SME |
+| `essai-gratuit` / `free-trial` | assisted trial and form (`pilot`) |
+| `demarrer` / `get-started` | demo, trial, plan, contact, devices |
+| `contact`, `faq`, `partenaires` / `partners`, legal pages | `demo` and `contact` forms, frequently asked questions, partnerships |
+
+- **No price** is shown: `check_site.py` flags any amount followed by a period ("$25 a
+  month"). Costed proposals are in `marketing/en/16-subscription-financial-study.md`, not
+  published.
+- Positive, verifiable sales copy: no invented feature, figure or testimonial; the exact
+  limits are in the user guide (§ 11 "Scope of Nhill") and in the terms of use.
+- Language switch visible on computer and phone; each page has its pair (`pair`) and its
+  `hreflang` tags.
+- IBM Plex fonts as WOFF subsets limited to the characters used (OFL licence in
+  `assets/fonts/`).

@@ -294,3 +294,25 @@ confidentialité ; consignez la réponse.
 - [ ] Sauvegarde chiffrée et restauration testées.
 - [ ] Envoi de test de chaque formulaire, puis `cli delete` de ces essais.
 - [ ] Une personne désignée lit les demandes et répond.
+
+## 10. Contenu et règles éditoriales (octobre 2026)
+
+| Page (FR / EN) | Rôle |
+|---|---|
+| `index` / `en/index` | accueil : pour qui, gains au quotidien, deux applications, contrôle, multidevise, comparaison avec un ERP modulaire, démarrage |
+| `fonctionnalites` / `features` | caisse, factures, stock, rapports, équipe, appareils, intégration au quotidien |
+| `cas-usage` / `use-cases` | boutique, quincaillerie ou dépôt, prestataire, PME |
+| `essai-gratuit` / `free-trial` | essai accompagné et formulaire (`pilot`) |
+| `demarrer` / `get-started` | démonstration, essai, formule, contact, appareils |
+| `contact`, `faq`, `partenaires` / `partners`, pages légales | formulaires `demo` et `contact`, questions fréquentes, partenariats |
+
+- **Aucun prix** n'est affiché : `check_site.py` signale tout montant suivi d'une durée
+  (« 25 $ par mois »). Les propositions chiffrées sont dans
+  `marketing/fr/16-etude-financiere-abonnements.md`, non publiées.
+- Discours commercial positif et vérifiable : pas de fonction, de chiffre ou de
+  témoignage inventé ; les limites exactes sont dans le guide utilisateur (§ 11
+  « Périmètre de Nhill ») et dans les conditions d'utilisation.
+- Sélecteur de langue visible sur ordinateur et sur téléphone ; chaque page a sa paire
+  (`pair`) et ses balises `hreflang`.
+- Polices IBM Plex en WOFF réduites aux caractères utiles (licence OFL dans
+  `assets/fonts/`).

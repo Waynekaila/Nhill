@@ -1,0 +1,369 @@
+{
+ "hypotheses": {
+  "app_server": {
+   "v": 8.26,
+   "src": "V",
+   "fr": "Serveur d'application Hetzner CX23 (2 vCPU, 4 Go, 40 Go) 5,99 € + sauvegardes 20 %",
+   "en": "Hetzner CX23 application server (2 vCPU, 4 GB, 40 GB) €5.99 + 20% backups"
+  },
+  "database": {
+   "v": 25.0,
+   "src": "V",
+   "fr": "Base PostgreSQL gérée Supabase Pro (8 Go, sauvegarde quotidienne 7 jours)",
+   "en": "Supabase Pro managed PostgreSQL (8 GB, daily backup kept 7 days)"
+  },
+  "offsite_backup": {
+   "v": 1.0,
+   "src": "H",
+   "fr": "Sauvegardes chiffrées hors site (Backblaze B2, 6,95 $/To ; 10 Go gratuits)",
+   "en": "Encrypted off-site backups (Backblaze B2, $6.95/TB; first 10 GB free)"
+  },
+  "email": {
+   "v": 1.0,
+   "src": "H",
+   "fr": "Envoi d'e-mails (Amazon SES, 0,10 $ / 1 000 e-mails)",
+   "en": "E-mail delivery (Amazon SES, $0.10 per 1,000 e-mails)"
+  },
+  "domain": {
+   "v": 1.67,
+   "src": "H",
+   "fr": "Nom de domaine (20 $ par an)",
+   "en": "Domain name ($20 a year)"
+  },
+  "code_signing": {
+   "v": 9.99,
+   "src": "H",
+   "fr": "Signature des installateurs Windows (Azure Artifact Signing, 9,99 $ annoncés, à confirmer)",
+   "en": "Windows installer signing (Azure Artifact Signing, $9.99 quoted, to be confirmed)"
+  },
+  "tools": {
+   "v": 45.0,
+   "src": "H",
+   "fr": "Outils : assistance, CRM, visioconférence, bureautique",
+   "en": "Tools: help desk, CRM, video calls, office suite"
+  },
+  "legal_accounting": {
+   "v": 150.0,
+   "src": "H",
+   "fr": "Comptable, frais juridiques et administratifs",
+   "en": "Accountant, legal and administrative fees"
+  },
+  "telecom_transport": {
+   "v": 80.0,
+   "src": "H",
+   "fr": "Données mobiles, téléphone, déplacements de l'équipe",
+   "en": "Mobile data, phone, team travel"
+  },
+  "marketing_fixed": {
+   "v": 150.0,
+   "src": "H",
+   "fr": "Supports de démonstration, impressions, petits événements",
+   "en": "Demo material, printing, small events"
+  },
+  "founder": {
+   "v": 1000.0,
+   "src": "H",
+   "fr": "Rémunération du fondateur (produit, développement)",
+   "en": "Founder pay (product, development)"
+  },
+  "support_agent": {
+   "v": 500.0,
+   "src": "H",
+   "fr": "Agent d'accompagnement et d'assistance (1 par tranche de 150 clients actifs)",
+   "en": "Onboarding and support agent (1 per 150 active customers)"
+  },
+  "customers_per_support": {
+   "v": 150,
+   "src": "H",
+   "fr": "Clients actifs suivis par agent d'assistance",
+   "en": "Active customers per support agent"
+  },
+  "sales_agent": {
+   "v": 400.0,
+   "src": "H",
+   "fr": "Commercial terrain, salaire fixe (1 de plus au-delà de 12 puis 24 nouveaux clients par mois)",
+   "en": "Field sales agent, fixed pay (1 more above 12, then 24 new customers a month)"
+  },
+  "sales_bonus": {
+   "v": 15.0,
+   "src": "H",
+   "fr": "Prime du commercial par nouveau client payant",
+   "en": "Sales bonus per new paying customer"
+  },
+  "variable_marketing": {
+   "v": 10.0,
+   "src": "H",
+   "fr": "Déplacement et supports par nouveau client",
+   "en": "Travel and material per new customer"
+  },
+  "payment_fee": {
+   "v": 0.035,
+   "src": "H",
+   "fr": "Frais d'encaissement moyens (Mobile Money 2,5-3,2 % via agrégateur, virements, cartes)",
+   "en": "Average collection fees (Mobile Money 2.5-3.2% via an aggregator, transfers, cards)"
+  },
+  "partner_share": {
+   "v": 0.2,
+   "src": "H",
+   "fr": "Part des nouveaux clients apportés par un partenaire",
+   "en": "Share of new customers brought by a partner"
+  },
+  "partner_commission": {
+   "v": 0.2,
+   "src": "H",
+   "fr": "Commission partenaire sur la première année encaissée",
+   "en": "Partner commission on the first year collected"
+  },
+  "referral_share": {
+   "v": 0.15,
+   "src": "H",
+   "fr": "Part des nouveaux clients venus par recommandation (1 mois offert au parrain)",
+   "en": "Share of new customers from referrals (1 month free for the referrer)"
+  },
+  "discount": {
+   "v": 0.05,
+   "src": "H",
+   "fr": "Remises moyennes (codes promotionnels, gestes commerciaux)",
+   "en": "Average discounts (promo codes, commercial gestures)"
+  },
+  "customers_per_app_server": {
+   "v": 250,
+   "src": "H",
+   "fr": "Établissements actifs par serveur d'application (aucun test de charge réalisé)",
+   "en": "Active establishments per application server (no load test performed)"
+  },
+  "db_upgrade_above": {
+   "v": 500,
+   "src": "H",
+   "fr": "Établissements actifs au-delà desquels la base passe à la puissance supérieure (+15 $/mois)",
+   "en": "Active establishments above which the database moves to larger compute (+$15/month)"
+  }
+ },
+ "plans": {
+  "solo": {
+   "fr": "Solo",
+   "en": "Solo",
+   "zoneA": 9,
+   "zoneB": 15,
+   "users": 1,
+   "registers": 1,
+   "warehouses": 1
+  },
+  "commerce": {
+   "fr": "Commerce",
+   "en": "Commerce",
+   "zoneA": 25,
+   "zoneB": 39,
+   "users": 5,
+   "registers": 2,
+   "warehouses": 1
+  },
+  "pme": {
+   "fr": "PME",
+   "en": "SME",
+   "zoneA": 59,
+   "zoneB": 89,
+   "users": 15,
+   "registers": 5,
+   "warehouses": 3
+  }
+ },
+ "scenarios": {
+  "pessimiste": {
+   "fr": "Pessimiste",
+   "en": "Pessimistic",
+   "color": "#eb6834",
+   "start": 2,
+   "step_every": 4,
+   "step": 1,
+   "cap": 10,
+   "churn": 0.05,
+   "mix": {
+    "solo": 0.45,
+    "commerce": 0.45,
+    "pme": 0.1
+   },
+   "annual": 0.25
+  },
+  "central": {
+   "fr": "Central",
+   "en": "Central",
+   "color": "#2a78d6",
+   "start": 4,
+   "step_every": 2,
+   "step": 1,
+   "cap": 25,
+   "churn": 0.03,
+   "mix": {
+    "solo": 0.35,
+    "commerce": 0.45,
+    "pme": 0.2
+   },
+   "annual": 0.35
+  },
+  "optimiste": {
+   "fr": "Optimiste",
+   "en": "Optimistic",
+   "color": "#1baf7a",
+   "start": 6,
+   "step_every": 2,
+   "step": 2,
+   "cap": 45,
+   "churn": 0.02,
+   "mix": {
+    "solo": 0.3,
+    "commerce": 0.45,
+    "pme": 0.25
+   },
+   "annual": 0.45
+  }
+ },
+ "one_off": [
+  [
+   1,
+   1500.0,
+   "H",
+   "Création de la société, conseil juridique et fiscal",
+   "Company set-up, legal and tax advice"
+  ],
+  [
+   1,
+   1200.0,
+   "H",
+   "Matériel de démonstration (imprimante de tickets, lecteur, tablette Android)",
+   "Demo hardware (receipt printer, scanner, Android tablet)"
+  ],
+  [
+   1,
+   25.0,
+   "V",
+   "Compte développeur Google Play (paiement unique)",
+   "Google Play developer account (one-time fee)"
+  ],
+  [
+   1,
+   500.0,
+   "H",
+   "Identité visuelle imprimée, cartes, kakémono",
+   "Printed brand material, cards, banner"
+  ],
+  [
+   6,
+   5000.0,
+   "H",
+   "Test d'intrusion externe avant un déploiement large",
+   "External penetration test before a wide roll-out"
+  ]
+ ],
+ "funnel": {
+  "demo_to_trial": 0.5,
+  "trial_to_paid": 0.4
+ },
+ "summary": {
+  "pessimiste": {
+   "scenario": "pessimiste",
+   "break_even_month": null,
+   "min_cum_cash": -58126,
+   "min_cash_month": 36,
+   "cac": 125.4,
+   "gross_margin": 0.475,
+   "ltv": 182,
+   "ltv_cac": 1.4,
+   "payback_months": 13.8,
+   "arpa_m36": 19.14,
+   "active": {
+    "12": 31,
+    "24": 77,
+    "36": 132
+   },
+   "mrr": {
+    "12": 586,
+    "24": 1471,
+    "36": 2517
+   },
+   "arr": {
+    "12": 7038,
+    "24": 17652,
+    "36": 30199
+   },
+   "cum_cash": {
+    "12": -33569,
+    "24": -50988,
+    "36": -58126
+   },
+   "new_m12": 4,
+   "new_m36": 10,
+   "demos_needed_m12": 20
+  },
+  "central": {
+   "scenario": "central",
+   "break_even_month": 23,
+   "min_cum_cash": -27472,
+   "min_cash_month": 15,
+   "cac": 96.3,
+   "gross_margin": 0.716,
+   "ltv": 556,
+   "ltv_cac": 5.8,
+   "payback_months": 5.8,
+   "arpa_m36": 23.29,
+   "active": {
+    "12": 72,
+    "24": 186,
+    "36": 331
+   },
+   "mrr": {
+    "12": 1669,
+    "24": 4340,
+    "36": 7707
+   },
+   "arr": {
+    "12": 20024,
+    "24": 52078,
+    "36": 92478
+   },
+   "cum_cash": {
+    "12": -26544,
+    "24": -24432,
+    "36": 3683
+   },
+   "new_m12": 9,
+   "new_m36": 21,
+   "demos_needed_m12": 45
+  },
+  "optimiste": {
+   "scenario": "optimiste",
+   "break_even_month": 15,
+   "min_cum_cash": -17789,
+   "min_cash_month": 10,
+   "cac": 82.6,
+   "gross_margin": 0.779,
+   "ltv": 978,
+   "ltv_cac": 11.8,
+   "payback_months": 4.2,
+   "arpa_m36": 25.11,
+   "active": {
+    "12": 126,
+    "24": 361,
+    "36": 681
+   },
+   "mrr": {
+    "12": 3163,
+    "24": 9055,
+    "36": 17087
+   },
+   "arr": {
+    "12": 37958,
+    "24": 108657,
+    "36": 205047
+   },
+   "cum_cash": {
+    "12": -17403,
+    "24": 16094,
+    "36": 116258
+   },
+   "new_m12": 16,
+   "new_m36": 40,
+   "demos_needed_m12": 80
+  }
+ }
+}

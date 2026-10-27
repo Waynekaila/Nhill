@@ -86,7 +86,7 @@ gains non mesurés.
 
 ## 6. Prix (à fixer après le pilote)
 
-Aucun prix n'est arrêté (site, page « Accès et tarifs »). Méthode proposée :
+Aucun prix n'est arrêté ni publié sur le site ; propositions chiffrées dans l'étude financière (document 16). Méthode proposée :
 
 1. Pendant le pilote, mesurer le temps gagné et les écarts évités chez chaque pilote.
 2. Interroger les pilotes sur leur dépense actuelle (papeterie, tableur, logiciel) et un
