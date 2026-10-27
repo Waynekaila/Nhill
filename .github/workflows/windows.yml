@@ -77,10 +77,10 @@ jobs:
             build-windows/dist/*-setup.exe
             build-windows/dist/SHA256SUMS
       - name: Publication des résultats (branche ci-results/windows)
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JOB_STATUS: ${{ job.status }}
           MATRIX_NAME: ''
-        run: .github/scripts/publish-results.sh ci-results/windows build-windows/dist build-windows-log.txt build-windows-err.txt
+        run: .github/scripts/publish-results.sh ci-results/windows build-windows/dist/*-setup.exe build-windows/dist/SHA256SUMS build-windows-log.txt build-windows-err.txt

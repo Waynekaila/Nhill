@@ -41,7 +41,7 @@ jobs:
             artifacts/screenshots/
           if-no-files-found: ignore
       - name: Publication des résultats (branche ci-results/ci)
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

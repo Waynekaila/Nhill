@@ -128,6 +128,9 @@ def main():
 
     api.call("POST", "/api/v1/exchange-rates", {"from": "USD", "to": "CDF", "rate": "2800.0000", "rate_date": datetime.date.today().isoformat(),
                                                 "source": "Valeur de démonstration — non officielle"})
+    # Caisse de démonstration (Nhill POS) : sans caisse, la visite de Nhill POS s'arrête à
+    # « Aucune caisse ne vous est attribuée ».
+    api.call("POST", "/api/v1/pos/registers", {"code": "C1", "name": "Caisse principale (démo)", "location": "Comptoir"})
 
     print(json.dumps({"email": a.email, "seller_email": seller_email, "password": a.password, "establishment_code": created["establishment_code"],
                       "establishment_id": created["establishment"]["id"]}, ensure_ascii=False))

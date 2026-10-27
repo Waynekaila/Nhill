@@ -34,7 +34,7 @@ jobs:
             README*.pdf
             dist/website/
       - name: Publication des résultats (branche ci-results/docs-website)
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -87,7 +87,7 @@ jobs:
         shell: bash
         run: mkdir -p pg-report && echo "${{ job.status }}" > pg-report/status.txt
       - name: Publication des résultats (branche ci-results/site-backend-postgresql)
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

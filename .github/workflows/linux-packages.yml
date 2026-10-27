@@ -47,7 +47,7 @@ jobs:
           path: build/logs/
           if-no-files-found: ignore
       - name: Publication des résultats (branche ci-results/deb-${{ matrix.name }})
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -104,7 +104,7 @@ jobs:
           set -o pipefail
           { DEBIAN_FRONTEND=noninteractive apt-get remove -y nhill-business nhill-pos nhill-console && ! command -v nhill-pos && echo "désinstallation OK"; } 2>&1 | tee -a install-report/install-test.log
       - name: Publication des résultats (branche ci-results/install-${{ matrix.name }})
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

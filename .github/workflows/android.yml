@@ -42,7 +42,7 @@ jobs:
           name: nhill-android-apk
           path: dist/android/
       - name: Publication des résultats (branche ci-results/android)
-        if: always()
+        if: ${{ !cancelled() }}   # une exécution annulée n'écrase pas les résultats précédents
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
