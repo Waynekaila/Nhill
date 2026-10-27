@@ -29,8 +29,8 @@ Rectangle {
                 Field { label: qsTr("Email"); FbTextField { id: email; text: root.presetEmail; inputMethodHints: Qt.ImhEmailCharactersOnly } }
                 Field { visible: root.mode !== "login"; label: qsTr("Setup token"); help: qsTr("Given once by the person who created your account (valid 30 minutes).")
                         FbTextField { id: setupToken; text: root.presetToken; monospace: true; enabled: root.mode === "setup" } }
-                Field { visible: root.mode !== "confirm"; label: root.mode === "setup" ? qsTr("Choose a password (8 characters minimum)") : qsTr("Password")
-                        FbTextField { id: password; echoMode: TextInput.Password } }
+                Field { id: passwordField; visible: root.mode !== "confirm"; label: root.mode === "setup" ? qsTr("Choose a password (8 characters minimum)") : qsTr("Password")
+                        FbTextField { id: password; echoMode: TextInput.Password; onTextChanged: passwordField.error = "" } }
                 ColumnLayout {
                     visible: root.mode === "confirm" && !!root.setupResult
                     Layout.fillWidth: true
@@ -48,6 +48,11 @@ Rectangle {
                     busy: root.busy
                     text: root.mode === "login" ? qsTr("Sign in") : root.mode === "setup" ? qsTr("Continue") : qsTr("Activate my account")
                     onClicked: {
+                        if (root.mode === "setup") {
+                            // Same rule as the server (shared C++ validation): checked before sending.
+                            var issue = Check.password(password.text, email.text.trim())
+                            if (issue.length > 0) { passwordField.error = Labels.password(issue); return }
+                        }
                         root.busy = true
                         var done = function(r) { root.busy = false; if (!r.ok) ConsoleNav.fail(r) }
                         if (root.mode === "login")
