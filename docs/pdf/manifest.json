@@ -141,13 +141,13 @@
    "title": "Nhill 2.0 — User guide"
   },
   "docs/pdf/en/validation-report.pdf": {
-   "bytes": 81044,
+   "bytes": 81698,
    "engine": "playwright",
-   "generated": "2026-10-27T07:04:38+00:00",
+   "generated": "2026-10-27T07:11:56+00:00",
    "lang": "en",
-   "pdf_sha256": "4472195df8d95b182734809d5e3d9d8de2f9381e865a97d6a61b99fbb4a40b19",
+   "pdf_sha256": "0ded34f18051bf8cba99a4633f4dff4231c19a3227317ac4d4f1c0953f09fa5b",
    "source": "docs/en/validation-report.md",
-   "source_sha256": "6479f855b671d00bb67b37b8a4421e4566c9a6f9690945cda10672ffc460dcca",
+   "source_sha256": "64c0535d8b80960bbe807318d5f231f72ab448ec3e6d5294e77bac7644fa2c42",
    "title": "Validation report — Nhill 2.0.0"
   },
   "docs/pdf/en/website.pdf": {
@@ -261,13 +261,13 @@
    "title": "Paramètres légaux de Nhill 2.0"
   },
   "docs/pdf/fr/rapport-validation.pdf": {
-   "bytes": 83149,
+   "bytes": 83269,
    "engine": "playwright",
-   "generated": "2026-10-27T07:04:37+00:00",
+   "generated": "2026-10-27T07:11:55+00:00",
    "lang": "fr",
-   "pdf_sha256": "c6c25eb9224e65917c4c354d3f042ebc72772010d0cef86819d23648a68195f5",
+   "pdf_sha256": "9293cc5fd947564ccafd2c1f9d827d78b2f7ff3d22d605028f64d38cecc7925f",
    "source": "docs/fr/rapport-validation.md",
-   "source_sha256": "073dbbe8fd183e7f8607531afe01d4d945f214af51f5d9dcb206cbef0ef86f9f",
+   "source_sha256": "885a32e21cadfe14782a028e4694a62716b6282837d6d99c6f86be387f687df4",
    "title": "Rapport de validation — Nhill 2.0.0"
   },
   "docs/pdf/fr/securite.pdf": {

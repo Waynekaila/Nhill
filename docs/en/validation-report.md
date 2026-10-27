@@ -24,7 +24,7 @@ Each job's results are published in `ci-results/*` branches of the repository
 
 | Suite | Where | Result | Evidence |
 |---|---|---|---|
-| `common` (amounts, taxes, codes, passwords, 128-bit integer) | CI Ubuntu 24.04 and Debian 13; workspace (standalone tool) | **22/22** passed; also 22/22 in `NHILL_PORTABLE_INT128` mode (Windows path) in the workspace | [run 40461610927](https://github.com/Waynekaila/Nhill/actions/runs/40461610927), `Testing/Temporary/LastTest.log` |
+| `common` (amounts, taxes, codes, passwords, 128-bit integer) | CI Ubuntu 24.04 and Debian 13; workspace (standalone tool) | **22/22** passed; also 22/22 in `NHILL_PORTABLE_INT128` mode (Windows path) in the workspace | [run 40464011312](https://github.com/Waynekaila/Nhill/actions/runs/40464011312), `Testing/Temporary/LastTest.log` |
 | `server` (API + throwaway PostgreSQL) | CI Ubuntu 24.04 (PostgreSQL 16), Debian 13 (PostgreSQL 17) | **83 passed, 1 skipped** (`Samples.GenerateDocumentSamples`, sample generation off by default) out of 84 | same |
 | `setup` (setup mode) | CI | **6/6** | same |
 | `client` (Qt Test) | CI | **13/13** | same |
@@ -75,7 +75,7 @@ Each job's results are published in `ci-results/*` branches of the repository
 | Remembered sessions on Windows and Android | QtKeychain not included in the CI Windows/Android builds: sessions are not remembered there | add QtKeychain (vcpkg / Android build) then test |
 | Production deployment with public TLS, production Supabase, backups, restore | no production infrastructure in the session | `docs/en/installation-guide.md` § 4 |
 | Real payments (Stripe, PayPal) | adapters tested against simulated responses only | test payment with a provider account |
-| Nhill POS 2.0 screenshots | the automatic tour stopped for lack of a demo till (fixed in `seed-demo.py`, to reconfirm in CI) | rerun CI; Business 2.0 screenshots available in `docs/assets/v2/` |
+| Nhill POS 2.0 screenshots | the automatic tour now reaches the choice of the demo till (created by `seed-demo.py`) but does not open the session: 2.0 sales screens are not captured automatically | adapt the tour (`PosMain.qml`) or capture by hand; Business 2.0 screenshots in `docs/assets/v2/` |
 | Accessibility with a screen reader (NVDA, Orca, TalkBack) | not available | manual test |
 | Legal | no validation by a lawyer | `legal/en/00-legal-research.md` § 6 |
 | External audit, penetration test | not ordered | before a wide opening |

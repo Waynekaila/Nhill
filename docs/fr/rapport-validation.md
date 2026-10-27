@@ -24,7 +24,7 @@ Les résultats de chaque job sont publiés dans des branches `ci-results/*` du d
 
 | Suite | Où | Résultat | Preuve |
 |---|---|---|---|
-| `common` (montants, taxes, codes, mots de passe, entier 128 bits) | CI Ubuntu 24.04 et Debian 13 ; espace de travail (outil autonome) | **22/22** réussis ; aussi 22/22 en mode `NHILL_PORTABLE_INT128` (chemin Windows) dans l'espace de travail | [exécution 40461610927](https://github.com/Waynekaila/Nhill/actions/runs/40461610927), `Testing/Temporary/LastTest.log` |
+| `common` (montants, taxes, codes, mots de passe, entier 128 bits) | CI Ubuntu 24.04 et Debian 13 ; espace de travail (outil autonome) | **22/22** réussis ; aussi 22/22 en mode `NHILL_PORTABLE_INT128` (chemin Windows) dans l'espace de travail | [exécution 40464011312](https://github.com/Waynekaila/Nhill/actions/runs/40464011312), `Testing/Temporary/LastTest.log` |
 | `server` (API + PostgreSQL jetable) | CI Ubuntu 24.04 (PostgreSQL 16), Debian 13 (PostgreSQL 17) | **83 réussis, 1 ignoré** (`Samples.GenerateDocumentSamples`, génération d'exemples désactivée par défaut) sur 84 | idem |
 | `setup` (mode installation) | CI | **6/6** | idem |
 | `client` (Qt Test) | CI | **13/13** | idem |
@@ -75,7 +75,7 @@ Les résultats de chaque job sont publiés dans des branches `ci-results/*` du d
 | Mémorisation de session sous Windows et Android | QtKeychain non intégré aux constructions Windows/Android de la CI : la session n'y est pas mémorisée | intégrer QtKeychain (vcpkg / compilation Android) puis tester |
 | Déploiement de production avec TLS public, Supabase de production, sauvegardes, restauration | pas d'infrastructure de production dans la session | `docs/fr/guide-installation.md` § 4 |
 | Paiements réels (Stripe, PayPal) | adaptateurs testés contre des réponses simulées seulement | paiement de test avec un compte du prestataire |
-| Captures de Nhill POS 2.0 | la visite automatique s'arrêtait faute de caisse de démonstration (corrigé dans `seed-demo.py`, à reconfirmer en CI) | relancer la CI ; captures Business 2.0 disponibles dans `docs/assets/v2/` |
+| Captures de Nhill POS 2.0 | la visite automatique atteint désormais le choix de la caisse de démonstration (créée par `seed-demo.py`) mais n'ouvre pas la session : les écrans de vente 2.0 ne sont pas capturés automatiquement | adapter la visite (`PosMain.qml`) ou capturer à la main ; captures Business 2.0 dans `docs/assets/v2/` |
 | Accessibilité avec un lecteur d'écran (NVDA, Orca, TalkBack) | non disponible | test manuel |
 | Juridique | aucune validation par un avocat | `legal/fr/00-recherche-juridique.md` § 6 |
 | Audit externe, test d'intrusion | non commandés | avant ouverture large |
