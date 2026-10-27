@@ -3,9 +3,9 @@
   "README.en.pdf": {
    "bytes": 63300,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:03+00:00",
+   "generated": "2026-10-27T06:59:08+00:00",
    "lang": "en",
-   "pdf_sha256": "9d94f2e954e7f6f95fcb41a78c790c44474964125088a11d3deeb5541a1cdffa",
+   "pdf_sha256": "ea0eeb4e73cffe5db7399bf46f5cbc5da37b2dc2ea26f31548136bd1b62bba03",
    "source": "README.en.md",
    "source_sha256": "42c6097586b6c08f6c74057b6214eaa5c614c47ae8b177150689e1edc41449fd",
    "title": "Nhill 2.0"
@@ -13,9 +13,9 @@
   "README.pdf": {
    "bytes": 64279,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:03+00:00",
+   "generated": "2026-10-27T06:59:07+00:00",
    "lang": "fr",
-   "pdf_sha256": "b891a8a476af35baa22fbb86fdb084814856c907641cab41324f46841435f0cc",
+   "pdf_sha256": "39ab697e953b4a8fe72813776584d13219405632d4b4055f08e4f74435886f05",
    "source": "README.md",
    "source_sha256": "4bad7772e53c8d02254cb62d253d7811f6894a79779f4846846f462d59ac6356",
    "title": "Nhill 2.0"
@@ -23,29 +23,29 @@
   "docs/pdf/RELEASE-NOTES.pdf": {
    "bytes": 38662,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:04+00:00",
+   "generated": "2026-10-27T06:59:08+00:00",
    "lang": "fr",
-   "pdf_sha256": "472a26c4c54259a0165bb926ec6645ef0cfb1228761edc96cc3f33cbeaae8aae",
+   "pdf_sha256": "2d6939cd35661044cb5435269959e34ad045f89c8c56ecc8a8245ac36da5172e",
    "source": "RELEASE-NOTES.md",
    "source_sha256": "58fa7e3d00d1fc140c83dd080f14518f5d5888d592e37cec91fe351998f2116f",
    "title": "Nhill 2.0.0 — notes de version / release notes"
   },
   "docs/pdf/en/01-technical-audit.pdf": {
-   "bytes": 111264,
+   "bytes": 111773,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:14+00:00",
+   "generated": "2026-10-27T06:59:18+00:00",
    "lang": "en",
-   "pdf_sha256": "845dca1b1312be283813d3b9a91c01d7e8f506455b66d506957053a7fd80dba7",
+   "pdf_sha256": "62eb5f08ef166c93035a598eda3d1f3620ade711ef2eeb915feb1e9275ae3bd7",
    "source": "docs/en/01-technical-audit.md",
-   "source_sha256": "a9329230f20cd72012882b07c633da4fcd7b9313834a37db12c85a751fdc4663",
+   "source_sha256": "487707c29b819605286be766c1a3bf7a974588abbfe648dfc1c321b2c064ee2c",
    "title": "Technical audit — Nhill (baseline 0.1.0, target version 2.0.0)"
   },
   "docs/pdf/en/02-ui-ux-audit.pdf": {
    "bytes": 106645,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:15+00:00",
+   "generated": "2026-10-27T06:59:19+00:00",
    "lang": "en",
-   "pdf_sha256": "2c086e5aae86360a7da2e95cb0df1b853ad5be39b14b79ae2ed7cd7c8675f274",
+   "pdf_sha256": "7e518a511b30c5fb71052e06dfc7b8d31d88d916fce040bee9ce49920a544c69",
    "source": "docs/en/02-ui-ux-audit.md",
    "source_sha256": "b8c8cead30a34e6845597376501bc5c0a2fa99aa9d376b8cf9d64726f7374987",
    "title": "UI/UX audit — Nhill Business, Nhill POS, Nhill Console"
@@ -53,9 +53,9 @@
   "docs/pdf/en/03-security-audit.pdf": {
    "bytes": 97103,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:15+00:00",
+   "generated": "2026-10-27T06:59:20+00:00",
    "lang": "en",
-   "pdf_sha256": "c15192ec8b0f034b9da54a257c00781c8f4ba208a43dd93aa489ea263c463587",
+   "pdf_sha256": "533e93500b8c7b6dc480fbf532126c8f09b0fb1c8622a608825f873ade7541ef",
    "source": "docs/en/03-security-audit.md",
    "source_sha256": "41da19ef8362007ac52bb5f82ea7daa9ed32476b42d63f3058868ca0cc40d202",
    "title": "Security audit — Nhill 0.1.0 → 2.0.0"
@@ -63,9 +63,9 @@
   "docs/pdf/en/build-guide.pdf": {
    "bytes": 88311,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:16+00:00",
+   "generated": "2026-10-27T06:59:20+00:00",
    "lang": "en",
-   "pdf_sha256": "9582738eafeb962aacac268ae219a9b12f6384a074a0dd441e49dbe49f267a4a",
+   "pdf_sha256": "be0e1d3fe4c88a87e159f56186a7661e829d7a55fdb489d5aebdf78d3e6adb09",
    "source": "docs/en/build-guide.md",
    "source_sha256": "e4ccfe28b7bca64e4de616e40712b281e55c5deb467f781198b9352bc3747fea",
    "title": "Nhill 2.0 — Build and release guide"
@@ -73,9 +73,9 @@
   "docs/pdf/en/changelog.pdf": {
    "bytes": 57657,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:16+00:00",
+   "generated": "2026-10-27T06:59:21+00:00",
    "lang": "en",
-   "pdf_sha256": "8f494aabd41854861aba4ad8b59602916a65188d227421a5b04398a1f23ec9df",
+   "pdf_sha256": "1d236cd7fb0060f284e74c8e2079a00641805ffcd15cadfd358e0428cf4c6b21",
    "source": "docs/en/changelog.md",
    "source_sha256": "583cef6fd0d42c8d970f6134b03d2072bd5073c877c62371decf4b4f9c21b099",
    "title": "Changelog"
@@ -83,9 +83,9 @@
   "docs/pdf/en/configuration-guide.pdf": {
    "bytes": 94436,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:17+00:00",
+   "generated": "2026-10-27T06:59:22+00:00",
    "lang": "en",
-   "pdf_sha256": "e9066fceee6c6549002bf6705d4bc49a70ba351ac1c6f028b4653bac74c7bb78",
+   "pdf_sha256": "2fb56f05c75ff315db377e8d6d93bd78f5c9a882b42c8dbed77a153d112c07a7",
    "source": "docs/en/configuration-guide.md",
    "source_sha256": "06a897ba4339d158ba20add94897731ae0b15f23278015e7e951f15cdb7911d6",
    "title": "Nhill 2.0 — Configuration guide"
@@ -93,9 +93,9 @@
   "docs/pdf/en/developer-guide.pdf": {
    "bytes": 112441,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:18+00:00",
+   "generated": "2026-10-27T06:59:22+00:00",
    "lang": "en",
-   "pdf_sha256": "c030ebda3d392405dda04673bb645462cd26e7265690492caf1662abe827948f",
+   "pdf_sha256": "47b28bf8bc375d1a7d03ca4ee8c48a7b635ed909ddf5dee0ccf024fbd58689d9",
    "source": "docs/en/developer-guide.md",
    "source_sha256": "afd89e93415ea1814bcd568e87b7216ec9aac768ea384855b4c919056c8c1d1a",
    "title": "Nhill 2.0 — Developer guide"
@@ -103,9 +103,9 @@
   "docs/pdf/en/installation-guide.pdf": {
    "bytes": 82609,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:18+00:00",
+   "generated": "2026-10-27T06:59:23+00:00",
    "lang": "en",
-   "pdf_sha256": "e76e5a9bb24d8ce9dfc670670c604f36f97cfea3e2b88918af04b876bdfceaa8",
+   "pdf_sha256": "fcb2574a57693edd6ba1f72106690094be82b1005c27bcbf7b1ea0e46f6bb4ac",
    "source": "docs/en/installation-guide.md",
    "source_sha256": "51062a79e6e8676f0204e564e8201be9ffca91827b6752da4498915906c33ddf",
    "title": "Nhill 2.0 — Installation guide"
@@ -113,9 +113,9 @@
   "docs/pdf/en/legal-parameters.pdf": {
    "bytes": 64497,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:19+00:00",
+   "generated": "2026-10-27T06:59:24+00:00",
    "lang": "en",
-   "pdf_sha256": "34c99bf976fab57db31001ba77646c18c59ffd2803238ff9b0ffc99fe7fd7ec3",
+   "pdf_sha256": "4f99ba04fdc4f3f7376e51741c8cffbc1ac40b6d7ef47bec1688ce15da3e704b",
    "source": "docs/en/legal-parameters.md",
    "source_sha256": "30a3dea9f2e270c80519ed8a7d0a123faabe965349a4f0a8880c0b98fe1562d5",
    "title": "Nhill 2.0 legal parameters"
@@ -123,9 +123,9 @@
   "docs/pdf/en/security.pdf": {
    "bytes": 60041,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:20+00:00",
+   "generated": "2026-10-27T06:59:24+00:00",
    "lang": "en",
-   "pdf_sha256": "91fdf3c11b0ada748b5825c98a96c1b83369a352af6ee655152a9ba3756ab18a",
+   "pdf_sha256": "f78ab55e494496c89002bc3a6cfee343fcf0f498081bfde64e98497c5b1a671b",
    "source": "docs/en/security.md",
    "source_sha256": "301a38a6a95cfe8e219273aefde54325dd4bdad61f882effdaa9b93ceb2ba4bd",
    "title": "Nhill 2.0 — Security"
@@ -133,9 +133,9 @@
   "docs/pdf/en/user-guide.pdf": {
    "bytes": 93243,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:20+00:00",
+   "generated": "2026-10-27T06:59:25+00:00",
    "lang": "en",
-   "pdf_sha256": "7d2be1f79b84d747bd04e9acd28d1209c872773ccd0ba2be36f64494d5d81ac9",
+   "pdf_sha256": "2d4d2af3135dd31da656c29f84357eb55438c084d4f11ec8dda2d53860d99c8b",
    "source": "docs/en/user-guide.md",
    "source_sha256": "9f8f1f1ffe7700421868eab9ee29669ff127bbe2904a0ec0a9b217821f8e5136",
    "title": "Nhill 2.0 — User guide"
@@ -143,9 +143,9 @@
   "docs/pdf/en/validation-report.pdf": {
    "bytes": 81065,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:21+00:00",
+   "generated": "2026-10-27T06:59:26+00:00",
    "lang": "en",
-   "pdf_sha256": "da8e27903ecb4830f703e19043a3eb97003f57e255d3ea64d155e8d57017ab01",
+   "pdf_sha256": "ed49e9dd9227846ead84cd11b66e0d704fdf675ecaf7eb5e76c150fb0b67e55b",
    "source": "docs/en/validation-report.md",
    "source_sha256": "3dc216409bc34e04ef27c265eaebef9a019cd0736708e0d62912073597524398",
    "title": "Validation report — Nhill 2.0.0"
@@ -153,29 +153,29 @@
   "docs/pdf/en/website.pdf": {
    "bytes": 164155,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:22+00:00",
+   "generated": "2026-10-27T06:59:26+00:00",
    "lang": "en",
-   "pdf_sha256": "45c7c43a439b183c5fc93efa6a9356a1514e0a4d3ae38743074d4097090cf2da",
+   "pdf_sha256": "b05ec96b001864ebeb806b45a51f5b62f731a8720726d9298c1ef2475ee45831",
    "source": "website/README.en.md",
    "source_sha256": "55cb28c9bc5e0f11760d623e5367f78963eb839dfc94989a98bb32382e6d5e68",
    "title": "Nhill website — deployment and database"
   },
   "docs/pdf/fr/01-audit-technique.pdf": {
-   "bytes": 115015,
+   "bytes": 115529,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:05+00:00",
+   "generated": "2026-10-27T06:59:09+00:00",
    "lang": "fr",
-   "pdf_sha256": "edcc6a50b39d991ca41f807ed5caca922567169c676737a58fbccd4b3bc54ab3",
+   "pdf_sha256": "0a325fa409955ec9c9349c494ab553bd2e07e5377e1429053f34ce92a29201d5",
    "source": "docs/fr/01-audit-technique.md",
-   "source_sha256": "2a9bdfd23e50a83c613bc376c3b3b191d6ec7190f4ee2a5eb2a08193e31febe8",
+   "source_sha256": "292355a96b01d4b3d85666b8c4ac6d266c441597e5520f8e7a92866ef961ed7d",
    "title": "Audit technique — Nhill (base 0.1.0, version cible 2.0.0)"
   },
   "docs/pdf/fr/02-audit-ui-ux.pdf": {
    "bytes": 109701,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:05+00:00",
+   "generated": "2026-10-27T06:59:10+00:00",
    "lang": "fr",
-   "pdf_sha256": "335166a571e1d6251f5d90928335d77256a68c522361bf5dbe34def4dea8af8e",
+   "pdf_sha256": "0de5a42dff9d28e3c552d8071ca38cdb488d549a63621bde74af6761724d5094",
    "source": "docs/fr/02-audit-ui-ux.md",
    "source_sha256": "7a0d1a6dfbd32cc44446ebc4530f5ffc937cc6f7be8c17f56049c23687ab99b1",
    "title": "Audit UI/UX — Nhill Business, Nhill POS, Nhill Console"
@@ -183,9 +183,9 @@
   "docs/pdf/fr/03-audit-securite.pdf": {
    "bytes": 100405,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:06+00:00",
+   "generated": "2026-10-27T06:59:11+00:00",
    "lang": "fr",
-   "pdf_sha256": "065b19f055d95bf24aea5cd315e6eb7c1d515345d1d2ad365a1abc347f6ed521",
+   "pdf_sha256": "ee3335a89b6dabab85496b98fc0181250f186db8a5981a3c545778940d761704",
    "source": "docs/fr/03-audit-securite.md",
    "source_sha256": "b6134c6e6b9d6f04abeff2c1fc4ca4c6854845b0e0238ff8c22a480ab61d3828",
    "title": "Audit de sécurité — Nhill 0.1.0 → 2.0.0"
@@ -193,9 +193,9 @@
   "docs/pdf/fr/changelog.pdf": {
    "bytes": 58899,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:07+00:00",
+   "generated": "2026-10-27T06:59:11+00:00",
    "lang": "fr",
-   "pdf_sha256": "d8b452f9f2b81222c30de27b8b889987a49d40efb7dc911008adf405620aa562",
+   "pdf_sha256": "79ad8d2a87b47d903351bec1a187631ce96cad8b75d522996904737b88f1aa5e",
    "source": "docs/fr/changelog.md",
    "source_sha256": "dc81f953185b3d1371880e14e14ac2e7150c50cd19ab4b5993b401ffe9d35361",
    "title": "Journal des modifications"
@@ -203,9 +203,9 @@
   "docs/pdf/fr/guide-compilation.pdf": {
    "bytes": 90304,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:07+00:00",
+   "generated": "2026-10-27T06:59:12+00:00",
    "lang": "fr",
-   "pdf_sha256": "b50b7dd2c385f84d763c4e84527b7a1b329b3cf1121b226bdc293102ee14aaf3",
+   "pdf_sha256": "c7b0b03be437abc9649ee973a051bd0ab83446eeb3005c2457cb76e2e0c92a00",
    "source": "docs/fr/guide-compilation.md",
    "source_sha256": "f504bacccd1c1e7c0b10d5f9592ad9a11d8f07df01fecfef0ac79bf519053631",
    "title": "Nhill 2.0 — Guide de compilation et de livraison"
@@ -213,9 +213,9 @@
   "docs/pdf/fr/guide-configuration.pdf": {
    "bytes": 96046,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:08+00:00",
+   "generated": "2026-10-27T06:59:13+00:00",
    "lang": "fr",
-   "pdf_sha256": "eca01f717f29e460d8438729b5fc7b4e39756b1e6314222ab9cc031b731ca1e7",
+   "pdf_sha256": "0bd6107943e85b9264e2151fbf23f69442fcb3e1026fc02c45f6bf0886a5990e",
    "source": "docs/fr/guide-configuration.md",
    "source_sha256": "ed46b59c259555c182d82ff0e6edee4cc272bf4ddcd774606a274e63084d1b95",
    "title": "Nhill 2.0 — Guide de configuration"
@@ -223,9 +223,9 @@
   "docs/pdf/fr/guide-developpement.pdf": {
    "bytes": 114653,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:09+00:00",
+   "generated": "2026-10-27T06:59:13+00:00",
    "lang": "fr",
-   "pdf_sha256": "853bb3f8ba443d974f477e483d4655dc97dd1f30520b791b4fe5ea26ed72b5a8",
+   "pdf_sha256": "c5c3151320836ce767e03aaa9cc62236578b064e6cc2b4d2f6e45bb395bfe22c",
    "source": "docs/fr/guide-developpement.md",
    "source_sha256": "d97c56608d17a5ba024932dcca09c6af45e99a21d1e224f913c64049a931cd97",
    "title": "Nhill 2.0 — Guide du développeur"
@@ -233,9 +233,9 @@
   "docs/pdf/fr/guide-installation.pdf": {
    "bytes": 85606,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:09+00:00",
+   "generated": "2026-10-27T06:59:14+00:00",
    "lang": "fr",
-   "pdf_sha256": "4179578f9658ad1866cea286f61d2b336fe0eea21d6540a9936c061e53f11443",
+   "pdf_sha256": "0ecff309fe02f9205bf9c0ba053bba7c6582c21a0b9fbdbe288cda9f58237969",
    "source": "docs/fr/guide-installation.md",
    "source_sha256": "97f98e169a32754640d7bf28ba76ed60099b675210dc68c4c592bc31468bcc4a",
    "title": "Nhill 2.0 — Guide d'installation"
@@ -243,9 +243,9 @@
   "docs/pdf/fr/guide-utilisateur.pdf": {
    "bytes": 97798,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:10+00:00",
+   "generated": "2026-10-27T06:59:15+00:00",
    "lang": "fr",
-   "pdf_sha256": "b63abe874a3b3b5e6a4221fb234f7255a484fef0708d9c52447508334ade41cb",
+   "pdf_sha256": "b4858988fc2f991e117920767dbb337ca401912dcde9c80ec55f4a5b1e05101f",
    "source": "docs/fr/guide-utilisateur.md",
    "source_sha256": "1076d3b8980192c89b67de8d0954859fb8b2742b84ecf49d267852c1ca08f1b0",
    "title": "Nhill 2.0 — Guide utilisateur"
@@ -253,9 +253,9 @@
   "docs/pdf/fr/parametres-legaux.pdf": {
    "bytes": 65765,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:11+00:00",
+   "generated": "2026-10-27T06:59:15+00:00",
    "lang": "fr",
-   "pdf_sha256": "dee9a9482d59c7b7a6f14ae271e408161c62c8f72572d769627acf36274dd3ad",
+   "pdf_sha256": "a9750577848b0949e75c464ec9a0c1d0c9cc855d93b265824b414fe760012dbc",
    "source": "docs/fr/parametres-legaux.md",
    "source_sha256": "05d729387ed56f07d16814d1feb0ccfcab4fa779aae5aca722abf726755dab1d",
    "title": "Paramètres légaux de Nhill 2.0"
@@ -263,9 +263,9 @@
   "docs/pdf/fr/rapport-validation.pdf": {
    "bytes": 83178,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:11+00:00",
+   "generated": "2026-10-27T06:59:16+00:00",
    "lang": "fr",
-   "pdf_sha256": "b1d2bac74cd026077faa10fa76dcde06d60366b53af39b0571d823f031ed09a8",
+   "pdf_sha256": "d77d3ca411693bf4762d6969878feb05f5ff86cf091da9ae84ea0110bba32e8a",
    "source": "docs/fr/rapport-validation.md",
    "source_sha256": "47276078055ee637d3233ab27fd96d867e9e4b8a98ce78032ad669122b99afa1",
    "title": "Rapport de validation — Nhill 2.0.0"
@@ -273,9 +273,9 @@
   "docs/pdf/fr/securite.pdf": {
    "bytes": 61984,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:12+00:00",
+   "generated": "2026-10-27T06:59:17+00:00",
    "lang": "fr",
-   "pdf_sha256": "7cd2203ad4c5520006549d9814de2d41a7a3960f5c3396ab9dbda19ff7773a56",
+   "pdf_sha256": "f452a787217a3b9da29384f632c566ffb8014f8b0d3434b1254f860755280acf",
    "source": "docs/fr/securite.md",
    "source_sha256": "a1e842dbb9929458cc6b3677aae6c03005531b3a480affa689f4dbe69de83039",
    "title": "Nhill 2.0 — Sécurité"
@@ -283,9 +283,9 @@
   "docs/pdf/fr/site-vitrine.pdf": {
    "bytes": 166713,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:13+00:00",
+   "generated": "2026-10-27T06:59:17+00:00",
    "lang": "fr",
-   "pdf_sha256": "c431bcc22cbaaf363803a52dd4f783fa23a9925ca1bcba7c4df2779d9bfc6aba",
+   "pdf_sha256": "2bce80796b87ff1cea6f9fcbf533f0d080051c2d045b71c8da0e440c25c93c25",
    "source": "website/README.md",
    "source_sha256": "0b0b407bc4b7f33a9a33af3dc63923e96df4c1dcb3d51959cf06fd06426a4975",
    "title": "Site vitrine Nhill — mise en service et base de données"
@@ -293,9 +293,9 @@
   "legal/pdf/en/00-legal-research.pdf": {
    "bytes": 108393,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:35+00:00",
+   "generated": "2026-10-27T06:59:40+00:00",
    "lang": "en",
-   "pdf_sha256": "a5b93e33461b969d156bc0a55f7250d67190e433bf06c7f7edd6466251682968",
+   "pdf_sha256": "7a8c84c6552d76ca73c2186f5c4d95d98b7ad448bdc62a6bc8a1a30ad73a6516",
    "source": "legal/en/00-legal-research.md",
    "source_sha256": "25b005e46b698f859c05425ddbaa9d4d53be70a37cfb27ce90ba6036cc9ee431",
    "title": "Legal research — Nhill in the Democratic Republic of the Congo"
@@ -303,9 +303,9 @@
   "legal/pdf/en/01-terms-of-use.pdf": {
    "bytes": 45110,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:36+00:00",
+   "generated": "2026-10-27T06:59:40+00:00",
    "lang": "en",
-   "pdf_sha256": "144c99265ef1fb7f28a9975f369536f7418e637c09660cb4b6095eb3e6e20ace",
+   "pdf_sha256": "db33ebf597e0627e176db8d5612c36720b5271c9f0bdbb09ad4dec5b46861c92",
    "source": "legal/en/01-terms-of-use.md",
    "source_sha256": "c9fa2a1dc5df2a24ee9d492021359b9b9f00fd4e28ccdff90c403fc5387b2bfb",
    "title": "01 — Terms of use"
@@ -313,9 +313,9 @@
   "legal/pdf/en/02-saas-terms-of-service.pdf": {
    "bytes": 49867,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:37+00:00",
+   "generated": "2026-10-27T06:59:41+00:00",
    "lang": "en",
-   "pdf_sha256": "e0a4c0225bd0b8ab9200fc5e39116c9a999c517c63c6a0c006cdc6e6ac3c7d73",
+   "pdf_sha256": "6fe71b70931020821ea37939dcecb287627a7c22d5a7f7464133c514e98fa1ea",
    "source": "legal/en/02-saas-terms-of-service.md",
    "source_sha256": "8e70990aed1148baabc306182579b36c22176858b23512d627bb86090edec079",
    "title": "02 — SaaS terms of service (subscription contract)"
@@ -323,9 +323,9 @@
   "legal/pdf/en/03-privacy-policy.pdf": {
    "bytes": 47194,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:37+00:00",
+   "generated": "2026-10-27T06:59:42+00:00",
    "lang": "en",
-   "pdf_sha256": "33849bae9edfa9537bd974970d604125ca2db0d9f5ad41be89fe865f9427ee96",
+   "pdf_sha256": "cfe1fcdd39ad691b600c85a852a74fdecc402bd2ccafd2cc32eff33868445c41",
    "source": "legal/en/03-privacy-policy.md",
    "source_sha256": "d56e4807a855f7b2d6e8d2366b99d0c01c9443a13ba5febf99a4e5a00a02611e",
    "title": "03 — Privacy policy"
@@ -333,9 +333,9 @@
   "legal/pdf/en/04-cookie-policy.pdf": {
    "bytes": 27530,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:38+00:00",
+   "generated": "2026-10-27T06:59:42+00:00",
    "lang": "en",
-   "pdf_sha256": "b5bbe3b4729db8b9084ae2a048cfaacafa57513356c2c53c60067c15558c3308",
+   "pdf_sha256": "58b2cfb6e95a20fb42b5c18637bd4767a99bcefd655a52dc2e6360a3e785907f",
    "source": "legal/en/04-cookie-policy.md",
    "source_sha256": "99e719fd2bced35feedcee10de9b0eaf28895cbcfd86c0fdc1b9c32a07eddafd",
    "title": "04 — Cookie and tracker policy (marketing website)"
@@ -343,9 +343,9 @@
   "legal/pdf/en/05-legal-notice.pdf": {
    "bytes": 27922,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:38+00:00",
+   "generated": "2026-10-27T06:59:43+00:00",
    "lang": "en",
-   "pdf_sha256": "9948e89299ae7eb68c97f1ccc34e57dd7d5d1c1cf2a550c0f0002602c62a6e42",
+   "pdf_sha256": "13e973fe34894a288e14ab474814a266061577dcba2c166424f7867298c9732c",
    "source": "legal/en/05-legal-notice.md",
    "source_sha256": "cf3056cc01163a90148c3cd18b438026c2624689e328bba8b9ad24ca897d01ab",
    "title": "05 — Legal notice (marketing website)"
@@ -353,9 +353,9 @@
   "legal/pdf/en/06-data-processing-agreement.pdf": {
    "bytes": 41696,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:39+00:00",
+   "generated": "2026-10-27T06:59:44+00:00",
    "lang": "en",
-   "pdf_sha256": "1a9153345ef2766fe8d94bffb9f57a6f069787f2eed53d17240c31af369c94c9",
+   "pdf_sha256": "295408dc62457d78af286b634c54e5f1cf8755d2fc070551a9cea57fa499c962",
    "source": "legal/en/06-data-processing-agreement.md",
    "source_sha256": "34610aaa33a172f7d4e539f903f47b39871afd0ac8339f00b4cc69ff7abd9fd4",
    "title": "06 — Data processing agreement"
@@ -363,9 +363,9 @@
   "legal/pdf/en/07-service-level-agreement.pdf": {
    "bytes": 35648,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:40+00:00",
+   "generated": "2026-10-27T06:59:44+00:00",
    "lang": "en",
-   "pdf_sha256": "c2bbd3238533525477fa3bef37a54866c67be75f62a605d4ebf20f4699fc6f23",
+   "pdf_sha256": "fa1c5933cf2ec9fd2c4ae587371fbe78db9a7b3b8ba7582028ba6a683a4f5251",
    "source": "legal/en/07-service-level-agreement.md",
    "source_sha256": "330306f63d25bc4848490b7993b9baffa7deb6275d88b4d83c51ccb3998683b0",
    "title": "07 — Service level agreement (SLA)"
@@ -373,9 +373,9 @@
   "legal/pdf/en/08-acceptable-use-policy.pdf": {
    "bytes": 24876,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:40+00:00",
+   "generated": "2026-10-27T06:59:45+00:00",
    "lang": "en",
-   "pdf_sha256": "861bfa95af882dc0ddf669cb6dd99b279214e10e4d94c771b4178b613d0993f7",
+   "pdf_sha256": "03171e2e45196ae1b76646cafa599ffb111ec61f54a804d4015494b76f021121",
    "source": "legal/en/08-acceptable-use-policy.md",
    "source_sha256": "87fb588b8258ba767092c617d710b83931738aaf06d1c9c29e75b09818f6136f",
    "title": "08 — Acceptable use policy"
@@ -383,9 +383,9 @@
   "legal/pdf/en/09-pilot-programme-agreement.pdf": {
    "bytes": 44740,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:41+00:00",
+   "generated": "2026-10-27T06:59:45+00:00",
    "lang": "en",
-   "pdf_sha256": "4f9395e2a49828e418bfa9b1caaf330b572b67c51e16fef40456b787d4932b8d",
+   "pdf_sha256": "4938e5617c4aba30a51c52237a0d2fdd16971071a3decee4b5eb8c37625f095a",
    "source": "legal/en/09-pilot-programme-agreement.md",
    "source_sha256": "187de83599512b63efaec7e1fbb5789c6caf41e0ab0ec2505d6602f8625e0813",
    "title": "09 — Pilot programme agreement"
@@ -393,9 +393,9 @@
   "legal/pdf/en/10-partnership-agreement.pdf": {
    "bytes": 47708,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:42+00:00",
+   "generated": "2026-10-27T06:59:46+00:00",
    "lang": "en",
-   "pdf_sha256": "7d97ab0c24fb2777bdc9d2cf3a847be4bef4129fe4f833417f68e43aeb1c42f5",
+   "pdf_sha256": "47862a845697dcdaea2bbec89eee57794f6324105dd4fb71286537d93be2e4b5",
    "source": "legal/en/10-partnership-agreement.md",
    "source_sha256": "d05f3eeb4c77c50356b3b4563bbe455b7cbe3d5de369ce78a6337024e9556c7a",
    "title": "10 — Commercial partnership agreement"
@@ -403,9 +403,9 @@
   "legal/pdf/en/11-non-disclosure-agreement.pdf": {
    "bytes": 27923,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:42+00:00",
+   "generated": "2026-10-27T06:59:47+00:00",
    "lang": "en",
-   "pdf_sha256": "8d1c03c4d75327955d4a9a42fb7e4aa945a9f6cdf4bb542226d65cab51f51a91",
+   "pdf_sha256": "343686e7158545758330ad4b038abeb0293a9a10c19057a6d2cb17a104769114",
    "source": "legal/en/11-non-disclosure-agreement.md",
    "source_sha256": "052b91d9a8f35a96af88ed1937c66edf338dbff614edcaefca5af4352d515ddc",
    "title": "11 — Non-disclosure agreement"
@@ -413,9 +413,9 @@
   "legal/pdf/en/12-application-licence.pdf": {
    "bytes": 37256,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:43+00:00",
+   "generated": "2026-10-27T06:59:47+00:00",
    "lang": "en",
-   "pdf_sha256": "dce930dea78981d060f29c1bd04c50c8084290f261145ba8bc0cc139f59bc63f",
+   "pdf_sha256": "3e169dc1c4844eed77424a40ffe66f7d24a6130755e224e593d24060bb51d985",
    "source": "legal/en/12-application-licence.md",
    "source_sha256": "a4d8cefd64295a456982a73b345a7cda6572e22d2792267309ea427c95f3038c",
    "title": "12 — Nhill application licence"
@@ -423,9 +423,9 @@
   "legal/pdf/en/13-security-policy.pdf": {
    "bytes": 35679,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:43+00:00",
+   "generated": "2026-10-27T06:59:48+00:00",
    "lang": "en",
-   "pdf_sha256": "f301c0cf3fb607b7764edfec48e5a0b415fe7b9b3ee84223f7481c66a3075020",
+   "pdf_sha256": "5c0411d1cd5a68aef50f49a7419cdc463e737388817e03255a99a4892d332cfd",
    "source": "legal/en/13-security-policy.md",
    "source_sha256": "d81aabef9731981de4fb082fd9e58546b663c5239df13799a4a479e7d920d497",
    "title": "13 — Information security policy (public summary)"
@@ -433,9 +433,9 @@
   "legal/pdf/en/14-data-breach-procedure.pdf": {
    "bytes": 39134,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:44+00:00",
+   "generated": "2026-10-27T06:59:49+00:00",
    "lang": "en",
-   "pdf_sha256": "11f5af54076a4f1782cc00a01ce5f984b6284493450960b92d2bb8f0ac7cdb02",
+   "pdf_sha256": "aff5a175c55102f2a1481ba9d60ebebe94801c8e2dce73dae77a0de393723444",
    "source": "legal/en/14-data-breach-procedure.md",
    "source_sha256": "409390ed66a5c2a4b8ad79c4c78f08c14f6424dcc5f3986be1dad5f3fafc608f",
    "title": "14 — Data breach procedure"
@@ -443,9 +443,9 @@
   "legal/pdf/en/15-retention-policy.pdf": {
    "bytes": 38583,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:45+00:00",
+   "generated": "2026-10-27T06:59:49+00:00",
    "lang": "en",
-   "pdf_sha256": "844c69c8fe7c44e55ccd7048212c6ec1fd60fd1b706d8d9e83b1e105bd6dd5fd",
+   "pdf_sha256": "b8e76c11632d47c1c565cdad080410536c13aa159e432d8f179ddaa03397d8af",
    "source": "legal/en/15-retention-policy.md",
    "source_sha256": "f2ff05aa875ed554b50795434a224ba09a437619d540f61eda2f381283ac8791",
    "title": "15 — Data retention and deletion policy"
@@ -453,9 +453,9 @@
   "legal/pdf/en/16-marketing-consent.pdf": {
    "bytes": 40732,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:45+00:00",
+   "generated": "2026-10-27T06:59:50+00:00",
    "lang": "en",
-   "pdf_sha256": "d15be3021cdcce8c913f4fbf903388b502af3f8b3fd655bd2bd1b373255f599a",
+   "pdf_sha256": "947fbe232dc46d6227b28cbed42095563685ffd13ea2e87674115a9bbf953038",
    "source": "legal/en/16-marketing-consent.md",
    "source_sha256": "ad722003a10c773cfad0d2d134f053c36d4dac1c8cd9eadc57ea0c8aadeca9bd",
    "title": "16 — Marketing consent form and register"
@@ -463,9 +463,9 @@
   "legal/pdf/en/17-staff-notice.pdf": {
    "bytes": 27962,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:46+00:00",
+   "generated": "2026-10-27T06:59:50+00:00",
    "lang": "en",
-   "pdf_sha256": "d135abd59f8bfdf140f6509639b9890dd880d76292e0f030029ba704d33cd1f5",
+   "pdf_sha256": "4c63e3444f67e2bc6b2ef3fe778ffed9de2ff64f15140b5e1058caa3d8c906dc",
    "source": "legal/en/17-staff-notice.md",
    "source_sha256": "abee746fbad40ac86bf0dc54c71cff7f5c9f8384f596d4f671d21b655e4522c0",
    "title": "17 — Staff information notice (Nhill activity log)"
@@ -473,9 +473,9 @@
   "legal/pdf/en/18-processing-register.pdf": {
    "bytes": 31706,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:47+00:00",
+   "generated": "2026-10-27T06:59:51+00:00",
    "lang": "en",
-   "pdf_sha256": "7425d1c00d9735a756ccc54715d03e84f3dfb5af90cab6f1ad2a9ce3ccd7d760",
+   "pdf_sha256": "b92715aaeb2528593b60eff3fead176947feb6ab8fb259a5ed58c3bec5d3e103",
    "source": "legal/en/18-processing-register.md",
    "source_sha256": "0c0a9b75b359aaf2a02347ffb9e3cad2a9bcdd8d2d50777983e639dfd0fb8a45",
    "title": "18 — Record of processing activities (Publisher)"
@@ -483,9 +483,9 @@
   "legal/pdf/en/19-data-subject-request.pdf": {
    "bytes": 38013,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:47+00:00",
+   "generated": "2026-10-27T06:59:52+00:00",
    "lang": "en",
-   "pdf_sha256": "7dd64eab042f9dfa225e5c5aadafbd5d82aed28f4e24f635891659ad18ecfb90",
+   "pdf_sha256": "ccf2147e614236e5dc5b223b2de0eeb27c570b67e779cb3124a321c8ccc8aca8",
    "source": "legal/en/19-data-subject-request.md",
    "source_sha256": "e461d384fab5654461aab0bffc5c6341b11cdba1db9fc8899577afcaf2cfd704",
    "title": "19 — Personal data request form"
@@ -493,9 +493,9 @@
   "legal/pdf/fr/00-recherche-juridique.pdf": {
    "bytes": 112378,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:23+00:00",
+   "generated": "2026-10-27T06:59:27+00:00",
    "lang": "fr",
-   "pdf_sha256": "eff7475db8b1aff9290f16a1710082d6abbe3ab8ce62fa7f57fe74d9d8b459a5",
+   "pdf_sha256": "1efc73453261775f7ec551af40cf3005e8dad3b51ee3769ce514c616caa226bc",
    "source": "legal/fr/00-recherche-juridique.md",
    "source_sha256": "2a697a66f39d4e712c272bfabf690b94b2e8849d94d34b99ac96840f39224e35",
    "title": "Recherche juridique — Nhill en République démocratique du Congo"
@@ -503,9 +503,9 @@
   "legal/pdf/fr/01-conditions-generales-utilisation.pdf": {
    "bytes": 48182,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:23+00:00",
+   "generated": "2026-10-27T06:59:28+00:00",
    "lang": "fr",
-   "pdf_sha256": "b00ea8bfac724dfda31064905d26b48ce65d713526361cf2e010e8e6b4514f84",
+   "pdf_sha256": "a63370d9ce3ba21efe7a98e720977ba13eaf949dc383ebed6b089a03e1ef2da6",
    "source": "legal/fr/01-conditions-generales-utilisation.md",
    "source_sha256": "8c5ed6c0df8d06588cedcfc0a3d2b875ebd5e44ba81db41b811e57c0afb18de9",
    "title": "01 — Conditions générales d'utilisation (CGU)"
@@ -513,9 +513,9 @@
   "legal/pdf/fr/02-conditions-service-saas.pdf": {
    "bytes": 51692,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:24+00:00",
+   "generated": "2026-10-27T06:59:28+00:00",
    "lang": "fr",
-   "pdf_sha256": "6fde50d94874628daaf1ce2acc38f71c66d11fe9d693b0e1f08e728729c4cc0f",
+   "pdf_sha256": "aa6fe68e02a6448c3bffdd0b417da5ac56ca5a0c10e8e9f73b3a2cb083e040f3",
    "source": "legal/fr/02-conditions-service-saas.md",
    "source_sha256": "a167b390ab5f1c4606072964d0e92b36d6cce03e4158a9d3df078ecedafa791c",
    "title": "02 — Conditions de service SaaS (contrat d'abonnement)"
@@ -523,9 +523,9 @@
   "legal/pdf/fr/03-politique-confidentialite.pdf": {
    "bytes": 50042,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:24+00:00",
+   "generated": "2026-10-27T06:59:29+00:00",
    "lang": "fr",
-   "pdf_sha256": "69e9a14ace511553f6baa22a2843bdd86be25c2f6221de50bcb12a8e5c7b9d64",
+   "pdf_sha256": "483ff7f8e4d0b045b8eba0578032c5b297b593fbd04e041e22c8dcd2b5b046d9",
    "source": "legal/fr/03-politique-confidentialite.md",
    "source_sha256": "076edd1f1cd629be1437b9c567e3ce21de226707df3db6005dcfd0b816ffa730",
    "title": "03 — Politique de confidentialité"
@@ -533,9 +533,9 @@
   "legal/pdf/fr/04-politique-cookies.pdf": {
    "bytes": 28415,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:25+00:00",
+   "generated": "2026-10-27T06:59:30+00:00",
    "lang": "fr",
-   "pdf_sha256": "0f9406315be6d82bfbe7f13d05eb2ccf1acb54e1b6a0257266e73c7dd870088b",
+   "pdf_sha256": "7a4b3b1fb5317ddc466bfc75af2af0effeac162e500316bc8d707a3fd530dd31",
    "source": "legal/fr/04-politique-cookies.md",
    "source_sha256": "6d84c728cbe387847ba349d8065b6b4b0d10a3e25ad1864460207c075e91dbef",
    "title": "04 — Politique relative aux cookies et traceurs (site vitrine)"
@@ -543,9 +543,9 @@
   "legal/pdf/fr/05-mentions-legales.pdf": {
    "bytes": 29321,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:26+00:00",
+   "generated": "2026-10-27T06:59:30+00:00",
    "lang": "fr",
-   "pdf_sha256": "03a633c0eb40979332dad02831e406ed9278db28432222f8494062d6d8e71335",
+   "pdf_sha256": "cb4415d2f97efec38cdc2406245ac08ff387afa55571af43acc055bf17570cb9",
    "source": "legal/fr/05-mentions-legales.md",
    "source_sha256": "10a949a8064f795d543e42f39103e32378c48818d8524fd4db56e05b3dd6a8cc",
    "title": "05 — Mentions légales (site vitrine)"
@@ -553,9 +553,9 @@
   "legal/pdf/fr/06-accord-traitement-donnees.pdf": {
    "bytes": 43713,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:26+00:00",
+   "generated": "2026-10-27T06:59:31+00:00",
    "lang": "fr",
-   "pdf_sha256": "557e82178e82c9279f8fce777b40890472429bd4adf906922aaefb73f83844de",
+   "pdf_sha256": "54b47bb39a1013a33c26bcbe951b1cabc0925ebbe68e0deec3e3a62050cdd4a9",
    "source": "legal/fr/06-accord-traitement-donnees.md",
    "source_sha256": "a93a9eaf9777ff244265dde13c2280fecd6100aaf465c3fedc0ddc5ec768f295",
    "title": "06 — Accord de traitement des données (sous-traitance)"
@@ -563,9 +563,9 @@
   "legal/pdf/fr/07-engagement-niveau-service.pdf": {
    "bytes": 36074,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:27+00:00",
+   "generated": "2026-10-27T06:59:32+00:00",
    "lang": "fr",
-   "pdf_sha256": "42bf5a77dad32013c3731014e3db683c8df8970d016348662e57d025eab86cfe",
+   "pdf_sha256": "45286de29231206dd1863cc141039e8f1e40f233339ce7fdf94dd7c25abce4b5",
    "source": "legal/fr/07-engagement-niveau-service.md",
    "source_sha256": "1e61972d06f593f3e21b15942896777a4e7d07a28f026121198c7875007f976d",
    "title": "07 — Engagement de niveau de service (SLA)"
@@ -573,9 +573,9 @@
   "legal/pdf/fr/08-politique-utilisation-acceptable.pdf": {
    "bytes": 25517,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:28+00:00",
+   "generated": "2026-10-27T06:59:32+00:00",
    "lang": "fr",
-   "pdf_sha256": "5c88e6e5ffe16ea2e1feb06fec52e3cf182836b351b219f2f83ed9275ada2516",
+   "pdf_sha256": "b49c5d6065dda1374bc6409186d98d682643c9ee4a11eb9854429cc49bf94fe7",
    "source": "legal/fr/08-politique-utilisation-acceptable.md",
    "source_sha256": "d65f2bda377ceaabba576dda9f6769769a236be5ffc3685c131eea9b34d264c5",
    "title": "08 — Politique d'utilisation acceptable"
@@ -583,9 +583,9 @@
   "legal/pdf/fr/09-convention-programme-pilote.pdf": {
    "bytes": 46059,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:28+00:00",
+   "generated": "2026-10-27T06:59:33+00:00",
    "lang": "fr",
-   "pdf_sha256": "36e9341e0a97e564812045be3d55a313fca72237c24a4611186555f94640fac5",
+   "pdf_sha256": "aef8a9a6f0f98266d1d6fdee8c51155f9871fe9c7aef4d4532aade85d6634592",
    "source": "legal/fr/09-convention-programme-pilote.md",
    "source_sha256": "0034e67fecfc65baf369817312797e6c9b964bde14012db933f45ed2f6ea88ef",
    "title": "09 — Convention de programme pilote"
@@ -593,9 +593,9 @@
   "legal/pdf/fr/10-contrat-partenariat.pdf": {
    "bytes": 47848,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:29+00:00",
+   "generated": "2026-10-27T06:59:33+00:00",
    "lang": "fr",
-   "pdf_sha256": "55b4d46f42a7558804ad12b6d4c5b611ede266a137bfb3a110ddcd8add034241",
+   "pdf_sha256": "bc1460e3674917a48b9ce55672aeefb8c5879d12242e7cc472e606c071119cb2",
    "source": "legal/fr/10-contrat-partenariat.md",
    "source_sha256": "4f32f44994c6d17e94a5349f5b8184cd5543482de7db27c1a240f33fd5a20797",
    "title": "10 — Contrat de partenariat commercial"
@@ -603,9 +603,9 @@
   "legal/pdf/fr/11-accord-confidentialite.pdf": {
    "bytes": 28192,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:29+00:00",
+   "generated": "2026-10-27T06:59:34+00:00",
    "lang": "fr",
-   "pdf_sha256": "739dc69883f5108454bd6b2e3f58e96c6c61b8d423a63aee55acf9436cc2cec7",
+   "pdf_sha256": "9cd32ab1b439fe70a4d97a9c72ba20fa9bec5ca43b7f0bed2ad21361089bb618",
    "source": "legal/fr/11-accord-confidentialite.md",
    "source_sha256": "cfca2f41f2fa19527c3b64cb1401a66c4fcdf9e993f4d82831f2ad8536578155",
    "title": "11 — Accord de confidentialité"
@@ -613,9 +613,9 @@
   "legal/pdf/fr/12-licence-applications.pdf": {
    "bytes": 38282,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:30+00:00",
+   "generated": "2026-10-27T06:59:35+00:00",
    "lang": "fr",
-   "pdf_sha256": "2258b763f3cc9646b152ab4552e27d0f2badc959638945974d3617fe3295061f",
+   "pdf_sha256": "5dac29da87ded4548ff87a1980c49fbf80fd77ba8bd5f0069ca9cd6b06ae2a51",
    "source": "legal/fr/12-licence-applications.md",
    "source_sha256": "1212e3578ff8f41028f957b5bfc66eb9470bedb8b8fca6e04503caf70a38f278",
    "title": "12 — Licence d'utilisation des applications Nhill"
@@ -623,9 +623,9 @@
   "legal/pdf/fr/13-politique-securite.pdf": {
    "bytes": 36613,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:31+00:00",
+   "generated": "2026-10-27T06:59:35+00:00",
    "lang": "fr",
-   "pdf_sha256": "6e2ea8e6b6b55b96d614d145a4c94fe4ec30b025ae50cddd0dab1c450f4715c6",
+   "pdf_sha256": "6f39695d7e6951b712553bd66a1130309274236f9a13231df0f31704b8aa6538",
    "source": "legal/fr/13-politique-securite.md",
    "source_sha256": "0062041e4133ed78d58911291f3b448b24bcc8c4b5b95ed0abc3a6a228f5f244",
    "title": "13 — Politique de sécurité de l'information (résumé public)"
@@ -633,9 +633,9 @@
   "legal/pdf/fr/14-procedure-violation-donnees.pdf": {
    "bytes": 41173,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:31+00:00",
+   "generated": "2026-10-27T06:59:36+00:00",
    "lang": "fr",
-   "pdf_sha256": "1f3793f043e2145a43ea0d993d7ccfb5972bc512132c8ae81d70eadb84e2de87",
+   "pdf_sha256": "aaa364c6dffa8e85f3c66cb91fc8b9b41d77f055f563bd8b13965ae658bb3255",
    "source": "legal/fr/14-procedure-violation-donnees.md",
    "source_sha256": "375294ed624d770966643c08f30145af65abf18992bef1674932bee7fc9432c9",
    "title": "14 — Procédure de gestion des violations de données"
@@ -643,9 +643,9 @@
   "legal/pdf/fr/15-politique-conservation.pdf": {
    "bytes": 40316,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:32+00:00",
+   "generated": "2026-10-27T06:59:37+00:00",
    "lang": "fr",
-   "pdf_sha256": "c119a4c5b5266357ae6ad7b8351cfc77c33f8309a6b00a33644380a60bfd9c96",
+   "pdf_sha256": "a417ada9b73f584d08be59571eaf575f38668e44d546b08fc8135e76b25424b3",
    "source": "legal/fr/15-politique-conservation.md",
    "source_sha256": "860017d5b52c0ea565a33e7e28c791bbde393ac692cdaf47ed4fed422bae6b5c",
    "title": "15 — Politique de conservation et de suppression des données"
@@ -653,9 +653,9 @@
   "legal/pdf/fr/16-consentement-prospection.pdf": {
    "bytes": 41211,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:33+00:00",
+   "generated": "2026-10-27T06:59:37+00:00",
    "lang": "fr",
-   "pdf_sha256": "01e003cb47b6b47c9965e018dfddcc493aa7ee823d569d71e5ee008f29db4b77",
+   "pdf_sha256": "bb07d3280bfa4ac5c2a5b31eadc0bfe0d21a6349d8bcdc3e652f26b40312013a",
    "source": "legal/fr/16-consentement-prospection.md",
    "source_sha256": "1605b6b34ef4224bc24280821b0cca914ce81bd19c13c3126d7edd263b427720",
    "title": "16 — Formulaire et registre de consentement à la prospection"
@@ -663,9 +663,9 @@
   "legal/pdf/fr/17-information-personnel.pdf": {
    "bytes": 29115,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:33+00:00",
+   "generated": "2026-10-27T06:59:38+00:00",
    "lang": "fr",
-   "pdf_sha256": "f010a211ebc3684c1665a0483be4b028bd092ec44f745988bd170d0323384eee",
+   "pdf_sha256": "cba5f7593b33a7c618d4b65555b71257fa5111782fa1ab4a93d07b740f387aaf",
    "source": "legal/fr/17-information-personnel.md",
    "source_sha256": "951e06907e5c2ee24ebb8a07d029882c14c7d82aefdc7af0b9f4e515e3fa323b",
    "title": "17 — Note d'information du personnel (journal d'activité Nhill)"
@@ -673,9 +673,9 @@
   "legal/pdf/fr/18-registre-traitements.pdf": {
    "bytes": 32963,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:34+00:00",
+   "generated": "2026-10-27T06:59:39+00:00",
    "lang": "fr",
-   "pdf_sha256": "f45122deb88d3f7692895e3626a7646819f1b10af7581232f7189c065870b1d2",
+   "pdf_sha256": "3e3f866c41dcb735f480c8ffe5ac0fa94a102f40f2ecb4e6b47dcdc765ba057c",
    "source": "legal/fr/18-registre-traitements.md",
    "source_sha256": "51e37256f0f7eed2063729503f94feb37a6c964f1f3ca4319fd00eb129b56707",
    "title": "18 — Registre des activités de traitement (Éditeur)"
@@ -683,9 +683,9 @@
   "legal/pdf/fr/19-demande-exercice-droits.pdf": {
    "bytes": 38151,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:34+00:00",
+   "generated": "2026-10-27T06:59:39+00:00",
    "lang": "fr",
-   "pdf_sha256": "afb2da77df67c9bec0af65299c49bc027cba0e7ef725a0949e4868cbfba57978",
+   "pdf_sha256": "8a5af77813cdb04cd162ad4ae47265906bd75cb9244cd1e1c86d53af581213fa",
    "source": "legal/fr/19-demande-exercice-droits.md",
    "source_sha256": "97e8ee6c111293c1748fa8ddc8055afcd71368af80c9ef29cab613b8cc23e608",
    "title": "19 — Formulaire d'exercice des droits sur les données personnelles"
@@ -693,9 +693,9 @@
   "marketing/pdf/en/01-market-study.pdf": {
    "bytes": 55424,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:58+00:00",
+   "generated": "2026-10-27T07:00:02+00:00",
    "lang": "en",
-   "pdf_sha256": "fb06cf327bfc6cfa3fc73fc54f4389929b34173d91b3f4a224dc6e9726a3def3",
+   "pdf_sha256": "6ec4806d395605a7dd04cbd0e8a716f5a2f5bd6bb124e9da5b07c33c7ff5179a",
    "source": "marketing/en/01-market-study.md",
    "source_sha256": "e7df78a0fb14ce15577af279f6ca601538c451483658669a993b242752966d8e",
    "title": "Market study — Nhill in Kinshasa (DRC)"
@@ -703,9 +703,9 @@
   "marketing/pdf/en/02-pilot-programme.pdf": {
    "bytes": 44849,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:58+00:00",
+   "generated": "2026-10-27T07:00:03+00:00",
    "lang": "en",
-   "pdf_sha256": "f00bb977f87ccec0a71a84543beb079f66407b28fcf334cad58a9c9640cecddd",
+   "pdf_sha256": "582a33c11de1c9ce984d2fed912a73f765fad4dd772fb3a283ccb86b7dd465f6",
    "source": "marketing/en/02-pilot-programme.md",
    "source_sha256": "8a52a266deb78c0f4f8b5da3cbc1f04600b793c1e33d1d5dbf40ec523929fb3f",
    "title": "Nhill pilot programme — Kinshasa"
@@ -713,9 +713,9 @@
   "marketing/pdf/en/03-90-day-plan.pdf": {
    "bytes": 51530,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:59+00:00",
+   "generated": "2026-10-27T07:00:03+00:00",
    "lang": "en",
-   "pdf_sha256": "7f6014730b0574c1f430adb8c87f6d052fc724fda4d1112176ce8080f67486f6",
+   "pdf_sha256": "95ff8105ce9a64c827344f5c5189b86e451aef9330be7d81ad468ab8f6e5d50b",
    "source": "marketing/en/03-90-day-plan.md",
    "source_sha256": "a96afbaae59313ae1802f5bad95ddb337fad753bb9b92699fbd2a6f5f131c564",
    "title": "90-day launch plan — Kinshasa"
@@ -723,9 +723,9 @@
   "marketing/pdf/en/04-icp-qualification.pdf": {
    "bytes": 40384,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:59+00:00",
+   "generated": "2026-10-27T07:00:04+00:00",
    "lang": "en",
-   "pdf_sha256": "21a9f4e478c828f6a566a7d948f40e4d9a4bd6655bce8590cfcaf11b11fa4532",
+   "pdf_sha256": "fc3692883d178a46759d45601770198ba3e2624636e98aa4d3c99cbc9620b1f2",
    "source": "marketing/en/04-icp-qualification.md",
    "source_sha256": "0f4b6b37a14b5f608fa14c07e910a6f023ed39a661ab952e2533cab4ecea0ac6",
    "title": "Ideal customer profile (ICP) and qualification grid"
@@ -733,9 +733,9 @@
   "marketing/pdf/en/05-prospecting-scripts.pdf": {
    "bytes": 38517,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:00+00:00",
+   "generated": "2026-10-27T07:00:04+00:00",
    "lang": "en",
-   "pdf_sha256": "dff8a3a22fe28e3f7c9104000b9b816c33571e01624e530b975e2c756b96b79e",
+   "pdf_sha256": "45437af24e131bbdc8f7e849b8d15c0bf8dab29b66cb534c0fbf6eb49abca651",
    "source": "marketing/en/05-prospecting-scripts.md",
    "source_sha256": "8a979844b8fba39f4d567be1788e106e69e61be4d1751863ff8dec7ea8f434fd",
    "title": "Prospecting scripts (shop visit, call, WhatsApp voice note)"
@@ -743,9 +743,9 @@
   "marketing/pdf/en/06-message-templates.pdf": {
    "bytes": 44555,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:01+00:00",
+   "generated": "2026-10-27T07:00:05+00:00",
    "lang": "en",
-   "pdf_sha256": "f6b59cc178e87db346d06addc718619336dc3be92adae962b996f34b089ae19b",
+   "pdf_sha256": "ec84d2e12cbbdf28c12a705fca9297777d76f535f17aa96258e3f24253508fef",
    "source": "marketing/en/06-message-templates.md",
    "source_sha256": "a793aa30225ae90935f79ea2821fd5238e74aa49d5c6287f3acce29dd26321e6",
    "title": "Message templates (WhatsApp, e-mail)"
@@ -753,9 +753,9 @@
   "marketing/pdf/en/07-demo-script.pdf": {
    "bytes": 39523,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:01+00:00",
+   "generated": "2026-10-27T07:00:06+00:00",
    "lang": "en",
-   "pdf_sha256": "6df694dc98d23e500a256002ff6b902745c95ca5e20f80630802607d969217d7",
+   "pdf_sha256": "4b73ae3a24a0af5170a2261d2bd19eb259df4620dff19ae5d3670bc2c1f4e53a",
    "source": "marketing/en/07-demo-script.md",
    "source_sha256": "a34ce8803a0c68cb4ab936dc7e3bed70943ccc26f197f07cdade81ab0350672f",
    "title": "Demo script (15 to 30 minutes)"
@@ -763,9 +763,9 @@
   "marketing/pdf/en/08-sales-process-and-tracking.pdf": {
    "bytes": 57281,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:02+00:00",
+   "generated": "2026-10-27T07:00:06+00:00",
    "lang": "en",
-   "pdf_sha256": "ebb7630976475973f5127d502bed679f90eee61aa8f2a322a503f9157854a7ae",
+   "pdf_sha256": "8c3d697ae8e087db1c13132f7a06860a4cd2cb5468e461d2b044a38a09bef4b3",
    "source": "marketing/en/08-sales-process-and-tracking.md",
    "source_sha256": "c3200e29f907ddfc2b27efd1b1d0e8b5dae09ee0550968604f6fc74b15ef5ce6",
    "title": "Sales process, prospect tracking and questionnaires"
@@ -773,9 +773,9 @@
   "marketing/pdf/en/09-partner-model.pdf": {
    "bytes": 40926,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:03+00:00",
+   "generated": "2026-10-27T07:00:07+00:00",
    "lang": "en",
-   "pdf_sha256": "f64b33f675af2a55a7627e0bbc9707bdc1de769f8789355c5cf0eb466c8ca867",
+   "pdf_sha256": "3cc77eb662bb9c265afc1c11feaef7c6ed4d14d82692e85fb57e8506629d317d",
    "source": "marketing/en/09-partner-model.md",
    "source_sha256": "fbfa16fb1cf3160dd9e759758a94f7b47bbad819f1f082fd068273eb5ffc573c",
    "title": "Partner model"
@@ -783,9 +783,9 @@
   "marketing/pdf/en/10-kpis.pdf": {
    "bytes": 36225,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:03+00:00",
+   "generated": "2026-10-27T07:00:08+00:00",
    "lang": "en",
-   "pdf_sha256": "2dca581d5705c6e70e30a7600f23106888b0c1669c3d725c4e164a3765491d93",
+   "pdf_sha256": "376fd1765de58a4e8735ffc23a738d0299c35d1c63327ac4c8136d8bf898d5da",
    "source": "marketing/en/10-kpis.md",
    "source_sha256": "5e2629eb5bdd7a44bd86cee0c09e71fd69eed1cfc3a70c4545ed28f15059157e",
    "title": "Key performance indicators (KPIs) and dashboard"
@@ -793,9 +793,9 @@
   "marketing/pdf/en/11-video-scripts.pdf": {
    "bytes": 48280,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:04+00:00",
+   "generated": "2026-10-27T07:00:08+00:00",
    "lang": "en",
-   "pdf_sha256": "aca20f6110eac3860ae2c72e2632bb9f4c432cba4163ac7ff6280b45176ed7f9",
+   "pdf_sha256": "d3ed258900abe09876559f8bedd934a466a5fda886e0fedd79a768cef7c09cff",
    "source": "marketing/en/11-video-scripts.md",
    "source_sha256": "838d7a77771af5860e90673434f6a96a6624c393cd34837ea8b324fb95818e0e",
    "title": "Video scripts (30, 60 and 90 seconds) — storyboards and FR/EN voice-over"
@@ -803,9 +803,9 @@
   "marketing/pdf/en/12-brand-voice.pdf": {
    "bytes": 35682,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:05+00:00",
+   "generated": "2026-10-27T07:00:09+00:00",
    "lang": "en",
-   "pdf_sha256": "e281880239d2d6daf59c44b9e65a1703f938a8958e8a70e41dcb8dc6bb251914",
+   "pdf_sha256": "1731f86c75375e91790c2c1ffff559401457f6e73e3e2540c9259d4fb18e2518",
    "source": "marketing/en/12-brand-voice.md",
    "source_sha256": "0510341f8ad01ab4d22cba544b20bcfd0439a401abe99e4557d4032113e436ce",
    "title": "Nhill brand voice"
@@ -813,9 +813,9 @@
   "marketing/pdf/en/13-pitches.pdf": {
    "bytes": 31016,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:05+00:00",
+   "generated": "2026-10-27T07:00:09+00:00",
    "lang": "en",
-   "pdf_sha256": "870d6adfdd72a4f3a0e0a976862b878e21b514efb3e0ef9c933f3d1e0aa59d66",
+   "pdf_sha256": "5b868c6785a037c04e230653bd4d77fb8eb12760e082b8fc390d2d7e1e5ca0fc",
    "source": "marketing/en/13-pitches.md",
    "source_sha256": "cfa19c1290d48cc8b57e5cbdfc0400818c4367d7bde2340d8447d901c60cb860",
    "title": "30-second and 2-minute pitches"
@@ -823,9 +823,9 @@
   "marketing/pdf/en/14-sales-presentation.pdf": {
    "bytes": 41584,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:06+00:00",
+   "generated": "2026-10-27T07:00:10+00:00",
    "lang": "en",
-   "pdf_sha256": "4362a9f5cd3731434acfbe408ab8b508413b586cf2cf5971385530785255a85d",
+   "pdf_sha256": "72424a99d54067f3d5cf4a6d4981a531b752b26bbae34fe6733f43385d92417e",
    "source": "marketing/en/14-sales-presentation.md",
    "source_sha256": "27ac0fe0c4b49cb0a7118cc3026226e201c7090ec0cf83cfa2a9d0073442e1fc",
    "title": "Sales presentation (10 slides)"
@@ -833,9 +833,9 @@
   "marketing/pdf/en/15-sales-faq.pdf": {
    "bytes": 29737,
    "engine": "playwright",
-   "generated": "2026-10-27T06:54:06+00:00",
+   "generated": "2026-10-27T07:00:11+00:00",
    "lang": "en",
-   "pdf_sha256": "3f4b1d623b2c30ffece84751c78f41058b84961441100d200524dfb4acbbc6ad",
+   "pdf_sha256": "601882c63dd8db5d1a5da0a293761be61da579977a5ba23a42c734338aa5d94d",
    "source": "marketing/en/15-sales-faq.md",
    "source_sha256": "638e6d5c61bd28f716d815fee72056823e5760513367be2cc8a6fd132d7b3cea",
    "title": "Sales FAQ (answers for the team and partners)"
@@ -843,9 +843,9 @@
   "marketing/pdf/fr/01-etude-marche.pdf": {
    "bytes": 58140,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:48+00:00",
+   "generated": "2026-10-27T06:59:52+00:00",
    "lang": "fr",
-   "pdf_sha256": "a7296d9ae53c1480c895277768ea30f1b4199f31485c023f2607d13146dd4720",
+   "pdf_sha256": "41f70c51280b5bb4b9397c5801b367bb302a5a21812dc68280149c5a2dc9efc4",
    "source": "marketing/fr/01-etude-marche.md",
    "source_sha256": "eefaa0bc3d214369df895fee607b53e78c0fcaa7fdc2a0f398829f828b01f447",
    "title": "Étude de marché — Nhill à Kinshasa (RDC)"
@@ -853,9 +853,9 @@
   "marketing/pdf/fr/02-programme-pilote.pdf": {
    "bytes": 46468,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:49+00:00",
+   "generated": "2026-10-27T06:59:53+00:00",
    "lang": "fr",
-   "pdf_sha256": "bdc5124b1f451dc77bc018b2466e22a2a8e744ab54408c403c99e28b30aeb3ae",
+   "pdf_sha256": "100c369b292487e5869e91dadefec7ad01c0316d00099ca7b4195540960e5ab7",
    "source": "marketing/fr/02-programme-pilote.md",
    "source_sha256": "6793ee4d9f9888252bb5dc0dea9c535e480c0561c6c345920c29421957f2488f",
    "title": "Programme pilote Nhill — Kinshasa"
@@ -863,9 +863,9 @@
   "marketing/pdf/fr/03-plan-90-jours.pdf": {
    "bytes": 52867,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:49+00:00",
+   "generated": "2026-10-27T06:59:54+00:00",
    "lang": "fr",
-   "pdf_sha256": "9a40864dafb60bd3ad73c526f4ac96a85f7781e53d9c2ff099256f924bc02033",
+   "pdf_sha256": "9dd8c46c34b2d1779ee9fc6f44b065e43b8389bc50caddfa46e512bc09bb6b00",
    "source": "marketing/fr/03-plan-90-jours.md",
    "source_sha256": "2f161fb688c137372e8d776ddebbc792e5ae97a2a4d44d5e5c32e92c83c0be10",
    "title": "Plan de lancement sur 90 jours — Kinshasa"
@@ -873,9 +873,9 @@
   "marketing/pdf/fr/04-icp-qualification.pdf": {
    "bytes": 41752,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:50+00:00",
+   "generated": "2026-10-27T06:59:54+00:00",
    "lang": "fr",
-   "pdf_sha256": "8d2f201015d4d784807f1bc03eb5defc26de7b72673c56ee6ae0ddfaa5521509",
+   "pdf_sha256": "8c1a55dc0a5fa99c4027a4f55a527528cf743564979b4663d4e03ed626b1a0aa",
    "source": "marketing/fr/04-icp-qualification.md",
    "source_sha256": "fd5d5c04edae5f1284f874c27cbfdd6743eb7ee96d5a84d7b24143676c94bf14",
    "title": "Client idéal (ICP) et grille de qualification"
@@ -883,9 +883,9 @@
   "marketing/pdf/fr/05-scripts-prospection.pdf": {
    "bytes": 39581,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:50+00:00",
+   "generated": "2026-10-27T06:59:55+00:00",
    "lang": "fr",
-   "pdf_sha256": "2f0a135c6c8f3448f02e7b771db538ebc4c97f27c91e8c9c1c2e11adae927416",
+   "pdf_sha256": "a7a9fd774ca8b7441b2d3e31f0ea20ee6b98423e409184372b1bc73d33cae5bb",
    "source": "marketing/fr/05-scripts-prospection.md",
    "source_sha256": "f246b2e7edae91ca1d8a242bf779e500191015d43d0fee9c96b131daf9f6ce0e",
    "title": "Scripts de prospection (visite, appel, WhatsApp vocal)"
@@ -893,9 +893,9 @@
   "marketing/pdf/fr/06-modeles-messages.pdf": {
    "bytes": 44824,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:51+00:00",
+   "generated": "2026-10-27T06:59:56+00:00",
    "lang": "fr",
-   "pdf_sha256": "c146029922cab8b340ed9092b2dbf859319f0bfba6256618351128028e905c4d",
+   "pdf_sha256": "2049cd36e9af20c7594e6512ed62748660e4360a21e0b2fed8af91b59e622352",
    "source": "marketing/fr/06-modeles-messages.md",
    "source_sha256": "da49de0b710485a45df5f932f873acd20ac9be41890d819b3280b9de720b3897",
    "title": "Modèles de messages (WhatsApp, e-mail)"
@@ -903,9 +903,9 @@
   "marketing/pdf/fr/07-script-demonstration.pdf": {
    "bytes": 41415,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:52+00:00",
+   "generated": "2026-10-27T06:59:56+00:00",
    "lang": "fr",
-   "pdf_sha256": "584fd1932d6943e90f46aa10278f528d9af15da2839d7e2eac389ae6785997bd",
+   "pdf_sha256": "8ae15be4d6b6cc24681f07d3c1e895a9ce7ee9aa5ce34669a7d04f61204594f4",
    "source": "marketing/fr/07-script-demonstration.md",
    "source_sha256": "fd40d4411c101f1d28395ef8c0152cbb74551ba61fe9699eef47ea606ac8d757",
    "title": "Script de démonstration (15 à 30 minutes)"
@@ -913,9 +913,9 @@
   "marketing/pdf/fr/08-suivi-et-processus.pdf": {
    "bytes": 56652,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:52+00:00",
+   "generated": "2026-10-27T06:59:57+00:00",
    "lang": "fr",
-   "pdf_sha256": "8bb26a87d9cda732e519af1d8d32805ce2606bf960a9d939a27e8f1de5a166d1",
+   "pdf_sha256": "c213b322f232bfef71368142e9fe575fd202387e95d3b9ac1282088dd3fd814b",
    "source": "marketing/fr/08-suivi-et-processus.md",
    "source_sha256": "d8ddead1d587b626cb36c85f4d6b2ebfd0773893da949007fe382b5637402115",
    "title": "Processus commercial, suivi des prospects et questionnaires"
@@ -923,9 +923,9 @@
   "marketing/pdf/fr/09-modele-partenaires.pdf": {
    "bytes": 42312,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:53+00:00",
+   "generated": "2026-10-27T06:59:57+00:00",
    "lang": "fr",
-   "pdf_sha256": "990977d09e72fbb47bd1c1d1653a6ad02c70916ac4163c698480faf6b0c8d5ce",
+   "pdf_sha256": "1805f565a852b7f08eb76787d39c3bdf52e261c3532ef6a4919af5ee10c377b4",
    "source": "marketing/fr/09-modele-partenaires.md",
    "source_sha256": "14cb822589842769f90352fca04cf0832c602fb5e6cb064fe4110b752419bee6",
    "title": "Modèle de partenariat"
@@ -933,9 +933,9 @@
   "marketing/pdf/fr/10-indicateurs.pdf": {
    "bytes": 36871,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:54+00:00",
+   "generated": "2026-10-27T06:59:58+00:00",
    "lang": "fr",
-   "pdf_sha256": "b14943b931e3590f722274f2f68597adb52df3c6c1bc6f317f28ff677d0a5d02",
+   "pdf_sha256": "362c74cfefb0654f334f8a01436e98fa7b5875e7493d89432296996848d41f65",
    "source": "marketing/fr/10-indicateurs.md",
    "source_sha256": "693725536135413e6e7559b7e79e92a894d56925d16575d470df5f03d7e133ea",
    "title": "Indicateurs clés (KPI) et tableau de bord"
@@ -943,9 +943,9 @@
   "marketing/pdf/fr/11-scripts-videos.pdf": {
    "bytes": 49183,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:54+00:00",
+   "generated": "2026-10-27T06:59:59+00:00",
    "lang": "fr",
-   "pdf_sha256": "8d9902b3434f0b13a261ea2e727553cf735a1cc5228e6527a64208e781fc310e",
+   "pdf_sha256": "728d5ac01314e460835c99f00d9f600b0be98cdfeb973f12901add7c14d6c499",
    "source": "marketing/fr/11-scripts-videos.md",
    "source_sha256": "1f469fb013a2384e3228e279a9197e2f8fe4410ca83d9e81422b3f34110a65f9",
    "title": "Scripts vidéo (30, 60 et 90 secondes) — storyboards et voix off FR/EN"
@@ -953,9 +953,9 @@
   "marketing/pdf/fr/12-voix-de-marque.pdf": {
    "bytes": 35913,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:55+00:00",
+   "generated": "2026-10-27T06:59:59+00:00",
    "lang": "fr",
-   "pdf_sha256": "6049362c29b802f1125176eccb8c314e2365ab4dff161b31fb765fe431f04e27",
+   "pdf_sha256": "1361286c64db665090d07e4dcfd45c2a43a2343677355fb6fcf38944341a19af",
    "source": "marketing/fr/12-voix-de-marque.md",
    "source_sha256": "1aa4e9df9fa4ef54fddd85a73748c13a37752eda317108105072ddea26cbd715",
    "title": "Voix de la marque Nhill"
@@ -963,9 +963,9 @@
   "marketing/pdf/fr/13-pitchs.pdf": {
    "bytes": 31853,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:56+00:00",
+   "generated": "2026-10-27T07:00:00+00:00",
    "lang": "fr",
-   "pdf_sha256": "2c61c95acebc1ce65215e034ccc169f5154489988ddb8ead6a9399ac6f2aa874",
+   "pdf_sha256": "8fb6a8db239f0e1381398b8c2ba359183af677f71fec0f19bda84b03653f8a2d",
    "source": "marketing/fr/13-pitchs.md",
    "source_sha256": "563f0698f47be618c42d5ab1b107590d2f51d7691ce4c8e0b07d3f0a9194f74b",
    "title": "Pitchs de 30 secondes et de 2 minutes"
@@ -973,9 +973,9 @@
   "marketing/pdf/fr/14-presentation-commerciale.pdf": {
    "bytes": 43517,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:56+00:00",
+   "generated": "2026-10-27T07:00:01+00:00",
    "lang": "fr",
-   "pdf_sha256": "794d9f61da86752ff10b5d092786fc603fb644e33a0c6f88d4df5724aad73a36",
+   "pdf_sha256": "3cd02c2a7aa96d60f883c24d0074d32aeed09b5d0d351c31e9dfcee75a7389e0",
    "source": "marketing/fr/14-presentation-commerciale.md",
    "source_sha256": "3b36b3d56f1faa7b5201ac1311fcd5f30dfc84c24e4193cad384d07c9c1c19db",
    "title": "Présentation commerciale (10 diapositives)"
@@ -983,9 +983,9 @@
   "marketing/pdf/fr/15-faq-commerciale.pdf": {
    "bytes": 33409,
    "engine": "playwright",
-   "generated": "2026-10-27T06:53:57+00:00",
+   "generated": "2026-10-27T07:00:01+00:00",
    "lang": "fr",
-   "pdf_sha256": "b7b10a5bead116f8468e4bca98fb1489c31d001ec3229a95e55a2d787ab210b9",
+   "pdf_sha256": "09ef983eab5a33fb212225fa2291b84e6156d53f8881d08f2e5b5ebe5eefd412",
    "source": "marketing/fr/15-faq-commerciale.md",
    "source_sha256": "eba66ba1a6e78b861346d9a897b5ad71de7329753eb5f94633384ec06e271d7c",
    "title": "FAQ commerciale (réponses pour l'équipe et les partenaires)"
