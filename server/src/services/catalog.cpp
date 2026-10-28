@@ -200,7 +200,7 @@ void registerCatalogRoutes(App& app, Env& env) {
         std::string activeFilter = ctx.query("active").value_or("1");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             std::string where =
-                "WHERE ($1::text IS NULL OR p.name ILIKE '%' || $1 || '%' OR p.sku ILIKE '%' || $1 || '%' "
+                "WHERE ($1::text IS NULL OR p.name ILIKE nh_like_contains($1) OR p.sku ILIKE nh_like_contains($1) "
                 "OR p.barcode = $1) AND ($2::uuid IS NULL OR p.category_id = $2) "
                 "AND ($3 = 'all' OR p.active = ($3 = '1')) ";
             if (lowOnly)

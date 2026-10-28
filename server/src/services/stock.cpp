@@ -65,8 +65,8 @@ void registerStockRoutes(App& app, Env& env) {
                 "SELECT p.id, p.sku, p.name, p.unit, p.reorder_level_milli, "
                 "COALESCE((SELECT sum(l.quantity_milli) FROM stock_levels l WHERE l.product_id = p.id AND "
                 "($2::uuid IS NULL OR l.warehouse_id = $2)), 0) AS q, p.purchase_price_minor, p.currency "
-                "FROM products p WHERE p.track_stock AND p.active AND ($1::text IS NULL OR p.name ILIKE '%' || $1 || '%' "
-                "OR p.sku ILIKE '%' || $1 || '%')";
+                "FROM products p WHERE p.track_stock AND p.active AND ($1::text IS NULL OR p.name ILIKE nh_like_contains($1) "
+                "OR p.sku ILIKE nh_like_contains($1))";
             std::string outer = "SELECT * FROM (" + sql + ") s ";
             if (lowOnly) outer += "WHERE s.reorder_level_milli > 0 AND s.q <= s.reorder_level_milli ";
             int total = tx.one("SELECT count(*) FROM (" + outer + ") c", search, warehouse)[0].as<int>();

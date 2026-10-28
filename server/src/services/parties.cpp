@@ -76,8 +76,8 @@ void registerPartyRoutes(App& app, Env& env) {
         auto search = ctx.query("search");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
             std::string where = std::string("WHERE p.") + (role == "customer" ? "is_customer" : "is_supplier") +
-                                " AND ($1::text IS NULL OR p.name ILIKE '%' || $1 || '%' OR p.email ILIKE '%' || $1 || '%' "
-                                "OR p.phone LIKE '%' || $1 || '%') AND ($2 = 'all' OR p.active) ";
+                                " AND ($1::text IS NULL OR p.name ILIKE nh_like_contains($1) OR p.email ILIKE nh_like_contains($1) "
+                                "OR p.phone LIKE nh_like_contains($1)) AND ($2 = 'all' OR p.active) ";
             std::string active = ctx.query("active").value_or("1") == "all" ? "all" : "1";
             int total = tx.one("SELECT count(*) FROM parties p " + where, search, active)[0].as<int>();
             json items = json::array();

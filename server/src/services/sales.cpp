@@ -399,8 +399,8 @@ void registerSalesRoutes(App& app, Env& env) {
             std::string where =
                 "WHERE ($1::text IS NULL OR d.doc_type = $1) AND ($2::text IS NULL OR d.status = $2) "
                 "AND ($3::uuid IS NULL OR d.party_id = $3) AND ($4::date IS NULL OR d.issue_date >= $4::date) "
-                "AND ($5::date IS NULL OR d.issue_date <= $5::date) AND ($6::text IS NULL OR d.number ILIKE '%' || $6 || '%' "
-                "OR p.name ILIKE '%' || $6 || '%') ";
+                "AND ($5::date IS NULL OR d.issue_date <= $5::date) AND ($6::text IS NULL OR d.number ILIKE nh_like_contains($6) "
+                "OR p.name ILIKE nh_like_contains($6)) ";
             if (overdue) where += "AND d.doc_type = 'invoice' AND d.status IN ('issued','partially_paid') AND d.due_date < nh_local_today() ";
             const std::string types = entitlements::docTypesArray(ctx.actor);
             int total = tx.one("SELECT count(*) FROM sales_documents d JOIN parties p ON p.id = d.party_id " + where + "AND " +

@@ -241,8 +241,8 @@ void registerAdminRoutes(App& app, Env& env) {
         // erasable=true: establishments whose 90 days of export after the end of access are over.
         const bool erasable = ctx.query("erasable").value_or("") == "true";
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
-            std::string where = "WHERE ($1::text IS NULL OR e.trade_name ILIKE '%' || $1 || '%' OR e.email ILIKE '%' || $1 || "
-                                "'%' OR e.id::text = $1) AND ($2::text IS NULL OR e.status = $2) AND ($3::text IS NULL OR "
+            std::string where = "WHERE ($1::text IS NULL OR e.trade_name ILIKE nh_like_contains($1) OR "
+                                "e.email ILIKE nh_like_contains($1) OR e.id::text = $1) AND ($2::text IS NULL OR e.status = $2) AND ($3::text IS NULL OR "
                                 "s.status = $3) ";
             if (erasable) where += "AND COALESCE((SELECT x.eligible FROM nh_establishment_erasure(e.id) x), false) ";
             int total = tx.one("SELECT count(*) FROM establishments e LEFT JOIN subscriptions s ON s.establishment_id = e.id " +

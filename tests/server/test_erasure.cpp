@@ -172,3 +172,19 @@ TEST(Retention, OldSentEmailsAndEndedSessionsAreDeletedByTheDailyJob) {
     EXPECT_EQ(count("SELECT count(*) FROM email_outbox WHERE to_address = '" + addr + "' AND created_at > now() - interval '1 day'"), 1);
     EXPECT_EQ(count("SELECT count(*) FROM sessions WHERE establishment_id = '" + t.id + "'"), 0);
 }
+
+TEST(Search, PercentAndUnderscoreAreTakenLiterally) {
+    auto& h = Harness::get();
+    Tenant t = createTenant();
+    createCustomer(t, "Remise 50% Kin");
+    createCustomer(t, "Boutique_Gombe");
+    createCustomer(t, "Client ordinaire");
+    auto all = h.get("/api/v1/customers?search=%25", t.token);
+    ASSERT_EQ(all.status, 200) << all.raw;
+    EXPECT_EQ(all.body["total"], 1);   // only the name containing a real "%"
+    auto under = h.get("/api/v1/customers?search=_", t.token);
+    ASSERT_EQ(under.status, 200);
+    EXPECT_EQ(under.body["total"], 1);
+    auto plain = h.get("/api/v1/customers?search=ordinaire", t.token);
+    EXPECT_EQ(plain.body["total"], 1);
+}
