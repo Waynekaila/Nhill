@@ -31,9 +31,9 @@ FbPage {
                     [qsTr("Address"), [page.party.address, page.party.city].filter(function(x) { return x }).join(", ") || "—"],
                     [qsTr("Payment terms"), qsTr("%n day(s)", "", page.party.payment_terms_days)],
                     [qsTr("Tax number (NIF)"), page.party.tax_ids && page.party.tax_ids.nif ? page.party.tax_ids.nif : "—"],
-                    [qsTr("Receivable"), Object.keys(page.party.balances.receivable || {}).map(function(c) { return Fmt.money(page.party.balances.receivable[c], c) }).join(" · ") || "—"],
-                    [qsTr("Payable"), Object.keys(page.party.balances.payable || {}).map(function(c) { return Fmt.money(page.party.balances.payable[c], c) }).join(" · ") || "—"]
-                ] : []
+                    [qsTr("Receivable"), Object.keys(page.party.balances.receivable || {}).map(function(c) { return Fmt.money(page.party.balances.receivable[c], c) }).join(" · ") || "—", "sales.invoices"],
+                    [qsTr("Payable"), Object.keys(page.party.balances.payable || {}).map(function(c) { return Fmt.money(page.party.balances.payable[c], c) }).join(" · ") || "—", "purchases"]
+                ].filter(function(x) { return !x[2] || Session.has(x[2]) }) : []
                 delegate: ColumnLayout {
                     spacing: 0
                     Layout.fillWidth: true

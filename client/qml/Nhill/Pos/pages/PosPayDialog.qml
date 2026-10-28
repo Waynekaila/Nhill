@@ -18,11 +18,14 @@ FbDialog {
     preferredWidth: 620
     title: result ? qsTr("Sale recorded") : qsTr("Payment")
     subtitle: result ? result.receipt.number : (sale ? Fmt.money(sale.totals.total, sale.cur) : "")
-    readonly property string cur: sale ? sale.cur : "CDF"
+    readonly property string cur: sale ? sale.cur : Session.currency
+    // Invoice instead of a receipt: an identified customer and a plan with invoices.
+    property bool asInvoice: false
+    readonly property bool invoiceAllowed: Session.has("sales.invoices") && !!sale && !!sale.customer
     readonly property string paid: { rev; return Fmt.sum(payments.map(function(p) { return p.amount || "0" }), cur) }
     readonly property string remaining: sale ? Fmt.sum([sale.totals.total, "-" + paid], cur) : "0"
     function start() {
-        result = null; busy = false; key = Api.newIdempotencyKey()
+        result = null; busy = false; key = Api.newIdempotencyKey(); asInvoice = false
         var cash = PosNav.config.payment_methods.filter(function(m) { return m.kind === "cash" })[0]
         payments = cash ? [{ method: cash.code, label: cash.label, kind: "cash", amount: sale.totals.total, tendered: "" }] : []
         open()
@@ -42,6 +45,7 @@ FbDialog {
                      payments: payments.filter(function(p) { return p.amount && !Fmt.isZero(p.amount) }).map(function(p) {
                          var x = { method: p.method, amount: p.amount }; if (p.kind === "cash" && p.tendered) x.tendered = p.tendered; return x }) }
         if (sale.customer) body.customer_id = sale.customer.id
+        if (dlg.asInvoice && dlg.invoiceAllowed) body.document = "invoice"
         if (sale.promo) body.promo_code = sale.promo
         var done = function(r) {
             dlg.busy = false
@@ -66,8 +70,10 @@ FbDialog {
             done(r)
         }, key)
     }
-    function printReceipt() {
-        Api.download("/api/v1/pos/sales/" + result.receipt.id + "/receipt.pdf", result.receipt.number + ".pdf", function(r) { if (!r.ok) PosNav.fail(r) })
+    // Same templates as Nhill Business: roll ticket, or A4 page (invoices).
+    function printReceipt(format) {
+        Api.download("/api/v1/pos/sales/" + result.receipt.id + "/receipt.pdf?format=" + format,
+                     result.receipt.number + (format === "a4" ? "-A4" : "") + ".pdf", function(r) { if (!r.ok) PosNav.fail(r) })
     }
     function finish() { close(); sale.clear(); sale.loadCatalog() }
 
@@ -101,6 +107,13 @@ FbDialog {
                 delegate: FbButton { text: "+ " + modelData.label; variant: "secondary"; onClicked: dlg.addMethod(modelData) }
             }
         }
+        FbSwitch {
+            visible: dlg.invoiceAllowed
+            Layout.fillWidth: true
+            text: qsTr("Issue an invoice for %1 instead of a receipt").arg(dlg.sale && dlg.sale.customer ? dlg.sale.customer.name : "")
+            checked: dlg.asInvoice
+            onToggled: dlg.asInvoice = checked
+        }
         RowLayout {
             Layout.fillWidth: true
             Text { text: Fmt.isNegative(dlg.remaining) ? qsTr("Too much") : qsTr("Remaining"); color: Theme.textMuted; font.family: Theme.font; Layout.fillWidth: true }
@@ -112,7 +125,10 @@ FbDialog {
         visible: !!dlg.result
         Layout.fillWidth: true
         spacing: Theme.s3
-        Banner { Layout.fillWidth: true; tone: "success"; text: dlg.result ? qsTr("Receipt %1 — %2").arg(dlg.result.receipt.number).arg(Fmt.money(dlg.result.receipt.total, dlg.cur)) : "" }
+        Banner { Layout.fillWidth: true; tone: "success"
+                 text: !dlg.result ? "" : dlg.result.receipt.doc_type === "invoice"
+                       ? qsTr("Invoice %1 — %2").arg(dlg.result.receipt.number).arg(Fmt.money(dlg.result.receipt.total, dlg.cur))
+                       : qsTr("Receipt %1 — %2").arg(dlg.result.receipt.number).arg(Fmt.money(dlg.result.receipt.total, dlg.cur)) }
         RowLayout {
             Layout.fillWidth: true
             visible: !!dlg.result && !Fmt.isZero(dlg.result.change)
@@ -123,7 +139,11 @@ FbDialog {
     footer: [
         FbButton { visible: !dlg.result; text: qsTr("Validate"); iconName: "check"; busy: dlg.busy; enabled: Fmt.isZero(dlg.remaining) && !dlg.busy; onClicked: dlg.submit() },
         FbButton { visible: !dlg.result; text: qsTr("Back"); variant: "secondary"; onClicked: dlg.close() },
-        FbButton { visible: !!dlg.result; text: qsTr("Print the receipt"); iconName: "download"; variant: "secondary"; onClicked: dlg.printReceipt() },
+        FbButton { visible: !!dlg.result; text: dlg.result && dlg.result.receipt.doc_type === "invoice" ? qsTr("Print the invoice (A4)") : qsTr("Print the receipt")
+                   iconName: "download"; variant: "secondary"
+                   onClicked: dlg.printReceipt(dlg.result.receipt.doc_type === "invoice" ? "a4" : "ticket") },
+        FbButton { visible: !!dlg.result && dlg.result.receipt.doc_type === "invoice"; text: qsTr("Ticket"); iconName: "download"; variant: "ghost"
+                   onClicked: dlg.printReceipt("ticket") },
         FbButton { visible: !!dlg.result; text: qsTr("New sale"); iconName: "plus"; onClicked: dlg.finish() }
     ]
 }

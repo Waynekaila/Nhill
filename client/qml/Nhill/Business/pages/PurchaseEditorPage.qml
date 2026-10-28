@@ -76,7 +76,7 @@ FbPage {
             Field { label: qsTr("Supplier"); required: true; Layout.columnSpan: Theme.compact ? 1 : 2
                     FbComboBox { id: supplierBox; enabled: page.editable && !page.purchase; model: page.suppliers.map(function(s) { return { value: s.id, text: s.name } })
                                  displayText: currentIndex < 0 ? qsTr("Choose a supplier") : currentText } }
-            Field { label: qsTr("Currency"); FbComboBox { enabled: !page.purchase; model: Labels.currencies(); value: page.currency; onActivated: page.currency = currentValue } }
+            Field { label: qsTr("Currency"); FbComboBox { enabled: !page.purchase; model: Labels.currencyChoices(page.currency); value: page.currency; onActivated: page.currency = currentValue } }
             Field { label: qsTr("Supplier reference"); FbTextField { id: reference; enabled: page.editable; monospace: true } }
             Field { label: qsTr("Date"); DateField { id: purchaseDate; enabled: page.editable } }
             Field { label: qsTr("Due date"); DateField { id: dueDate; enabled: page.editable } }

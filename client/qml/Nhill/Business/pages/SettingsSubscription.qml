@@ -28,7 +28,9 @@ ColumnLayout {
         plans.forEach(function(p) { p.prices.forEach(function(x) { set[x.currency] = true }) })
         return Object.keys(set).sort()
     }
+    property var rights: null   // GET /entitlements: features of the plan, limits and usage
     function load() {
+        Api.get("/api/v1/entitlements", function(r) { if (r.ok) root.rights = r.data })
         Api.get("/api/v1/subscription", function(r) {
             if (!r.ok) { Nav.fail(r); return }
             root.sub = r.data.subscription; root.orders = r.data.orders; root.history = r.data.history; root.graceDays = r.data.grace_days || 7
@@ -67,7 +69,8 @@ ColumnLayout {
                 FbChip { visible: !!root.sub && !!root.sub.price; text: root.sub && root.sub.price ? Fmt.money(root.sub.price.price, root.sub.price.currency) + " / " + Labels.duration(root.sub.price.duration_months) : ""; tone: "neutral" }
             }
             Text { visible: !!root.sub; color: Theme.textMuted; font.family: Theme.font
-                   text: root.sub ? qsTr("Period: %1 → %2 · %3 day(s) left").arg(Fmt.date(root.sub.period_start)).arg(Fmt.date(root.sub.period_end)).arg(Math.max(0, root.sub.days_left)) : "" }
+                   text: !root.sub ? "" : root.sub.open_ended ? qsTr("Since %1 · no end date").arg(Fmt.date(root.sub.period_start))
+                         : qsTr("Period: %1 → %2 · %3 day(s) left").arg(Fmt.date(root.sub.period_start)).arg(Fmt.date(root.sub.period_end)).arg(Math.max(0, root.sub.days_left)) }
             Banner { Layout.fillWidth: true; visible: !!root.sub && !!root.sub.grace_until; tone: "warning"
                      text: root.sub && root.sub.grace_until ? qsTr("Payment overdue. Grace period until %1: after that date the establishment switches to read-only (consultation and export remain possible).").arg(Fmt.date(root.sub.grace_until)) : "" }
             Banner { Layout.fillWidth: true; visible: !!root.sub && !!root.sub.pending_change; tone: "info"
@@ -79,6 +82,43 @@ ColumnLayout {
                 text: qsTr("I agree to automatic renewal when a payment provider supporting it is connected")
                 checked: !!root.sub && root.sub.auto_renew_consent
                 onToggled: Api.send("POST", "/api/v1/subscription/auto-renew", { consent: checked }, function(r) { if (!r.ok) Nav.fail(r); root.load() })
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------- content of the plan
+    // What the plan includes, with the usage of its limits (nothing about what it does not include).
+    FbCard {
+        Layout.fillWidth: true
+        visible: !!root.rights
+        ColumnLayout {
+            width: parent.width
+            spacing: Theme.s2
+            SectionTitle { text: qsTr("Included in your plan") }
+            Flow {
+                Layout.fillWidth: true
+                spacing: Theme.s2
+                Repeater {
+                    model: root.rights ? root.rights.features : []
+                    delegate: FbChip {
+                        tone: "success"
+                        property var l: root.rights.labels[modelData] || {}
+                        text: (Prefs.language === "fr" ? l.label_fr : l.label_en) || modelData
+                    }
+                }
+            }
+            Repeater {
+                model: root.rights ? Object.keys(root.rights.limits) : []
+                delegate: RowLayout {
+                    Layout.fillWidth: true
+                    property var lim: root.rights.limits[modelData]
+                    property var l: root.rights.labels[modelData] || {}
+                    Text { text: (Prefs.language === "fr" ? l.label_fr : l.label_en) || modelData; color: Theme.text; font.family: Theme.font; Layout.fillWidth: true }
+                    Text {
+                        color: lim.max !== null && lim.used >= lim.max ? Theme.warning : Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                        text: lim.max === null ? qsTr("%1 used · unlimited").arg(lim.used) : qsTr("%1 of %2 used").arg(lim.used).arg(lim.max)
+                    }
+                }
             }
         }
     }

@@ -55,7 +55,7 @@ FbDialog {
         Field { label: qsTr("Category")
                 FbComboBox { id: category; model: [{ value: "", text: qsTr("— None —") }].concat(dlg.categories.map(function(c) { return { value: c.id, text: c.name } })); value: "" } }
         Field { label: qsTr("Unit"); FbComboBox { id: unit; model: Labels.units(); value: "unit" } }
-        Field { label: qsTr("Currency of prices"); FbComboBox { id: currency; enabled: !dlg.product; model: Labels.currencies(); value: Session.currency } }
+        Field { label: qsTr("Currency of prices"); FbComboBox { id: currency; enabled: !dlg.product; model: Labels.currencyChoices(dlg.product ? dlg.product.currency : ""); value: Session.currency } }
         Field { label: qsTr("Tax"); FbComboBox { id: tax; model: [{ value: "", text: qsTr("— Default rate —") }].concat(dlg.taxes.map(function(t) { return { value: t.id, text: t.label } })); value: "" } }
         Field { label: qsTr("Sale price excl. tax"); MoneyField { id: sale; currency: currency.value || Session.currency } }
         Field { label: qsTr("Purchase price"); help: qsTr("Used for estimated margins and stock value."); MoneyField { id: purchase; currency: currency.value || Session.currency } }

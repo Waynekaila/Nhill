@@ -1079,6 +1079,13 @@
         <source>My unpaid invoices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>%n till receipt(s)</source>
+        <translation>
+            <numerusform>%n till receipt</numerusform>
+            <numerusform>%n till receipts</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>DataTable</name>
@@ -8053,6 +8060,16 @@
     <message>
         <source>Not available on this device: the session is never stored without the system&apos;s secure storage.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PlanRulesPage</name>
+    <message numerus="yes">
+        <source>%n day(s)</source>
+        <translation>
+            <numerusform>%n day</numerusform>
+            <numerusform>%n days</numerusform>
+        </translation>
     </message>
 </context>
 </TS>

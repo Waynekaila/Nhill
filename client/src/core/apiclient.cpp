@@ -1,5 +1,6 @@
 #include "apiclient.h"
 
+#include <QCoreApplication>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
@@ -64,7 +65,76 @@ void ApiClient::setTokens(const QString& access, const QString& refresh) {
 void ApiClient::clearTokens() {
     m_access.clear();
     m_refresh.clear();
+    m_rights.clear();
     emit tokensChanged();
+}
+
+QString ApiClient::normaliseServerUrl(const QString& input) const {
+    QString v = input.trimmed();
+    if (v.isEmpty()) return QString();
+    if (!v.contains(QLatin1String("://"))) v.prepend(QLatin1String("https://"));
+    QUrl u(v, QUrl::StrictMode);
+    if (!u.isValid() || u.host().isEmpty()) return QString();
+    // Only the origin is kept: the API lives at /api/v1 of the server.
+    QUrl origin;
+    origin.setScheme(u.scheme().toLower());
+    origin.setHost(u.host().toLower());
+    if (u.port() > 0) origin.setPort(u.port());
+    return origin.toString();
+}
+
+void ApiClient::probeServer(const QString& input, const QJSValue& cb) {
+    ApiResult res;
+    const QString base = normaliseServerUrl(input);
+    if (base.isEmpty()) {
+        res.errorCode = QStringLiteral("invalid_url");
+        callJs(cb, res);
+        return;
+    }
+    const QUrl url = QUrl(base).resolved(QUrl(QStringLiteral("/api/v1/meta")));
+    if (!urlAllowed(url)) {
+        res.errorCode = QStringLiteral("insecure_url");
+        callJs(cb, res);
+        return;
+    }
+    QNetworkRequest req(url);
+    req.setTransferTimeout(10000);
+    req.setRawHeader("Accept", "application/json");
+    req.setRawHeader("User-Agent", "Nhill-Client/" + QCoreApplication::applicationVersion().toUtf8());
+    QNetworkReply* reply = m_probeNam.get(req);
+    connect(reply, &QNetworkReply::finished, this, [this, reply, cb, base]() {
+        reply->deleteLater();
+        ApiResult r;
+        const QVariant st = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+        if (!st.isValid()) {
+            r.network = true;
+            const auto err = reply->error();
+            r.errorCode = err == QNetworkReply::OperationCanceledError || err == QNetworkReply::TimeoutError
+                              ? QStringLiteral("timeout")
+                          : err == QNetworkReply::SslHandshakeFailedError ? QStringLiteral("tls_error")
+                                                                          : QStringLiteral("network_error");
+            r.message = reply->errorString();
+            callJs(cb, r);
+            return;
+        }
+        r.status = st.toInt();
+        const QJsonObject meta = QJsonDocument::fromJson(reply->readAll()).object();
+        // A Nhill server identifies itself in GET /api/v1/meta.
+        if (r.status != 200 || meta.value(QStringLiteral("product")).toString() != QLatin1String("Nhill") ||
+            meta.value(QStringLiteral("api")).toString() != QLatin1String("v1")) {
+            r.errorCode = QStringLiteral("not_nhill_server");
+            callJs(cb, r);
+            return;
+        }
+        r.ok = true;
+        QJsonObject d{{QStringLiteral("url"), base},
+                      {QStringLiteral("version"), meta.value(QStringLiteral("version"))},
+                      {QStringLiteral("api"), meta.value(QStringLiteral("api"))},
+                      {QStringLiteral("min_client_version"), meta.value(QStringLiteral("min_client_version"))},
+                      {QStringLiteral("mode"), meta.value(QStringLiteral("mode")).toString(QStringLiteral("ready"))}};
+        r.data = d;
+        callJs(cb, r);
+    });
 }
 
 QString ApiClient::newIdempotencyKey() const { return QUuid::createUuid().toString(QUuid::WithoutBraces); }
@@ -103,7 +173,7 @@ void ApiClient::dispatch(Request r, Callback cb) {
     req.setTransferTimeout(r.timeoutMs > 0 ? r.timeoutMs : m_timeoutMs);
     req.setRawHeader("Accept", "application/json");
     req.setRawHeader("Accept-Language", m_lang.toUtf8());
-    req.setRawHeader("User-Agent", "Nhill-Client/0.1");
+    req.setRawHeader("User-Agent", "Nhill-Client/" + QCoreApplication::applicationVersion().toUtf8());
     if (r.auth && !m_access.isEmpty()) req.setRawHeader("Authorization", "Bearer " + m_access.toUtf8());
     if (!r.idempotencyKey.isEmpty()) req.setRawHeader("Idempotency-Key", r.idempotencyKey.toUtf8());
     QByteArray payload = r.rawBody;
@@ -147,6 +217,12 @@ void ApiClient::dispatch(Request r, Callback cb) {
         }
         res.status = statusAttr.toInt();
         res.raw = reply->readAll();
+        const QByteArray rights = reply->rawHeader("X-Nhill-Rights");
+        if (!rights.isEmpty() && rights != m_rights) {
+            const bool first = m_rights.isEmpty();
+            m_rights = rights;
+            if (!first) emit rightsChanged(QString::fromLatin1(rights));
+        }
         res.contentType = reply->header(QNetworkRequest::ContentTypeHeader).toString();
         setConnection(res.status >= 500 && res.status != 503 ? Degraded : Online);
         if (res.contentType.contains(QLatin1String("json")) && !res.raw.isEmpty()) {
@@ -178,6 +254,9 @@ void ApiClient::dispatch(Request r, Callback cb) {
                 return;
             }
             if (res.status == 402) emit subscriptionBlocked(res.errorCode);
+            // A feature refused by the server: the displayed rights are out of date.
+            if (res.status == 403 && res.errorCode == QLatin1String("feature_not_included"))
+                emit rightsChanged(QString::fromLatin1(m_rights));
         }
         cb(res);
     });
@@ -282,6 +361,7 @@ void ApiClient::upload(const QString& method, const QString& path, const QUrl& l
 void ApiClient::download(const QString& path, const QString& fileName, const QJSValue& cb) {
     Request r;
     r.path = path;
+    r.timeoutMs = 120000;   // reports and data exports are generated on request
     request(r, [this, cb, fileName](const ApiResult& res) {
         if (!res.ok) {
             callJs(cb, res);

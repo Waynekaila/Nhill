@@ -18,7 +18,7 @@ Rectangle {
     property string promo: ""
     // 2.0.0: the screen adapts down to 860 px wide (small laptops, 1024 x 600 netbooks)
     readonly property bool narrow: width < 1200
-    readonly property string cur: PosNav.session ? PosNav.session.currency : (PosNav.config ? PosNav.config.currency : "CDF")
+    readonly property string cur: PosNav.session ? PosNav.session.currency : (PosNav.config ? PosNav.config.currency : Session.currency)
     readonly property var categories: {
         var set = {}
         catalog.forEach(function(p) { if (p.category) set[p.category] = true })

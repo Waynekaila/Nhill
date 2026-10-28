@@ -10,7 +10,7 @@
 # Les emplacements se donnent par variables d'environnement :
 #   QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 #   ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
-#   scripts/build-android.sh [--server-url URL] [--output DIR] [--force] [--dry-run]
+#   scripts/build-android.sh [--output DIR] [--force] [--dry-run]
 # QtKeychain (« Se souvenir de moi », Keystore Android) : KEYCHAIN_PREFIX=… construit par
 # packaging/android/build-qtkeychain-android.sh (obligatoire, ALLOW_NO_KEYCHAIN=1 pour s'en passer).
 # Signature de publication : KEYSTORE=… KEYSTORE_ALIAS=… KEYSTORE_PASS=… (sinon clé de
@@ -24,7 +24,7 @@ source "$(dirname "$0")/lib/common.sh"
 SERVER_URL="" OUT="" FORCE=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --server-url) SERVER_URL="${2:?}"; shift ;;
+    --server-url) echo "--server-url : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; exit 2 ;;
     --output|-o) OUT="${2:?}"; shift ;;
     --force) FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;

@@ -7,7 +7,7 @@ import Nhill.Business
 
 FbPage {
     id: page
-    title: qsTr("Customers & suppliers")
+    title: Session.has("purchases") || Session.has("expenses") ? qsTr("Customers & suppliers") : qsTr("Customers")
     property string role: "customer"
     property string search: ""
     property var rows: []
@@ -25,7 +25,7 @@ FbPage {
     }
     Component.onCompleted: reload()
     actions: [
-        FbButton { visible: Session.can("parties.write") && (page.role === "customer" || Session.can("purchases.write"))
+        FbButton { visible: Session.can("parties.write") && (page.role === "customer" || Session.can("purchases.write") || Session.can("expenses.write"))
                    text: page.role === "customer" ? qsTr("New customer") : qsTr("New supplier"); iconName: "plus"
                    onClicked: dialog.openNew(page.role === "customer", page.role === "supplier") }
     ]
@@ -34,7 +34,9 @@ FbPage {
         spacing: Theme.s3
         RowLayout {
             Layout.fillWidth: true
-            TabStrip { model: [{ value: "customer", text: qsTr("Customers") }, { value: "supplier", text: qsTr("Suppliers") }]
+            // Suppliers exist when the plan includes purchases or expenses.
+            TabStrip { visible: Session.has("purchases") || Session.has("expenses")
+                       model: [{ value: "customer", text: qsTr("Customers") }, { value: "supplier", text: qsTr("Suppliers") }]
                        current: page.role; onSelected: function(v) { page.role = v; page.reload() } }
             Item { Layout.fillWidth: true }
         }

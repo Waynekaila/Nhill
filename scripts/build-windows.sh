@@ -14,7 +14,7 @@
 #      compilé par packaging/windows/build-qt-mingw.sh (long : plusieurs heures).
 #
 # Usage (Linux) :
-#   scripts/build-windows.sh [--qt-prefix /opt/nhill-win/qt6] [--server-url URL]
+#   scripts/build-windows.sh [--qt-prefix /opt/nhill-win/qt6]
 #                            [--output DIR] [--force] [--dry-run]
 # Sortie : 0 succès · 1 échec · 2 usage · 3 environnement incompatible (Windows, Qt
 # pour Windows ou MinGW absents : le message indique la marche à suivre).
@@ -26,7 +26,7 @@ QT_PREFIX=/opt/nhill-win/qt6 SERVER_URL="" OUT="" FORCE=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --qt-prefix) QT_PREFIX="${2:?}"; shift ;;
-    --server-url) SERVER_URL="${2:?}"; shift ;;
+    --server-url) echo "--server-url : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; exit 2 ;;
     --output|-o) OUT="${2:?}"; shift ;;
     --force) FORCE=1 ;;
     --dry-run) DRY_RUN=1 ;;

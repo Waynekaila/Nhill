@@ -8,28 +8,41 @@ import Nhill.Ui
 Item {
     id: shell
     property string section: "dashboard"
+    // A section appears only when the role allows it (perm) AND the plan of the
+    // establishment includes its feature ("a|b": one of them). The server refuses the
+    // same requests; this list only follows the rights it sends (Session.me).
     readonly property var sections: [
         { key: "dashboard", icon: "dashboard", title: qsTr("Dashboard"), page: "pages/DashboardPage.qml" },
-        { key: "sales", icon: "invoice", title: qsTr("Sales"), page: "pages/SalesPage.qml" },
-        { key: "customers", icon: "users", title: qsTr("Customers & suppliers"), page: "pages/PartiesPage.qml" },
+        { key: "sales", icon: "invoice", title: qsTr("Sales"), page: "pages/SalesPage.qml", feature: "sales.invoices|sales.quotes|pos" },
+        { key: "customers", icon: "users", title: Session.has("purchases") || Session.has("expenses") ? qsTr("Customers & suppliers") : qsTr("Customers"), page: "pages/PartiesPage.qml" },
         { key: "products", icon: "box", title: qsTr("Products & services"), page: "pages/ProductsPage.qml" },
         { key: "stock", icon: "stock", title: qsTr("Stock"), page: "pages/StockPage.qml" },
-        { key: "purchases", icon: "cart", title: qsTr("Purchases"), page: "pages/PurchasesPage.qml", perm: "purchases.write" },
-        { key: "expenses", icon: "wallet", title: qsTr("Expenses"), page: "pages/ExpensesPage.qml" },
+        { key: "purchases", icon: "cart", title: qsTr("Purchases"), page: "pages/PurchasesPage.qml", perm: "purchases.write", feature: "purchases" },
+        { key: "expenses", icon: "wallet", title: qsTr("Expenses"), page: "pages/ExpensesPage.qml", feature: "expenses" },
         { key: "payments", icon: "payment", title: qsTr("Payments"), page: "pages/PaymentsPage.qml" },
         { key: "reports", icon: "chart", title: qsTr("Reports"), page: "pages/ReportsPage.qml", perm: "reports.read" },
         { key: "activity", icon: "clock", title: Session.can("audit.read") ? qsTr("Activity log") : qsTr("My activity"), page: "pages/ActivityPage.qml" },
         { key: "settings", icon: "settings", title: qsTr("Settings"), page: "pages/SettingsPage.qml" },
         { key: "support", icon: "info", title: qsTr("Help & support"), page: "pages/SupportPage.qml" }
     ]
-    function visibleSections() { return sections.filter(function(s) { return !s.perm || Session.can(s.perm) }) }
-    function navigate(key, props) {
-        for (var i = 0; i < sections.length; ++i) if (sections[i].key === key) {
-            section = key
-            pages.replace(null, Qt.resolvedUrl(sections[i].page), props || {})
-            drawer.close()
-            return
+    function hasAny(spec) { return spec.split("|").some(function(f) { return Session.has(f) }) }
+    function allowed(s) { return (!s.perm || Session.can(s.perm)) && (!s.feature || hasAny(s.feature)) }
+    function visibleSections() { return sections.filter(allowed) }
+    // The rights changed (plan, role): a section that is no longer allowed is left.
+    Connections {
+        target: Session
+        function onChanged() {
+            for (var i = 0; i < shell.sections.length; ++i)
+                if (shell.sections[i].key === shell.section && !shell.allowed(shell.sections[i])) { shell.navigate("dashboard"); return }
         }
+    }
+    function navigate(key, props) {
+        var target = sections[0]   // dashboard, always allowed
+        for (var i = 0; i < sections.length; ++i)
+            if (sections[i].key === key && allowed(sections[i])) target = sections[i]
+        section = target.key
+        pages.replace(null, Qt.resolvedUrl(target.page), target.key === key ? (props || {}) : {})
+        drawer.close()
     }
     function push(url, props) { pages.push(Qt.resolvedUrl(url), props || {}) }
     function pop() { if (pages.depth > 1) pages.pop() }
@@ -39,9 +52,9 @@ Item {
 
     // ---- keyboard shortcuts (desktop)
     Shortcut { sequence: "Ctrl+K"; onActivated: searchPopup.openSearch() }
-    Shortcut { sequence: "Ctrl+N"; enabled: Session.can("sales.write"); onActivated: shell.push("pages/DocumentEditorPage.qml", { docType: "invoice" }) }
+    Shortcut { sequence: "Ctrl+N"; enabled: Session.can("sales.write") && Session.has("sales.invoices"); onActivated: shell.push("pages/DocumentEditorPage.qml", { docType: "invoice" }) }
     Shortcut { sequence: "Ctrl+1"; onActivated: shell.navigate("dashboard") }
-    Shortcut { sequence: "Ctrl+2"; onActivated: shell.navigate("sales") }
+    Shortcut { sequence: "Ctrl+2"; enabled: Session.has("sales.invoices") || Session.has("sales.quotes") || Session.has("pos"); onActivated: shell.navigate("sales") }
     Shortcut { sequence: "Ctrl+3"; onActivated: shell.navigate("customers") }
     Shortcut { sequence: "Ctrl+4"; onActivated: shell.navigate("products") }
     Shortcut { sequence: "F5"; onActivated: shell.refreshCurrent() }
@@ -52,7 +65,8 @@ Item {
         ColumnLayout {
             spacing: 2
             Repeater {
-                model: shell.visibleSections()
+                // Session.me is read so that the menu follows every change of rights.
+                model: Session.me ? shell.visibleSections() : []
                 delegate: AbstractButton {
                     id: item
                     readonly property bool active: shell.section === modelData.key

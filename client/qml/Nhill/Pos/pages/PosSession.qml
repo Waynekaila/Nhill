@@ -14,7 +14,7 @@ Rectangle {
     property var s: null
     readonly property bool open: !!s && s.status === "open"
     readonly property bool narrow: width < 1180     // 2.0.0: secondary actions become icon buttons
-    readonly property string cur: s ? s.currency : "CDF"
+    readonly property string cur: s ? s.currency : Session.currency
     function reload() { Api.get("/api/v1/pos/sessions/" + sessionId, function(r) { if (r.ok) { root.s = r.data; if (r.data.status === "open") PosNav.session = r.data } else PosNav.fail(r) }) }
     function report() {
         Api.download("/api/v1/pos/sessions/" + sessionId + "/report.pdf", (open ? "X-" : "Z-") + s.register.code + "-" + s.number + ".pdf",
@@ -77,7 +77,7 @@ Rectangle {
             columns: [
                 { title: qsTr("Date / time"), width: 1, minWidth: 130, muted: true, value: function(d) { return Fmt.dateTime(d.issued_at) } },
                 { title: qsTr("Number"), width: 1.2, mono: true, strong: true, value: function(d) { return d.number } },
-                { title: qsTr("Type"), width: 0.9, value: function(d) { return d.doc_type === "receipt" ? qsTr("Sale") : qsTr("Return / void") } },
+                { title: qsTr("Type"), width: 0.9, value: function(d) { return d.doc_type === "receipt" ? qsTr("Sale") : d.doc_type === "invoice" ? qsTr("Invoice") : qsTr("Return / void") } },
                 { title: qsTr("Customer"), width: 1.3, muted: true, value: function(d) { return d.customer } },
                 { title: qsTr("Total"), width: 1, align: "right", value: function(d) { return (d.doc_type === "credit_note" ? "−" : "") + Fmt.money(d.total, d.currency) } },
                 { title: qsTr("Status"), width: 0.9, chip: function(d) { return d.doc_type === "credit_note" ? { text: qsTr("Refund"), tone: "warning" }
@@ -117,7 +117,7 @@ Rectangle {
                                if (r.ok) { docDialog.close(); PosNav.toast(qsTr("Credit note %1 — refund %2").arg(r.data.credit_note.number).arg(Fmt.money(r.data.credit_note.total, cur)), "success"); root.reload() }
                                else PosNav.fail(r) })
         }
-        readonly property bool returnable: !!full && full.doc_type === "receipt" && full.status !== "credited" && root.open
+        readonly property bool returnable: !!full && (full.doc_type === "receipt" || full.doc_type === "invoice") && full.status !== "credited" && root.open
         Repeater {
             model: docDialog.full ? docDialog.full.lines : []
             delegate: RowLayout {

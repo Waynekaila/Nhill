@@ -19,7 +19,7 @@ SetCompressor /SOLID lzma
   !define OUTPUT_DIR "."
 !endif
 !ifndef APP_VERSION
-  !define APP_VERSION "2.1.0"   ; normally passed by the build scripts (/DAPP_VERSION=x.y.z from CMakeLists.txt)
+  !define APP_VERSION "3.0.0"   ; normally passed by the build scripts (/DAPP_VERSION=x.y.z from CMakeLists.txt)
 !endif
 
 !if "${APP_ID}" == "nhill-business"

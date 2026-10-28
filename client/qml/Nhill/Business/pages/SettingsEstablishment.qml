@@ -23,6 +23,7 @@ ColumnLayout {
             phone.text = r.data.phone || ""; website.text = r.data.website || ""; vat.checked = r.data.vat_registered; tz.value = r.data.timezone
             terms.text = String(r.data.settings.default_payment_terms_days); footer.text = r.data.settings.invoice_footer
             payInfo.text = r.data.settings.payment_instructions; negStock.checked = r.data.settings.allow_negative_stock
+            mentions.text = r.data.settings.document_mentions || ""
             docLang.value = r.data.settings.document_language; rounding.value = r.data.settings.tax_rounding
             Api.get("/api/v1/countries/" + r.data.country_code + "/profile", function(p) { if (p.ok) root.profile = p.data })
             if (r.data.has_logo) Api.fetchImage("/api/v1/establishment/logo", function(i) { root.logoUrl = i.ok ? i.data : "" })
@@ -52,7 +53,7 @@ ColumnLayout {
                 Field { label: qsTr("City"); FbTextField { id: city; enabled: root.canEdit } }
                 Field { label: qsTr("Address"); FbTextField { id: address; enabled: root.canEdit } }
                 Field { label: qsTr("Email"); FbTextField { id: email; enabled: root.canEdit; inputMethodHints: Qt.ImhEmailCharactersOnly } }
-                Field { label: qsTr("Phone"); FbTextField { id: phone; enabled: root.canEdit; inputMethodHints: Qt.ImhDialableCharactersOnly; placeholderText: "+243…" } }
+                Field { label: qsTr("Phone"); FbTextField { id: phone; enabled: root.canEdit; inputMethodHints: Qt.ImhDialableCharactersOnly; placeholderText: qsTr("+ country code and number") } }
                 Field { label: qsTr("Website"); FbTextField { id: website; enabled: root.canEdit } }
                 Field { label: qsTr("Time zone"); help: qsTr("Dates of documents, cash sessions and daily reports follow this time zone.")
                         FbComboBox { id: tz; enabled: root.canEdit
@@ -152,6 +153,8 @@ ColumnLayout {
                 Field { label: qsTr("Tax rounding"); FbComboBox { id: rounding; enabled: root.canEdit; model: [{ value: "per_line", text: qsTr("Per line") }, { value: "per_rate", text: qsTr("Per rate (on totals)") }] } }
             }
             Field { label: qsTr("Payment instructions (printed on invoices)"); FbTextArea { id: payInfo; enabled: root.canEdit; placeholderText: qsTr("e.g. Bank, account, Mobile Money number") } }
+            Field { label: qsTr("Mentions on every document"); help: qsTr("Printed on invoices, quotes, credit notes and till receipts (A4 and ticket). Write here the mentions your activity requires; Nhill does not write or check them for you.")
+                    FbTextArea { id: mentions; enabled: root.canEdit } }
             Field { label: qsTr("Footer"); FbTextArea { id: footer; enabled: root.canEdit } }
             FbSwitch { id: negStock; enabled: root.canEdit; text: qsTr("Allow selling below zero stock") }
             RowLayout {
@@ -159,8 +162,30 @@ ColumnLayout {
                 Item { Layout.fillWidth: true }
                 FbButton { text: qsTr("Save"); onClicked: Api.send("PATCH", "/api/v1/establishment/settings",
                                { document_language: docLang.value, default_payment_terms_days: parseInt(terms.text || "0"), tax_rounding: rounding.value,
-                                 payment_instructions: payInfo.text, invoice_footer: footer.text, allow_negative_stock: negStock.checked },
+                                 payment_instructions: payInfo.text, invoice_footer: footer.text, document_mentions: mentions.text,
+                                 allow_negative_stock: negStock.checked },
                                function(r) { if (r.ok) Nav.toast(qsTr("Saved"), "success"); else Nav.fail(r) }) }
+            }
+        }
+    }
+    // Full export (owner): every data of the business, whatever the plan or the state of
+    // the subscription, as one archive (JSON and CSV files, attachments, manifest).
+    FbCard {
+        Layout.fillWidth: true
+        visible: Session.role === "owner"
+        ColumnLayout {
+            width: parent.width
+            spacing: Theme.s3
+            SectionTitle { text: qsTr("Export all my data") }
+            Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                   text: qsTr("One ZIP archive with all the data of the business (spreadsheet CSV files and JSON files), the stored files and a list of contents. Available at any time to the owner, including in read-only mode. Keep it safe: it contains personal data.") }
+            RowLayout {
+                Item { Layout.fillWidth: true }
+                FbButton { id: exportButton; text: qsTr("Download the archive"); iconName: "download"; variant: "secondary"
+                           onClicked: { exportButton.busy = true
+                               Api.download("/api/v1/establishment/export", "nhill-export.zip", function(r) {
+                                   exportButton.busy = false
+                                   r.ok ? Nav.toast(qsTr("Saved in %1").arg(r.data), "success") : Nav.fail(r) }) } }
             }
         }
     }

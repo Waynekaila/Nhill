@@ -292,6 +292,11 @@ TEST(Setup, SetupModeEndpoints) {
     auto health = cli.Get("/health");
     ASSERT_TRUE(health);
     EXPECT_EQ(json::parse(health->body)["status"], "setup");
+    // The applications recognise a Nhill server waiting for its installation.
+    auto meta = cli.Get("/api/v1/meta");
+    ASSERT_TRUE(meta);
+    EXPECT_EQ(json::parse(meta->body)["product"], "Nhill");
+    EXPECT_EQ(json::parse(meta->body)["mode"], "setup");
     json db = {{"provider", "postgres"}, {"host", "127.0.0.1"}, {"port", cl.port}, {"database", "viahttp"},
                {"user", "postgres"}, {"password", "super-secret-pw"}, {"sslmode", "disable"}};
 

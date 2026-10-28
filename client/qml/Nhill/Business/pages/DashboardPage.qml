@@ -53,24 +53,37 @@ FbPage {
         property var rev: page.data ? page.val(page.data.revenue, page.cur) : null
         property var recv: page.data ? page.val(page.data.receivables, page.cur) : null
         readonly property bool self: !!page.data && page.data.scope === "self"
+        // Tiles of the plan's features only (the server sends the same figures only).
         KpiTile {
+            visible: Session.has("sales.invoices") || Session.has("pos")
             label: parent.self ? qsTr("My sales (excl. tax)") : qsTr("Revenue (excl. tax)")
             iconName: "chart"
             value: parent.rev ? Fmt.money(parent.rev.net, page.cur) : Fmt.money("0", page.cur)
-            caption: parent.rev ? qsTr("%n invoice(s)", "", parent.rev.invoices) : qsTr("No invoice in the period")
+            caption: !parent.rev ? qsTr("No sale in the period")
+                     : Session.has("pos") && Session.has("sales.invoices") ? qsTr("%1 invoice(s) · %2 till receipt(s)").arg(parent.rev.invoices).arg(parent.rev.receipts || 0)
+                     : Session.has("pos") ? qsTr("%n till receipt(s)", "", parent.rev.receipts || 0)
+                     : qsTr("%n invoice(s)", "", parent.rev.invoices)
         }
         KpiTile {
+            visible: Session.has("sales.invoices")
             label: parent.self ? qsTr("My unpaid invoices") : qsTr("Unpaid invoices")
             iconName: "invoice"; tone: parent.recv && parent.recv.overdue_count > 0 ? "danger" : "accent"
             value: parent.recv ? Fmt.money(parent.recv.open, page.cur) : Fmt.money("0", page.cur)
             caption: parent.recv ? qsTr("%1 open · %2 overdue").arg(parent.recv.open_count).arg(parent.recv.overdue_count) : qsTr("Nothing to collect")
         }
         KpiTile {
-            visible: !parent.self
+            visible: !parent.self && Session.has("expenses")
             label: qsTr("Expenses")
             iconName: "wallet"; tone: "accent"
-            value: page.data && page.data.expenses[page.cur] ? Fmt.money(page.data.expenses[page.cur], page.cur) : Fmt.money("0", page.cur)
-            caption: page.data && page.data.payables[page.cur] ? qsTr("To pay: %1").arg(Fmt.money(page.data.payables[page.cur], page.cur)) : qsTr("No supplier debt")
+            value: page.data && page.data.expenses && page.data.expenses[page.cur] ? Fmt.money(page.data.expenses[page.cur], page.cur) : Fmt.money("0", page.cur)
+            caption: page.data && page.data.payables && page.data.payables[page.cur] ? qsTr("To pay: %1").arg(Fmt.money(page.data.payables[page.cur], page.cur)) : qsTr("No supplier debt")
+        }
+        KpiTile {
+            visible: !parent.self && !Session.has("expenses") && Session.has("purchases")
+            label: qsTr("Amounts to pay")
+            iconName: "cart"; tone: "accent"
+            value: page.data && page.data.payables && page.data.payables[page.cur] ? Fmt.money(page.data.payables[page.cur], page.cur) : Fmt.money("0", page.cur)
+            caption: qsTr("Received purchases not yet paid")
         }
         KpiTile {
             label: qsTr("Stock alerts")
@@ -117,7 +130,7 @@ FbPage {
                             ColumnLayout {
                                 spacing: 2
                                 Text { Layout.alignment: Qt.AlignRight; text: Fmt.money(modelData.total, modelData.currency); color: Theme.text; font.family: Theme.font; font.weight: Font.DemiBold }
-                                FbChip { Layout.alignment: Qt.AlignRight; property var c: Labels.docStatus({ status: modelData.status, doc_type: "invoice" }); text: c.text; tone: c.tone }
+                                FbChip { Layout.alignment: Qt.AlignRight; property var c: Labels.docStatus({ status: modelData.status, doc_type: modelData.doc_type || "invoice" }); text: c.text; tone: c.tone }
                             }
                         }
                     }

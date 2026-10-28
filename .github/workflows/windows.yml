@@ -6,12 +6,7 @@ on:
   push:
     tags: ['v*']
     branches: ['release/**']
-  workflow_dispatch:
-    inputs:
-      server_url:
-        description: "Adresse d'API compilée dans les applications (vide = choix au premier lancement)"
-        required: false
-        default: ""
+  workflow_dispatch:   # 3.0.0 : plus d'adresse d'API compilée (saisie au premier lancement)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -56,8 +51,6 @@ jobs:
                  '-Source', "`"$env:GITHUB_WORKSPACE`"", '-QtDir', "`"$env:QT_ROOT_DIR`"",
                  '-KeychainDir', "`"$env:RUNNER_TEMP\qtkeychain`"",
                  '-BuildDir', "`"$env:GITHUB_WORKSPACE\build-windows`"")
-          $url = "${{ github.event.inputs.server_url }}"
-          if ($url) { $a += @('-ServerUrl', $url) }
           $p = Start-Process powershell -ArgumentList $a -NoNewWindow -PassThru `
                  -RedirectStandardOutput build-windows-log.txt -RedirectStandardError build-windows-err.txt
           $null = $p.Handle   # garantit la lecture du code de sortie

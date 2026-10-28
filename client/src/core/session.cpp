@@ -13,7 +13,12 @@ namespace nhc {
 namespace {
 // Only a boolean preference lives in QSettings; the token itself is in the secure store.
 const QString kRememberKey = QStringLiteral("session/remember");
-QString storeKey(const ApiClient* api) { return QStringLiteral("refresh@") + QUrl(api->baseUrl()).host(); }
+// One stored session per server (host and port): a token is only ever sent back to the
+// server that issued it.
+QString storeKey(const ApiClient* api) {
+    const QUrl u(api->baseUrl());
+    return QStringLiteral("refresh@") + u.host() + (u.port() > 0 ? QStringLiteral(":%1").arg(u.port()) : QString());
+}
 }  // namespace
 
 Session::Session(ApiClient* api, SecureStore* store, QObject* parent) : QObject(parent), m_api(api), m_store(store) {
@@ -26,6 +31,12 @@ Session::Session(ApiClient* api, SecureStore* store, QObject* parent) : QObject(
         m_me.clear();
         emit changed();
         emit expired();
+    });
+    // Rights changed on the server (plan, role, access): reload them now.
+    connect(api, &ApiClient::rightsChanged, this, [this](const QString& version) {
+        if (!m_loggedIn || m_reloading) return;
+        if (!version.isEmpty() && version == m_me.value(QStringLiteral("rights_version")).toString()) return;
+        reload();
     });
 }
 
@@ -46,6 +57,19 @@ void Session::forget() { m_store->remove(storeKey(m_api)); }
 
 bool Session::can(const QString& permission) const {
     return m_me.value(QStringLiteral("permissions")).toStringList().contains(permission);
+}
+
+bool Session::has(const QString& feature) const { return can(QStringLiteral("feature.") + feature); }
+
+QVariantMap Session::limit(const QString& key) const {
+    return entitlements().value(QStringLiteral("limits")).toMap().value(key).toMap();
+}
+
+void Session::discard() {
+    m_api->clearTokens();
+    m_loggedIn = false;
+    m_me.clear();
+    emit changed();
 }
 
 void Session::callJs(const QJSValue& cb, bool ok) {
@@ -82,7 +106,9 @@ void Session::start(const QVariantMap& session, const QJSValue& done) {
 void Session::reload(const QJSValue& done) {
     ApiClient::Request r;
     r.path = QStringLiteral("/api/v1/me");
+    m_reloading = true;
     m_api->request(r, [this, done](const ApiResult& res) {
+        m_reloading = false;
         if (res.ok) setMe(res.data.toObject().toVariantMap());
         callJs(done, res.ok);
     });

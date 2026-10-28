@@ -19,8 +19,25 @@ Rectangle {
         spacing: Theme.s4
         LogoMark { app: "console"; Layout.preferredHeight: 44; Layout.preferredWidth: 300; Layout.alignment: Qt.AlignHCenter }
         Text { Layout.alignment: Qt.AlignHCenter; text: qsTr("Administration console"); color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_lg }
+        // First connection: the address of the Nhill server to administer (never built in).
         FbCard {
             Layout.fillWidth: true
+            visible: !Prefs.serverConfigured
+            ColumnLayout {
+                width: parent.width
+                spacing: Theme.s3
+                Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.text; font.family: Theme.font; font.pixelSize: Theme.fs_lg; font.weight: Font.DemiBold
+                       text: qsTr("Which Nhill server do you administer?") }
+                ServerAddressForm {
+                    Layout.fillWidth: true; initial: ""; saveText: qsTr("Continue")
+                    // A server waiting for its installation opens the installation wizard.
+                    onSaved: function(url) { Api.get("/health", function(r) { if (r.ok && r.data && r.data.status === "setup") ConsoleNav.window.openSetup() }) }
+                }
+            }
+        }
+        FbCard {
+            Layout.fillWidth: true
+            visible: Prefs.serverConfigured
             ColumnLayout {
                 width: parent.width
                 spacing: Theme.s3
@@ -68,9 +85,10 @@ Rectangle {
                 }
             }
         }
-        Text { Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; wrapMode: Text.Wrap; color: Theme.textFaint; font.family: Theme.font; font.pixelSize: Theme.fs_xs
+        Text { visible: Prefs.serverConfigured; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; wrapMode: Text.WrapAnywhere; color: Theme.textFaint; font.family: Theme.font; font.pixelSize: Theme.fs_xs
                text: qsTr("Server: %1 · Every action in this console is recorded in the audit log.").arg(Prefs.serverUrl) }
         RowLayout {
+            visible: Prefs.serverConfigured
             Layout.alignment: Qt.AlignHCenter
             FbButton { text: qsTr("Change server"); variant: "ghost"; iconName: "settings"; onClicked: serverDialog.open() }
             FbButton { text: qsTr("Install a new server"); variant: "ghost"; iconName: "shield"; onClicked: ConsoleNav.window.openSetup() }
@@ -78,17 +96,15 @@ Rectangle {
     }
     FbDialog {
         id: serverDialog
-        title: qsTr("Server")
-        subtitle: qsTr("Address of the Nhill server administered by this console.")
-        Field {
-            label: qsTr("Server address")
-            FbTextField { id: serverField; text: Prefs.serverUrl; monospace: true; placeholderText: "https://api.example.com" }
+        title: qsTr("Nhill server")
+        subtitle: qsTr("Address of the Nhill server administered by this console. It is checked before it is saved.")
+        ServerAddressForm {
+            Layout.fillWidth: true
+            onSaved: function(url) {
+                serverDialog.close()
+                Api.get("/health", function(r) { if (r.ok && r.data && r.data.status === "setup") ConsoleNav.window.openSetup() })
+            }
         }
-        footer: [
-            FbButton { text: qsTr("Save"); onClicked: {
-                Prefs.serverUrl = serverField.text.trim(); serverDialog.close()
-                Api.get("/health", function(r) { if (r.ok && r.data && r.data.status === "setup") ConsoleNav.window.openSetup() }) } },
-            FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() }
-        ]
+        footer: [ FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() } ]
     }
 }

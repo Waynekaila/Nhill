@@ -1,6 +1,13 @@
 // Current user session: identity, role/permissions, establishment and
-// subscription. Hiding a button is a convenience only — every permission is
-// enforced by the server.
+// subscription.
+//
+// Rights (3.0.0) come from the server only (/me): "permissions" holds the permissions of
+// the role reduced to the plan of the establishment, plus one "feature.<key>" entry per
+// feature of the plan. The applications show a menu, a tab, a button or a setting only
+// when Session.can(...) / Session.has(...) is true, so a feature outside the plan is
+// invisible; the server refuses it anyway. When the rights change (plan change, role
+// change, expiry), the server sends a new X-Nhill-Rights version and the session reloads
+// /me at once, so the interface follows without restarting.
 #pragma once
 
 #include <QJSValue>
@@ -25,6 +32,8 @@ class Session : public QObject {
     Q_PROPERTY(bool individual READ individual NOTIFY changed)
     Q_PROPERTY(bool writeAllowed READ writeAllowed NOTIFY changed)
     Q_PROPERTY(QString currency READ currency NOTIFY changed)
+    // Plan of the establishment: {access, plan, trial, features[], limits{key: {max, used}}}.
+    Q_PROPERTY(QVariantMap entitlements READ entitlements NOTIFY changed)
     Q_PROPERTY(bool persistent READ persistent NOTIFY changed)
     // "Remember me": the refresh token is kept in the OS credential store only when true.
     Q_PROPERTY(bool remember READ remember WRITE setRemember NOTIFY rememberChanged)
@@ -41,6 +50,7 @@ public:
     QString role() const { return m_me.value(QStringLiteral("role")).toString(); }
     bool individual() const { return establishment().value(QStringLiteral("kind")).toString() == QLatin1String("individual"); }
     bool writeAllowed() const { return subscription().value(QStringLiteral("write_allowed")).toBool(); }
+    QVariantMap entitlements() const { return m_me.value(QStringLiteral("entitlements")).toMap(); }
     QString currency() const { return establishment().value(QStringLiteral("main_currency")).toString(); }
     bool persistent() const;
     bool remember() const { return m_remember; }
@@ -48,6 +58,13 @@ public:
     bool rememberSupported() const;
 
     Q_INVOKABLE bool can(const QString& permission) const;
+    // True when the plan of the establishment includes the feature (e.g. "pos", "purchases").
+    Q_INVOKABLE bool has(const QString& feature) const;
+    // Limit of the plan for a capability ("catalog.products.max"): {max, used}, max null = unlimited.
+    Q_INVOKABLE QVariantMap limit(const QString& key) const;
+    // Ends the session on this device only, without any request (used when the server
+    // address changes: tokens are never sent to another server).
+    Q_INVOKABLE void discard();
     // Accepts the "session" object returned by login / creation / join endpoints.
     Q_INVOKABLE void start(const QVariantMap& session, const QJSValue& done = QJSValue());
     Q_INVOKABLE void reload(const QJSValue& done = QJSValue());
@@ -71,6 +88,7 @@ private:
     SecureStore* m_store;
     bool m_loggedIn = false;
     bool m_remember = false;
+    bool m_reloading = false;
     QVariantMap m_me;
 };
 

@@ -91,6 +91,12 @@ public:
     Q_INVOKABLE void fetchImage(const QString& path, const QJSValue& cb);
     Q_INVOKABLE QString newIdempotencyKey() const;
     Q_INVOKABLE void checkConnection();
+    // Checks that `url` answers as a Nhill server before it is saved (no token is ever
+    // sent): cb({ok, url (normalised), version, api, min_client_version, error: {code}}).
+    // Codes: insecure_url, invalid_url, network_error, timeout, tls_error, not_nhill_server.
+    Q_INVOKABLE void probeServer(const QString& url, const QJSValue& cb);
+    // Normalised form of an address typed by a user ("api.example.com" -> "https://api.example.com").
+    Q_INVOKABLE QString normaliseServerUrl(const QString& url) const;
 
 signals:
     void baseUrlChanged();
@@ -100,6 +106,9 @@ signals:
     void tokensRefreshed(const QString& refreshToken);
     void sessionExpired();
     void subscriptionBlocked(const QString& code);
+    // Version of the user's rights sent by the server (X-Nhill-Rights) changed, or a
+    // feature was refused: the session reloads /me so that the interface follows the plan.
+    void rightsChanged(const QString& version);
 
 private:
     void dispatch(Request r, Callback cb);
@@ -117,6 +126,8 @@ private:
     bool m_refreshing = false;
     std::vector<std::function<void(bool)>> m_refreshWaiters;
     QTimer m_probe;
+    QByteArray m_rights;
+    QNetworkAccessManager m_probeNam;   // server checks: separate, never carries tokens
 };
 
 }  // namespace nhc

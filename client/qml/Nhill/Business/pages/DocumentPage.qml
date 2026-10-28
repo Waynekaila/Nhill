@@ -29,8 +29,12 @@ FbPage {
     }
 
     actions: [
-        FbButton { visible: !!page.doc; text: qsTr("PDF"); iconName: "download"; variant: "secondary"
-                   onClicked: Api.download("/api/v1/sales-documents/" + page.docId + "/pdf", (page.doc.number || "brouillon") + ".pdf",
+        // The same document as in Nhill POS: A4 page or roll ticket (58/80 mm, till setting).
+        FbButton { visible: !!page.doc; text: qsTr("PDF A4"); iconName: "download"; variant: "secondary"
+                   onClicked: Api.download("/api/v1/sales-documents/" + page.docId + "/pdf?format=a4", (page.doc.number || "brouillon") + ".pdf",
+                                           function(r) { r.ok ? Nav.toast(qsTr("Saved in %1").arg(r.data)) : Nav.fail(r) }) },
+        FbButton { visible: !!page.doc && !page.isDraft; text: qsTr("Ticket"); iconName: "download"; variant: "ghost"
+                   onClicked: Api.download("/api/v1/sales-documents/" + page.docId + "/pdf?format=ticket", (page.doc.number || "brouillon") + "-ticket.pdf",
                                            function(r) { r.ok ? Nav.toast(qsTr("Saved in %1").arg(r.data)) : Nav.fail(r) }) },
         FbButton { visible: page.payable && Session.can("payments.write"); text: page.doc && page.doc.doc_type === "credit_note" ? qsTr("Record refund") : qsTr("Record payment"); iconName: "payment"
                    onClicked: payDialog.start("document_id", page.docId, page.doc.currency, page.doc.balance) },
@@ -39,7 +43,7 @@ FbPage {
         FbButton { visible: page.isDraft && Session.can("sales.issue"); text: qsTr("Issue"); iconName: "check"; onClicked: issueConfirm.open() },
         FbButton { visible: !!page.doc && page.doc.doc_type === "quote" && page.doc.status === "sent"; text: qsTr("Accepted"); variant: "secondary"
                    onClicked: page.act("/status", { status: "accepted" }) },
-        FbButton { visible: !!page.doc && (page.doc.doc_type === "quote" && (page.doc.status === "sent" || page.doc.status === "accepted")) || (!!page.doc && page.doc.doc_type === "order" && page.doc.status === "confirmed")
+        FbButton { visible: Session.has("sales.invoices") && Session.can("sales.write") && (!!page.doc && (page.doc.doc_type === "quote" && (page.doc.status === "sent" || page.doc.status === "accepted")) || (!!page.doc && page.doc.doc_type === "order" && page.doc.status === "confirmed"))
                    text: qsTr("Convert to invoice"); iconName: "invoice"
                    onClicked: page.act("/convert", { to: "invoice" }, function(d) { Nav.pop(); Nav.push("pages/DocumentEditorPage.qml", { docId: d.id, docType: "invoice" }) }) },
         FbButton { visible: !!page.doc && page.doc.doc_type === "invoice" && ["issued", "partially_paid", "paid"].indexOf(page.doc.status) >= 0 && Session.can("sales.issue")

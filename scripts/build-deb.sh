@@ -12,7 +12,7 @@
 #
 # Usage :
 #   scripts/build-deb.sh [--output DIR] [--build-dir DIR] [--components server,business,pos,console]
-#                        [--server-url URL] [--revision N] [--no-tests] [--debian13-embedded]
+#                        [--revision N] [--no-tests] [--debian13-embedded]
 #                        [--force] [--dry-run]
 # Implémentation : packaging/linux/build-deb.sh (compilation, tests, un paquet par
 # composant CMake, dépendances calculées par dpkg-shlibdeps, contrôle lintian).
@@ -27,7 +27,7 @@ while [[ $# -gt 0 ]]; do
     --output|-o) OUT="${2:?}"; shift ;;
     --build-dir) BUILD_DIR="${2:?}"; shift ;;
     --components|-c) COMPONENTS="${2:?}"; shift ;;
-    --server-url) SERVER_URL="${2:?}"; shift ;;
+    --server-url) echo "--server-url : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; exit 2 ;;
     --revision|-r) REVISION="${2:?}"; shift ;;
     --no-tests) NO_TESTS=1 ;;
     --debian13-embedded) EMBEDDED=1 ;;
@@ -63,7 +63,6 @@ ok "Nhill $VERSION -> paquets $TARGET dans $OUT"
 step "Compilation, tests et paquets ($TARGET)"
 ARGS=(-s "$ROOT" -o "$OUT" -r "$REVISION" --build-dir "$BUILD_DIR" "${FORCE_DISTRO[@]}")
 [[ -n "$COMPONENTS" ]] && ARGS+=(-c "$COMPONENTS")
-[[ -n "$SERVER_URL" ]] && ARGS+=(--server-url "$SERVER_URL")
 [[ "$NO_TESTS" == 1 ]] && ARGS+=(--no-tests)
 if [[ "$(id -u)" == 0 ]]; then run "$ROOT/packaging/linux/build-deb.sh" "${ARGS[@]}"
 else need sudo "build-deb installe les dépendances manquantes avec apt"; run sudo -E "$ROOT/packaging/linux/build-deb.sh" "${ARGS[@]}"; fi

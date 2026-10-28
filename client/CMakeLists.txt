@@ -2,7 +2,7 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Core Gui Network Qml Quick QuickControl
 find_package(Qt6Keychain CONFIG QUIET)
 qt_standard_project_setup()
 
-set(NHILL_SERVER_URL "http://127.0.0.1:8080" CACHE STRING "Default API address compiled into the client (HTTPS in production)")
+# No API address is compiled into the applications (3.0.0): users enter it at first launch.
 set(QML_IMPORT_PATH ${CMAKE_CURRENT_BINARY_DIR}/qml CACHE STRING "" FORCE)
 
 # ---------------------------------------------------------------- C++ core (shared by app, admin console, tests)
@@ -10,11 +10,10 @@ qt_add_library(nhill_client_core STATIC
     src/core/apiclient.cpp src/core/apiclient.h
     src/core/session.cpp src/core/session.h
     src/core/formatter.cpp src/core/formatter.h
-    src/core/appcontext.cpp src/core/appcontext.h
+    src/core/appcontext.cpp src/core/appcontext.h src/core/countries_data.inc
 )
 target_include_directories(nhill_client_core PUBLIC src/core)
 target_link_libraries(nhill_client_core PUBLIC Qt6::Core Qt6::Gui Qt6::Network Qt6::Qml Qt6::Quick nhill_common)
-target_compile_definitions(nhill_client_core PRIVATE NHILL_DEFAULT_SERVER="${NHILL_SERVER_URL}")
 if(Qt6Keychain_FOUND)
     target_link_libraries(nhill_client_core PUBLIC Qt6Keychain::Qt6Keychain)
     target_compile_definitions(nhill_client_core PUBLIC NHILL_HAVE_KEYCHAIN)
@@ -68,7 +67,7 @@ set_target_properties(nhill-business PROPERTIES
     QT_ANDROID_TARGET_SDK_VERSION 34
     QT_ANDROID_MIN_SDK_VERSION 24
     QT_ANDROID_VERSION_NAME ${PROJECT_VERSION}
-    QT_ANDROID_VERSION_CODE 20100)   # 2.1.0 — must increase with every Android release
+    QT_ANDROID_VERSION_CODE 30000)   # 3.0.0 — must increase with every Android release
 
 # Nhill Console — creators only (Windows, Linux; never built for Android)
 if(NOT ANDROID)

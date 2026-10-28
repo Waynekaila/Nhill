@@ -17,6 +17,7 @@ Item {
         { key: "tickets", icon: "info", title: qsTr("Support tickets"), page: "pages/TicketsPage.qml", role: "support" },
         { key: "orders", icon: "payment", title: qsTr("Transactions"), page: "pages/OrdersPage.qml", role: "billing|auditor" },
         { key: "plans", icon: "receipt", title: qsTr("Plans & prices"), page: "pages/PlansPage.qml", role: "" },
+        { key: "rules", icon: "filter", title: qsTr("Assignment rules"), page: "pages/PlanRulesPage.qml", role: "" },
         { key: "promos", icon: "filter", title: qsTr("Promo codes"), page: "pages/PromoCodesPage.qml", role: "billing" },
         { key: "providers", icon: "wallet", title: qsTr("Payment providers"), page: "pages/ProvidersPage.qml", role: "billing" },
         { key: "webhooks", icon: "swap", title: qsTr("Provider events"), page: "pages/WebhooksPage.qml", role: "billing|auditor" },

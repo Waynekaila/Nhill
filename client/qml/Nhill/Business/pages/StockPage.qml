@@ -29,7 +29,10 @@ FbPage {
     Component.onCompleted: reload()
     actions: [
         FbButton { visible: Session.can("stock.adjust"); text: qsTr("Adjust stock"); iconName: "edit"; onClicked: adjust.start(null) },
-        FbButton { visible: Session.can("stock.adjust") && page.multi && page.warehouses.length > 1; text: qsTr("Transfer"); iconName: "swap"; variant: "secondary"; onClicked: transfer.open() }
+        FbButton { visible: Session.can("stock.adjust") && page.multi && page.warehouses.length > 1; text: qsTr("Transfer"); iconName: "swap"; variant: "secondary"; onClicked: transfer.open() },
+        // Several warehouses: only when the plan includes them (limit of the plan shown).
+        FbButton { visible: Session.can("stock.adjust") && Session.has("stock.multi_warehouse"); text: qsTr("New warehouse"); iconName: "plus"; variant: "secondary"
+                   onClicked: { whName.text = ""; newWarehouse.open() } }
     ]
     ColumnLayout {
         anchors.fill: parent
@@ -110,6 +113,20 @@ FbPage {
                         if (r.ok) { adjust.close(); Nav.toast(qsTr("Stock updated: %1").arg(Fmt.quantity(r.data.quantity_after)), "success"); page.reload() } else Nav.fail(r)
                     }, adjust.key) } },
             FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: adjust.close() }
+        ]
+    }
+    FbDialog {
+        id: newWarehouse
+        title: qsTr("New warehouse")
+        subtitle: {
+            var l = Session.limit("stock.warehouses.max")
+            return l && l.max !== undefined && l.max !== null ? qsTr("Your plan: %1 of %2 warehouses used.").arg(l.used).arg(l.max) : ""
+        }
+        Field { label: qsTr("Name"); FbTextField { id: whName; placeholderText: qsTr("e.g. Back store, Second shop") } }
+        footer: [
+            FbButton { text: qsTr("Create"); onClicked: Api.send("POST", "/api/v1/warehouses", { name: whName.text.trim() },
+                        function(r) { if (r.ok) { newWarehouse.close(); Session.reload(); page.reload() } else Nav.fail(r) }) },
+            FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: newWarehouse.close() }
         ]
     }
     FbDialog {

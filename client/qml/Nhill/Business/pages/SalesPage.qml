@@ -8,8 +8,19 @@ import Nhill.Business
 FbPage {
     id: page
     title: qsTr("Sales")
-    subtitle: qsTr("Invoices, quotes, orders and credit notes")
-    property string type: "invoice"
+    subtitle: qsTr("Documents of your sales")
+    // Tabs of the plan only: invoices and credit notes, quotes and orders, till receipts.
+    readonly property var typeTabs: {
+        var t = []
+        if (!Session.me) return t
+        if (Session.has("sales.invoices")) t.push({ value: "invoice", text: qsTr("Invoices") })
+        if (Session.has("sales.quotes")) t.push({ value: "quote", text: qsTr("Quotes") }, { value: "order", text: qsTr("Orders") })
+        if (Session.has("sales.invoices")) t.push({ value: "credit_note", text: qsTr("Credit notes") })
+        if (Session.has("pos")) t.push({ value: "receipt", text: qsTr("Till receipts") })
+        return t
+    }
+    property string type: typeTabs.length ? typeTabs[0].value : "invoice"
+    onTypeTabsChanged: if (!typeTabs.some(function(t) { return t.value === page.type }) && typeTabs.length) { page.type = typeTabs[0].value; page.reload() }
     property string status: ""
     property string search: ""
     property bool overdue: false
@@ -29,7 +40,7 @@ FbPage {
 
     actions: [
         FbButton {
-            visible: Session.can("sales.write") && page.type !== "credit_note"
+            visible: Session.can("sales.write") && page.type !== "credit_note" && page.type !== "receipt"
             text: page.type === "quote" ? qsTr("New quote") : page.type === "order" ? qsTr("New order") : qsTr("New invoice")
             iconName: "plus"
             onClicked: Nav.push("pages/DocumentEditorPage.qml", { docType: page.type })
@@ -46,8 +57,7 @@ FbPage {
             clip: true
             TabStrip {
                 id: tabs
-                model: [ { value: "invoice", text: qsTr("Invoices") }, { value: "quote", text: qsTr("Quotes") },
-                         { value: "order", text: qsTr("Orders") }, { value: "credit_note", text: qsTr("Credit notes") } ]
+                model: page.typeTabs
                 current: page.type
                 onSelected: function(v) { page.type = v; page.status = ""; page.overdue = false; page.reload() }
             }
@@ -86,7 +96,7 @@ FbPage {
             emptyIcon: "invoice"
             emptyTitle: page.search || page.status ? qsTr("No matching document") : qsTr("No document yet")
             emptyText: qsTr("Create a document, issue it to give it its definitive number, then record the payments.")
-            emptyActionText: Session.can("sales.write") && page.type !== "credit_note" ? qsTr("Create") : ""
+            emptyActionText: Session.can("sales.write") && page.type !== "credit_note" && page.type !== "receipt" ? qsTr("Create") : ""
             onEmptyAction: Nav.push("pages/DocumentEditorPage.qml", { docType: page.type })
             onRowClicked: function(row) { Nav.push("pages/DocumentPage.qml", { docId: row.id }) }
         }

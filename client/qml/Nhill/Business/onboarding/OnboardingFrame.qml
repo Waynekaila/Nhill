@@ -36,7 +36,7 @@ Rectangle {
                     Layout.fillWidth: true
                 }
                 Text {
-                    text: qsTr("Built for traders, independent entrepreneurs and SMEs in the DRC and beyond. Works in CDF, USD and EUR, in French and English.")
+                    text: qsTr("For traders, independent entrepreneurs and SMEs. Your currency, your taxes, in French or English.")
                     color: Theme.sidebarText
                     font.family: Theme.font; font.pixelSize: Theme.fs_lg
                     wrapMode: Text.WordWrap

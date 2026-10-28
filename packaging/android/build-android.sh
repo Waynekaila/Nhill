@@ -50,7 +50,7 @@ OUT="${OUT:-$PWD/dist}"
 mkdir -p "$OUT"
 ARGS=(-S "$SRC" -B "$BUILD" -G Ninja -DCMAKE_BUILD_TYPE=Release -DQT_HOST_PATH="$QT_HOST"
       -DANDROID_SDK_ROOT="$ANDROID_SDK_ROOT" -DANDROID_NDK_ROOT="$ANDROID_NDK_ROOT" -DQT_ANDROID_ABIS="${ANDROID_ABI:-arm64-v8a}")
-[[ -n "$SERVER_URL" ]] && ARGS+=(-DNHILL_SERVER_URL="$SERVER_URL")
+[[ -n "$SERVER_URL" ]] && { echo "adresse de serveur ignorée : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; }
 if [[ -n "${KEYCHAIN_PREFIX:-}" ]]; then
   KC_CONFIG="$KEYCHAIN_PREFIX/lib/cmake/Qt6Keychain"
   [[ -f "$KC_CONFIG/Qt6KeychainConfig.cmake" ]] || die "QtKeychain introuvable dans $KEYCHAIN_PREFIX"

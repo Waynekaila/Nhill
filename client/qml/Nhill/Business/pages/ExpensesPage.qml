@@ -72,7 +72,7 @@ FbPage {
             columns: Theme.compact ? 1 : 2
             columnSpacing: Theme.s3; rowSpacing: Theme.s3
             Field { label: qsTr("Amount (tax included)"); required: true; MoneyField { id: amount; currency: editor.currency } }
-            Field { label: qsTr("Currency"); FbComboBox { model: Labels.currencies(); value: editor.currency; onActivated: editor.currency = currentValue } }
+            Field { label: qsTr("Currency"); FbComboBox { model: Labels.currencyChoices(editor.currency); value: editor.currency; onActivated: editor.currency = currentValue } }
             Field { label: qsTr("Of which deductible tax"); help: qsTr("Optional"); MoneyField { id: tax; currency: editor.currency } }
             Field { label: qsTr("Date"); DateField { id: date } }
             Field { label: qsTr("Category")

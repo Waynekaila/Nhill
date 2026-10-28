@@ -58,7 +58,7 @@ if ($KeychainDir) {
 $cmakeArgs = @("-S", $Source, "-B", $BuildDir, "-G", "Ninja", "-DCMAKE_BUILD_TYPE=Release",
           "-DCMAKE_PREFIX_PATH=$prefixPath", "-DNHILL_BUILD_SERVER=OFF", "-DNHILL_BUILD_TESTS=OFF",
           "-DNHILL_BUILD_KEYCHAIN_TEST=ON") + $keychainArgs
-if ($ServerUrl) { $cmakeArgs += "-DNHILL_SERVER_URL=$ServerUrl" }
+if ($ServerUrl) { Write-Warning "ServerUrl ignored: removed in 3.0.0, the server address is entered by the user at first launch" }
 if ($VcpkgRoot) {
   $cmakeArgs += "-DCMAKE_TOOLCHAIN_FILE=$VcpkgRoot\scripts\buildsystems\vcpkg.cmake"
   $cmakeArgs += "-DVCPKG_TARGET_TRIPLET=x64-windows"

@@ -24,7 +24,16 @@ FbPage {
         Api.download("/api/v1/admin/reports/establishments/" + establishmentId + period() + "&format=" + fmt, "nhill-etablissement." + fmt,
                      function(r) { if (r.ok) ConsoleNav.toast(qsTr("Saved to %1").arg(r.data), "success"); else ConsoleNav.fail(r) })
     }
-    Component.onCompleted: { statsFrom.value = Fmt.addDays(Fmt.today(), -90); statsTo.value = Fmt.today(); reload(); loadStats() }
+    Component.onCompleted: {
+        statsFrom.value = Fmt.addDays(Fmt.today(), -90); statsTo.value = Fmt.today(); reload(); loadStats()
+        Api.get("/api/v1/admin/capabilities", function(r) { if (r.ok) page.capabilities = r.data.items })
+    }
+    property var capabilities: []   // catalogue of the capabilities (labels)
+    function capLabel(k) {
+        for (var i = 0; i < capabilities.length; ++i) if (capabilities[i].key === k) return Prefs.language === "fr" ? capabilities[i].label_fr : capabilities[i].label_en
+        return k
+    }
+    function accessText(s) { return s === "full" ? qsTr("full") : s === "read_only" ? qsTr("read and export only") : qsTr("none") }
     actions: [
         FbButton { text: qsTr("Back"); variant: "ghost"; iconName: "close"; onClicked: ConsoleNav.shell.navigate("establishments") },
         FbButton { visible: !!page.e && ConsoleNav.can("billing"); text: qsTr("Subscription…"); iconName: "receipt"; variant: "secondary"; onClicked: subDialog.start() },
@@ -78,12 +87,37 @@ FbPage {
                          text: page.d && page.d.subscription.pending_change ? qsTr("Change to %1 on %2 (paid)").arg(page.d.subscription.pending_change.plan_code).arg(Fmt.date(page.d.subscription.pending_change.effective_at)) : "" }
                 Banner { Layout.fillWidth: true; visible: !!page.d && page.d.subscription.failed_payments > 0; tone: "warning"
                          text: page.d ? qsTr("%1 failed payment attempt(s) since the last successful payment.").arg(page.d.subscription.failed_payments) : "" }
+                // Access computed by the server from the dates (distinct from the status and from payments).
+                Text { visible: !!page.d && !!page.d.subscription.access; color: Theme.text; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                       text: page.d && page.d.subscription.access ? qsTr("Access: %1 (%2)").arg(page.accessText(page.d.subscription.access.state)).arg(page.d.subscription.access.reason) : "" }
+                SectionTitle { visible: !!page.d && !!page.d.entitlements; text: qsTr("Rights of the plan"); Layout.topMargin: Theme.s2 }
+                Flow {
+                    visible: !!page.d && !!page.d.entitlements
+                    Layout.fillWidth: true
+                    spacing: Theme.s2
+                    Repeater {
+                        model: page.d && page.d.entitlements ? page.d.entitlements.features : []
+                        delegate: FbChip { tone: "success"; text: page.capLabel(modelData) }
+                    }
+                }
+                Repeater {
+                    model: page.d && page.d.entitlements ? Object.keys(page.d.entitlements.limits) : []
+                    delegate: RowLayout {
+                        Layout.fillWidth: true
+                        property var lim: page.d.entitlements.limits[modelData]
+                        Text { text: page.capLabel(modelData); color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm; Layout.fillWidth: true }
+                        Text { text: lim.max === null ? qsTr("%1 · unlimited").arg(lim.used) : qsTr("%1 / %2").arg(lim.used).arg(lim.max)
+                               color: lim.max !== null && lim.used >= lim.max ? Theme.warning : Theme.text; font.family: Theme.font; font.pixelSize: Theme.fs_sm }
+                    }
+                }
                 SectionTitle { text: qsTr("Subscription history"); Layout.topMargin: Theme.s2 }
                 Repeater {
                     model: page.d ? page.d.subscription_events : []
-                    Text { Layout.fillWidth: true; elide: Text.ElideRight; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                    Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
                            text: Fmt.dateTime(modelData.at) + " · " + Labels.subscriptionEvent(modelData.kind) + (modelData.to ? " → " + Labels.subscription(modelData.to).text : "")
-                                 + " (" + (modelData.actor === "user" ? qsTr("establishment") : modelData.actor === "admin" ? qsTr("Nhill team") : qsTr("automatic")) + ")" }
+                                 + (modelData.details && modelData.details.plan ? " · " + modelData.details.plan : "")
+                                 + " (" + (modelData.actor === "user" ? qsTr("establishment") : modelData.actor === "admin" ? (modelData.admin_name || qsTr("Nhill team")) : qsTr("automatic")) + ")"
+                                 + (modelData.details && modelData.details.reason ? " — " + modelData.details.reason : "") }
                 }
             }
         }
@@ -198,21 +232,52 @@ FbPage {
         title: qsTr("Subscription actions")
         subtitle: qsTr("Every action needs a reason and is recorded; the establishment is notified.")
         preferredWidth: 600
+        property var plans: []
         function start() {
             action.value = "extend"; days.text = "30"; months.text = "0"; reason.text = ""
+            assignDays.text = "30"; assignMonths.text = "0"; openEnded.checked = false; assignMode.value = "active"
+            newEnd.value = ""; newGrace.value = ""
             Api.get("/api/v1/admin/plans", function(r) {
                 if (!r.ok) return
-                var out = []
-                r.data.items.forEach(function(p) { p.prices.forEach(function(x) { if (x.active) out.push({ value: x.id, text: p.code + " · " + Labels.duration(x.duration_months) + " · " + Fmt.money(x.price, x.currency) }) }) })
+                var out = [], plans = []
+                r.data.items.forEach(function(p) {
+                    if (!p.archived_at) plans.push({ value: p.id, text: p.code + " · " + (Prefs.language === "fr" ? p.name_fr : p.name_en) + " (" + p.kind + ")", kind: p.kind })
+                    p.prices.forEach(function(x) { if (x.active) out.push({ value: x.id, text: p.code + " · " + Labels.duration(x.duration_months) + " · " + Fmt.money(x.price, x.currency) }) })
+                })
                 subDialog.prices = out
+                subDialog.plans = plans
             })
             open()
         }
+        function planKind(id) { for (var i = 0; i < plans.length; ++i) if (plans[i].value === id) return plans[i].kind; return "" }
         Field { label: qsTr("Action")
                 FbComboBox { id: action; Layout.fillWidth: true
                              model: [{ value: "extend", text: qsTr("Extend (free days / months)") }, { value: "order", text: qsTr("Create a payment request") },
-                                     { value: "set_plan", text: qsTr("Change the plan (no charge)") }, { value: "suspend", text: qsTr("Suspend (read only)") },
+                                     { value: "assign_plan", text: qsTr("Assign a plan (trial, period or no end date)") },
+                                     { value: "set_plan", text: qsTr("Change the plan (no charge)") }, { value: "set_dates", text: qsTr("Correct the dates") },
+                                     { value: "suspend", text: qsTr("Suspend (read only)") },
                                      { value: "reactivate", text: qsTr("Reactivate") }, { value: "cancel", text: qsTr("Cancel the subscription") }] } }
+        ColumnLayout {
+            visible: action.value === "assign_plan"
+            Layout.fillWidth: true
+            spacing: Theme.s2
+            Field { label: qsTr("Plan"); FbComboBox { id: assignPlan; Layout.fillWidth: true; model: subDialog.plans } }
+            Field { label: qsTr("As"); FbComboBox { id: assignMode; model: [{ value: "active", text: qsTr("Active period") }, { value: "trial", text: qsTr("Trial") }] } }
+            FbSwitch { id: openEnded; visible: subDialog.planKind(assignPlan.value) === "free" || subDialog.planKind(assignPlan.value) === "custom"
+                       text: qsTr("No end date (free or custom plans only)") }
+            RowLayout {
+                visible: !openEnded.checked || !openEnded.visible
+                Field { label: qsTr("Days"); FbTextField { id: assignDays; inputMethodHints: Qt.ImhDigitsOnly } }
+                Field { label: qsTr("Months"); FbTextField { id: assignMonths; inputMethodHints: Qt.ImhDigitsOnly } }
+            }
+            Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+                   text: qsTr("An assigned plan is not a payment: no order is created and pending payment requests are cancelled. The rights of the establishment change at its next request.") }
+        }
+        RowLayout {
+            visible: action.value === "set_dates"
+            Field { label: qsTr("End of the period"); DateField { id: newEnd } }
+            Field { label: qsTr("End of the grace period (optional)"); DateField { id: newGrace } }
+        }
         RowLayout {
             visible: action.value === "extend"
             Field { label: qsTr("Days"); FbTextField { id: days; inputMethodHints: Qt.ImhDigitsOnly } }
@@ -234,6 +299,12 @@ FbPage {
                     var body = { action: action.value, reason: reason.text.trim() }
                     if (action.value === "extend") { body.days = parseInt(days.text || "0"); body.months = parseInt(months.text || "0") }
                     if (action.value === "set_plan") body.price_id = price.value
+                    if (action.value === "assign_plan") {
+                        body.plan_id = assignPlan.value; body.mode = assignMode.value
+                        if (openEnded.visible && openEnded.checked) body.open_ended = true
+                        else { body.days = parseInt(assignDays.text || "0"); body.months = parseInt(assignMonths.text || "0") }
+                    }
+                    if (action.value === "set_dates") { body.period_end = newEnd.value; if (newGrace.value) body.grace_until = newGrace.value }
                     Api.send("POST", "/api/v1/admin/establishments/" + page.establishmentId + "/subscription", body, done)
                 } },
             FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: subDialog.close() }

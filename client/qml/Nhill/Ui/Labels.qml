@@ -1,11 +1,12 @@
 pragma Singleton
 import QtQuick
+import Nhill.Core
 
 // Translated labels and tones for codes returned by the API.
 QtObject {
     function docType(t) {
         return t === "invoice" ? qsTr("Invoice") : t === "quote" ? qsTr("Quote") : t === "order" ? qsTr("Order")
-             : t === "credit_note" ? qsTr("Credit note") : t
+             : t === "credit_note" ? qsTr("Credit note") : t === "receipt" ? qsTr("Till receipt") : t
     }
     function docStatus(row) {
         var s = row.status
@@ -42,7 +43,10 @@ QtObject {
              : r === "cash_manager" ? qsTr("Cash manager (POS)") : r === "cashier" ? qsTr("Cashier (POS)") : r
     }
     function roles() {
-        return ["admin", "manager", "sales", "accountant", "viewer", "cash_manager", "cashier"].map(function(r) { return { value: r, text: role(r) } })
+        // Till roles exist only when the plan includes Nhill POS.
+        var all = ["admin", "manager", "sales", "accountant", "viewer"]
+        if (Session.has("pos")) all = all.concat(["cash_manager", "cashier"])
+        return all.map(function(r) { return { value: r, text: role(r) } })
     }
     function movement(k) {
         switch (k) {
@@ -121,6 +125,10 @@ QtObject {
         case "admin_reactivate": return qsTr("Reactivated by Nhill")
         case "admin_cancel": return qsTr("Cancelled by Nhill")
         case "admin_set_plan": return qsTr("Plan changed by Nhill")
+        case "admin_assign_plan": return qsTr("Plan assigned by Nhill")
+        case "admin_set_dates": return qsTr("Dates corrected by Nhill")
+        case "plan_assigned": return qsTr("Plan assigned by a rule")
+        case "fallback_plan": return qsTr("Expired: moved to the fallback plan")
         case "trial_started": return qsTr("Free trial started")
         case "trial_refused": return qsTr("Free trial refused (already used)")
         case "subscription_suspended": return qsTr("Suspended")
@@ -165,20 +173,40 @@ QtObject {
                  { value: "bag", text: qsTr("Bag") }, { value: "pack", text: qsTr("Pack") }, { value: "service", text: qsTr("Flat fee") } ]
     }
     function unit(u) { var all = units(); for (var i = 0; i < all.length; ++i) if (all[i].value === u) return all[i].text; return u }
+    // ISO 4217 currencies offered by the platform (names: Unicode CLDR).
+    readonly property var currencyNames: [
+        ["AED", "Dirham des Émirats arabes unis", "UAE dirham"], ["AOA", "Kwanza angolais", "Angolan kwanza"],
+        ["AUD", "Dollar australien", "Australian dollar"], ["BIF", "Franc burundais", "Burundian franc"],
+        ["BRL", "Réal brésilien", "Brazilian real"], ["CAD", "Dollar canadien", "Canadian dollar"],
+        ["CDF", "Franc congolais", "Congolese franc"], ["CHF", "Franc suisse", "Swiss franc"],
+        ["CNY", "Yuan renminbi chinois", "Chinese yuan"], ["DKK", "Couronne danoise", "Danish krone"],
+        ["DZD", "Dinar algérien", "Algerian dinar"], ["EGP", "Livre égyptienne", "Egyptian pound"],
+        ["ETB", "Birr éthiopien", "Ethiopian birr"], ["EUR", "Euro", "Euro"],
+        ["GBP", "Livre sterling", "Pound sterling"], ["GHS", "Cédi ghanéen", "Ghanaian cedi"],
+        ["GNF", "Franc guinéen", "Guinean franc"], ["INR", "Roupie indienne", "Indian rupee"],
+        ["JPY", "Yen japonais", "Japanese yen"], ["KES", "Shilling kényan", "Kenyan shilling"],
+        ["MAD", "Dirham marocain", "Moroccan dirham"], ["MZN", "Metical mozambicain", "Mozambican metical"],
+        ["NGN", "Naira nigérian", "Nigerian naira"], ["NOK", "Couronne norvégienne", "Norwegian krone"],
+        ["PLN", "Zloty polonais", "Polish zloty"], ["RWF", "Franc rwandais", "Rwandan franc"],
+        ["SAR", "Riyal saoudien", "Saudi riyal"], ["SEK", "Couronne suédoise", "Swedish krona"],
+        ["TND", "Dinar tunisien", "Tunisian dinar"], ["TZS", "Shilling tanzanien", "Tanzanian shilling"],
+        ["UGX", "Shilling ougandais", "Ugandan shilling"], ["USD", "Dollar américain", "US dollar"],
+        ["XAF", "Franc CFA (CEMAC)", "CFA franc (CEMAC)"], ["XOF", "Franc CFA (UEMOA)", "CFA franc (WAEMU)"],
+        ["ZAR", "Rand sud-africain", "South African rand"], ["ZMW", "Kwacha zambien", "Zambian kwacha"]
+    ]
     function currencies() {
-        return [ { value: "CDF", text: qsTr("CDF — Congolese franc") }, { value: "USD", text: qsTr("USD — US dollar") },
-                 { value: "EUR", text: qsTr("EUR — Euro") }, { value: "XAF", text: qsTr("XAF — CFA franc (CEMAC)") },
-                 { value: "XOF", text: qsTr("XOF — CFA franc (WAEMU)") }, { value: "RWF", text: qsTr("RWF — Rwandan franc") },
-                 { value: "ZAR", text: qsTr("ZAR — South African rand") }, { value: "KES", text: qsTr("KES — Kenyan shilling") },
-                 { value: "GBP", text: qsTr("GBP — Pound sterling") }, { value: "CHF", text: qsTr("CHF — Swiss franc") } ]
+        var fr = Prefs.language === "fr"
+        return currencyNames.map(function(c) { return { value: c[0], text: c[0] + " — " + (fr ? c[1] : c[2]) } })
     }
-    function countries() {
-        return [ { value: "CD", text: qsTr("DR Congo") }, { value: "CG", text: qsTr("Republic of the Congo") },
-                 { value: "AO", text: qsTr("Angola") }, { value: "RW", text: qsTr("Rwanda") }, { value: "BI", text: qsTr("Burundi") },
-                 { value: "UG", text: qsTr("Uganda") }, { value: "ZM", text: qsTr("Zambia") }, { value: "CM", text: qsTr("Cameroon") },
-                 { value: "SN", text: qsTr("Senegal") }, { value: "CI", text: qsTr("Côte d'Ivoire") }, { value: "BE", text: qsTr("Belgium") },
-                 { value: "FR", text: qsTr("France") }, { value: "US", text: qsTr("United States") }, { value: "ZA", text: qsTr("South Africa") } ]
+    // Currencies a user may choose for a document, an account or a price: the main currency
+    // only, unless the plan includes several currencies.
+    function currencyChoices(current) {
+        var all = currencies()
+        if (Session.has("multi_currency")) return all
+        return all.filter(function(c) { return c.value === Session.currency || (current && c.value === current) })
     }
+    // ISO 3166-1 countries, in the language of the interface (Unicode CLDR names).
+    function countries() { return Tools.countries(Prefs.language) }
     function password(code) {
         switch (code) {
         case "password_too_short": return qsTr("At least 8 characters.")
@@ -190,21 +218,16 @@ QtObject {
         return ""
     }
     function activityCategories() {
-        return [ { value: "", text: qsTr("All actions") }, { value: "sales_document.", text: qsTr("Sales documents") },
-                 { value: "payment.", text: qsTr("Payments") }, { value: "expense.", text: qsTr("Expenses") },
-                 { value: "purchase.", text: qsTr("Purchases") }, { value: "stock.", text: qsTr("Stock") },
-                 { value: "product.", text: qsTr("Products") }, { value: "party.", text: qsTr("Customers & suppliers") },
-                 { value: "auth.", text: qsTr("Sign-ins & passwords") }, { value: "member.", text: qsTr("Team") },
-                 { value: "establishment.", text: qsTr("Settings") }, { value: "pos.", text: qsTr("Point of sale") },
-                 { value: "support.", text: qsTr("Help requests") }, { value: "admin.", text: qsTr("Nhill support") } ]
+        var all = [ { value: "", text: qsTr("All actions") }, { value: "sales_document.", text: qsTr("Sales documents") },
+                    { value: "payment.", text: qsTr("Payments") }, { value: "expense.", text: qsTr("Expenses"), feature: "expenses" },
+                    { value: "purchase.", text: qsTr("Purchases"), feature: "purchases" }, { value: "stock.", text: qsTr("Stock") },
+                    { value: "product.", text: qsTr("Products") }, { value: "party.", text: qsTr("Customers & suppliers") },
+                    { value: "auth.", text: qsTr("Sign-ins & passwords") }, { value: "member.", text: qsTr("Team") },
+                    { value: "establishment.", text: qsTr("Settings") }, { value: "pos.", text: qsTr("Point of sale"), feature: "pos" },
+                    { value: "support.", text: qsTr("Help requests") }, { value: "admin.", text: qsTr("Nhill support") } ]
+        return all.filter(function(c) { return !c.feature || Session.has(c.feature) })
     }
-    function timeZones() {
-        return [ { value: "Africa/Kinshasa", text: qsTr("Kinshasa (UTC+1)") }, { value: "Africa/Lubumbashi", text: qsTr("Lubumbashi (UTC+2)") },
-                 { value: "Africa/Brazzaville", text: "Brazzaville (UTC+1)" }, { value: "Africa/Kigali", text: "Kigali (UTC+2)" },
-                 { value: "Africa/Bujumbura", text: "Bujumbura (UTC+2)" }, { value: "Africa/Luanda", text: "Luanda (UTC+1)" },
-                 { value: "Africa/Douala", text: "Douala (UTC+1)" }, { value: "Africa/Dakar", text: "Dakar (UTC+0)" },
-                 { value: "Africa/Abidjan", text: "Abidjan (UTC+0)" }, { value: "Africa/Johannesburg", text: "Johannesburg (UTC+2)" },
-                 { value: "Africa/Nairobi", text: "Nairobi (UTC+3)" }, { value: "Europe/Brussels", text: qsTr("Brussels") },
-                 { value: "Europe/Paris", text: qsTr("Paris") }, { value: "America/New_York", text: "New York" }, { value: "UTC", text: "UTC" } ]
-    }
+    // IANA time zones known to the device, sorted by offset.
+    function timeZones() { return Tools.timeZones() }
+
 }

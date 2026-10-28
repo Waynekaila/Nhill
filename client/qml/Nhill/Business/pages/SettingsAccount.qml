@@ -20,7 +20,7 @@ ColumnLayout {
                 columnSpacing: Theme.s3; rowSpacing: Theme.s3
                 Field { label: qsTr("Full name"); FbTextField { id: fullName; text: Session.me.user.full_name || "" } }
                 Field { label: qsTr("Email"); FbTextField { text: Session.me.user.email || ""; enabled: false } }
-                Field { label: qsTr("Phone"); FbTextField { id: myPhone; text: Session.me.user.phone || ""; placeholderText: "+243…" } }
+                Field { label: qsTr("Phone"); FbTextField { id: myPhone; text: Session.me.user.phone || ""; placeholderText: qsTr("+ country code and number") } }
                 Field { label: qsTr("Role"); FbTextField { text: Labels.role(Session.role); enabled: false } }
             }
             RowLayout {
@@ -46,9 +46,23 @@ ColumnLayout {
                 Field { label: qsTr("Language"); FbComboBox { model: [{ value: "fr", text: "Français" }, { value: "en", text: "English" }]; value: Prefs.language; onActivated: Prefs.language = currentValue } }
                 Field { label: qsTr("Theme"); FbComboBox { model: [{ value: "system", text: qsTr("Follow the system") }, { value: "light", text: qsTr("Light") }, { value: "dark", text: qsTr("Dark") }]; value: Prefs.theme; onActivated: Prefs.theme = currentValue } }
             }
-            Text { color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm; Layout.fillWidth: true; wrapMode: Text.Wrap
-                   text: qsTr("Server: %1").arg(Prefs.serverUrl) }
+            RowLayout {
+                Layout.fillWidth: true
+                Text { color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm; Layout.fillWidth: true; wrapMode: Text.WrapAnywhere
+                       text: qsTr("Server: %1").arg(Prefs.serverUrl) }
+                FbButton { text: qsTr("Change server"); variant: "ghost"; onClicked: serverDialog.open() }
+            }
         }
+    }
+    FbDialog {
+        id: serverDialog
+        title: qsTr("Change the Nhill server")
+        subtitle: qsTr("You will be signed out of this device: your account and your data stay on the current server. Change the address only if your provider asks you to.")
+        ServerAddressForm {
+            Layout.fillWidth: true
+            onSaved: function(url) { serverDialog.close(); Nav.window.openWelcome() }
+        }
+        footer: [ FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() } ]
     }
     FbCard {
         Layout.fillWidth: true

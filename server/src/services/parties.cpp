@@ -152,9 +152,11 @@ void registerPartyRoutes(App& app, Env& env) {
         bool isCustomer = in::optBool(b, "is_customer", false);
         bool isSupplier = in::optBool(b, "is_supplier", false);
         if (!isCustomer && !isSupplier) throw invalid("is_customer", "customer_or_supplier_required");
-        // Suppliers are a purchasing concern: the 'sales' role may only create customers.
-        if (isSupplier && !App::roleHas(ctx.actor.role, "purchases.write")) throw forbidden("permission_denied");
+        // Suppliers are a purchasing and expenses concern: the 'sales' role may only create
+        // customers. The plan must include purchases or expenses.
         if (isSupplier && !suppliersVisible(ctx.actor)) entitlements::requireFeature(ctx.actor, entitlements::key::kPurchases);
+        if (isSupplier && !App::allowed(ctx.actor, "purchases.write") && !App::allowed(ctx.actor, "expenses.write"))
+            throw forbidden("permission_denied");
         std::string kind = in::optEnum(b, "kind", {"individual", "company"}).value_or("company");
         std::string name = in::reqStr(b, "name", 200);
         auto email = in::optEmail(b, "email");

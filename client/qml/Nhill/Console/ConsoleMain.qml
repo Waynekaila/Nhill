@@ -64,7 +64,7 @@ ApplicationWindow {
         ConsoleNav.window = win
         placeOnScreen()
         if (typeof setupTour !== "undefined" && setupTour.dir) { Prefs.serverUrl = setupTour.server; win.openSetup(); return }
-        if (!(typeof adminTour !== "undefined" && adminTour.dir))
+        if (!(typeof adminTour !== "undefined" && adminTour.dir) && Prefs.serverConfigured)
             Api.get("/health", function(r) { if (r.ok && r.data && r.data.status === "setup") win.openSetup() })
     }
     Component { id: shellComp; ConsoleShell {} }

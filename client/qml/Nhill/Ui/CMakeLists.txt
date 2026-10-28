@@ -10,5 +10,6 @@ qt_add_qml_module(nhill_ui
         SectionTitle.qml KpiTile.qml SearchField.qml MoneyField.qml DateField.qml DataTable.qml FbPage.qml
         ConnectionBadge.qml TabStrip.qml SupportCenter.qml
         PasswordRecoveryDialog.qml PasswordChangeRequiredDialog.qml RememberMeSwitch.qml
+        ServerAddressForm.qml
 )
 target_link_libraries(nhill_ui PRIVATE Qt6::Quick Qt6::QuickControls2)

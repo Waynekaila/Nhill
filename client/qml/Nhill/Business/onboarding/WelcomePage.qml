@@ -5,8 +5,19 @@ import Nhill.Core
 import Nhill.Ui
 
 OnboardingFrame {
+    id: page
     showBack: false
     formWidth: 560
+    // Action chosen before the server address was entered (join, create or sign in).
+    property string pending: ""
+    function go(action) {
+        // The server is configured when the business is created (first step of the
+        // creation); joining or signing in needs it first.
+        if (action !== "create" && !Prefs.serverConfigured) { page.pending = action; serverDialog.open(); return }
+        if (action === "join") ApplicationWindow.window.openJoin()
+        else if (action === "create") ApplicationWindow.window.openCreate()
+        else ApplicationWindow.window.openLogin()
+    }
     Text {
         text: qsTr("Welcome")
         font.family: Theme.font; font.pixelSize: Theme.fs_xxl; font.weight: Font.DemiBold
@@ -23,7 +34,7 @@ OnboardingFrame {
             { key: "join", icon: "key", title: qsTr("My business already exists"),
               text: qsTr("I join a business already registered on Nhill with its establishment code and my personal access.") },
             { key: "create", icon: "building", title: qsTr("Create my business"),
-              text: qsTr("I register my company or my individual activity. The first 30 days are free, without payment details.") }
+              text: qsTr("I register my company or my individual activity, without payment details.") }
         ]
         delegate: AbstractButton {
             id: card
@@ -32,7 +43,7 @@ OnboardingFrame {
             padding: Theme.s4
             focusPolicy: Qt.StrongFocus
             Accessible.name: modelData.title
-            onClicked: modelData.key === "join" ? ApplicationWindow.window.openJoin() : ApplicationWindow.window.openCreate()
+            onClicked: page.go(modelData.key)
             background: Rectangle {
                 radius: Theme.radiusLg
                 color: card.hovered ? Theme.surfaceAlt : Theme.surface
@@ -62,21 +73,30 @@ OnboardingFrame {
     RowLayout {
         Layout.fillWidth: true
         Text { text: qsTr("Already have an account?"); color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_md }
-        FbButton { text: qsTr("Sign in"); variant: "ghost"; onClicked: ApplicationWindow.window.openLogin() }
+        FbButton { text: qsTr("Sign in"); variant: "ghost"; onClicked: page.go("login") }
         Item { Layout.fillWidth: true }
         FbIconButton { iconName: "settings"; tip: qsTr("Server settings"); onClicked: serverDialog.open() }
     }
+    Text {
+        visible: Prefs.serverConfigured
+        Layout.fillWidth: true; wrapMode: Text.WrapAnywhere
+        text: qsTr("Server: %1").arg(Prefs.serverUrl)
+        color: Theme.textFaint; font.family: Theme.mono; font.pixelSize: Theme.fs_xs
+    }
     FbDialog {
         id: serverDialog
-        title: qsTr("Server")
-        subtitle: qsTr("Address of the Nhill service. Change it only if your provider asks you to.")
-        Field {
-            label: qsTr("Server address")
-            FbTextField { id: serverField; text: Prefs.serverUrl; monospace: true; placeholderText: "https://api.example.com" }
+        title: qsTr("Nhill server")
+        subtitle: qsTr("Enter the address of the Nhill server you use. It is checked, then kept on this device; you can change it later.")
+        onClosed: if (!Prefs.serverConfigured) page.pending = ""
+        ServerAddressForm {
+            Layout.fillWidth: true
+            onSaved: function(url) {
+                serverDialog.close()
+                var next = page.pending
+                page.pending = ""
+                if (next) page.go(next)
+            }
         }
-        footer: [
-            FbButton { text: qsTr("Save"); onClicked: { Prefs.serverUrl = serverField.text; serverDialog.close(); Api.checkConnection() } },
-            FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() }
-        ]
+        footer: [ FbButton { text: qsTr("Close"); variant: "secondary"; onClicked: serverDialog.close() } ]
     }
 }

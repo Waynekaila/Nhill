@@ -86,8 +86,94 @@ private slots:
         QCOMPARE(got.errorCode, QStringLiteral("insecure_url"));
     }
 
+    // The API address typed by a user keeps only its origin; no scheme means HTTPS.
+    void serverAddressIsNormalised() {
+        ApiClient api;
+        QCOMPARE(api.normaliseServerUrl(QStringLiteral("  api.example.com/ ")), QStringLiteral("https://api.example.com"));
+        QCOMPARE(api.normaliseServerUrl(QStringLiteral("HTTPS://API.Example.com:8443/api/v1")), QStringLiteral("https://api.example.com:8443"));
+        QCOMPARE(api.normaliseServerUrl(QStringLiteral("http://127.0.0.1:8080")), QStringLiteral("http://127.0.0.1:8080"));
+        QCOMPARE(api.normaliseServerUrl(QString()), QString());
+        QCOMPARE(api.normaliseServerUrl(QStringLiteral("https://")), QString());
+    }
+
+    // A remote server in clear HTTP is refused before any request.
+    void probeRefusesPlainHttp() {
+        QQmlEngine engine;
+        ApiClient api;
+        QJSEngine::setObjectOwnership(&api, QJSEngine::CppOwnership);
+        engine.globalObject().setProperty(QStringLiteral("Api"), engine.newQObject(&api));
+        engine.evaluate(QStringLiteral("var got = null; Api.probeServer('http://api.example.com', function(r) { got = r })"));
+        QTRY_VERIFY_WITH_TIMEOUT(engine.evaluate(QStringLiteral("got !== null")).toBool(), 2000);
+        QCOMPARE(engine.evaluate(QStringLiteral("got.error.code")).toString(), QStringLiteral("insecure_url"));
+    }
+
 #ifdef NHILL_TEST_HTTPLIB
+    // The address is saved only when it answers as a Nhill server; no token is sent.
+    void probeChecksTheServerIdentity() {
+        QQmlEngine engine;
+        ApiClient api;
+        api.setTokens(QStringLiteral("secret-access"), QStringLiteral("secret-refresh"));
+        QJSEngine::setObjectOwnership(&api, QJSEngine::CppOwnership);
+        engine.globalObject().setProperty(QStringLiteral("Api"), engine.newQObject(&api));
+        engine.evaluate(QStringLiteral("var got = null; Api.probeServer('http://127.0.0.1:%1', function(r) { got = r })").arg(m_port));
+        QTRY_VERIFY_WITH_TIMEOUT(engine.evaluate(QStringLiteral("got !== null")).toBool(), 5000);
+        QVERIFY(engine.evaluate(QStringLiteral("got.ok")).toBool());
+        QCOMPARE(engine.evaluate(QStringLiteral("got.data.url")).toString(), QStringLiteral("http://127.0.0.1:%1").arg(m_port));
+        QCOMPARE(engine.evaluate(QStringLiteral("got.data.version")).toString(), QStringLiteral("3.0.0"));
+        {
+            std::lock_guard<std::mutex> l(m_mutex);
+            QCOMPARE(m_metaAuth, QString());  // never the user's token
+        }
+        // Another service on the same port range answers, but not as Nhill.
+        engine.evaluate(QStringLiteral("got = null; Api.probeServer('http://127.0.0.1:%1', function(r) { got = r })").arg(m_otherPort));
+        QTRY_VERIFY_WITH_TIMEOUT(engine.evaluate(QStringLiteral("got !== null")).toBool(), 5000);
+        QCOMPARE(engine.evaluate(QStringLiteral("got.error.code")).toString(), QStringLiteral("not_nhill_server"));
+    }
+
+    // A new rights version (plan or role changed) is announced once per change.
+    void rightsVersionChangesAreAnnounced() {
+        ApiClient api;
+        api.setBaseUrl(QStringLiteral("http://127.0.0.1:%1").arg(m_port));
+        QSignalSpy spy(&api, &ApiClient::rightsChanged);
+        auto call = [&](const char* path) {
+            bool done = false;
+            ApiClient::Request r;
+            r.path = QString::fromLatin1(path);
+            api.request(r, [&](const ApiResult&) { done = true; });
+            QTRY_VERIFY_WITH_TIMEOUT(done, 5000);
+        };
+        m_rights = "v1";
+        call("/rights");   // first version seen: nothing to announce
+        call("/rights");
+        QCOMPARE(spy.count(), 0);
+        m_rights = "v2";
+        call("/rights");
+        QCOMPARE(spy.count(), 1);
+        QCOMPARE(spy.at(0).at(0).toString(), QStringLiteral("v2"));
+        call("/refused");  // 403 feature_not_included: rights are reloaded as well
+        QCOMPARE(spy.count(), 2);
+    }
+
     void initTestCase() {
+        m_server.Get("/api/v1/meta", [this](const httplib::Request& req, httplib::Response& res) {
+            std::lock_guard<std::mutex> l(m_mutex);
+            m_metaAuth = QString::fromStdString(req.get_header_value("Authorization"));
+            res.set_content("{\"product\":\"Nhill\",\"version\":\"3.0.0\",\"api\":\"v1\",\"min_client_version\":\"3.0.0\"}",
+                            "application/json");
+        });
+        m_server.Get("/rights", [this](const httplib::Request&, httplib::Response& res) {
+            res.set_header("X-Nhill-Rights", m_rights.load() == nullptr ? "" : m_rights.load());
+            res.set_content("{}", "application/json");
+        });
+        m_server.Get("/refused", [](const httplib::Request&, httplib::Response& res) {
+            res.status = 403;
+            res.set_content("{\"error\":{\"code\":\"feature_not_included\"}}", "application/json");
+        });
+        m_other.Get("/api/v1/meta", [](const httplib::Request&, httplib::Response& res) {
+            res.set_content("{\"name\":\"something else\"}", "application/json");
+        });
+        m_otherPort = m_other.bind_to_any_port("127.0.0.1");
+        m_otherThread = std::thread([this] { m_other.listen_after_bind(); });
         m_server.Post("/echo", [this](const httplib::Request& req, httplib::Response& res) {
             std::lock_guard<std::mutex> l(m_mutex);
             m_lastBody = QByteArray::fromStdString(req.body);
@@ -122,7 +208,9 @@ private slots:
     }
     void cleanupTestCase() {
         m_server.stop();
+        m_other.stop();
         if (m_thread.joinable()) m_thread.join();
+        if (m_otherThread.joinable()) m_otherThread.join();
     }
 
     // Regression: a JS object passed from QML arrives as QVariant<QJSValue>.
@@ -212,9 +300,11 @@ private slots:
     }
 
 private:
-    httplib::Server m_server;
-    std::thread m_thread;
-    int m_port = 0;
+    httplib::Server m_server, m_other;
+    std::thread m_thread, m_otherThread;
+    int m_port = 0, m_otherPort = 0;
+    QString m_metaAuth;
+    std::atomic<const char*> m_rights{nullptr};
     std::mutex m_mutex;
     QByteArray m_lastBody;
     QString m_lastKey;

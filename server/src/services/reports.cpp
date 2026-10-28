@@ -99,14 +99,15 @@ void registerReportRoutes(App& app, Env& env) {
                                {"net", money(r[3].as<int64_t>(), db::str(r[1]))}});
             json recent = json::array();
             for (const auto& r : tx.q(
-                     "SELECT d.id, d.number, p.name, d.issue_date::text, d.currency, d.total_minor, d.status FROM "
+                     "SELECT d.id, d.number, p.name, d.issue_date::text, d.currency, d.total_minor, d.status, d.doc_type FROM "
                      "sales_documents d JOIN parties p ON p.id = d.party_id WHERE d.doc_type IN ('invoice','receipt') AND d.status <> "
                      "'draft' AND ($1::uuid IS NULL OR d.issued_by = $1) AND " + entitlements::docVisibleSql("d", 2) +
                          " ORDER BY d.issued_at DESC LIMIT 5",
                      mine, types))
                 recent.push_back({{"id", db::str(r[0])}, {"number", db::str(r[1])}, {"party_name", db::str(r[2])},
                                   {"issue_date", db::str(r[3])}, {"currency", db::str(r[4])},
-                                  {"total", money(r[5].as<int64_t>(), db::str(r[4]))}, {"status", db::str(r[6])}});
+                                  {"total", money(r[5].as<int64_t>(), db::str(r[4]))}, {"status", db::str(r[6])},
+                                  {"doc_type", db::str(r[7])}});
             return {{"period", {{"from", p.from}, {"to", p.to}}},
                     {"scope", full ? "establishment" : "self"},
                     {"revenue", revenue},

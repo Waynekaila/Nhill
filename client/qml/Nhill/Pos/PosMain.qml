@@ -44,7 +44,10 @@ ApplicationWindow {
     // Loads the configuration and the open session of this user (if any).
     function loadConfig(done) {
         Api.get("/api/v1/pos/config", function(r) {
-            if (!r.ok) { fail(r); if (r.status === 403) openLogin(qsTr("This account cannot use the point of sale.")); return }
+            if (!r.ok) {
+                if (r.error && r.error.code === "feature_not_included") { openLogin(qsTr("The plan of this business does not include the point of sale.")); return }
+                fail(r); if (r.status === 403) openLogin(qsTr("This account cannot use the point of sale.")); return
+            }
             PosNav.config = r.data
             if (!r.data.my_open_session) { PosNav.session = null; if (done) done(); return }
             Api.get("/api/v1/pos/sessions/" + r.data.my_open_session, function(s) {
@@ -64,9 +67,22 @@ ApplicationWindow {
             color: Theme.bg
             LogoMark { app: "pos"; anchors.centerIn: parent; height: 56; width: 300 }
             BusyIndicator { anchors.horizontalCenter: parent.horizontalCenter; anchors.top: parent.verticalCenter; anchors.topMargin: 60 }
-            Component.onCompleted: Session.restore(function(ok) {
-                if (!ok) { win.openLogin(""); return }
-                win.loadConfig(function() { PosNav.session ? win.openSale() : win.openHome() })
+            property string required: ""
+            Text { visible: !!parent.required; anchors.horizontalCenter: parent.horizontalCenter; anchors.top: parent.verticalCenter; anchors.topMargin: 110
+                   width: Math.min(parent.width - 48, 480); horizontalAlignment: Text.AlignHCenter; wrapMode: Text.Wrap; color: Theme.text; font.family: Theme.font
+                   text: qsTr("This version of Nhill POS (%1) is no longer supported by the server. Please install version %2 or later.").arg(Qt.application.version).arg(parent.required) }
+            function newer(a, b) {
+                var x = String(a).split("."), y = String(b).split(".")
+                for (var i = 0; i < 3; ++i) { var d = (parseInt(x[i]) || 0) - (parseInt(y[i]) || 0); if (d !== 0) return d > 0 }
+                return false
+            }
+            // First launch: no server yet, the sign-in screen asks for it.
+            Component.onCompleted: if (!Prefs.serverConfigured) win.openLogin(""); else Api.get("/api/v1/meta", function(m) {
+                if (m.ok && m.data.min_client_version && newer(m.data.min_client_version, Qt.application.version)) { required = m.data.min_client_version; return }
+                Session.restore(function(ok) {
+                    if (!ok) { win.openLogin(""); return }
+                    win.loadConfig(function() { PosNav.session ? win.openSale() : win.openHome() })
+                })
             })
         }
     }
@@ -79,6 +95,8 @@ ApplicationWindow {
     Connections {
         target: Session
         function onExpired() { win.openLogin(qsTr("Your session has expired. Please sign in again.")) }
+        // Rights reloaded (plan or role changed): without the point of sale, the till stops here.
+        function onChanged() { if (Session.loggedIn && Session.me.permissions && !Session.has("pos")) win.openLogin(qsTr("The plan of this business does not include the point of sale.")) }
         function onRememberFailed() { win.toast(qsTr("This device could not keep your session (system secure storage unavailable): you will sign in again at the next start."), "warning") }
     }
 

@@ -342,6 +342,18 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Address of the Nhill server administered by this console. It is checked before it is saved.</source>
+        <translation>Adresse du serveur Nhill administré par cette console. Elle est vérifiée avant d'être enregistrée.</translation>
+    </message>
+    <message>
+        <source>Nhill server</source>
+        <translation>Serveur Nhill</translation>
+    </message>
+    <message>
+        <source>Which Nhill server do you administer?</source>
+        <translation>Quel serveur Nhill administrez-vous ?</translation>
+    </message>
 </context>
 <context>
     <name>ConsoleMain</name>
@@ -691,6 +703,10 @@
         <source>Technical errors</source>
         <translation>Erreurs techniques</translation>
     </message>
+    <message>
+        <source>Assignment rules</source>
+        <translation>Règles d'attribution</translation>
+    </message>
 </context>
 <context>
     <name>CreatePage</name>
@@ -954,6 +970,30 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>+ country code and number</source>
+        <translation>+ indicatif du pays et numéro</translation>
+    </message>
+    <message>
+        <source>Choose the country of the business.</source>
+        <translation>Choisissez le pays de l'entreprise.</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Continuer</translation>
+    </message>
+    <message>
+        <source>No payment details are requested to create your business. No automatic charge will ever be made without your explicit agreement.</source>
+        <translation>Aucun moyen de paiement n'est demandé pour créer votre entreprise. Aucun prélèvement automatique ne sera jamais effectué sans votre accord explicite.</translation>
+    </message>
+    <message>
+        <source>Your Nhill server</source>
+        <translation>Votre serveur Nhill</translation>
+    </message>
+    <message>
+        <source>Your business and its data are kept on this server. Enter the address given by your provider or your administrator.</source>
+        <translation>Votre entreprise et ses données sont conservées sur ce serveur. Saisissez l'adresse fournie par votre prestataire ou votre administrateur.</translation>
+    </message>
 </context>
 <context>
     <name>DashboardPage</name>
@@ -1085,6 +1125,29 @@
     <message>
         <source>My unpaid invoices</source>
         <translation>Mes factures impayées</translation>
+    </message>
+    <message>
+        <source>%1 invoice(s) · %2 till receipt(s)</source>
+        <translation>%1 facture(s) · %2 ticket(s) de caisse</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n till receipt(s)</source>
+        <translation>
+            <numerusform>%n ticket de caisse</numerusform>
+            <numerusform>%n tickets de caisse</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Amounts to pay</source>
+        <translation>Montants à payer</translation>
+    </message>
+    <message>
+        <source>No sale in the period</source>
+        <translation>Aucune vente sur la période</translation>
+    </message>
+    <message>
+        <source>Received purchases not yet paid</source>
+        <translation>Achats reçus non encore payés</translation>
     </message>
 </context>
 <context>
@@ -1526,6 +1589,14 @@
         <source>Save</source>
         <translation>Enregistrer</translation>
     </message>
+    <message>
+        <source>PDF A4</source>
+        <translation>PDF A4</translation>
+    </message>
+    <message>
+        <source>Ticket</source>
+        <translation>Ticket</translation>
+    </message>
 </context>
 <context>
     <name>ErrorsPage</name>
@@ -1931,6 +2002,70 @@
     <message>
         <source>automatic</source>
         <translation>automatique</translation>
+    </message>
+    <message>
+        <source>%1 / %2</source>
+        <translation>%1 / %2</translation>
+    </message>
+    <message>
+        <source>%1 · unlimited</source>
+        <translation>%1 · illimité</translation>
+    </message>
+    <message>
+        <source>Access: %1 (%2)</source>
+        <translation>Accès : %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Active period</source>
+        <translation>Période active</translation>
+    </message>
+    <message>
+        <source>An assigned plan is not a payment: no order is created and pending payment requests are cancelled. The rights of the establishment change at its next request.</source>
+        <translation>Une formule attribuée n'est pas un paiement : aucune commande n'est créée et les demandes de paiement en attente sont annulées. Les droits de l'établissement changent à sa prochaine requête.</translation>
+    </message>
+    <message>
+        <source>As</source>
+        <translation>Comme</translation>
+    </message>
+    <message>
+        <source>Assign a plan (trial, period or no end date)</source>
+        <translation>Attribuer une formule (essai, période ou sans fin)</translation>
+    </message>
+    <message>
+        <source>Correct the dates</source>
+        <translation>Corriger les dates</translation>
+    </message>
+    <message>
+        <source>End of the grace period (optional)</source>
+        <translation>Fin du délai de grâce (facultatif)</translation>
+    </message>
+    <message>
+        <source>End of the period</source>
+        <translation>Fin de la période</translation>
+    </message>
+    <message>
+        <source>No end date (free or custom plans only)</source>
+        <translation>Sans date de fin (formules gratuites ou sur mesure uniquement)</translation>
+    </message>
+    <message>
+        <source>Plan</source>
+        <translation>Formule</translation>
+    </message>
+    <message>
+        <source>Rights of the plan</source>
+        <translation>Droits de la formule</translation>
+    </message>
+    <message>
+        <source>full</source>
+        <translation>complet</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>aucun</translation>
+    </message>
+    <message>
+        <source>read and export only</source>
+        <translation>lecture et export uniquement</translation>
     </message>
 </context>
 <context>
@@ -2909,6 +3044,26 @@
         <source>Must differ from the temporary password.</source>
         <translation>Doit différer du mot de passe temporaire.</translation>
     </message>
+    <message>
+        <source>Dates corrected by Nhill</source>
+        <translation>Dates corrigées par Nhill</translation>
+    </message>
+    <message>
+        <source>Expired: moved to the fallback plan</source>
+        <translation>Expiré : passage à la formule de repli</translation>
+    </message>
+    <message>
+        <source>Plan assigned by Nhill</source>
+        <translation>Formule attribuée par Nhill</translation>
+    </message>
+    <message>
+        <source>Plan assigned by a rule</source>
+        <translation>Formule attribuée par une règle</translation>
+    </message>
+    <message>
+        <source>Till receipt</source>
+        <translation>Ticket de caisse</translation>
+    </message>
 </context>
 <context>
     <name>LoginPage</name>
@@ -3010,6 +3165,62 @@
         <source>No notification</source>
         <translation>Aucune notification</translation>
     </message>
+    <message>
+        <source>A change of plan is scheduled at the end of the current period.</source>
+        <translation>Un changement de formule est prévu à la fin de la période en cours.</translation>
+    </message>
+    <message>
+        <source>New information about your business.</source>
+        <translation>Nouvelle information concernant votre entreprise.</translation>
+    </message>
+    <message>
+        <source>Nhill assigned the plan %1 to your business.</source>
+        <translation>Nhill a attribué la formule %1 à votre entreprise.</translation>
+    </message>
+    <message>
+        <source>Nhill changed the plan of your business.</source>
+        <translation>Nhill a modifié la formule de votre entreprise.</translation>
+    </message>
+    <message>
+        <source>Nhill corrected the dates of your subscription.</source>
+        <translation>Nhill a corrigé les dates de votre abonnement.</translation>
+    </message>
+    <message>
+        <source>Nhill extended your subscription.</source>
+        <translation>Nhill a prolongé votre abonnement.</translation>
+    </message>
+    <message>
+        <source>Nhill reactivated your subscription.</source>
+        <translation>Nhill a réactivé votre abonnement.</translation>
+    </message>
+    <message>
+        <source>Nhill support answered your request #%1.</source>
+        <translation>Le support Nhill a répondu à votre demande n° %1.</translation>
+    </message>
+    <message>
+        <source>Nhill suspended your subscription: read-only access.</source>
+        <translation>Nhill a suspendu votre abonnement : accès en lecture seule.</translation>
+    </message>
+    <message>
+        <source>Till %1, session %2: cash difference of %3.</source>
+        <translation>Caisse %1, session %2 : écart d'espèces de %3.</translation>
+    </message>
+    <message>
+        <source>Your plan has changed (%1). The screens show the features of the new plan.</source>
+        <translation>Votre formule a changé (%1). Les écrans affichent les fonctionnalités de la nouvelle formule.</translation>
+    </message>
+    <message>
+        <source>Your plan has changed. The screens show the features of the new plan.</source>
+        <translation>Votre formule a changé. Les écrans affichent les fonctionnalités de la nouvelle formule.</translation>
+    </message>
+    <message>
+        <source>Your request #%1 has a new status.</source>
+        <translation>Votre demande n° %1 a un nouveau statut.</translation>
+    </message>
+    <message>
+        <source>Your subscription was cancelled.</source>
+        <translation>Votre abonnement a été résilié.</translation>
+    </message>
 </context>
 <context>
     <name>NotificationsPage</name>
@@ -3095,6 +3306,10 @@
     <message>
         <source>Change language</source>
         <translation>Changer de langue</translation>
+    </message>
+    <message>
+        <source>For traders, independent entrepreneurs and SMEs. Your currency, your taxes, in French or English.</source>
+        <translation>Pour les commerçants, entrepreneurs indépendants et PME. Votre devise, vos taxes, en français ou en anglais.</translation>
     </message>
 </context>
 <context>
@@ -3637,6 +3852,10 @@
         <source>Payments are recorded from an invoice, a purchase or an expense.</source>
         <translation>Les paiements s'enregistrent depuis une facture, un achat ou une dépense.</translation>
     </message>
+    <message>
+        <source>Payments are recorded from your documents (invoices, purchases, expenses) when your plan includes them.</source>
+        <translation>Les paiements s'enregistrent depuis vos documents (factures, achats, dépenses) lorsque votre formule les inclut.</translation>
+    </message>
 </context>
 <context>
     <name>PlansPage</name>
@@ -3847,6 +4066,134 @@
     <message>
         <source>Features: invalid JSON.</source>
         <translation>Fonctionnalités : JSON invalide.</translation>
+    </message>
+    <message>
+        <source>A feature that is off is invisible in the applications and refused by the server.</source>
+        <translation>Une fonctionnalité désactivée est invisible dans les applications et refusée par le serveur.</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <translation>Archivée</translation>
+    </message>
+    <message>
+        <source>Archived (no new subscription; current ones continue)</source>
+        <translation>Archivée (plus de nouvelle souscription ; les abonnements en cours continuent)</translation>
+    </message>
+    <message>
+        <source>At expiry, move to</source>
+        <translation>À l'expiration, passer à</translation>
+    </message>
+    <message>
+        <source>Automatic renewal allowed (with consent)</source>
+        <translation>Renouvellement automatique autorisé (avec consentement)</translation>
+    </message>
+    <message>
+        <source>Can be chosen by the establishments (self-service)</source>
+        <translation>Peut être choisie par les établissements (libre-service)</translation>
+    </message>
+    <message>
+        <source>Conditions</source>
+        <translation>Conditions</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Sur mesure</translation>
+    </message>
+    <message>
+        <source>Custom (negotiated)</source>
+        <translation>Sur mesure (négociée)</translation>
+    </message>
+    <message>
+        <source>Duration when assigned (days)</source>
+        <translation>Durée lors de l'attribution (jours)</translation>
+    </message>
+    <message>
+        <source>Empty = platform setting. 0 to 90.</source>
+        <translation>Vide = paramètre de la plateforme. 0 à 90.</translation>
+    </message>
+    <message>
+        <source>Features</source>
+        <translation>Fonctionnalités</translation>
+    </message>
+    <message>
+        <source>For trial plans and fallback plans. Empty = no fixed duration.</source>
+        <translation>Pour les formules d'essai et de repli. Vide = pas de durée fixe.</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translation>Gratuite</translation>
+    </message>
+    <message>
+        <source>Free or custom plan used when the grace period ends, instead of read-only access.</source>
+        <translation>Formule gratuite ou sur mesure appliquée à la fin du délai de grâce, au lieu de l'accès en lecture seule.</translation>
+    </message>
+    <message>
+        <source>Grace period (days)</source>
+        <translation>Délai de grâce (jours)</translation>
+    </message>
+    <message>
+        <source>Identity</source>
+        <translation>Identité</translation>
+    </message>
+    <message>
+        <source>Kind</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Limits</source>
+        <translation>Limites</translation>
+    </message>
+    <message>
+        <source>Paid</source>
+        <translation>Payante</translation>
+    </message>
+    <message>
+        <source>Plan saved. Establishments of this plan get the new rights at their next request.</source>
+        <translation>Formule enregistrée. Les établissements de cette formule reçoivent les nouveaux droits à leur prochaine requête.</translation>
+    </message>
+    <message>
+        <source>Price</source>
+        <translation>Prix</translation>
+    </message>
+    <message>
+        <source>Private</source>
+        <translation>Privée</translation>
+    </message>
+    <message>
+        <source>Private plans are assigned from this console only.</source>
+        <translation>Les formules privées sont attribuées uniquement depuis cette console.</translation>
+    </message>
+    <message>
+        <source>Public</source>
+        <translation>Publique</translation>
+    </message>
+    <message>
+        <source>Read-only access (no fallback plan)</source>
+        <translation>Accès en lecture seule (pas de formule de repli)</translation>
+    </message>
+    <message>
+        <source>Reminders (days before the end)</source>
+        <translation>Rappels (jours avant la fin)</translation>
+    </message>
+    <message>
+        <source>Reminders: numbers of days separated by commas.</source>
+        <translation>Rappels : nombres de jours séparés par des virgules.</translation>
+    </message>
+    <message>
+        <source>Trial</source>
+        <translation>Essai</translation>
+    </message>
+    <message>
+        <source>Visibility</source>
+        <translation>Visibilité</translation>
+    </message>
+    <message>
+        <source>e.g. 14, 7, 3, 1 — empty = platform setting</source>
+        <translation>ex. 14, 7, 3, 1 — vide = paramètre de la plateforme</translation>
+    </message>
+    <message>
+        <source>private</source>
+        <translation>privée</translation>
     </message>
 </context>
 <context>
@@ -4099,6 +4446,22 @@
         <source>Forgot your password?</source>
         <translation>Mot de passe oublié ?</translation>
     </message>
+    <message>
+        <source>Change the address only if your provider asks you to. The current session of this till ends.</source>
+        <translation>Ne changez l'adresse que si votre prestataire vous le demande. La session en cours de cette caisse se termine.</translation>
+    </message>
+    <message>
+        <source>Connect this till to your Nhill server</source>
+        <translation>Connectez cette caisse à votre serveur Nhill</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Continuer</translation>
+    </message>
+    <message>
+        <source>Nhill server</source>
+        <translation>Serveur Nhill</translation>
+    </message>
 </context>
 <context>
     <name>PosMain</name>
@@ -4113,6 +4476,14 @@
     <message>
         <source>This device could not keep your session (system secure storage unavailable): you will sign in again at the next start.</source>
         <translation>Cet appareil n&apos;a pas pu mémoriser votre session (stockage sécurisé du système indisponible) : vous devrez vous reconnecter au prochain démarrage.</translation>
+    </message>
+    <message>
+        <source>The plan of this business does not include the point of sale.</source>
+        <translation>La formule de cette entreprise n'inclut pas la caisse.</translation>
+    </message>
+    <message>
+        <source>This version of Nhill POS (%1) is no longer supported by the server. Please install version %2 or later.</source>
+        <translation>Cette version de Nhill POS (%1) n'est plus prise en charge par le serveur. Installez la version %2 ou une version plus récente.</translation>
     </message>
 </context>
 <context>
@@ -4176,6 +4547,22 @@
     <message>
         <source>New sale</source>
         <translation>Nouvelle vente</translation>
+    </message>
+    <message>
+        <source>Invoice %1 — %2</source>
+        <translation>Facture %1 — %2</translation>
+    </message>
+    <message>
+        <source>Issue an invoice for %1 instead of a receipt</source>
+        <translation>Établir une facture au nom de %1 au lieu d'un ticket</translation>
+    </message>
+    <message>
+        <source>Print the invoice (A4)</source>
+        <translation>Imprimer la facture (A4)</translation>
+    </message>
+    <message>
+        <source>Ticket</source>
+        <translation>Ticket</translation>
     </message>
 </context>
 <context>
@@ -4566,6 +4953,10 @@
     <message>
         <source>Enter the cash counted in the drawer (0 if the drawer is empty).</source>
         <translation>Saisissez les espèces comptées dans le tiroir (0 si le tiroir est vide).</translation>
+    </message>
+    <message>
+        <source>Invoice</source>
+        <translation>Facture</translation>
     </message>
 </context>
 <context>
@@ -5517,6 +5908,14 @@
         <source>Create</source>
         <translation>Créer</translation>
     </message>
+    <message>
+        <source>Documents of your sales</source>
+        <translation>Les documents de vos ventes</translation>
+    </message>
+    <message>
+        <source>Till receipts</source>
+        <translation>Tickets de caisse</translation>
+    </message>
 </context>
 <context>
     <name>SearchField</name>
@@ -5634,6 +6033,26 @@
     <message>
         <source>When on, Nhill reopens signed in, using a token kept in the system&apos;s secure storage (never your password). Turn it off on a shared device.</source>
         <translation>Activé, Nhill se rouvre connecté grâce à un jeton conservé dans le stockage sécurisé du système (jamais votre mot de passe). Désactivez-le sur un appareil partagé.</translation>
+    </message>
+    <message>
+        <source>+ country code and number</source>
+        <translation>+ indicatif du pays et numéro</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Change server</source>
+        <translation>Changer de serveur</translation>
+    </message>
+    <message>
+        <source>Change the Nhill server</source>
+        <translation>Changer de serveur Nhill</translation>
+    </message>
+    <message>
+        <source>You will be signed out of this device: your account and your data stay on the current server. Change the address only if your provider asks you to.</source>
+        <translation>Vous serez déconnecté de cet appareil : votre compte et vos données restent sur le serveur actuel. Ne changez l'adresse que si votre prestataire vous le demande.</translation>
     </message>
 </context>
 <context>
@@ -5837,6 +6256,34 @@
         <source>Dates of documents, cash sessions and daily reports follow this time zone.</source>
         <translation>Les dates des documents, des sessions de caisse et des rapports journaliers suivent ce fuseau horaire.</translation>
     </message>
+    <message>
+        <source>+ country code and number</source>
+        <translation>+ indicatif du pays et numéro</translation>
+    </message>
+    <message>
+        <source>Download the archive</source>
+        <translation>Télécharger l'archive</translation>
+    </message>
+    <message>
+        <source>Export all my data</source>
+        <translation>Exporter toutes mes données</translation>
+    </message>
+    <message>
+        <source>Mentions on every document</source>
+        <translation>Mentions sur chaque document</translation>
+    </message>
+    <message>
+        <source>One ZIP archive with all the data of the business (spreadsheet CSV files and JSON files), the stored files and a list of contents. Available at any time to the owner, including in read-only mode. Keep it safe: it contains personal data.</source>
+        <translation>Une archive ZIP avec toutes les données de l'entreprise (fichiers CSV pour tableur et fichiers JSON), les fichiers enregistrés et la liste du contenu. Disponible à tout moment pour le propriétaire, y compris en lecture seule. Conservez-la en lieu sûr : elle contient des données personnelles.</translation>
+    </message>
+    <message>
+        <source>Printed on invoices, quotes, credit notes and till receipts (A4 and ticket). Write here the mentions your activity requires; Nhill does not write or check them for you.</source>
+        <translation>Imprimées sur les factures, devis, avoirs et tickets de caisse (A4 et ticket). Indiquez ici les mentions qu'exige votre activité ; Nhill ne les rédige pas et ne les vérifie pas à votre place.</translation>
+    </message>
+    <message>
+        <source>Saved in %1</source>
+        <translation>Enregistré dans %1</translation>
+    </message>
 </context>
 <context>
     <name>SettingsFinance</name>
@@ -6035,6 +6482,18 @@
     <message>
         <source>Record</source>
         <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>Nhill does not fetch rates automatically. Enter the rate you apply with its date and source (for example the daily rate of your central bank). A document keeps the rate recorded when it was issued.</source>
+        <translation>Nhill ne récupère pas les taux automatiquement. Saisissez le taux que vous appliquez avec sa date et sa source (par exemple le taux du jour de votre banque centrale). Un document conserve le taux enregistré lors de son émission.</translation>
+    </message>
+    <message>
+        <source>e.g. Main till, Bank account, Mobile Money</source>
+        <translation>ex. Caisse principale, Compte bancaire, Mobile Money</translation>
+    </message>
+    <message>
+        <source>e.g. central bank daily rate</source>
+        <translation>ex. taux du jour de la banque centrale</translation>
     </message>
 </context>
 <context>
@@ -6685,6 +7144,22 @@
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
+    <message>
+        <source>%1 of %2 used</source>
+        <translation>%1 sur %2 utilisés</translation>
+    </message>
+    <message>
+        <source>%1 used · unlimited</source>
+        <translation>%1 utilisés · illimité</translation>
+    </message>
+    <message>
+        <source>Included in your plan</source>
+        <translation>Inclus dans votre formule</translation>
+    </message>
+    <message>
+        <source>Since %1 · no end date</source>
+        <translation>Depuis le %1 · sans date de fin</translation>
+    </message>
 </context>
 <context>
     <name>SettingsTeam</name>
@@ -6918,6 +7393,10 @@
         <source>Read-only mode: you can consult and export data, but not create or modify anything. Contact the administrator of the establishment.</source>
         <translation>Mode lecture seule : vous pouvez consulter et exporter les données, mais rien créer ni modifier. Contactez l'administrateur de l'établissement.</translation>
     </message>
+    <message>
+        <source>Customers</source>
+        <translation>Clients</translation>
+    </message>
 </context>
 <context>
     <name>StatsPage</name>
@@ -7147,6 +7626,26 @@
     <message>
         <source>To</source>
         <translation>Au</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>New warehouse</source>
+        <translation>Nouveau dépôt</translation>
+    </message>
+    <message>
+        <source>Your plan: %1 of %2 warehouses used.</source>
+        <translation>Votre formule : %1 dépôt(s) utilisé(s) sur %2.</translation>
+    </message>
+    <message>
+        <source>e.g. Back store, Second shop</source>
+        <translation>ex. Réserve, Deuxième boutique</translation>
     </message>
 </context>
 <context>
@@ -7445,6 +7944,26 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Enter the address of the Nhill server you use. It is checked, then kept on this device; you can change it later.</source>
+        <translation>Saisissez l'adresse du serveur Nhill que vous utilisez. Elle est vérifiée puis conservée sur cet appareil ; vous pourrez la modifier plus tard.</translation>
+    </message>
+    <message>
+        <source>I register my company or my individual activity, without payment details.</source>
+        <translation>J'enregistre ma société ou mon activité individuelle, sans moyen de paiement.</translation>
+    </message>
+    <message>
+        <source>Nhill server</source>
+        <translation>Serveur Nhill</translation>
+    </message>
+    <message>
+        <source>Server: %1</source>
+        <translation>Serveur : %1</translation>
     </message>
 </context>
 <context>
@@ -8013,6 +8532,74 @@
         <source>Choose a password different from the temporary one.</source>
         <translation>Choisissez un mot de passe différent du mot de passe temporaire.</translation>
     </message>
+    <message>
+        <source>An invoice needs an identified customer: choose the customer first.</source>
+        <translation>Une facture nécessite un client identifié : choisissez d'abord le client.</translation>
+    </message>
+    <message>
+        <source>Automatic renewal is not available for this plan.</source>
+        <translation>Le renouvellement automatique n'est pas disponible pour cette formule.</translation>
+    </message>
+    <message>
+        <source>Choose A4 or ticket.</source>
+        <translation>Choisissez A4 ou ticket.</translation>
+    </message>
+    <message>
+        <source>Choose a 58 mm or 80 mm roll.</source>
+        <translation>Choisissez un rouleau de 58 mm ou de 80 mm.</translation>
+    </message>
+    <message>
+        <source>Only a free or custom plan can be given without an end date.</source>
+        <translation>Seule une formule gratuite ou sur mesure peut être accordée sans date de fin.</translation>
+    </message>
+    <message>
+        <source>Only the owner of the business can do this.</source>
+        <translation>Seul le propriétaire de l'entreprise peut effectuer cette action.</translation>
+    </message>
+    <message>
+        <source>The limit of your plan is reached.</source>
+        <translation>La limite de votre formule est atteinte.</translation>
+    </message>
+    <message>
+        <source>This address does not answer as a Nhill server. Check the address given by your provider.</source>
+        <translation>Cette adresse ne répond pas comme un serveur Nhill. Vérifiez l'adresse fournie par votre prestataire.</translation>
+    </message>
+    <message>
+        <source>This feature is not part of the plan of your business. The screen has been updated.</source>
+        <translation>Cette fonctionnalité ne fait pas partie de la formule de votre entreprise. L'écran a été mis à jour.</translation>
+    </message>
+    <message>
+        <source>This plan is assigned by Nhill: contact us to change it.</source>
+        <translation>Cette formule est attribuée par Nhill : contactez-nous pour la modifier.</translation>
+    </message>
+    <message>
+        <source>This plan is not active.</source>
+        <translation>Cette formule n'est pas active.</translation>
+    </message>
+    <message>
+        <source>This server address is not valid.</source>
+        <translation>Cette adresse de serveur n'est pas valide.</translation>
+    </message>
+    <message>
+        <source>Your plan allows %1 MB of stored files.</source>
+        <translation>Votre formule permet %1 Mo de fichiers enregistrés.</translation>
+    </message>
+    <message>
+        <source>Your plan allows %1 active products and services.</source>
+        <translation>Votre formule permet %1 produits et services actifs.</translation>
+    </message>
+    <message>
+        <source>Your plan allows %1 documents per month. Credit notes stay possible.</source>
+        <translation>Votre formule permet %1 documents par mois. Les avoirs restent possibles.</translation>
+    </message>
+    <message>
+        <source>Your plan allows %1 warehouses.</source>
+        <translation>Votre formule permet %1 dépôts.</translation>
+    </message>
+    <message>
+        <source>Your plan does not allow more tills.</source>
+        <translation>Votre formule ne permet pas d'autres caisses.</translation>
+    </message>
 </context>
 <context>
     <name>FbTextField</name>
@@ -8156,6 +8743,163 @@
     <message>
         <source>Not available on this device: the session is never stored without the system&apos;s secure storage.</source>
         <translation>Indisponible sur cet appareil : la session n&apos;est jamais conservée sans le stockage sécurisé du système.</translation>
+    </message>
+</context>
+<context>
+    <name>PlanRulesPage</name>
+    <message numerus="yes">
+        <source>%n day(s)</source>
+        <translation>
+            <numerusform>%n jour</numerusform>
+            <numerusform>%n jours</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Active</translation>
+    </message>
+    <message>
+        <source>All countries</source>
+        <translation>Tous les pays</translation>
+    </message>
+    <message>
+        <source>As</source>
+        <translation>Comme</translation>
+    </message>
+    <message>
+        <source>Assignment rules</source>
+        <translation>Règles d'attribution</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Companies</source>
+        <translation>Sociétés</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation>Pays</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>Duration (days)</source>
+        <translation>Durée (jours)</translation>
+    </message>
+    <message>
+        <source>Edit the rule</source>
+        <translation>Modifier la règle</translation>
+    </message>
+    <message>
+        <source>Empty = no end date (granted free or custom plans only)</source>
+        <translation>Vide = sans date de fin (formules gratuites ou sur mesure accordées uniquement)</translation>
+    </message>
+    <message>
+        <source>Everyone</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <source>For</source>
+        <translation>Pour</translation>
+    </message>
+    <message>
+        <source>Granted period</source>
+        <translation>Période accordée</translation>
+    </message>
+    <message>
+        <source>Inactive</source>
+        <translation>Inactive</translation>
+    </message>
+    <message>
+        <source>Individual entrepreneurs</source>
+        <translation>Entrepreneurs individuels</translation>
+    </message>
+    <message>
+        <source>New establishments get the standard free trial of the platform settings.</source>
+        <translation>Les nouveaux établissements reçoivent l'essai gratuit standard défini dans les paramètres de la plateforme.</translation>
+    </message>
+    <message>
+        <source>New rule</source>
+        <translation>Nouvelle règle</translation>
+    </message>
+    <message>
+        <source>No rule</source>
+        <translation>Aucune règle</translation>
+    </message>
+    <message>
+        <source>Plan</source>
+        <translation>Formule</translation>
+    </message>
+    <message>
+        <source>Plan given automatically to a new establishment</source>
+        <translation>Formule attribuée automatiquement à un nouvel établissement</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Priorité</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>Statut</translation>
+    </message>
+    <message>
+        <source>The first active rule that matches, by priority (lowest first), applies at the creation of an establishment.</source>
+        <translation>La première règle active qui correspond, par priorité (la plus basse d'abord), s'applique à la création d'un établissement.</translation>
+    </message>
+    <message>
+        <source>Trial</source>
+        <translation>Essai</translation>
+    </message>
+    <message>
+        <source>Type of establishment</source>
+        <translation>Type d'établissement</translation>
+    </message>
+    <message>
+        <source>no end date</source>
+        <translation>sans date de fin</translation>
+    </message>
+</context>
+<context>
+    <name>ServerAddressForm</name>
+    <message>
+        <source>Connection verified: Nhill server %1.</source>
+        <translation>Connexion vérifiée : serveur Nhill %1.</translation>
+    </message>
+    <message>
+        <source>Enter the address given by your provider.</source>
+        <translation>Saisissez l'adresse fournie par votre prestataire.</translation>
+    </message>
+    <message>
+        <source>Given by your provider or your administrator, for example https://api.example.com. Secure connections (HTTPS) only.</source>
+        <translation>Fournie par votre prestataire ou votre administrateur, par exemple https://api.example.com. Connexions sécurisées (HTTPS) uniquement.</translation>
+    </message>
+    <message>
+        <source>Server address (API)</source>
+        <translation>Adresse du serveur (API)</translation>
+    </message>
+    <message>
+        <source>Test the connection</source>
+        <translation>Tester la connexion</translation>
+    </message>
+    <message>
+        <source>This server requires version %1 of the application or later. Install the update first.</source>
+        <translation>Ce serveur exige la version %1 de l'application ou une version plus récente. Installez d'abord la mise à jour.</translation>
+    </message>
+    <message>
+        <source>Use this server</source>
+        <translation>Utiliser ce serveur</translation>
     </message>
 </context>
 </TS>

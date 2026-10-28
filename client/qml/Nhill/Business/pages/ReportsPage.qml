@@ -9,23 +9,26 @@ FbPage {
     id: page
     title: qsTr("Reports")
     subtitle: qsTr("Figures computed by the server from the recorded documents")
-    property string kind: "sales"
+    property string kind: kinds.length ? kinds[0].value : "payments"
+    onKindsChanged: if (!kinds.some(function(k) { return k.value === page.kind }) && kinds.length) page.kind = kinds[0].value
     property var columns: []
     property var rows: []
     property bool loading: false
+    // Reports of the plan only (feature "a|b": one of them is enough).
     readonly property var kinds: {
-        var k = baseKinds.slice()
-        if (Session.can("audit.read") && !Session.individual) k.splice(1, 0, { value: "staff", text: qsTr("Activity per employee"), period: true })
+        var k = baseKinds.filter(function(x) { return !x.feature || x.feature.split("|").some(function(f) { return Session.has(f) }) })
+        if (Session.can("audit.read") && !Session.individual && Session.has("reports.advanced"))
+            k.splice(1, 0, { value: "staff", text: qsTr("Activity per employee"), period: true })
         return k
     }
     readonly property var baseKinds: [
-        { value: "sales", text: qsTr("Sales journal"), period: true },
+        { value: "sales", text: qsTr("Sales journal"), period: true, feature: "sales.invoices|pos" },
         { value: "payments", text: qsTr("Payments"), period: true },
-        { value: "expenses", text: qsTr("Expenses"), period: true },
-        { value: "products", text: qsTr("Sales by product (estimated margin)"), period: true },
+        { value: "expenses", text: qsTr("Expenses"), period: true, feature: "expenses" },
+        { value: "products", text: qsTr("Sales by product (estimated margin)"), period: true, feature: "reports.advanced" },
         { value: "stock-movements", text: qsTr("Stock movements"), period: true },
-        { value: "receivables", text: qsTr("Customer receivables (today)"), period: false },
-        { value: "payables", text: qsTr("Amounts to pay (today)"), period: false }
+        { value: "receivables", text: qsTr("Customer receivables (today)"), period: false, feature: "sales.invoices" },
+        { value: "payables", text: qsTr("Amounts to pay (today)"), period: false, feature: "purchases|expenses" }
     ]
     readonly property bool needsPeriod: { for (var i = 0; i < kinds.length; ++i) if (kinds[i].value === kind) return kinds[i].period; return true }
     function query() { return "/api/v1/reports/" + kind + "?from=" + from.value + "&to=" + to.value }

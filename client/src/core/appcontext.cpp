@@ -9,6 +9,8 @@
 #include <QTimeZone>
 
 #include <QClipboard>
+#include <QCollator>
+#include <QDateTime>
 #include <QCoreApplication>
 #include <QQuickWindow>
 #include <QFontDatabase>
@@ -19,17 +21,25 @@
 #include <QSettings>
 #include <QStyleHints>
 
-#ifndef NHILL_DEFAULT_SERVER
-#define NHILL_DEFAULT_SERVER "http://127.0.0.1:8080"
-#endif
+#include <algorithm>
 
 namespace nhc {
+
+namespace {
+struct CountryRow {
+    const char *code, *fr, *en, *currency;
+};
+// Generated from the Unicode CLDR (scripts/tools/gen-countries.py).
+const CountryRow kCountries[] = {
+#include "countries_data.inc"
+};
+}  // namespace
 
 // --------------------------------------------------------------------- Preferences
 
 Preferences::Preferences(QObject* parent) : QObject(parent) {
     QSettings s;
-    m_server = s.value(QStringLiteral("prefs/serverUrl"), QStringLiteral(NHILL_DEFAULT_SERVER)).toString();
+    m_server = s.value(QStringLiteral("prefs/serverUrl")).toString();
     if (qEnvironmentVariableIsSet("NHILL_SERVER")) m_server = qEnvironmentVariable("NHILL_SERVER");
     m_theme = s.value(QStringLiteral("prefs/theme"), QStringLiteral("system")).toString();
     QString sys = QLocale::system().name().startsWith(QLatin1String("en")) ? QStringLiteral("en") : QStringLiteral("fr");
@@ -38,7 +48,10 @@ Preferences::Preferences(QObject* parent) : QObject(parent) {
 }
 
 void Preferences::setServerUrl(const QString& u) {
-    m_server = u.trimmed();
+    QString v = u.trimmed();
+    while (v.endsWith(QLatin1Char('/'))) v.chop(1);
+    if (v == m_server) return;
+    m_server = v;
     QSettings().setValue(QStringLiteral("prefs/serverUrl"), m_server);
     emit changed();
 }
@@ -119,6 +132,17 @@ QString Errors::code(const QString& c, const QString& field) const {
         {"invoice_not_creditable", QT_TR_NOOP("This invoice cannot be credited.")},
         {"document_not_payable", QT_TR_NOOP("This document cannot receive a payment.")},
         {"feature_not_in_plan", QT_TR_NOOP("This feature is not included in your plan.")},
+        {"feature_not_included", QT_TR_NOOP("This feature is not part of the plan of your business. The screen has been updated.")},
+        {"plan_limit_reached", QT_TR_NOOP("The limit of your plan is reached.")},
+        {"plan_register_limit", QT_TR_NOOP("Your plan does not allow more tills.")},
+        {"owner_only", QT_TR_NOOP("Only the owner of the business can do this.")},
+        {"invalid_url", QT_TR_NOOP("This server address is not valid.")},
+        {"not_nhill_server", QT_TR_NOOP("This address does not answer as a Nhill server. Check the address given by your provider.")},
+        {"auto_renew_not_allowed", QT_TR_NOOP("Automatic renewal is not available for this plan.")},
+        {"plan_not_self_service", QT_TR_NOOP("This plan is assigned by Nhill: contact us to change it.")},
+        {"plan_inactive", QT_TR_NOOP("This plan is not active.")},
+        {"open_ended_requires_free_plan", QT_TR_NOOP("Only a free or custom plan can be given without an end date.")},
+        {"open_ended_grant_requires_free_plan", QT_TR_NOOP("Only a free or custom plan can be given without an end date.")},
         {"plan_audience_mismatch", QT_TR_NOOP("This plan is not available for your type of business.")},
         {"plan_user_limit", QT_TR_NOOP("You have more active users than this plan allows.")},
         {"category_in_use", QT_TR_NOOP("This category still contains products.")},
@@ -202,6 +226,9 @@ QString Errors::code(const QString& c, const QString& field) const {
         {"corrupted_pdf", QT_TR_NOOP("The PDF file is damaged.")},
         {"out_of_range", QT_TR_NOOP("%1: value out of the allowed range.")},
         {"cash_count_required", QT_TR_NOOP("Enter the cash counted in the drawer (0 if the drawer is empty).")},
+        {"required_for_invoice", QT_TR_NOOP("An invoice needs an identified customer: choose the customer first.")},
+        {"a4_or_ticket", QT_TR_NOOP("Choose A4 or ticket.")},
+        {"58_or_80", QT_TR_NOOP("Choose a 58 mm or 80 mm roll.")},
     };
     if (c == QLatin1String("validation_failed")) return QString();
     auto it = msgs.find(c);
@@ -221,6 +248,18 @@ QString Errors::message(const QVariant& result) const {
     if (m.value(QStringLiteral("uncertain")).toBool())
         return tr("The connection was lost before the server answered. The operation may have been recorded: "
                   "use \"Retry\", it will never be applied twice.");
+    if (c == QLatin1String("plan_limit_reached")) {
+        // Which limit, in the user's words, and how many are used.
+        QVariantMap d = e.value(QStringLiteral("details")).toMap();
+        const QString k = d.value(QStringLiteral("limit_key")).toString();
+        const QString max = d.value(QStringLiteral("limit")).toString();
+        if (k == QLatin1String("catalog.products.max")) return tr("Your plan allows %1 active products and services.").arg(max);
+        if (k == QLatin1String("documents.month.max")) return tr("Your plan allows %1 documents per month. Credit notes stay possible.").arg(max);
+        if (k == QLatin1String("stock.warehouses.max")) return tr("Your plan allows %1 warehouses.").arg(max);
+        if (k == QLatin1String("storage.mb.max")) return tr("Your plan allows %1 MB of stored files.").arg(max);
+        if (k == QLatin1String("pos.registers.max")) return tr("Your plan does not allow more tills.");
+        return code(c);
+    }
     if (c == QLatin1String("validation_failed")) {
         QVariantMap d = e.value(QStringLiteral("details")).toMap();
         QString reason = d.value(QStringLiteral("reason")).toString();
@@ -306,7 +345,12 @@ AppContext::AppContext(QQmlApplicationEngine* engine, QObject* parent)
         m_errorTimer.start();
     }
     m_api.setBaseUrl(m_prefs.serverUrl());
-    connect(&m_prefs, &Preferences::changed, this, [this] { m_api.setBaseUrl(m_prefs.serverUrl()); });
+    connect(&m_prefs, &Preferences::changed, this, [this] {
+        // Another server: the current session (tokens of the previous server) ends here,
+        // without any request, so that no token is sent to the new address.
+        if (QUrl(m_prefs.serverUrl()) != QUrl(m_api.baseUrl())) m_session.discard();
+        m_api.setBaseUrl(m_prefs.serverUrl());
+    });
     connect(&m_prefs, &Preferences::languageChanged, this, [this] { applyLanguage(m_prefs.language()); });
 }
 
@@ -341,4 +385,62 @@ void registerFonts() {
 
 namespace nhc {
 QString Tools::systemTimeZone() const { return QString::fromUtf8(QTimeZone::systemTimeZoneId()); }
+
+QVariantList Tools::timeZones() const {
+    struct Z {
+        int offset;
+        QString id;
+    };
+    std::vector<Z> zones;
+    const QDateTime now = QDateTime::currentDateTimeUtc();
+    for (const QByteArray& id : QTimeZone::availableTimeZoneIds()) {
+        const QString s = QString::fromUtf8(id);
+        // Geographic IANA names only (Region/City); legacy aliases and fixed offsets are left out.
+        if (!s.contains(QLatin1Char('/')) || s.startsWith(QLatin1String("Etc/")) || s.startsWith(QLatin1String("SystemV/")))
+            continue;
+        zones.push_back({QTimeZone(id).offsetFromUtc(now), s});
+    }
+    std::sort(zones.begin(), zones.end(), [](const Z& a, const Z& b) { return a.offset != b.offset ? a.offset < b.offset : a.id < b.id; });
+    QVariantList out;
+    for (const auto& z : zones) {
+        const int m = std::abs(z.offset) / 60;
+        const QString off = QStringLiteral("UTC%1%2:%3").arg(z.offset < 0 ? QLatin1Char('-') : QLatin1Char('+'))
+                                .arg(m / 60, 2, 10, QLatin1Char('0')).arg(m % 60, 2, 10, QLatin1Char('0'));
+        QString label = z.id;
+        label.replace(QLatin1Char('_'), QLatin1Char(' '));
+        out.append(QVariantMap{{QStringLiteral("value"), z.id}, {QStringLiteral("text"), label + QStringLiteral(" (") + off + QLatin1Char(')')}});
+    }
+    out.append(QVariantMap{{QStringLiteral("value"), QStringLiteral("UTC")}, {QStringLiteral("text"), QStringLiteral("UTC")}});
+    return out;
+}
+
+QVariantList Tools::countries(const QString& lang) const {
+    const bool fr = lang == QLatin1String("fr");
+    std::vector<const CountryRow*> rows;
+    for (const auto& c : kCountries) rows.push_back(&c);
+    QCollator col(QLocale(fr ? QLocale::French : QLocale::English));
+    std::sort(rows.begin(), rows.end(), [&](const CountryRow* a, const CountryRow* b) {
+        return col.compare(QString::fromUtf8(fr ? a->fr : a->en), QString::fromUtf8(fr ? b->fr : b->en)) < 0;
+    });
+    QVariantList out;
+    for (const auto* c : rows)
+        out.append(QVariantMap{{QStringLiteral("value"), QString::fromLatin1(c->code)},
+                               {QStringLiteral("text"), QString::fromUtf8(fr ? c->fr : c->en)},
+                               {QStringLiteral("currency"), QString::fromLatin1(c->currency)}});
+    return out;
+}
+
+QString Tools::countryCurrency(const QString& code) const {
+    for (const auto& c : kCountries)
+        if (code == QLatin1String(c.code)) return QString::fromLatin1(c.currency);
+    return QString();
+}
+
+QString Tools::systemCountry() const {
+    const QString name = QLocale::system().name();  // e.g. "fr_FR"
+    const QString cc = name.section(QLatin1Char('_'), 1, 1).left(2).toUpper();
+    for (const auto& c : kCountries)
+        if (cc == QLatin1String(c.code)) return cc;
+    return QString();
+}
 }  // namespace nhc

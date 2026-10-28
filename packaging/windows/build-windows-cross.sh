@@ -25,7 +25,7 @@ HOST_CMAKE_DIR="$(dirname "$(dpkg -L qt6-base-dev | grep -m1 '/cmake/Qt6/Qt6Conf
 ARGS=(-S "$SRC" -B "$BUILD" -G Ninja -DCMAKE_TOOLCHAIN_FILE="$HERE/toolchain-mingw64.cmake" -DCMAKE_BUILD_TYPE=Release
       -DCMAKE_PREFIX_PATH="$PREFIX" -DQt6_DIR="$PREFIX/lib/cmake/Qt6" -DQT_HOST_PATH=/usr
       -DQT_HOST_PATH_CMAKE_DIR="$HOST_CMAKE_DIR" -DNHILL_BUILD_SERVER=OFF -DNHILL_BUILD_TESTS=OFF)
-[[ -n "$SERVER_URL" ]] && ARGS+=(-DNHILL_SERVER_URL="$SERVER_URL")
+[[ -n "$SERVER_URL" ]] && { echo "adresse de serveur ignorée : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; }
 cmake "${ARGS[@]}" || die "configuration CMake échouée"
 cmake --build "$BUILD" --parallel || die "compilation échouée"
 

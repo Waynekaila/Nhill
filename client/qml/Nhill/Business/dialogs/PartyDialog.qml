@@ -41,7 +41,7 @@ FbDialog {
     RowLayout {
         Layout.fillWidth: true
         FbSwitch { id: isCustomer; text: qsTr("Customer"); checked: true }
-        FbSwitch { id: isSupplier; text: qsTr("Supplier"); visible: Session.can("purchases.write") }
+        FbSwitch { id: isSupplier; text: qsTr("Supplier"); visible: Session.can("purchases.write") || Session.can("expenses.write") }
     }
     Field { label: qsTr("Type"); FbComboBox { id: kind; model: [{ value: "company", text: qsTr("Company / organisation") }, { value: "individual", text: qsTr("Private person") }]; value: "company" } }
     Field { id: nameField; label: qsTr("Name"); required: true; FbTextField { id: name; onTextChanged: nameField.error = "" } }

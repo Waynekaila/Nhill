@@ -50,7 +50,7 @@ FbPage {
             ]
             emptyIcon: "payment"
             emptyTitle: qsTr("No payment yet")
-            emptyText: qsTr("Payments are recorded from an invoice, a purchase or an expense.")
+            emptyText: qsTr("Payments are recorded from your documents (invoices, purchases, expenses) when your plan includes them.")
             onRowClicked: function(p) { if (p.document_id) Nav.push("pages/DocumentPage.qml", { docId: p.document_id }); else if (p.purchase_id) Nav.push("pages/PurchaseEditorPage.qml", { purchaseId: p.purchase_id }) }
         }
     }

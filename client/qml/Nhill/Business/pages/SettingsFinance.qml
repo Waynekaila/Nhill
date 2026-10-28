@@ -14,7 +14,7 @@ ColumnLayout {
     function load() {
         Api.get("/api/v1/tax-rates", function(r) { if (r.ok) root.taxes = r.data.items })
         Api.get("/api/v1/cash-accounts", function(r) { if (r.ok) root.accounts = r.data.items })
-        Api.get("/api/v1/exchange-rates", function(r) { if (r.ok) root.rates = r.data.items })
+        if (Session.has("multi_currency")) Api.get("/api/v1/exchange-rates", function(r) { if (r.ok) root.rates = r.data.items })
     }
     Component.onCompleted: load()
 
@@ -49,10 +49,12 @@ ColumnLayout {
         ]
     }
 
-    RowLayout { SectionTitle { text: qsTr("Exchange rates"); Layout.fillWidth: true } FbButton { text: qsTr("Record a rate"); iconName: "plus"; variant: "secondary"; onClicked: rateDialog.start() } }
-    Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
-           text: qsTr("Nhill does not fetch rates automatically. Enter the rate you apply with its date and source (e.g. Banque Centrale du Congo daily rate). A document keeps the rate recorded when it was issued.") }
+    // Exchange rates exist only when the plan includes several currencies.
+    RowLayout { visible: Session.has("multi_currency"); SectionTitle { text: qsTr("Exchange rates"); Layout.fillWidth: true } FbButton { text: qsTr("Record a rate"); iconName: "plus"; variant: "secondary"; onClicked: rateDialog.start() } }
+    Text { visible: Session.has("multi_currency"); Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+           text: qsTr("Nhill does not fetch rates automatically. Enter the rate you apply with its date and source (for example the daily rate of your central bank). A document keeps the rate recorded when it was issued.") }
     DataTable {
+        visible: Session.has("multi_currency")
         Layout.fillWidth: true
         Layout.preferredHeight: Math.min(360, 64 + root.rates.length * 52)
         rows: root.rates
@@ -101,9 +103,9 @@ ColumnLayout {
     FbDialog {
         id: accountDialog
         title: qsTr("New account")
-        Field { label: qsTr("Name"); FbTextField { id: accName; placeholderText: qsTr("e.g. M-Pesa, Rawbank USD") } }
+        Field { label: qsTr("Name"); FbTextField { id: accName; placeholderText: qsTr("e.g. Main till, Bank account, Mobile Money") } }
         Field { label: qsTr("Type"); FbComboBox { id: accKind; value: "bank"; model: [{ value: "cash", text: qsTr("Cash") }, { value: "bank", text: qsTr("Bank") }, { value: "mobile_money", text: qsTr("Mobile Money") }, { value: "other", text: qsTr("Other") }] } }
-        Field { label: qsTr("Currency"); FbComboBox { id: accCur; model: Labels.currencies(); value: Session.currency } }
+        Field { label: qsTr("Currency"); FbComboBox { id: accCur; model: Labels.currencyChoices(); value: Session.currency } }
         footer: [
             FbButton { text: qsTr("Create"); onClicked: Api.send("POST", "/api/v1/cash-accounts", { name: accName.text.trim(), kind: accKind.value, currency: accCur.value },
                                                                  function(r) { if (r.ok) { accountDialog.close(); accName.text = ""; root.load() } else Nav.fail(r) }) },
@@ -117,12 +119,12 @@ ColumnLayout {
         function start() { rateDate.value = Fmt.today(); rateValue.text = ""; open() }
         RowLayout {
             Layout.fillWidth: true
-            Field { label: qsTr("From"); FbComboBox { id: rateFrom; model: Labels.currencies(); value: "USD" } }
-            Field { label: qsTr("To"); FbComboBox { id: rateTo; model: Labels.currencies(); value: "CDF" } }
+            Field { label: qsTr("From"); FbComboBox { id: rateFrom; model: Labels.currencies(); value: Session.currency === "USD" ? "EUR" : "USD" } }
+            Field { label: qsTr("To"); FbComboBox { id: rateTo; model: Labels.currencies(); value: Session.currency } }
         }
         Field { label: qsTr("Rate"); FbTextField { id: rateValue; horizontalAlignment: TextInput.AlignRight; placeholderText: "2850.50" } }
         Field { label: qsTr("Date"); DateField { id: rateDate } }
-        Field { label: qsTr("Source"); FbTextField { id: rateSource; placeholderText: qsTr("e.g. BCC daily rate") } }
+        Field { label: qsTr("Source"); FbTextField { id: rateSource; placeholderText: qsTr("e.g. central bank daily rate") } }
         footer: [
             FbButton { text: qsTr("Record"); onClicked: Api.send("POST", "/api/v1/exchange-rates",
                            { from: rateFrom.value, to: rateTo.value, rate: rateValue.text.trim().replace(",", ".").replace(/\s/g, ""), rate_date: rateDate.value, source: rateSource.text },

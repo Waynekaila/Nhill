@@ -71,7 +71,8 @@ ApplicationWindow {
                 for (var i = 0; i < 3; ++i) { var d = (parseInt(x[i]) || 0) - (parseInt(y[i]) || 0); if (d !== 0) return d > 0 }
                 return false
             }
-            Component.onCompleted: Api.get("/api/v1/meta", function(r) {
+            // No server address yet (first launch): the welcome screen asks for it.
+            Component.onCompleted: if (!Prefs.serverConfigured) win.openWelcome(); else Api.get("/api/v1/meta", function(r) {
                 if (r.ok && r.data.min_client_version && splash.newer(r.data.min_client_version, Qt.application.version)) { splash.required = r.data.min_client_version; return }
                 Session.restore(function(ok) { ok ? win.openShell() : win.openWelcome() })
             })

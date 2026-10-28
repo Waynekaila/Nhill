@@ -438,6 +438,12 @@ bool runSetupServer(const std::string& configPath, const Config& cfg, const std:
     srv.Get("/health", [&](const httplib::Request&, httplib::Response& res) {
         reply(res, 200, {{"status", "setup"}, {"database", false}});
     });
+    // Identity of the server while it waits for its installation: the applications check
+    // an address with GET /api/v1/meta before saving it (3.0.0).
+    srv.Get("/api/v1/meta", [&](const httplib::Request&, httplib::Response& res) {
+        reply(res, 200, {{"product", nhill::kProductName}, {"version", nhill::kProductVersion}, {"api", nhill::kApiVersion},
+                         {"min_client_version", nhill::kMinClientVersion}, {"mode", "setup"}});
+    });
     srv.Get("/api/v1/setup/status", [&](const httplib::Request&, httplib::Response& res) {
         reply(res, 200, {{"mode", installed ? "restarting" : "setup"}, {"version", nhill::kProductVersion}});
     });

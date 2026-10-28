@@ -169,7 +169,7 @@ FbPage {
             Field {
                 label: qsTr("Currency")
                 Layout.minimumWidth: Theme.compact ? 0 : 230
-                FbComboBox { id: currencyBox; model: Labels.currencies(); value: page.currency; enabled: !page.docId
+                FbComboBox { id: currencyBox; model: Labels.currencyChoices(page.currency); value: page.currency; enabled: !page.docId
                              onActivated: page.currency = currentValue }
             }
             Field { label: qsTr("Date"); Layout.preferredWidth: 220; DateField { id: issueDate } }

@@ -15,10 +15,21 @@ OnboardingFrame {
     property var created: null
     property var session: null
     readonly property int lastStep: 4
+    // First step: the Nhill server of the business (its address is never built into the
+    // application). It is checked, then kept on this device.
+    property bool serverStep: true
     formWidth: 560
-    onBackRequested: step > 0 && step < 5 ? step-- : ApplicationWindow.window.back()
+    onBackRequested: {
+        if (page.serverStep || page.step >= 5) { ApplicationWindow.window.back(); return }
+        if (page.step > 0) page.step--
+        else page.serverStep = true
+    }
 
     function loadProfile(cc) {
+        if (!cc) return
+        // Currency of the country by default (ISO 4217), when the platform offers it.
+        var cur = Tools.countryCurrency(cc)
+        if (cur && Labels.currencies().some(function(c) { return c.value === cur })) currency.value = cur
         Api.get("/api/v1/countries/" + cc + "/profile", function(r) {
             if (r.ok) {
                 page.profile = r.data
@@ -26,7 +37,7 @@ OnboardingFrame {
             }
         })
     }
-    Component.onCompleted: loadProfile("CD")
+    function serverReady() { page.serverStep = false; loadProfile(country.value) }
 
     function legalRequired(def) {
         var req = (def.required_for || []).indexOf(page.kind) >= 0
@@ -35,6 +46,7 @@ OnboardingFrame {
     function validateStep() {
         if (step === 1) {
             if (tradeName.text.trim().length === 0) { tradeField.error = qsTr("Trade name is required."); return false }
+            if (!country.value) { countryField.error = qsTr("Choose the country of the business."); return false }
             if (page.profile) for (var i = 0; i < page.profile.legal_ids.length; ++i) {
                 var d = page.profile.legal_ids[i]
                 if (legalRequired(d) && !(legalValues[d.kind] || "").trim()) { ApplicationWindow.window.toast(qsTr("Please fill in: %1").arg(Prefs.language === "fr" ? d.label_fr : d.label_en), "danger"); return false }
@@ -75,9 +87,29 @@ OnboardingFrame {
         })
     }
 
+    // ---- step "server"
+    Text {
+        visible: page.serverStep
+        text: qsTr("Your Nhill server")
+        font.family: Theme.font; font.pixelSize: Theme.fs_xxl; font.weight: Font.DemiBold; color: Theme.text
+        Layout.fillWidth: true; wrapMode: Text.WordWrap
+    }
+    Text {
+        visible: page.serverStep
+        text: qsTr("Your business and its data are kept on this server. Enter the address given by your provider or your administrator.")
+        font.family: Theme.font; font.pixelSize: Theme.fs_md; color: Theme.textMuted
+        Layout.fillWidth: true; wrapMode: Text.WordWrap
+    }
+    ServerAddressForm {
+        visible: page.serverStep
+        Layout.fillWidth: true
+        saveText: qsTr("Continue")
+        onSaved: function(url) { page.serverReady() }
+    }
+
     // ---- progress
     RowLayout {
-        visible: page.step < 5
+        visible: !page.serverStep && page.step < 5
         Layout.fillWidth: true
         spacing: 6
         Repeater {
@@ -86,7 +118,7 @@ OnboardingFrame {
         }
     }
     Text {
-        visible: page.step < 5
+        visible: !page.serverStep && page.step < 5
         text: [qsTr("Your type of activity"), qsTr("Identity of the business"), qsTr("Contact and preferences"),
                page.kind === "individual" ? qsTr("Your account") : qsTr("Account of the owner"), qsTr("Check and create")][page.step]
         font.family: Theme.font; font.pixelSize: Theme.fs_xxl; font.weight: Font.DemiBold; color: Theme.text
@@ -95,7 +127,7 @@ OnboardingFrame {
 
     // ---- step 0: kind
     ColumnLayout {
-        visible: page.step === 0
+        visible: !page.serverStep && page.step === 0
         Layout.fillWidth: true
         spacing: Theme.s3
         Repeater {
@@ -130,7 +162,7 @@ OnboardingFrame {
 
     // ---- step 1: identity
     ColumnLayout {
-        visible: page.step === 1
+        visible: !page.serverStep && page.step === 1
         Layout.fillWidth: true
         spacing: Theme.s3
         Field { id: tradeField; label: page.kind === "individual" ? qsTr("Name of your activity") : qsTr("Trade name"); required: true
@@ -138,8 +170,9 @@ OnboardingFrame {
                 FbTextField { id: tradeName; onTextChanged: tradeField.error = "" } }
         Field { visible: page.kind === "company"; label: qsTr("Legal name (if different)"); FbTextField { id: legalName } }
         Field { label: qsTr("Business sector"); FbTextField { id: sector; placeholderText: qsTr("e.g. retail, hardware, pharmacy, services") } }
-        Field { label: qsTr("Country"); required: true
-                FbComboBox { id: country; model: Labels.countries(); value: "CD"; onActivated: page.loadProfile(currentValue) } }
+        Field { id: countryField; label: qsTr("Country"); required: true
+                FbComboBox { id: country; model: Labels.countries(); value: Tools.systemCountry()
+                             onActivated: { countryField.error = ""; page.loadProfile(currentValue) } } }
         FbSwitch { id: vat; text: qsTr("My business is registered for VAT"); Layout.fillWidth: true }
         Banner {
             visible: vat.checked && page.profile && page.profile.document_notices && page.profile.document_notices.vat_registered
@@ -161,19 +194,19 @@ OnboardingFrame {
 
     // ---- step 2: contact & preferences
     ColumnLayout {
-        visible: page.step === 2
+        visible: !page.serverStep && page.step === 2
         Layout.fillWidth: true
         spacing: Theme.s3
         GridLayout {
             Layout.fillWidth: true
             columns: Theme.compact ? 1 : 2
             columnSpacing: Theme.s3; rowSpacing: Theme.s3
-            Field { label: qsTr("City"); FbTextField { id: city; text: "Kinshasa" } }
+            Field { label: qsTr("City"); FbTextField { id: city } }
             Field { label: qsTr("Address"); FbTextField { id: address } }
-            Field { id: bizPhoneField; label: qsTr("Business phone"); FbTextField { id: bizPhone; inputMethodHints: Qt.ImhDialableCharactersOnly; placeholderText: "+243 …"; onTextChanged: bizPhoneField.error = "" } }
+            Field { id: bizPhoneField; label: qsTr("Business phone"); FbTextField { id: bizPhone; inputMethodHints: Qt.ImhDialableCharactersOnly; placeholderText: qsTr("+ country code and number"); onTextChanged: bizPhoneField.error = "" } }
             Field { id: bizEmailField; label: qsTr("Business e-mail"); FbTextField { id: bizEmail; inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase; onTextChanged: bizEmailField.error = "" } }
             Field { label: qsTr("Main currency"); help: qsTr("Other currencies remain available on each document.")
-                    FbComboBox { id: currency; model: Labels.currencies(); value: "CDF" } }
+                    FbComboBox { id: currency; model: Labels.currencies(); value: "" } }
             Field { label: qsTr("Language of documents")
                     FbComboBox { id: lang; model: [{ value: "fr", text: "Français" }, { value: "en", text: "English" }]; value: Prefs.language } }
         }
@@ -181,7 +214,7 @@ OnboardingFrame {
 
     // ---- step 3: owner
     ColumnLayout {
-        visible: page.step === 3
+        visible: !page.serverStep && page.step === 3
         Layout.fillWidth: true
         spacing: Theme.s3
         Field { id: ownerNameField; label: qsTr("Full name"); required: true; FbTextField { id: ownerName; onTextChanged: ownerNameField.error = "" } }
@@ -196,7 +229,7 @@ OnboardingFrame {
 
     // ---- step 4: review
     ColumnLayout {
-        visible: page.step === 4
+        visible: !page.serverStep && page.step === 4
         Layout.fillWidth: true
         spacing: Theme.s3
         FbCard {
@@ -223,12 +256,12 @@ OnboardingFrame {
                 }
             }
         }
-        Banner { tone: "success"; text: qsTr("Free trial: 30 days, all features, without payment details. No automatic charge will ever be made without your explicit agreement.") }
+        Banner { tone: "success"; text: qsTr("No payment details are requested to create your business. No automatic charge will ever be made without your explicit agreement.") }
     }
 
     // ---- step 5: done
     ColumnLayout {
-        visible: page.step === 5
+        visible: !page.serverStep && page.step === 5
         Layout.fillWidth: true
         spacing: Theme.s4
         Rectangle { width: 56; height: 56; radius: 28; color: Theme.successSoft
@@ -262,7 +295,7 @@ OnboardingFrame {
 
     // ---- navigation
     RowLayout {
-        visible: page.step >= 1 && page.step <= page.lastStep
+        visible: !page.serverStep && page.step >= 1 && page.step <= page.lastStep
         Layout.fillWidth: true
         FbButton { text: qsTr("Previous"); variant: "secondary"; onClicked: page.step-- }
         Item { Layout.fillWidth: true }

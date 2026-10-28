@@ -11,10 +11,15 @@
 
 namespace nhc {
 
-// User preferences (QSettings). No business data is ever stored locally.
+// User preferences (QSettings, user scope). No business data is ever stored locally.
+// The API address is never compiled into the applications: the user enters it (first
+// launch, establishment creation, or later in the settings) and it is kept only after a
+// successful check of the server (Api.probeServer). NHILL_SERVER overrides it for
+// development and automated tests.
 class Preferences : public QObject {
     Q_OBJECT
     Q_PROPERTY(QString serverUrl READ serverUrl WRITE setServerUrl NOTIFY changed)
+    Q_PROPERTY(bool serverConfigured READ serverConfigured NOTIFY changed)
     Q_PROPERTY(QString theme READ theme WRITE setTheme NOTIFY changed)          // system | light | dark
     Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged)
     Q_PROPERTY(bool systemDark READ systemDark NOTIFY changed)
@@ -22,6 +27,7 @@ class Preferences : public QObject {
 public:
     explicit Preferences(QObject* parent = nullptr);
     QString serverUrl() const { return m_server; }
+    bool serverConfigured() const { return !m_server.isEmpty(); }
     void setServerUrl(const QString& u);
     QString theme() const { return m_theme; }
     void setTheme(const QString& t);
@@ -54,8 +60,16 @@ public:
     explicit Tools(QObject* parent = nullptr) : QObject(parent) {}
     Q_INVOKABLE bool grabWindow(QObject* window, const QString& path) const;
     Q_INVOKABLE void copyText(const QString& text) const;
-    // IANA time zone of this device (e.g. "Africa/Kinshasa"), sent when creating an establishment.
+    // IANA time zone of this device (e.g. "Europe/Paris"), sent when creating an establishment.
     Q_INVOKABLE QString systemTimeZone() const;
+    // Every IANA time zone known to this device: [{value, text: "Europe/Paris (UTC+01:00)"}].
+    Q_INVOKABLE QVariantList timeZones() const;
+    // ISO 3166-1 countries (Unicode CLDR names in the language): [{value, text, currency}].
+    Q_INVOKABLE QVariantList countries(const QString& lang) const;
+    // Main legal tender of a country (ISO 4217), empty when unknown.
+    Q_INVOKABLE QString countryCurrency(const QString& code) const;
+    // Country of this device's regional settings (ISO code), empty when unknown.
+    Q_INVOKABLE QString systemCountry() const;
 };
 
 // Owns the core objects and exposes them to QML as singletons in "Nhill.Core".

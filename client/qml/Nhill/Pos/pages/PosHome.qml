@@ -59,7 +59,7 @@ Rectangle {
                 spacing: Theme.s3
                 SectionTitle { text: root.selected ? qsTr("Open register %1").arg(root.selected.code) : "" }
                 Field { label: qsTr("Opening float (cash in the drawer)"); help: qsTr("Count the cash before opening; it is part of the expected amount at closing.")
-                        MoneyField { id: floatField; currency: PosNav.config ? PosNav.config.currency : "CDF" } }
+                        MoneyField { id: floatField; currency: PosNav.config ? PosNav.config.currency : Session.currency } }
                 FbButton { text: qsTr("Open the cash session"); iconName: "check"; Layout.fillWidth: true
                            onClicked: Api.send("POST", "/api/v1/pos/sessions", { register_id: root.selected.id, opening_float: floatField.value || "0" }, function(r) {
                                if (!r.ok) { PosNav.fail(r); return }

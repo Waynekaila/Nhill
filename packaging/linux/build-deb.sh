@@ -14,7 +14,6 @@
 #   -r, --revision REV     révision Debian (défaut : 1)
 #   -a, --arch ARCH        architecture cible (défaut : architecture de la machine ;
 #                          seule la compilation native est prise en charge)
-#       --server-url URL   adresse d'API compilée dans les applications (NHILL_SERVER_URL)
 #       --no-tests         ne pas exécuter les tests (ctest)
 #       --no-install-deps  ne pas installer les dépendances (vérification seulement)
 #       --force-distro     accepter une autre distribution que Debian 13 (non recommandé)
@@ -100,7 +99,7 @@ while (( $# )); do
         -j|--jobs)       JOBS="${2:?--jobs demande un nombre}"; shift 2 ;;
         -r|--revision)   REVISION="${2:?--revision demande une valeur}"; shift 2 ;;
         -a|--arch)       ARCH="${2:?--arch demande une architecture}"; shift 2 ;;
-        --server-url)    SERVER_URL="${2:?--server-url demande une adresse}"; shift 2 ;;
+        --server-url)    echo "--server-url : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; exit 2 ;;
         --no-tests)      RUN_TESTS=0; shift ;;
         --no-install-deps) INSTALL_DEPS=0; shift ;;
         --force-distro)  FORCE_DISTRO=1; shift ;;
@@ -342,7 +341,6 @@ CMAKE_ARGS=(-S "$SRC" -B "$BUILD" -G Ninja
     -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_SYSCONFDIR=/etc
     -DCMAKE_INSTALL_LOCALSTATEDIR=/var -DCMAKE_VERBOSE_MAKEFILE=OFF
     -DNHILL_BUILD_SERVER=ON -DNHILL_BUILD_CLIENT=ON -DNHILL_BUILD_TESTS="$( ((RUN_TESTS)) && echo ON || echo OFF)")
-[[ -n "$SERVER_URL" ]] && CMAKE_ARGS+=(-DNHILL_SERVER_URL="$SERVER_URL")
 cmake "${CMAKE_ARGS[@]}" >"$TMP_ROOT/cmake-configure.log" 2>&1 \
     || { tail -n 40 "$TMP_ROOT/cmake-configure.log" >&2; die "configuration CMake échouée (journal ci-dessus)"; }
 grep -q 'QtKeychain found' "$TMP_ROOT/cmake-configure.log" \

@@ -5,7 +5,7 @@
 #
 # Usage :
 #   scripts/build-linux.sh [BUILD_DIR] [--no-tests] [--server-only|--client-only]
-#                          [--server-url URL] [--jobs N] [--debug] [--deb] [--dry-run]
+#                          [--jobs N] [--debug] [--deb] [--dry-run]
 #
 # Prérequis : scripts/install-deps-linux.sh (Debian 13 / Ubuntu 24.04).
 # Le code source n'est pas modifié : compilation hors arborescence dans BUILD_DIR
@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
     --no-tests) TESTS=OFF ;;
     --server-only) CLIENT=OFF ;;
     --client-only) SERVER=OFF ;;
-    --server-url) SERVER_URL="${2:?--server-url URL}"; shift ;;
+    --server-url) echo "--server-url : option retirée en 3.0.0 : aucune adresse de serveur n'est compilée dans les applications (saisie au premier lancement) / removed in 3.0.0: no server address is compiled into the applications" >&2; exit 2 ;;
     --jobs|-j) JOBS="${2:?--jobs N}"; shift ;;
     --debug) TYPE=Debug ;;
     --deb) DEB=1 ;;
@@ -55,7 +55,6 @@ ok "Nhill $VERSION — $NH_OS_ID $NH_OS_VERSION, $(g++ -dumpversion | sed 's/^/g
 step "Configuration (CMake, $TYPE)"
 ARGS=(-S "$ROOT" -B "$BUILD" -G Ninja -DCMAKE_BUILD_TYPE="$TYPE" -DCMAKE_INSTALL_PREFIX=/usr
       -DNHILL_BUILD_SERVER="$SERVER" -DNHILL_BUILD_CLIENT="$CLIENT" -DNHILL_BUILD_TESTS="$TESTS")
-[[ -n "$SERVER_URL" ]] && ARGS+=(-DNHILL_SERVER_URL="$SERVER_URL")
 # Drapeaux de durcissement Debian quand dpkg-buildflags est disponible.
 if command -v dpkg-buildflags >/dev/null; then
   ARGS+=(-DCMAKE_CXX_FLAGS="$(dpkg-buildflags --get CXXFLAGS) $(dpkg-buildflags --get CPPFLAGS)"

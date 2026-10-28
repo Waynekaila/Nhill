@@ -30,7 +30,7 @@ FbPage {
         FbButton { visible: Session.can("catalog.write"); text: qsTr("New"); iconName: "plus"; onClicked: dialog.openNew() },
         FbButton { text: qsTr("Export CSV"); iconName: "download"; variant: "secondary"
                    onClicked: Api.download("/api/v1/products/export.csv", "produits.csv", function(r) { r.ok ? Nav.toast(qsTr("Saved in %1").arg(r.data)) : Nav.fail(r) }) },
-        FbButton { visible: Session.can("catalog.write"); text: qsTr("Import CSV"); iconName: "upload"; variant: "secondary"; onClicked: importDialog.open() }
+        FbButton { visible: Session.can("catalog.write") && Session.has("catalog.import"); text: qsTr("Import CSV"); iconName: "upload"; variant: "secondary"; onClicked: importDialog.open() }
     ]
     ColumnLayout {
         anchors.fill: parent

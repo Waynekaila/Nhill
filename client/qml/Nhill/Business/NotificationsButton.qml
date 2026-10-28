@@ -33,8 +33,22 @@ FbIconButton {
         case "attachment_request": return qsTr("%1 (%2) asks to join the business.").arg(p.name || "").arg(p.email || "")
         case "establishment_suspended": return qsTr("The business was suspended by support: %1").arg(p.reason || "")
         case "establishment_reactivated": return qsTr("The business was reactivated.")
+        case "plan_changed": return p.plan ? qsTr("Your plan has changed (%1). The screens show the features of the new plan.").arg(p.plan)
+                                          : qsTr("Your plan has changed. The screens show the features of the new plan.")
+        case "plan_change_scheduled": return qsTr("A change of plan is scheduled at the end of the current period.")
+        case "subscription_admin_extend": return qsTr("Nhill extended your subscription.")
+        case "subscription_admin_suspend": return qsTr("Nhill suspended your subscription: read-only access.") + (p.reason ? " " + p.reason : "")
+        case "subscription_admin_reactivate": return qsTr("Nhill reactivated your subscription.")
+        case "subscription_admin_cancel": return qsTr("Your subscription was cancelled.")
+        case "subscription_admin_set_plan":
+        case "subscription_admin_assign_plan": return p.plan ? qsTr("Nhill assigned the plan %1 to your business.").arg(p.plan) : qsTr("Nhill changed the plan of your business.")
+        case "subscription_admin_set_dates": return qsTr("Nhill corrected the dates of your subscription.")
+        case "pos_cash_variance": return qsTr("Till %1, session %2: cash difference of %3.").arg(p.register || "").arg(p.number || "").arg(p.variance ? Fmt.money(p.variance, p.currency || Session.currency) : "")
+        case "ticket_replied": return qsTr("Nhill support answered your request #%1.").arg(p.number || "")
+        case "ticket_status": return qsTr("Your request #%1 has a new status.").arg(p.number || "")
         }
-        return n.kind
+        // A notification this version does not know is described generically, never by its code.
+        return qsTr("New information about your business.")
     }
     Popup {
         id: pop

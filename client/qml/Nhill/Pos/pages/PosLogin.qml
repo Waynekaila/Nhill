@@ -40,8 +40,21 @@ Rectangle {
         spacing: Theme.s4
         LogoMark { app: "pos"; Layout.preferredHeight: 44; Layout.preferredWidth: 260; Layout.alignment: Qt.AlignHCenter }
         Text { Layout.alignment: Qt.AlignHCenter; text: qsTr("Point of sale"); color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_lg }
+        // First connection: the address of the Nhill server is entered (never built in).
         FbCard {
             Layout.fillWidth: true
+            visible: !Prefs.serverConfigured
+            ColumnLayout {
+                width: parent.width
+                spacing: Theme.s3
+                Text { Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.text; font.family: Theme.font; font.pixelSize: Theme.fs_lg; font.weight: Font.DemiBold
+                       text: qsTr("Connect this till to your Nhill server") }
+                ServerAddressForm { Layout.fillWidth: true; initial: ""; saveText: qsTr("Continue") }
+            }
+        }
+        FbCard {
+            Layout.fillWidth: true
+            visible: Prefs.serverConfigured
             ColumnLayout {
                 width: parent.width
                 spacing: Theme.s3
@@ -57,16 +70,16 @@ Rectangle {
                 }
             }
         }
-        Text { Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; wrapMode: Text.Wrap; color: Theme.textFaint; font.family: Theme.font; font.pixelSize: Theme.fs_xs
+        Text { visible: Prefs.serverConfigured; Layout.fillWidth: true; horizontalAlignment: Text.AlignHCenter; wrapMode: Text.WrapAnywhere; color: Theme.textFaint; font.family: Theme.font; font.pixelSize: Theme.fs_xs
                text: qsTr("Use the account created for you in Nhill Business (cashier or cash manager). Server: %1").arg(Prefs.serverUrl) }
-        FbButton { Layout.alignment: Qt.AlignHCenter; text: qsTr("Change server"); variant: "ghost"; iconName: "settings"; onClicked: serverDialog.open() }
+        FbButton { visible: Prefs.serverConfigured; Layout.alignment: Qt.AlignHCenter; text: qsTr("Change server"); variant: "ghost"; iconName: "settings"; onClicked: serverDialog.open() }
     }
     FbDialog {
         id: serverDialog
-        title: qsTr("Server")
-        Field { label: qsTr("Server address"); FbTextField { id: serverField; text: Prefs.serverUrl; monospace: true } }
-        footer: [ FbButton { text: qsTr("Save"); onClicked: { Prefs.serverUrl = serverField.text.trim(); serverDialog.close() } },
-                  FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() } ]
+        title: qsTr("Nhill server")
+        subtitle: qsTr("Change the address only if your provider asks you to. The current session of this till ends.")
+        ServerAddressForm { Layout.fillWidth: true; onSaved: function(url) { serverDialog.close() } }
+        footer: [ FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: serverDialog.close() } ]
     }
     PasswordRecoveryDialog {
         id: recovery
