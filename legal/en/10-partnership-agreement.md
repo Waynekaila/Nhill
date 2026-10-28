@@ -1,97 +1,104 @@
-# 10 — Commercial partnership agreement
+# 10 — General partnership terms
 
 *Français (version de référence) : [../fr/10-contrat-partenariat.md](../fr/10-contrat-partenariat.md)*
 
-> **TEMPLATE — TO VALIDATE** (lawyer and tax adviser: commissions, withholding, partner
-> status). See the partner model in `marketing/en/09-partner-model.md`.
-
 | Header | |
 |---|---|
-| Jurisdiction | DRC; OHADA Uniform Act on general commercial law (commercial intermediaries) |
-| Assumptions | H-01, H-10, H-11, H-18 |
-| Sources | S14 — see [00-legal-research.md](00-legal-research.md) § 7 |
-| Clauses to validate | V-02, V-03, V-11; classification (referrer, commercial agent, reseller) |
-| Version | [NUMBER] of [DATE] |
+| Publisher | Nhill Solution, Kinshasa (Democratic Republic of the Congo) |
+| Version | 3.0.0 — 28 October 2026 |
+| Status | written without review by a lawyer or a tax adviser; recommended review points: V-02, V-03, V-11 and status of the partner (business introducer, commercial agent) ([00](00-legal-research.md) § 5). The French version is the reference text |
+| Assumptions | H-10, H-11, H-18 ([00](00-legal-research.md) § 2) |
+| Documents | 1. the **letter of agreement** sent to the Partner and accepted by it (form of partnership, territory, remuneration, term); 2. these terms. The letter prevails in case of conflict |
 
-## Between
+## 1. Parties
 
-**[PUBLISHER COMPANY NAME]** (the "Publisher") and **[PARTNER NAME]**, [individual /
-company], [RCCM or identification number], [ADDRESS] (the "Partner").
+These terms bind **Nhill Solution**, with its head office in Kinshasa (Democratic Republic
+of the Congo), hereinafter the "Publisher", and the person or organisation identified in
+the letter of agreement, hereinafter the "Partner".
 
-## 1. Type of partnership (tick)
+## 2. Forms of partnership
 
-- [ ] **Referrer**: introduces businesses to the Publisher; signs nothing on the
-  Publisher's behalf.
-- [ ] **Integrator / trainer**: installs Nhill, imports data, trains users, invoices its
-  own services to the customer.
-- [ ] **Support organisation** (association, incubator, federation): makes Nhill known to
-  its members.
+The letter of agreement retains one or more of the following forms:
 
-## 2. Independence
+- **Referral**: the Partner introduces Nhill to businesses in its network; if they become
+  customers, it receives the commission set in the letter of agreement;
+- **Installation and support**: the Partner installs Nhill, imports the data and provides
+  first-level support, paid by its customers or by the Publisher according to the letter
+  of agreement;
+- **Training**: the Partner trains users on Nhill with the Publisher's materials;
+- **Support of entrepreneurs**: the Partner (incubator, professional association, SME
+  support organisation) offers Nhill to the businesses it supports, for example through
+  the assisted free trial;
+- **Reference user**: a customer business agrees to receive other entrepreneurs to share
+  its experience, without remuneration unless stated otherwise.
 
-The Partner acts as an independent professional. It is neither an employee nor an agent of
-the Publisher and cannot bind it. It bears its own costs unless agreed in writing. **[TO
-VALIDATE: V-11 — classification under the Uniform Act (commercial agent, broker).]**
+## 3. Independence
 
-## 3. Referred customer
+The Partner acts as an independent professional. It is neither an employee nor an agent
+of the Publisher, cannot bind it and signs nothing in its name. It bears its own costs,
+unless agreed in writing.
 
-A business counts as referred by the Partner if the Partner records it in the [partner
-form / shared tracking sheet] **before** any direct contact with the Publisher, and it then
-takes a paid subscription within [90] days. If two partners report the same business, the
-first record prevails.
+## 4. Referred customer
 
-## 4. Remuneration
+A business is deemed referred by the Partner if the Partner reported it in writing to the
+Publisher (e-mail to info@nhill.online) **before** any direct contact between that
+business and the Publisher, and if the business then accepts a subscription proposal
+within the period set in the letter of agreement. In case of double reporting, the first
+written report prevails.
 
-| Item | Value |
-|---|---|
-| Commission | [N] % of amounts **actually collected** excluding taxes, over the first [12] months of the referred customer's subscription |
-| Customer discount (partner code) | [N] % for [N] months, if any |
-| Payment | monthly, before the [10th] of the month after collection, in [USD / CDF] by [transfer / Mobile Money] |
-| Statement | monthly statement of referred customers and amounts collected |
+## 5. Remuneration
 
-No commission on refunded or unpaid amounts. Any tax withholding is applied as required by
-law. **[TO VALIDATE: V-03, V-11 — taxation of the commission.]**
+5.1 The commission is calculated on the amounts **actually collected** by the Publisher
+for the referred customer's subscription, excluding taxes, at the rate, over the period
+and on the payment terms set in the letter of agreement.
 
-## 5. Partner's commitments
+5.2 No commission is due on an amount refunded or unpaid. The Publisher gives the Partner
+a statement with each commission payment (customers concerned, amounts collected). Any
+tax withholding is applied as required by law.
+
+## 6. Partner's undertakings
 
 Present Nhill fairly, **without promising what the software does not do** (in particular:
-Nhill is not invoicing software certified by the DGI; no guaranteed figures); use only the
-materials provided or approved by the Publisher; respect prospects' consent (no addition to
-a mailing list without agreement); never ask a customer for a password.
+Nhill is not an invoicing device approved or standardised by a tax administration; no
+figure on results is guaranteed); use the materials provided or approved by the
+Publisher; pass on to the Publisher only contacts who agreed to be contacted (document 16);
+never ask a customer for a password.
 
-## 6. Publisher's commitments
+## 7. Publisher's undertakings
 
-Provide presentation materials, a demo account, an initial [2]-hour training, an accurate
-monthly statement, and answer the Partner's questions within [2] business days.
+Provide presentation materials and a demo access, train the Partner on Nhill, give
+accurate statements, answer the Partner's questions.
 
-## 7. Trademark
+## 8. Name and brand
 
-The Partner may mention "Nhill partner" during the contract, according to the guidelines
-provided. It registers no domain name or social-media account containing "Nhill".
+The Partner may present itself as a "Nhill partner" during the partnership. It registers
+no domain name or social network account containing "Nhill". The Publisher announces the
+partnership publicly only with the Partner's agreement.
 
-## 8. Personal data
+## 9. Confidentiality and personal data
 
-Each party is responsible for the data it collects. Prospect data passed to the Publisher
-is passed with the person's agreement (template 16).
+Each party keeps the other's non-public information confidential (document 11) and
+remains responsible for the personal data it collects.
 
-## 9. Term and end
+## 10. Term and end
 
-Term [12] months, renewable by express agreement. Either party may terminate with [30]
-days' notice; for serious breach, without notice after a formal notice left unremedied for
-[15] days. Commissions earned before the end remain due.
-
-## 10. Non-solicitation
-
-[Option] During the contract and for [6] months after, neither party directly solicits the
-other's employees. **[TO VALIDATE: V-11.]**
+The partnership lasts for the period set in the letter of agreement. Either party may end
+it in writing with the notice set in the letter of agreement, and without notice in case of
+a serious breach that remains unremedied after a written formal notice. Commissions earned
+before the end remain due.
 
 ## 11. Governing law
 
-Law of the DRC and OHADA Uniform Acts; amicable settlement, then [Kinshasa/Gombe commercial
-court] **[TO VALIDATE: V-02]**.
+Law of the Democratic Republic of the Congo, including the OHADA Uniform Acts; search for
+an amicable solution, then the competent courts of Kinshasa.
 
-Made in [CITY], on [DATE].
+## Acceptance
 
-| For the Publisher | For the Partner |
+The Partner accepts these terms and the letter of agreement by signing below or by an
+e-mail of acceptance.
+
+| For Nhill Solution | For the Partner |
 |---|---|
-| [NAME, TITLE] | [NAME] |
+| Name and position: | Name, position and organisation: |
+| Date: | Date: |
+| Signature: | Signature: |

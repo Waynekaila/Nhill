@@ -4,19 +4,18 @@
 
 | | |
 |---|---|
-| Version | 2.0.0 — 27 octobre 2026 |
+| Version | 3.0.0 — 28 octobre 2026 (2.0.0 du 27 octobre 2026 mise à jour avec les décisions de la direction) |
 | Juridiction principale | République démocratique du Congo (droit congolais et droit uniforme OHADA) |
 | Objet | cadre applicable à l'édition et à l'exploitation du logiciel en ligne Nhill (SaaS de gestion commerciale et de caisse) et de son site vitrine ; base des modèles `01` à `19` |
-| Méthode | lecture de textes officiels quand ils sont accessibles en ligne, sinon de sources secondaires identifiées comme telles (doctrine, presse spécialisée) ; consultation des sources du 26 au 27 octobre 2026 |
+| Méthode | lecture de textes officiels quand ils sont accessibles en ligne, sinon de sources secondaires identifiées comme telles (doctrine, presse spécialisée) ; consultation des sources du 26 au 27 octobre 2026 ; décisions de la direction du 28 octobre 2026 reportées au § 2 |
 | Statut | **document de travail, non validé par un avocat**. Il ne constitue pas un avis juridique |
 
 > **Avertissement.** Ce dossier a été préparé sans accès au Journal officiel de la RDC et
 > sans consultation d'un avocat inscrit à un barreau congolais. Plusieurs textes récents
 > (2024-2026) ne sont connus que par des commentaires ou la presse ; leur portée exacte,
-> leur validité et leur articulation doivent être confirmées. Aucun élément propre à
-> l'entreprise exploitante (forme juridique, RCCM, identification nationale, NIF, adresse,
-> capital, dirigeants) n'est connu : ils apparaissent entre crochets dans les modèles et
-> ne doivent jamais être inventés.
+> leur validité et leur articulation doivent être confirmées. Les documents identifient
+> l'éditeur par son nom commercial, **Nhill Solution**, et son siège, **Kinshasa** ; aucun
+> autre élément d'identification n'y figure (décision de la direction du 28 octobre 2026).
 
 ## 1. Synthèse pour la direction
 
@@ -24,12 +23,12 @@
 |---|---|---|---|
 | Données personnelles | Code du numérique (Ordonnance-loi n° 23/010 du 13 mars 2023), Livre III : principes, droits des personnes, sécurité, délégué à la protection des données, formalités préalables, transferts hors RDC encadrés | Nhill est **responsable de traitement** pour ses prospects, clients-payeurs et administrateurs, **sous-traitant** pour les données que les établissements saisissent | Élevé sur l'existence du cadre ; moyen sur les détails |
 | Autorité de contrôle | Missions de l'autorité de protection des données confiées à titre provisoire à l'ARPTC (2024) ; la presse et la doctrine indiquent ensuite son remplacement par une nouvelle autorité, l'**ARPTIC** (2026) | Identifier l'autorité **compétente au jour du dépôt** et la procédure en vigueur | **Faible : à vérifier en priorité** |
-| Formalités et frais | Décision n° 039/ARPTC/CLG/2025 du 11 septembre 2025 (déclaration, autorisation, transfert, frais, durées) ; sa légalité est contestée par la doctrine | Budget et calendrier des formalités ; l'hébergement hors RDC (ex. Supabase) relève a priori d'une **autorisation de transfert** | Moyen (source secondaire), validité discutée |
+| Formalités et frais | Décision n° 039/ARPTC/CLG/2025 du 11 septembre 2025 (déclaration, autorisation, transfert, frais, durées) ; sa légalité est contestée par la doctrine | Budget et calendrier des formalités ; l'hébergement hors RDC (serveur Hostinger situé en France) relève a priori d'une **autorisation de transfert** | Moyen (source secondaire), validité discutée |
 | Activités et services numériques | Code du numérique, art. 13 à 17 (régimes) ; arrêtés n° 004 et n° 005 du 11 mars 2026 (autorisation / déclaration) ; arrêté interministériel de 2026 sur les frais, startups exonérées selon la presse | Déterminer si l'activité de Nhill relève de la déclaration ou de l'autorisation (« hébergement d'applications ») et si l'exploitant peut bénéficier d'une exonération | Faible à moyen |
 | Commerce électronique | Code du numérique, art. 48 à 72 : informations précontractuelles, contenu de l'offre en ligne, rétractation, publicité, prospection directe (consentement préalable) | Mentions du site et des conditions de service ; opt-in pour les envois commerciaux | Moyen |
 | Consommation | Pas de code de la consommation adopté identifié ; un projet de loi sur la protection des consommateurs est en discussion ; textes sectoriels anciens et loi n° 18/020 du 9 juillet 2018 (prix et concurrence) | Les clients de Nhill sont des professionnels : régime B2B principal ; prudence pour les entrepreneurs individuels | Moyen |
 | Facturation et TVA | TVA 16 % (Ordonnance-loi n° 10/001 du 20 août 2010) ; facture normalisée produite par un dispositif électronique fiscal, logiciels homologués seuls autorisés pour les assujettis, sanctions à partir du 15 mai 2026 selon la presse | Nhill **n'est pas homologué** : documents de gestion seulement ; cibler d'abord les non-assujettis ou un usage en complément du dispositif DGI | Moyen à élevé |
-| Droit des sociétés et comptabilité | RDC membre de l'OHADA (adhésion déposée le 13 juillet 2012) ; actes uniformes applicables (sociétés, droit commercial général, comptabilité : conservation 10 ans) | Forme sociale et RCCM de l'exploitant à créer ; durées de conservation des pièces | Élevé |
+| Droit commercial et comptabilité | RDC membre de l'OHADA (adhésion déposée le 13 juillet 2012) ; actes uniformes applicables (droit commercial général, comptabilité : conservation 10 ans) | Chaque établissement conserve ses propres pièces comptables 10 ans : Nhill lui permet de tout exporter | Élevé |
 | Propriété intellectuelle | Loi n° 82-001 du 7 janvier 1982 (propriété industrielle, dont marques) ; Ordonnance-loi n° 86-033 du 5 avril 1986 (droit d'auteur, dont logiciels selon sa rédaction, à confirmer) | Dépôt de la marque « Nhill » à vérifier (disponibilité non vérifiée) ; clauses de licence | Moyen |
 | Droit du travail (journal d'activité) | Le journal nominatif des actions des employés est un traitement de données des salariés | Note d'information au personnel fournie aux établissements (modèle 17) | Moyen |
 
@@ -40,22 +39,24 @@ revoir les modèles cités.
 
 | N° | Hypothèse | Modèles concernés | Comment la vérifier | État |
 |---|---|---|---|---|
-| H-01 | L'exploitant est une société de droit congolais (forme OHADA à choisir : SARL, SAS, SA…) immatriculée au RCCM de Kinshasa | tous | statuts, extrait RCCM | **ouvert** — aucune société identifiée |
+| H-01 | L'éditeur est identifié par son nom commercial, Nhill Solution, et son siège à Kinshasa ; aucun autre élément d'identification n'est mentionné | tous | décision de la direction | **décidé** le 28/10/2026 |
 | H-02 | Les clients de Nhill sont des professionnels (commerçants, entreprises, associations) agissant pour leur activité ; il n'y a pas de vente à des consommateurs | 01, 02, 07, 09 | modèle commercial ; avocat : qualification d'un entrepreneur individuel | à valider |
 | H-03 | Nhill est responsable de traitement pour les données des visiteurs, prospects, comptes utilisateurs et facturation, et sous-traitant pour les données saisies par les établissements | 03, 06, 15, 18 | avocat ; Code du numérique, Livre III | à valider |
-| H-04 | La base de production peut être hébergée hors de RDC (Supabase, région à choisir) : transfert international soumis à autorisation préalable | 03, 06, 14, 18 | choix de l'hébergeur ; autorité compétente | **ouvert** — hébergeur et région non choisis |
+| H-04 | Le serveur et la base de production sont hébergés hors de RDC, sur un serveur privé virtuel de Hostinger International Ltd situé en France ; l'équipe y accède depuis Kinshasa : transfert international, a priori soumis à autorisation préalable | 03, 06, 14, 18 | autorité compétente ; avocat | hébergeur **décidé** ; régime du transfert **ouvert** |
 | H-05 | L'autorité de protection des données compétente est l'ARPTC à titre provisoire, ou l'ARPTIC si sa création et la reprise des missions sont effectives | 03, 06, 14, 18, 19 | textes de création ; site de l'autorité | **ouvert — prioritaire** |
 | H-06 | Les frais et procédures de la décision n° 039/ARPTC/CLG/2025 restent applicables malgré les contestations et le changement d'autorité | checklist § 6 | autorité ; avocat | ouvert |
 | H-07 | L'activité de Nhill (logiciel en ligne hébergé pour des tiers) peut relever du régime d'**autorisation** des arrêtés n° 004 et 005/2026 si elle est qualifiée d'hébergement d'applications ; une jeune entreprise pourrait relever de la déclaration ou d'une exonération | checklist § 6 | texte des arrêtés ; ministère / autorité | ouvert |
 | H-08 | La prospection commerciale par e-mail, SMS et WhatsApp exige le consentement préalable de la personne (opt-in) ; le silence ne vaut pas consentement | 03, 16 | Code du numérique, art. 68 à 72 | à valider |
 | H-09 | Les documents émis par Nhill ne sont pas des factures normalisées ; un assujetti à la TVA doit utiliser un dispositif ou logiciel homologué par la DGI | 01, 02 | DGI ; fiscaliste | élevé, à confirmer |
-| H-10 | Le droit congolais et les juridictions de Kinshasa (tribunal de commerce de Kinshasa/Gombe) sont choisis dans les contrats ; l'arbitrage CCJA OHADA est une option | 01, 02, 05, 09, 10, 11, 12 | avocat | choix à faire |
-| H-11 | Les prix sont fixés en USD et/ou en CDF ; la conversion se fait au taux indiqué sur la facture | 02, 09 | politique commerciale ; loi n° 18/020 ; réglementation des changes | à valider |
+| H-10 | Droit de la RDC et juridictions compétentes de Kinshasa, sans priver l'utilisateur des règles impératives de son pays (consommation, données personnelles) | 01, 02, 09, 10, 11, 12 | avocat (rédaction de la clause) | **décidé** le 28/10/2026 |
+| H-11 | Aucun prix n'est publié : l'offre, la durée, le prix, la devise, les moyens de paiement et la période de grâce figurent dans la proposition écrite acceptée par l'établissement | 02 | politique commerciale ; loi n° 18/020 ; réglementation des changes | décidé (pas de prix publics) ; devise de paiement à valider (V-03) |
 | H-12 | La disponibilité du nom « Nhill » comme marque et dénomination n'a pas été vérifiée | 01, 05, 12 | recherche d'antériorité (RDC, OAPI non applicable, international) | **ouvert** |
-| H-13 | Le site vitrine ne dépose aucun cookie et n'utilise aucun outil de mesure tiers | 04 | contrôle technique du site | vrai en 2.0.0 (vérifié dans le code) |
-| H-14 | Les données des établissements sont conservées pendant l'abonnement puis 90 jours après la fin pour permettre l'export, sauf obligation légale contraire | 02, 06, 15 | politique produit ; avocat (obligation de conservation 10 ans à la charge de l'établissement) | proposition |
+| H-13 | Le site vitrine ne dépose aucun cookie et n'utilise aucun outil de mesure tiers | 04 | contrôle technique du site | vrai en 3.0.0 (vérifié dans le code du site : aucun cookie, aucun stockage local, aucune ressource tierce) |
+| H-14 | Les données des établissements sont conservées pendant l'abonnement puis 90 jours après la fin pour permettre l'export, sauf obligation légale contraire | 02, 06, 15 | politique produit ; avocat (obligation de conservation 10 ans à la charge de l'établissement) | décidé (publié sur le site 3.0.0) |
 | H-15 | Une violation de données est notifiée à l'autorité et, si nécessaire, aux personnes, dans les délais du Code du numérique (72 heures selon un résumé secondaire) | 06, 14 | texte officiel | à confirmer |
-| H-16 | Le programme pilote est gratuit, limité dans le temps et sans engagement d'achat | 09 | politique commerciale | proposition |
+| H-16 | L'essai gratuit accompagné dure 30 jours, sans moyen de paiement ni engagement ; il remplace le programme pilote de la version 2.0.0 | 09 | politique commerciale | décidé (site 3.0.0) |
+| H-19 | Positionnement international : les textes prennent les normes européennes (notamment le RGPD) comme référence de bonnes pratiques, sans affirmer de conformité ni de certification | 03, 06, 13, 15, 19 | décision de la direction | **décidé** le 28/10/2026 |
+| H-20 | Aucun niveau de service chiffré (taux de disponibilité, délai de réponse) n'est garanti ; la responsabilité de l'éditeur est plafonnée aux sommes payées sur les 12 mois précédant le fait générateur | 02, 07, 09, 12 | décision de la direction ; avocat (validité du plafond, V-01) | **décidé** le 28/10/2026 |
 | H-17 | Les applications sont fournies sous licence d'utilisation non exclusive, liée à l'abonnement ; le code reste propriété de l'éditeur | 01, 12 | statuts / cession des droits des développeurs | à valider |
 | H-18 | Les partenaires (apporteurs, intégrateurs, formateurs) sont des indépendants, rémunérés à la commission, sans pouvoir de signer au nom de l'exploitant | 10 | avocat ; fiscaliste (retenues) | à valider |
 
@@ -150,48 +151,52 @@ revoir les modèles cités.
   information préalable du personnel (finalité, données, durée, droits). Modèle 17 fourni
   aux établissements ; articulation avec le Code du travail à faire valider.
 
-## 4. Liste des modèles
+## 4. Liste des documents
 
-| N° | Modèle (FR) | Modèle (EN) | Usage |
+| N° | Document (FR) | Document (EN) | Usage |
 |---|---|---|---|
 | 01 | [Conditions générales d'utilisation](01-conditions-generales-utilisation.md) | [Terms of use](../en/01-terms-of-use.md) | utilisation du site et des applications |
-| 02 | [Conditions de service SaaS](02-conditions-service-saas.md) | [SaaS terms of service](../en/02-saas-terms-of-service.md) | contrat d'abonnement avec l'établissement |
+| 02 | [Conditions de service](02-conditions-service-saas.md) | [Terms of service](../en/02-saas-terms-of-service.md) | abonnement d'un établissement, avec la proposition écrite acceptée |
 | 03 | [Politique de confidentialité](03-politique-confidentialite.md) | [Privacy policy](../en/03-privacy-policy.md) | information des personnes |
 | 04 | [Politique relative aux cookies et traceurs](04-politique-cookies.md) | [Cookie policy](../en/04-cookie-policy.md) | site vitrine |
 | 05 | [Mentions légales](05-mentions-legales.md) | [Legal notice](../en/05-legal-notice.md) | site vitrine |
-| 06 | [Accord de traitement des données](06-accord-traitement-donnees.md) | [Data processing agreement](../en/06-data-processing-agreement.md) | annexe au contrat (sous-traitance) |
-| 07 | [Engagement de niveau de service](07-engagement-niveau-service.md) | [Service level agreement](../en/07-service-level-agreement.md) | disponibilité, assistance |
+| 06 | [Accord de traitement des données](06-accord-traitement-donnees.md) | [Data processing agreement](../en/06-data-processing-agreement.md) | document contractuel des conditions de service (sous-traitance) |
+| 07 | [Engagement de service](07-engagement-de-service.md) | [Service commitment](../en/07-service-commitment.md) | moyens d'exploitation et d'assistance, sans valeur chiffrée |
 | 08 | [Politique d'utilisation acceptable](08-politique-utilisation-acceptable.md) | [Acceptable use policy](../en/08-acceptable-use-policy.md) | usages interdits |
-| 09 | [Convention de programme pilote](09-convention-programme-pilote.md) | [Pilot programme agreement](../en/09-pilot-programme-agreement.md) | essai encadré |
-| 10 | [Contrat de partenariat commercial](10-contrat-partenariat.md) | [Partnership agreement](../en/10-partnership-agreement.md) | apporteurs, intégrateurs, formateurs |
+| 09 | [Conditions de l'essai gratuit accompagné](09-conditions-essai-accompagne.md) | [Assisted free trial terms](../en/09-assisted-trial-terms.md) | essai de 30 jours |
+| 10 | [Conditions générales de partenariat](10-contrat-partenariat.md) | [Partnership terms](../en/10-partnership-agreement.md) | recommandation, installation, formation, accompagnement |
 | 11 | [Accord de confidentialité](11-accord-confidentialite.md) | [Non-disclosure agreement](../en/11-non-disclosure-agreement.md) | échanges avec partenaires, prestataires |
 | 12 | [Licence d'utilisation des applications](12-licence-applications.md) | [Application licence](../en/12-application-licence.md) | applications installées (Windows, Linux, Android) |
 | 13 | [Politique de sécurité (résumé public)](13-politique-securite.md) | [Security policy (public summary)](../en/13-security-policy.md) | confiance, appels d'offres |
 | 14 | [Procédure de gestion des violations de données](14-procedure-violation-donnees.md) | [Data breach procedure](../en/14-data-breach-procedure.md) | interne |
 | 15 | [Politique de conservation et de suppression](15-politique-conservation.md) | [Retention and deletion policy](../en/15-retention-policy.md) | interne et contractuelle |
-| 16 | [Formulaire et registre de consentement à la prospection](16-consentement-prospection.md) | [Marketing consent form and register](../en/16-marketing-consent.md) | prospection, WhatsApp, e-mail |
+| 16 | [Formulaire et registre d'accord pour recevoir des nouvelles](16-consentement-prospection.md) | [Consent form and register for news](../en/16-marketing-consent.md) | prospection, WhatsApp, e-mail |
 | 17 | [Note d'information du personnel](17-information-personnel.md) | [Staff information notice](../en/17-staff-notice.md) | fournie aux établissements (journal d'activité) |
 | 18 | [Registre des activités de traitement](18-registre-traitements.md) | [Record of processing activities](../en/18-processing-register.md) | interne |
 | 19 | [Formulaire d'exercice des droits](19-demande-exercice-droits.md) | [Data subject request form](../en/19-data-subject-request.md) | accès, rectification, effacement |
 
-Chaque modèle commence par un cartouche : juridiction, hypothèses, sources, clauses à
-valider. Les champs à compléter sont entre crochets `[…]` ; les clauses à faire valider
-portent la mention **[À VALIDER]**.
+Chaque document commence par un cartouche : version, statut, hypothèses, points de
+relecture recommandés. Depuis la version 3.0.0, le corps des documents ne contient plus de
+champ entre crochets ni de mention « à valider » : les points à faire relire par un avocat
+sont regroupés au § 5. Les éléments propres à chaque contrat (identité du cocontractant,
+dates, prix, commission) figurent dans la proposition écrite ou la lettre d'accord
+acceptée, et non dans les conditions générales ; seuls les formulaires (16, 17, 19) et les
+accords à signer (10, 11) comportent des zones à remplir par le signataire.
 
 ## 5. Clauses nécessitant une validation juridique
 
 | Réf. | Clause | Modèles | Question pour l'avocat |
 |---|---|---|---|
-| V-01 | Limitation de responsabilité (plafond = sommes payées sur 12 mois) | 02, 07, 12 | validité et opposabilité en droit congolais / OHADA ; exceptions (faute lourde, dol) |
-| V-02 | Loi applicable et juridiction (Kinshasa) ou arbitrage | 01, 02, 09, 10, 11, 12 | for le plus adapté, clause compromissoire |
-| V-03 | Prix en USD, paiement en CDF au taux du jour | 02, 10 | réglementation des changes, loi 18/020 |
-| V-04 | Suspension pour défaut de paiement après période de grâce, lecture seule | 02 | délais de mise en demeure |
-| V-05 | Transfert des données hors RDC et garanties | 03, 06 | autorisation préalable, autorité compétente (H-04, H-05) |
+| V-01 | Limitation de responsabilité (plafond = sommes payées sur 12 mois, **décidé**) | 02, 07, 09, 12 | validité et opposabilité en droit congolais / OHADA ; exceptions (faute lourde, dol, dommage corporel) |
+| V-02 | Loi applicable (RDC) et juridictions de Kinshasa (**décidé**) | 01, 02, 09, 10, 11, 12 | rédaction de la clause ; opposabilité à un utilisateur établi hors de RDC |
+| V-03 | Devise du prix et devise de paiement fixées dans la proposition écrite | 02, 10 | réglementation des changes, loi 18/020 |
+| V-04 | Passage en lecture seule après la période de grâce (rappels automatiques avant l'échéance) | 02 | nécessité d'une mise en demeure préalable |
+| V-05 | Transfert des données hors RDC (serveur en France) et garanties | 03, 06, 18 | autorisation préalable, autorité compétente (H-04, H-05) |
 | V-06 | Délai de notification d'une violation (72 h) | 06, 14 | délai exact du Code du numérique |
 | V-07 | Durées de conservation | 03, 15 | prescription, obligations comptables |
 | V-08 | Consentement à la prospection (opt-in) et preuve | 16 | art. 68 à 72 |
 | V-09 | Information du personnel sur le journal d'activité | 17 | Code du travail, représentation du personnel |
-| V-10 | Rétractation pour les entrepreneurs individuels | 02 | applicabilité de l'art. 61 |
+| V-10 | Rétractation pour les entrepreneurs individuels | 01, 02 | applicabilité de l'art. 61 |
 | V-11 | Commission des partenaires, non-concurrence, non-sollicitation | 10 | validité, fiscalité (retenue à la source) |
 | V-12 | Clause de non-responsabilité fiscale (documents de gestion) | 01, 02 | suffisance au regard de la réforme de la facture normalisée |
 | V-13 | Désignation d'un délégué à la protection des données | 03, 18 | obligation (art. 222) et seuils |
@@ -200,19 +205,18 @@ portent la mention **[À VALIDER]**.
 
 | # | Action | Responsable | Préalable à |
 |---|---|---|---|
-| 1 | Constituer la société exploitante (forme OHADA), obtenir RCCM, identification nationale, NIF | fondateurs + avocat / guichet unique | tout contrat |
-| 2 | Vérifier la disponibilité du nom et déposer la marque « Nhill » | avocat / conseil en PI | communication publique |
-| 3 | Identifier l'autorité de protection des données compétente (ARPTC / ARPTIC) et la procédure en vigueur | avocat | dépôts |
-| 4 | Choisir l'hébergeur et la région ; si hors RDC, demander l'autorisation de transfert | direction technique + avocat | mise en production |
-| 5 | Déposer les déclarations / autorisations de traitement (prospects, clients, employés de l'exploitant, sous-traitance) | DPO / avocat | collecte de données |
-| 6 | Qualifier l'activité au regard des arrêtés n° 004 et 005/2026 ; vérifier l'éligibilité à une exonération startup | avocat | facturation des abonnements |
-| 7 | Désigner un délégué à la protection des données ou justifier son absence | direction | dépôts |
-| 8 | Compléter tous les champs `[…]` des modèles 01 à 19 et faire relire les clauses V-01 à V-13 | avocat | publication |
-| 9 | Valider la position fiscale : Nhill = documents de gestion ; facturation de l'exploitant (TVA, facture normalisée) | fiscaliste | premier encaissement |
-| 10 | Publier mentions légales, CGU, politique de confidentialité sur le site ; retirer les bandeaux « projet » | direction | ouverture des formulaires |
-| 11 | Mettre en place le registre des traitements (modèle 18) et la procédure de violation (modèle 14) | DPO | mise en production |
-| 12 | Fournir le modèle 17 aux établissements dès l'activation du journal d'activité | équipe produit | premiers clients |
-| 13 | Réexaminer ce dossier tous les 6 mois et à chaque nouveau texte | DPO / avocat | — |
+| 1 | Vérifier la disponibilité du nom et déposer la marque « Nhill » | avocat / conseil en PI | communication publique |
+| 2 | Identifier l'autorité de protection des données compétente (ARPTC / ARPTIC) et la procédure en vigueur | avocat | dépôts |
+| 3 | Hébergement décidé (Hostinger, serveur en France) : faire confirmer le régime du transfert hors RDC et accomplir la formalité requise | direction + avocat | mise en production |
+| 4 | Déposer les déclarations / autorisations de traitement (prospects, clients, sous-traitance) | direction / avocat | collecte de données |
+| 5 | Qualifier l'activité au regard des arrêtés n° 004 et 005/2026 ; vérifier l'éligibilité à une exonération startup | avocat | facturation des abonnements |
+| 6 | Désigner un délégué à la protection des données ou justifier son absence | direction | dépôts |
+| 7 | Faire relire les documents 01 à 19 et les points V-01 à V-13 par un avocat inscrit à un barreau de la RDC | avocat | publication |
+| 8 | Valider la position fiscale : Nhill = documents de gestion ; facturation des abonnements par Nhill Solution (TVA, facture normalisée) | fiscaliste | premier encaissement |
+| 9 | Publier mentions légales, conditions d'utilisation et politique de confidentialité (pages prêtes dans le site 3.0.0) ; compléter les mentions légales avec l'hébergeur du site vitrine dès qu'il est choisi | direction | ouverture des formulaires |
+| 10 | Tenir le registre des traitements (document 18) et la procédure de violation (document 14) | direction | mise en production |
+| 11 | Fournir le document 17 aux établissements dès l'ouverture de leur compte | équipe d'accompagnement | premiers clients |
+| 12 | Réexaminer ce dossier tous les 6 mois et à chaque nouveau texte | direction / avocat | — |
 
 ## 7. Sources
 

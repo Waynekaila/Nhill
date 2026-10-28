@@ -2,38 +2,39 @@
 
 *Français (version de référence) : [../fr/11-accord-confidentialite.md](../fr/11-accord-confidentialite.md)*
 
-> **TEMPLATE — TO VALIDATE.** Mutual agreement, for exchanges with partners, contractors,
-> investors or pilots before a contract.
-
 | Header | |
 |---|---|
-| Jurisdiction | DRC; OHADA law of obligations |
-| Assumptions | H-01, H-10 |
-| Sources | — |
-| Clauses to validate | V-02; duration; remedies |
-| Version | [NUMBER] of [DATE] |
+| Publisher | Nhill Solution, Kinshasa (Democratic Republic of the Congo) |
+| Version | 3.0.0 — 28 October 2026 |
+| Status | written without review by a lawyer; recommended review points: V-02, duration and sanction ([00](00-legal-research.md) § 5). The French version is the reference text |
+| Assumptions | H-10 ([00](00-legal-research.md) § 2) |
+| Use | mutual agreement for exchanges with partners, contractors or businesses before a contract; the subject of the exchanges is stated at signature |
 
-**Between** [PARTY A — full identification] and [PARTY B — full identification].
+## Parties
+
+**Nhill Solution**, with its head office in Kinshasa (Democratic Republic of the Congo),
+and the other signatory of this agreement, each being "a party".
 
 ## 1. Purpose
 
-The parties exchange information in connection with [PURPOSE: evaluating a partnership, a
-pilot, a service]. This agreement protects that information.
+The parties exchange information to assess a collaboration (partnership, trial, service).
+This agreement protects that information.
 
 ## 2. Confidential information
 
 Any non-public information disclosed by a party, in any form: technical (code,
-architecture, security), commercial (prices, customers, plans), financial, personal data.
-Not confidential: information already public through no fault of the recipient; already
-known to it; lawfully received from a third party; independently developed.
+architecture, security), commercial (prices, customers, projects), financial, personal
+data. Information is not confidential if it is: already public through no fault of the
+recipient; already known to the recipient; lawfully received from a third party;
+independently developed.
 
-## 3. Commitments
+## 3. Undertakings
 
 The recipient: uses the information only for the purpose; discloses it only to people who
 need it and are bound by the same secrecy; protects it at least as well as its own
-information; warns the other party of any unauthorised disclosure; returns or destroys the
-information on request. Disclosure required by law or an authority is allowed after
-informing the other party where the law permits.
+information; informs the other party of any unauthorised disclosure; returns or destroys
+the information on request. Disclosure required by law or by an authority is allowed,
+after informing the other party where the law permits.
 
 ## 4. No licence
 
@@ -42,15 +43,20 @@ from this agreement.
 
 ## 5. Duration
 
-Agreement valid for [2] years from signature; confidentiality obligations continue for [3]
-years after its end ([without limit] for security secrets and source code).
+The confidentiality obligations apply from signature and for as long as the information
+has not become public through no fault of the recipient; source code and security
+information remain confidential without time limit.
 
 ## 6. Governing law
 
-Law of the DRC; [Kinshasa/Gombe commercial court] **[TO VALIDATE: V-02]**.
+Law of the Democratic Republic of the Congo; search for an amicable solution, then the
+competent courts of Kinshasa.
 
-Made in [CITY], on [DATE].
+## Signatures
 
-| Party A | Party B |
+| For Nhill Solution | For the other party |
 |---|---|
-| [NAME, TITLE] | [NAME, TITLE] |
+| Name and position: | Name, position and organisation: |
+| Subject of the exchanges: | E-mail address: |
+| Date: | Date: |
+| Signature: | Signature: |

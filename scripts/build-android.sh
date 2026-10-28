@@ -69,5 +69,8 @@ unzip -p "$APK" AndroidManifest.xml | tr -d '\000' | grep -q 'androidx.core.cont
   || die "$APK : fournisseur de fichiers (FileProvider) absent du manifeste"
 unzip -p "$APK" 'classes*.dex' | grep -aq 'Landroidx/core/content/FileProvider;' \
   || die "$APK : classe androidx FileProvider absente (dépendance androidx.core manquante)"
-unzip -l "$APK" | grep -q 'res/xml/qtprovider_paths.xml' || die "$APK : res/xml/qtprovider_paths.xml absent"
+# Release builds shorten resource paths (optimizeReleaseResources): the resource is looked
+# up by its name in the resource table, not by its path in the archive.
+unzip -p "$APK" resources.arsc | tr -d '\000' | grep -aq 'qtprovider_paths' \
+  || die "$APK : ressource xml/qtprovider_paths absente de resources.arsc"
 write_checksums "$OUT"

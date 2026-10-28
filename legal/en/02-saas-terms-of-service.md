@@ -1,183 +1,180 @@
-# 02 — SaaS terms of service (subscription contract)
+# 02 — Terms of service (a business's subscription)
 
 *Français (version de référence) : [../fr/02-conditions-service-saas.md](../fr/02-conditions-service-saas.md)*
 
-> **TEMPLATE — DO NOT SIGN AS IS.** To be completed and validated by a lawyer (Congolese and
-> OHADA law) and, for tax matters, by a tax adviser. The French version is the reference.
-
 | Header | |
 |---|---|
-| Jurisdiction | DRC; OHADA Uniform Acts (general commercial law) |
-| Assumptions | H-01, H-02, H-03, H-09, H-10, H-11, H-14, H-17 |
-| Sources | S01 (art. 48–72), S08, S09, S10, S14 — see [00-legal-research.md](00-legal-research.md) § 7 |
-| Clauses to validate | V-01, V-02, V-03, V-04, V-10, V-12 |
-| Annexes | A: plan and price · B: data processing agreement (template 06) · C: service level agreement (template 07, optional) · D: acceptable use policy (template 08) |
-| Version | [NUMBER] of [DATE] |
+| Publisher | Nhill Solution, Kinshasa (Democratic Republic of the Congo) |
+| Version | 3.0.0 — 28 October 2026 |
+| Status | written without review by a lawyer or a tax adviser; recommended review points: V-01, V-02, V-03, V-04, V-10, V-12 ([00](00-legal-research.md) § 5). The French version is the reference text |
+| Assumptions | H-01, H-02, H-03, H-09, H-10, H-11, H-14, H-17, H-20 ([00](00-legal-research.md) § 2) |
+| Contract documents | 1. the written proposal accepted by the Customer (plan, limits, term, price, currency, payment methods, grace period); 2. these terms; 3. the data processing agreement (document 06); 4. the service commitment (document 07); 5. the acceptable use policy (document 08). In case of conflict, they prevail in that order |
 
-## Between
+## Parties
 
-**[COMPANY NAME]**, [LEGAL FORM], RCCM [RCCM], Nat. ID [NAT. ID], tax No. [NIF], registered
-office [ADDRESS], represented by [NAME, TITLE] (the "Publisher");
+These terms bind **Nhill Solution**, with its head office in Kinshasa (Democratic
+Republic of the Congo), hereinafter the "Publisher", and the business identified in the
+written proposal it accepts or in its Nhill account, hereinafter the "Customer".
 
-and **[BUSINESS NAME]**, [FORM], RCCM [RCCM or "not registered"], tax No. [NIF], office
-[ADDRESS], represented by [NAME, TITLE] (the "Customer").
-
-When the subscription is taken online, electronic acceptance of these terms by the owner of
-the business account is a signature. **[TO VALIDATE: proof of electronic acceptance under
-the Digital Code.]**
+The Customer accepts them by accepting the Publisher's proposal in writing (signature, or
+reply by e-mail from the account holder's address) or, for a plan ordered in the
+application, by confirming the order in the application.
 
 ## 1. Purpose
 
-The Publisher provides the Customer with Internet access to the Nhill business management
-software (Nhill Business, Nhill POS depending on the plan), hosted by the Publisher or its
-processors, and the support described in article 7.
+The Publisher provides the Customer with access, over the Internet, to the Nhill business
+management and point-of-sale software (Nhill Business and, depending on the plan, Nhill
+POS), hosted by the Publisher and its processors, together with the onboarding and support
+described in articles 7 and 8.
 
-## 2. Term
+## 2. Trial and term
 
-2.1 **Trial**: [30] free days, once per business, without a payment method.
+2.1 **Assisted free trial**: 30 days, once per business, with no payment details and no
+commitment (document 09).
 
-2.2 **Subscription**: term chosen by the Customer among those offered (for example 1, 3, 6,
-12 months), renewed [by the Customer's express decision / tacitly for the same term]
-**[TO CHOOSE]**. The new period starts at the end of the current one.
+2.2 **Subscription**: for the term stated in the accepted proposal or chosen in the
+application. The new period starts at the end of the current one.
+
+2.3 **Renewal**: the subscription renews automatically only if the business's account
+holder has expressly agreed to it in the application, where the plan allows it; they may
+withdraw this agreement at any time. Without this agreement, the subscription ends on its
+due date and the Customer renews by paying for a new period. Reminders are sent before the
+due date.
 
 ## 3. Plans, prices and payment
 
-3.1 Plans, limits (users, tills, warehouses) and prices per term and currency are listed in
-Annex A and in the application when ordering. The applicable price is the one displayed and
-confirmed in the summary computed by the server.
+3.1 No price is published. The plan (functions, limits on users, tills and warehouses),
+the term, the price, the currency and the payment methods are those of the proposal
+accepted by the Customer or of the summary calculated by the server and confirmed in the
+application.
 
-3.2 Prices are stated in [USD / CDF] [excluding taxes]. **[TO VALIDATE: V-03 — payment in
-CDF of a USD price; rate applied; VAT on the subscription.]**
+3.2 A payment is deemed received when the payment provider confirms it (notification
+verified by the server) or when the Publisher records it after receiving the funds. The
+Customer's rights change only at that moment.
 
-3.3 Payment methods: [bank transfer, Mobile Money (list operators), card, PayPal]. A
-payment is only considered received after the Publisher confirms it. An unpaid request
-expires after 48 hours.
+3.3 **Change of plan**: moving to a higher plan takes effect upon payment; moving to a
+lower plan takes effect at the end of the current period.
 
-3.4 **Plan change**: upgrade immediately, with the unused part of the current period
-deducted; downgrade at the end of the period.
+3.4 **Invoicing**: the Publisher gives the Customer an invoice for each payment.
 
-3.5 **Invoicing**: the Publisher issues an invoice for each payment [under the
-standardised-invoice rules if it is subject to them] **[TO VALIDATE: tax adviser]**.
+## 4. Late payment
 
-## 4. Non-payment
-
-If payment is not made when due, the Customer has a grace period of [7] days. After that,
-the business switches to **read-only**: viewing and export remain possible, writing is
-suspended until payment. **[TO VALIDATE: V-04 — prior formal notice.]**
+If payment is not received by the due date, the Service remains fully available during the
+grace period stated in the proposal or in the application. After that, the business
+switches to **read-only**: its data can still be viewed and exported, but can no longer be
+changed until payment.
 
 ## 5. Publisher's obligations
 
-5.1 Provide the Service with due care, according to its documentation.
+5.1 Provide the Service with due care, in line with its documentation.
 
-5.2 Isolate each business's data, protect the Service with reasonable security measures
-(encrypted communications, access control, audit log, encrypted backups), described in
-template 13. No measure guarantees the complete absence of vulnerabilities.
+5.2 Keep each business's data separate from the others' and protect the Service with
+reasonable security measures (encrypted connections, access control, activity log,
+encrypted backups), summarised in document 13. No measure guarantees the complete absence
+of vulnerabilities.
 
-5.3 Inform the Customer of scheduled maintenance at least [48] hours in advance.
+5.3 Announce scheduled maintenance in advance whenever possible.
 
-5.4 Process the Customer's data under the data processing agreement (Annex B).
+5.4 Process the Customer's data in accordance with the data processing agreement
+(document 06).
 
 ## 6. Customer's obligations
 
-6.1 Use the Service in accordance with the terms of use (template 01) and the acceptable
-use policy (Annex D).
+6.1 Use the Service in accordance with the terms of use (document 01) and the acceptable
+use policy (document 08).
 
-6.2 Create a personal account for each user, assign appropriate roles, remove access for
-people who leave the business.
+6.2 Create a personal account for each user, assign the appropriate roles, remove access
+for people who leave the business.
 
-6.3 Inform its staff of the activity log (template 17).
+6.3 Inform its staff about the activity log (model notice: document 17).
 
-6.4 Check the tax settings (rates, mentions) and meet its tax obligations. **Nhill is not
-an invoicing system certified by the DGI**: a VAT-registered Customer issues standardised
-invoices with a certified device. **[TO VALIDATE: V-12.]**
+6.4 Check the tax settings (rates, notices) and meet its tax and accounting obligations.
+**Nhill is not an invoicing device approved or standardised by a tax administration**: a
+Customer required to do so uses an approved fiscal device.
 
-6.5 Have Internet access and compatible computers (see the installation guide).
+6.5 Have Internet access and compatible devices (installation guide).
 
-## 7. Support
+## 7. Onboarding
 
-Support through the "Help and support" menu of the application and by e-mail at
-support@nhill.online, during [DAYS AND HOURS, Kinshasa time]. Target times: template 07 if taken,
-otherwise best efforts.
+Onboarding (demonstration, installation, catalogue import, user training) is provided
+during the assisted trial; additional onboarding may be included in the proposal.
 
-## 8. Customer data
+## 8. Support
 
-8.1 The Customer remains the owner of its data. The Publisher acts as processor (Annex B).
+Support through the "Help and support" menu of the applications and by e-mail at
+support@nhill.online. The Publisher handles requests by severity, first those that
+prevent selling or taking payments; no response time is guaranteed (document 07).
 
-8.2 **Reversibility**: the Customer can export its data (CSV, PDF) at any time. At the end
-of the contract, the data remains available for reading and export for [90] days, then is
-deleted, including from backups within a further [35] days, unless the Publisher has a
-legal retention obligation. The Customer keeps its own accounting records for the legal
+## 9. Customer data
+
+9.1 The Customer remains the owner of its data. The Publisher acts as a processor
+(document 06).
+
+9.2 **Export and reversibility**: the Customer can export its data at any time, including
+in read-only mode, and the account holder can download the full archive of the business's
+data. At the end of the contract, the data remains available for viewing and export for 90
+days, then is deleted, unless the law requires keeping it; backup copies then disappear as
+they rotate (document 15). The Customer keeps its own accounting records for the legal
 period (10 years under OHADA law).
 
-8.3 Operating statistics: the Publisher looks at aggregated figures per business (number
-of documents, volumes per currency, active users) to run and improve the Service; each
-view is written to the Customer's log.
-
-## 9. Intellectual property
-
-The Publisher grants the Customer, for the subscription term, a non-exclusive,
-non-transferable right to use the Service and the applications (template 12), limited to
-the Customer's internal needs and its plan's limits.
+9.3 **Operating statistics**: the Publisher consults overall figures per business (number
+of documents, volumes per currency, active users) to operate the Service and provide
+support; each consultation is recorded in the Customer's activity log.
 
 ## 10. Liability
 
-10.1 Each party is liable for direct damage caused by its proven fault.
+10.1 The Publisher has an obligation of means. Each party is liable for proven direct
+damage caused by its fault.
 
-10.2 The Publisher is not liable for indirect damage (lost revenue, lost customers), for the
-consequences of a setting error by the Customer, or for power or Internet cuts at the
-Customer's premises.
+10.2 The Publisher is not liable for indirect damage, such as loss of profit, loss of
+customers or damage to reputation, nor for the consequences of an incorrect entry, of
+settings made by the Customer, of a document issued by the Customer or of the Customer's
+failure to meet its tax obligations, nor for power or Internet outages at the Customer's
+premises.
 
-10.3 The Publisher's total liability is limited to the amounts paid by the Customer in the
-12 months before the event, except for gross negligence or wilful misconduct. **[TO
-VALIDATE: V-01.]**
+10.3 The Publisher's total liability is limited to the amounts paid by the Customer for
+the Service during the 12 months before the event that caused the damage. These limits do
+not apply in case of gross negligence or wilful misconduct, of personal injury, or where
+an applicable mandatory rule forbids them.
 
 ## 11. Force majeure
 
-Neither party is liable for a failure caused by force majeure under the applicable law
-(including serious unrest, disaster, general network outage). The affected party informs
-the other without delay.
+Neither party is liable for a failure caused by force majeure within the meaning of the
+applicable law (in particular serious unrest, disaster, widespread network outage). The
+party prevented informs the other without delay.
 
-## 12. Termination
+## 12. End of the contract
 
-12.1 The Customer can stop renewal at any time from the application; the subscription runs
-until the end of the paid period. **[TO VALIDATE: V-10 — refund / withdrawal for a sole
-trader.]**
+12.1 The Customer can end its subscription in accordance with the accepted proposal;
+without an accepted automatic renewal, the subscription ends on its due date.
 
-12.2 Either party may terminate for a serious breach by the other not remedied within [30]
-days of a formal notice.
+12.2 The Publisher may suspend an access in case of use contrary to the law or to these
+terms, after a warning except in an emergency (security, fraud, request from an
+authority). Either party may end the contract in case of a serious breach by the other
+that remains unremedied after a written formal notice.
 
-12.3 Articles 8 (reversibility), 10 and 13 survive the end of the contract.
+12.3 Articles 9 (data), 10 (liability) and 13 (confidentiality) continue to apply after the
+end of the contract.
 
 ## 13. Confidentiality
 
-Each party keeps the other's non-public information confidential during the contract and
-for [3] years afterwards.
+Each party keeps the other's non-public information confidential, during the contract and
+for as long as it has not become public through no fault of its own.
 
 ## 14. Processors
 
-The Publisher may use processors (hosting: [HOST, COUNTRY]) under Annex B.
+The Publisher has the Service hosted by Hostinger International Ltd (Cyprus), on a server
+located in France, under the conditions of document 06.
 
-## 15. Governing law and disputes
+## 15. Changes
 
-Law of the Democratic Republic of the Congo and OHADA Uniform Acts. [30]-day amicable
-settlement attempt, then [Kinshasa/Gombe commercial court / arbitration under the CCJA
-Arbitration Rules, seat Kinshasa, language French] **[TO VALIDATE: V-02]**.
+The Publisher may change these terms. Significant changes are announced to the Customer
+before they take effect; they apply to a period already paid only with its agreement,
+unless a legal obligation requires them.
 
-## Signatures
+## 16. Governing law and disputes
 
-Made in [CITY], on [DATE], in two copies.
-
-| For the Publisher | For the Customer |
-|---|---|
-| [NAME, TITLE] | [NAME, TITLE] |
-
----
-
-### Annex A — Plan and price
-
-| Plan | Users | POS tills | Warehouses | Term | Price | Currency |
-|---|---|---|---|---|---|---|
-| [NAME] | [N] | [N] | [N] | [MONTHS] | [AMOUNT] | [USD/CDF] |
-
-No price is preconfigured in Nhill: prices are entered by the Publisher in Nhill Console
-and must match this annex.
+These terms are governed by the law of the Democratic Republic of the Congo, including the
+OHADA Uniform Acts. In case of dispute, the parties first look for an amicable solution;
+failing that, the competent courts of Kinshasa have jurisdiction. These choices do not
+deprive the Customer of the protection of the mandatory rules of its country.

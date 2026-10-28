@@ -2,29 +2,26 @@
 
 *English: [../en/12-application-licence.md](../en/12-application-licence.md)*
 
-> **MODÈLE — À FAIRE VALIDER.** Texte affiché à l'installation (Windows) ou fourni avec les
-> paquets Linux et l'APK. Le code de Nhill est propriétaire ; sa licence définitive est à
-> fixer par les créateurs (voir `README.md`, section Licence).
-
 | Cartouche | |
 |---|---|
-| Juridiction | RDC — Ordonnance-loi n° 86-033 (droit d'auteur), loi n° 82-001 (marques) |
-| Hypothèses | H-01, H-12, H-17 |
-| Sources | S12, S13 — voir [00-recherche-juridique.md](00-recherche-juridique.md) § 7 |
-| Clauses à valider | V-01, V-02 ; titularité des droits sur le code (contrats des développeurs) |
-| Version | [NUMÉRO] du [DATE] |
+| Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
+| Version | 3.0.0 — 28 octobre 2026 |
+| Statut | rédigé sans relecture par un avocat ; points de relecture recommandés : V-01, V-02 et titularité des droits sur le code ([00](00-recherche-juridique.md) § 5) |
+| Hypothèses | H-12, H-17, H-20 ([00](00-recherche-juridique.md) § 2) |
+| Usage | texte fourni avec l'installateur Windows, les paquets Linux et l'application Android |
 
 ## 1. Logiciels concernés
 
-Nhill Business, Nhill POS et Nhill Console (« les Applications »), version 2.0.0 et
-suivantes, pour Windows, Linux et Android, éditées par [RAISON SOCIALE] (« l'Éditeur »).
+Nhill Business, Nhill POS et Nhill Console (« les Applications »), version 3.0.0 et
+suivantes, pour Windows, Linux et Android selon l'application, éditées par **Nhill
+Solution** (« l'Éditeur »).
 
 ## 2. Droits accordés
 
 L'Éditeur accorde à l'utilisateur un droit **personnel, non exclusif, non transférable et
 gratuit** d'installer et d'utiliser les Applications, uniquement pour accéder au service
-Nhill dans le cadre d'un compte valide (essai, pilote ou abonnement). Nhill Console est
-réservée aux personnes autorisées par l'Éditeur.
+Nhill avec un compte valide (essai ou abonnement). Nhill Console est réservée aux personnes
+autorisées par l'Éditeur.
 
 ## 3. Restrictions
 
@@ -37,21 +34,21 @@ les louer ou les mettre à disposition de tiers.
 
 Les Applications intègrent des composants sous leurs propres licences, notamment Qt
 (LGPL v3, liaison dynamique : l'utilisateur peut remplacer les bibliothèques Qt fournies),
-libsodium (ISC), polices IBM Plex (SIL OFL 1.1). La liste et les textes de licence sont
-fournis avec les Applications (`docs/licences-dependances.md`). La présente licence ne
-restreint pas les droits accordés par ces licences.
+libsodium (ISC) et les polices IBM Plex (SIL OFL 1.1). La liste et les textes de licence
+sont fournis avec les Applications. La présente licence ne restreint pas les droits
+accordés par ces licences.
 
 ## 5. Mises à jour
 
-L'Éditeur peut publier des mises à jour ; une version trop ancienne peut être refusée par
-le serveur, qui indique alors la version minimale à installer.
+L'Éditeur peut publier des mises à jour. Le serveur peut exiger une version minimale ;
+une application plus ancienne demande alors d'installer la mise à jour avant de continuer.
 
 ## 6. Garantie et responsabilité
 
-Les Applications sont fournies pour accéder au service dans les conditions du contrat
-d'abonnement (modèle 02). En dehors de ce contrat, elles sont fournies « en l'état ».
-**[À VALIDER : V-01.]** Vérifiez l'empreinte SHA-256 de chaque fichier téléchargé avant
-installation (guide d'installation).
+Les Applications servent à accéder au service dans le cadre des conditions de
+service (document 02), dont l'article 10 encadre la responsabilité de l'Éditeur. En
+dehors de ce cadre, elles sont fournies « en l'état ». Vérifiez l'empreinte SHA-256 de
+chaque fichier téléchargé avant installation (guide d'installation).
 
 ## 7. Fin
 
@@ -60,4 +57,5 @@ désinstalle alors les Applications.
 
 ## 8. Droit applicable
 
-Droit de la RDC ; [tribunal de commerce de Kinshasa/Gombe] **[À VALIDER : V-02]**.
+Droit de la République démocratique du Congo ; juridictions compétentes de Kinshasa, sans
+priver l'utilisateur de la protection des règles impératives de son pays.

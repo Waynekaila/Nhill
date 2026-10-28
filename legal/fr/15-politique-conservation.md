@@ -2,54 +2,53 @@
 
 *English: [../en/15-retention-policy.md](../en/15-retention-policy.md)*
 
-> **MODÈLE — À FAIRE VALIDER.** Les durées entre crochets sont des propositions ; les
-> réglages techniques correspondants sont indiqués quand ils existent.
-
 | Cartouche | |
 |---|---|
-| Juridiction | RDC — Code du numérique (durée limitée) ; OHADA (pièces comptables : 10 ans) |
-| Hypothèses | H-03, H-14 |
-| Sources | S01, S15 — voir [00-recherche-juridique.md](00-recherche-juridique.md) § 7 |
-| Clauses à valider | V-07 |
-| Version | [NUMÉRO] du [DATE] |
+| Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
+| Version | 3.0.0 — 28 octobre 2026 |
+| Statut | rédigé sans relecture par un avocat ; point de relecture recommandé : V-07 ([00](00-recherche-juridique.md) § 5). Les durées sont celles publiées dans la politique de confidentialité et appliquées par les réglages indiqués |
+| Hypothèses | H-03, H-14, H-19 ([00](00-recherche-juridique.md) § 2) |
 
 ## 1. Principe
 
-Une donnée n'est conservée que le temps nécessaire à sa finalité, puis supprimée ou rendue
-anonyme. La suppression couvre aussi les sauvegardes, qui expirent selon leur propre cycle.
+Une donnée n'est conservée que le temps nécessaire à sa finalité, puis supprimée. La
+suppression couvre aussi les sauvegardes, qui disparaissent à leur rotation.
 
 ## 2. Durées
 
 | Données | Durée | Mise en œuvre |
 |---|---|---|
-| Demandes reçues par le site (sans suite) | [365] jours | `SITE_RETENTION_DAYS`, purge quotidienne (`nhill-site-purge.timer`) |
-| Empreinte IP des formulaires | [30] jours | `SITE_IP_RETENTION_DAYS` |
-| Compteurs anti-abus du site | 2 jours | purge quotidienne |
-| Consentement à la prospection | jusqu'au retrait ; preuve du retrait [3] ans | modèle 16 ; `cli unsubscribe` |
-| Données d'un établissement (clients, ventes, stock…) | durée du contrat + [90] jours de réversibilité | export par le client ; suppression par l'exploitation |
-| Pièces comptables de l'établissement | 10 ans **à la charge de l'établissement** (il exporte ses données) | export CSV/PDF |
-| Factures d'abonnement émises par l'Éditeur | 10 ans | comptabilité de l'Éditeur |
-| Comptes utilisateurs inactifs | [24] mois sans connexion → avertissement puis suppression [À DÉCIDER] | procédure manuelle |
-| Journal d'audit et de sécurité | [12] mois minimum, [5] ans maximum **[À VALIDER : V-07]** | — |
-| Demandes d'assistance | [24] mois après clôture | — |
-| Sauvegardes de la base | rotation : [7] quotidiennes, [4] hebdomadaires, [12] mensuelles | `deploy/backup/` |
-| Journaux techniques du serveur | [30] jours | configuration de journald |
+| Demandes reçues par le site | 12 mois après l'envoi | `SITE_RETENTION_DAYS=365`, purge quotidienne (`nhill-site-purge.timer`) |
+| Empreinte de l'adresse IP des formulaires | 30 jours | `SITE_IP_RETENTION_DAYS=30`, même purge |
+| Compteurs anti-abus du site | 2 jours | même purge |
+| Accord pour recevoir des nouvelles | jusqu'au retrait, au plus tard jusqu'à la suppression de la demande | `python3 -m nhill_site.cli unsubscribe --email …` ; registre (document 16) pour les accords recueillis hors du site |
+| Données d'un établissement (comptes, clients, produits, documents, stock, paiements, journal d'activité, demandes d'assistance) | durée du contrat, puis 90 jours d'export en lecture seule | suppression définitive par la console d'administration, possible seulement après ces 90 jours (article 3) |
+| Pièces comptables de l'établissement | 10 ans, **à la charge de l'établissement** | export CSV et PDF, archive complète des données |
+| Factures d'abonnement émises par Nhill Solution | 10 ans | comptabilité de Nhill Solution |
+| Journal d'administration de la plateforme (actions de l'équipe) | durée d'exploitation de la plateforme ; entrées liées à un établissement supprimées avec lui | journal en ajout seul |
+| Sauvegardes chiffrées de la base | 14 jours sur le serveur | `NH_BACKUP_KEEP_DAYS=14` (`/etc/nhill/backup.env`) |
+| Copies du serveur par l'hébergeur | selon le cycle de l'hébergeur (2 copies hebdomadaires par défaut) | panneau Hostinger |
+| Copie externe des sauvegardes (si elle est mise en place) | durée choisie à sa mise en place, inscrite au registre (document 18) | `NH_BACKUP_OFFSITE_CMD` |
+| Journaux techniques du serveur | 90 jours au plus | journald `MaxRetentionSec=90day` ; journaux de Caddy `roll_keep_for 2160h` |
 
 ## 3. Suppression à la fin du contrat
 
-1. Fin de l'abonnement → établissement en lecture seule ; le propriétaire est invité à
-   exporter ses données.
-2. J+[90] → suppression des données de l'établissement de la base de production ;
-   enregistrement de la suppression (date, opérateur) dans le registre.
-3. J+[90] + durée de rotation des sauvegardes → les données ont disparu des sauvegardes.
-4. Sur demande, attestation écrite de suppression.
+1. Fin de l'abonnement ou de l'essai, puis période de grâce éventuelle → l'établissement
+   passe en lecture seule ; le titulaire est invité à exporter ses données.
+2. 90 jours après la fin de l'accès complet → l'équipe supprime définitivement
+   l'établissement depuis la console d'administration ; la suppression (date, auteur) est
+   inscrite au journal d'administration.
+3. 14 jours plus tard → les données ont disparu des sauvegardes conservées sur le serveur ;
+   elles disparaissent des copies de l'hébergeur et de la copie externe à leur rotation.
+4. Sur demande, Nhill Solution confirme la suppression par écrit.
 
 ## 4. Demandes d'effacement
 
-Traitées selon le modèle 19, sous [30] jours, sauf obligation légale de conservation (dans
-ce cas : conservation limitée, accès restreint, et information de la personne).
+Traitées selon le document 19, dans un délai d'un mois, sauf obligation légale de
+conservation (dans ce cas : conservation limitée, accès restreint, information de la
+personne).
 
 ## 5. Revue
 
 Cette politique est revue une fois par an et à chaque nouveau traitement (registre,
-modèle 18).
+document 18).

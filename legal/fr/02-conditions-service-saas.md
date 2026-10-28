@@ -1,140 +1,143 @@
-# 02 — Conditions de service SaaS (contrat d'abonnement)
+# 02 — Conditions de service (abonnement d'un établissement)
 
 *English: [../en/02-saas-terms-of-service.md](../en/02-saas-terms-of-service.md)*
 
-> **MODÈLE — NE PAS SIGNER EN L'ÉTAT.** À compléter et à faire valider par un avocat
-> (droit congolais et OHADA) et, pour la fiscalité, par un fiscaliste.
-
 | Cartouche | |
 |---|---|
-| Juridiction | RDC ; Actes uniformes OHADA (droit commercial général) |
-| Hypothèses | H-01, H-02, H-03, H-09, H-10, H-11, H-14, H-17 |
-| Sources | S01 (art. 48 à 72), S08, S09, S10, S14 — voir [00-recherche-juridique.md](00-recherche-juridique.md) § 7 |
-| Clauses à valider | V-01, V-02, V-03, V-04, V-10, V-12 |
-| Annexes | A : offre et prix · B : accord de traitement des données (modèle 06) · C : engagement de niveau de service (modèle 07, optionnel) · D : politique d'utilisation acceptable (modèle 08) |
-| Version | [NUMÉRO] du [DATE] |
+| Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
+| Version | 3.0.0 — 28 octobre 2026 |
+| Statut | rédigé sans relecture par un avocat ni par un fiscaliste ; points de relecture recommandés : V-01, V-02, V-03, V-04, V-10, V-12 ([00](00-recherche-juridique.md) § 5) |
+| Hypothèses | H-01, H-02, H-03, H-09, H-10, H-11, H-14, H-17, H-20 ([00](00-recherche-juridique.md) § 2) |
+| Documents contractuels | 1. la proposition écrite acceptée par le Client (offre, plafonds, durée, prix, devise, moyens de paiement, période de grâce) ; 2. les présentes conditions ; 3. l'accord de traitement des données (document 06) ; 4. l'engagement de service (document 07) ; 5. la politique d'utilisation acceptable (document 08). En cas de contradiction, ils prévalent dans cet ordre |
 
-## Entre
+## Parties
 
-**[RAISON SOCIALE]**, [FORME JURIDIQUE], RCCM [RCCM], Id. Nat. [ID. NAT.], NIF [NIF], siège
-[ADRESSE], représentée par [NOM, FONCTION] (« l'Éditeur ») ;
+Les présentes conditions lient **Nhill Solution**, dont le siège est à Kinshasa
+(République démocratique du Congo), ci-après « l'Éditeur », et l'établissement identifié
+dans la proposition écrite qu'il accepte ou dans son compte Nhill, ci-après « le Client ».
 
-et **[NOM DE L'ÉTABLISSEMENT]**, [FORME], RCCM [RCCM ou « non immatriculé »], NIF [NIF],
-siège [ADRESSE], représenté par [NOM, FONCTION] (« le Client »).
-
-Lorsque l'abonnement est souscrit en ligne, l'acceptation électronique des présentes par le
-propriétaire du compte de l'établissement vaut signature. **[À VALIDER : preuve de
-l'acceptation électronique au regard du Code du numérique.]**
+Le Client les accepte en acceptant par écrit la proposition de l'Éditeur (signature, ou
+réponse par e-mail depuis l'adresse du titulaire) ou, pour une offre souscrite dans
+l'application, en confirmant sa commande dans l'application.
 
 ## 1. Objet
 
-L'Éditeur fournit au Client un accès, par Internet, au logiciel de gestion commerciale
-Nhill (Nhill Business, Nhill POS selon l'offre) hébergé par l'Éditeur ou ses
-sous-traitants, ainsi que l'assistance décrite à l'article 7.
+L'Éditeur fournit au Client un accès, par Internet, au logiciel de gestion commerciale et
+de caisse Nhill (Nhill Business et, selon l'offre, Nhill POS), hébergé par l'Éditeur et
+ses sous-traitants, ainsi que l'accompagnement et l'assistance décrits aux articles 7 et 8.
 
-## 2. Durée
+## 2. Essai et durée
 
-2.1 **Essai** : [30] jours gratuits, une fois par établissement, sans moyen de paiement.
+2.1 **Essai gratuit accompagné** : 30 jours, une fois par établissement, sans moyen de
+paiement ni engagement (document 09).
 
-2.2 **Abonnement** : durée choisie par le Client parmi celles proposées (par exemple 1, 3,
-6, 12 mois), renouvelée [par décision expresse du Client / tacitement pour une durée
-identique] **[À CHOISIR]**. La nouvelle période commence à la fin de la période en cours.
+2.2 **Abonnement** : pour la durée indiquée dans la proposition acceptée ou choisie dans
+l'application. La nouvelle période commence à la fin de la période en cours.
+
+2.3 **Renouvellement** : l'abonnement se renouvelle automatiquement seulement si le
+titulaire de l'établissement l'a expressément accepté dans l'application, lorsque la
+formule le permet ; il peut retirer cet accord à tout moment. Sans cet accord,
+l'abonnement prend fin à son échéance et le Client renouvelle en payant une nouvelle
+période. Des rappels sont envoyés avant l'échéance.
 
 ## 3. Offres, prix et paiement
 
-3.1 Les offres, plafonds (utilisateurs, caisses, dépôts) et prix par durée et par devise
-sont indiqués en Annexe A et dans l'application au moment de la commande. Le prix
-applicable est celui affiché et confirmé dans le récapitulatif calculé par le serveur.
+3.1 Aucun prix n'est publié. L'offre (formule, fonctions, plafonds d'utilisateurs, de
+caisses et de dépôts), la durée, le prix, la devise et les moyens de paiement sont ceux de
+la proposition acceptée par le Client ou du récapitulatif calculé par le serveur et
+confirmé dans l'application.
 
-3.2 Les prix sont exprimés en [USD / CDF] [hors taxes]. **[À VALIDER : V-03 — paiement
-en CDF d'un prix fixé en USD ; taux appliqué ; TVA applicable à l'abonnement.]**
+3.2 Un paiement est considéré comme reçu lorsqu'il est confirmé par le prestataire de
+paiement (notification vérifiée par le serveur) ou enregistré par l'Éditeur après
+réception des fonds. Les droits du Client changent à ce moment seulement.
 
-3.3 Moyens de paiement : [virement, Mobile Money (préciser opérateurs), carte, PayPal]. Un
-paiement n'est considéré reçu qu'après confirmation par l'Éditeur. Une demande non payée
-expire après 48 heures.
+3.3 **Changement d'offre** : le passage à une offre supérieure prend effet dès le
+paiement ; le passage à une offre inférieure prend effet à la fin de la période en cours.
 
-3.4 **Changement d'offre** : passage à une offre supérieure immédiat, avec déduction de la
-partie non utilisée de la période en cours ; passage à une offre inférieure à la fin de la
-période.
-
-3.5 **Facturation** : l'Éditeur émet une facture pour chaque paiement
-[selon les règles de la facture normalisée s'il y est assujetti] **[À VALIDER :
-fiscaliste]**.
+3.4 **Facturation** : l'Éditeur remet au Client une facture pour chaque paiement.
 
 ## 4. Défaut de paiement
 
-Faute de paiement à l'échéance, le Client bénéficie d'une période de grâce de [7] jours.
-Ensuite, l'établissement passe en **lecture seule** : consultation et export restent
-possibles, les écritures sont suspendues jusqu'au paiement. **[À VALIDER : V-04 — mise en
-demeure préalable.]**
+Si le paiement n'est pas reçu à l'échéance, le Service reste entièrement disponible
+pendant la période de grâce indiquée dans la proposition ou dans l'application. Ensuite,
+l'établissement passe en **lecture seule** : ses données restent consultables et
+exportables, mais ne peuvent plus être modifiées jusqu'au paiement.
 
 ## 5. Obligations de l'Éditeur
 
 5.1 Fournir le Service avec diligence, conformément à sa documentation.
 
-5.2 Isoler les données de chaque établissement, protéger le Service par des mesures de
-sécurité raisonnables (chiffrement des échanges, contrôle d'accès, journal d'audit,
-sauvegardes chiffrées), décrites au modèle 13. Aucune mesure ne garantit l'absence totale
-de vulnérabilité.
+5.2 Séparer les données de chaque établissement de celles des autres et protéger le
+Service par des mesures de sécurité raisonnables (échanges chiffrés, contrôle d'accès,
+journal d'activité, sauvegardes chiffrées), résumées dans le document 13. Aucune mesure ne
+garantit l'absence totale de vulnérabilité.
 
-5.3 Informer le Client des maintenances programmées au moins [48] heures à l'avance.
+5.3 Annoncer à l'avance les maintenances programmées lorsque c'est possible.
 
-5.4 Traiter les données du Client conformément à l'accord de traitement (Annexe B).
+5.4 Traiter les données du Client conformément à l'accord de traitement (document 06).
 
 ## 6. Obligations du Client
 
-6.1 Utiliser le Service conformément aux CGU (modèle 01) et à la politique d'utilisation
-acceptable (Annexe D).
+6.1 Utiliser le Service conformément aux CGU (document 01) et à la politique
+d'utilisation acceptable (document 08).
 
 6.2 Créer un compte personnel pour chaque utilisateur, attribuer les rôles appropriés,
 retirer l'accès des personnes qui quittent l'établissement.
 
-6.3 Informer son personnel de l'existence du journal d'activité (modèle 17).
+6.3 Informer son personnel de l'existence du journal d'activité (modèle de note :
+document 17).
 
-6.4 Vérifier les paramètres fiscaux (taux, mentions) et respecter ses obligations fiscales.
-**Nhill n'est pas un système de facturation homologué par la DGI** : le Client assujetti à
-la TVA émet ses factures normalisées par un dispositif homologué. **[À VALIDER : V-12.]**
+6.4 Vérifier les paramètres fiscaux (taux, mentions) et respecter ses obligations fiscales
+et comptables. **Nhill n'est pas un dispositif de facturation agréé ou normalisé par une
+administration fiscale** : le Client qui y est tenu utilise un dispositif fiscal agréé.
 
-6.5 Disposer d'un accès Internet et de postes compatibles (voir le guide d'installation).
+6.5 Disposer d'un accès Internet et d'appareils compatibles (guide d'installation).
 
-## 7. Assistance
+## 7. Accompagnement
 
-Assistance par le menu « Aide et assistance » de l'application et par e-mail à
-support@nhill.online, aux heures [JOURS ET HORAIRES, fuseau de Kinshasa]. Délais cibles : modèle
-07 s'il est souscrit, sinon meilleurs efforts.
+La mise en route (démonstration, installation, import du catalogue, formation des
+utilisateurs) est assurée pendant l'essai accompagné ; un accompagnement complémentaire
+peut figurer dans la proposition.
 
-## 8. Données du Client
+## 8. Assistance
 
-8.1 Le Client reste propriétaire de ses données. L'Éditeur agit comme sous-traitant
-(Annexe B).
+Assistance par le menu « Aide et assistance » des applications et par e-mail à
+support@nhill.online. L'Éditeur traite les demandes par ordre de gravité, en priorité
+celles qui empêchent de vendre ou d'encaisser ; aucun délai de réponse chiffré n'est
+garanti (document 07).
 
-8.2 **Réversibilité** : à tout moment, le Client peut exporter ses données (CSV, PDF). À la
-fin du contrat, les données restent accessibles en lecture et export pendant [90] jours,
-puis sont supprimées, sauvegardes comprises dans un délai de [35] jours supplémentaires,
-sauf obligation légale de conservation à la charge de l'Éditeur. Le Client conserve
-lui-même ses pièces comptables pendant la durée légale (10 ans en droit OHADA).
+## 9. Données du Client
 
-8.3 Statistiques d'exploitation : l'Éditeur consulte des chiffres agrégés par
+9.1 Le Client reste propriétaire de ses données. L'Éditeur agit comme sous-traitant
+(document 06).
+
+9.2 **Export et réversibilité** : le Client peut exporter ses données à tout moment, y
+compris en lecture seule, et le titulaire peut télécharger l'archive complète des données
+de l'établissement. À la fin du contrat, les données restent accessibles en lecture et en
+export pendant 90 jours, puis sont supprimées, sauf obligation légale de conservation ;
+les copies de sauvegarde disparaissent ensuite à leur rotation (document 15). Le Client
+conserve lui-même ses pièces comptables pendant la durée légale (10 ans en droit OHADA).
+
+9.3 **Statistiques d'exploitation** : l'Éditeur consulte des chiffres globaux par
 établissement (nombre de documents, volumes par devise, utilisateurs actifs) pour exploiter
-et améliorer le Service ; chaque consultation est inscrite au journal du Client.
-
-## 9. Propriété intellectuelle
-
-L'Éditeur concède au Client, pour la durée de l'abonnement, un droit d'utilisation non
-exclusif et non transférable du Service et des applications (modèle 12), limité aux
-besoins internes du Client et aux plafonds de son offre.
+le Service et assurer l'assistance ; chaque consultation est inscrite au journal
+d'activité du Client.
 
 ## 10. Responsabilité
 
-10.1 Chaque partie répond des dommages directs causés par sa faute prouvée.
+10.1 L'Éditeur est tenu d'une obligation de moyens. Chaque partie répond des dommages
+directs prouvés causés par sa faute.
 
-10.2 L'Éditeur n'est pas responsable des dommages indirects (perte de chiffre d'affaires,
-de clientèle), ni des conséquences d'une erreur de paramétrage par le Client, ni des
-coupures d'électricité ou d'Internet chez le Client.
+10.2 L'Éditeur ne répond pas des dommages indirects, tels qu'un manque à gagner, une perte
+de clientèle ou une atteinte à l'image, ni des conséquences d'une saisie erronée, d'un
+paramétrage fait par le Client, d'un document émis par le Client ou d'un manquement de
+celui-ci à ses obligations fiscales, ni des coupures d'électricité ou d'Internet chez le
+Client.
 
-10.3 La responsabilité totale de l'Éditeur est limitée aux sommes payées par le Client au
-cours des 12 mois précédant le fait générateur, sauf faute lourde ou dolosive. **[À
-VALIDER : V-01.]**
+10.3 La responsabilité totale de l'Éditeur est limitée aux sommes payées par le Client
+au titre du Service pendant les 12 mois précédant le fait à l'origine du dommage. Ces
+limites ne s'appliquent pas en cas de faute lourde ou intentionnelle, de dommage
+corporel, ni lorsqu'une règle impérative applicable les interdit.
 
 ## 11. Force majeure
 
@@ -142,49 +145,38 @@ Aucune partie n'est responsable d'un manquement dû à un événement de force m
 du droit applicable (notamment troubles graves, catastrophe, coupure généralisée des
 réseaux). La partie empêchée informe l'autre sans délai.
 
-## 12. Résiliation
+## 12. Fin du contrat
 
-12.1 Le Client peut mettre fin au renouvellement à tout moment depuis l'application ;
-l'abonnement court jusqu'à la fin de la période payée. **[À VALIDER : V-10 —
-remboursement / rétractation pour un entrepreneur individuel.]**
+12.1 Le Client peut mettre fin à son abonnement selon la proposition acceptée ; en
+l'absence de renouvellement automatique accepté, l'abonnement prend fin à son échéance.
 
-12.2 Chaque partie peut résilier en cas de manquement grave de l'autre non réparé dans les
-[30] jours d'une mise en demeure.
+12.2 L'Éditeur peut suspendre un accès en cas d'usage contraire à la loi ou aux présentes
+conditions, après avertissement sauf urgence (sécurité, fraude, demande d'une autorité).
+Chaque partie peut mettre fin au contrat en cas de manquement grave de l'autre resté sans
+effet après une mise en demeure écrite.
 
-12.3 Les articles 8 (réversibilité), 10 et 13 survivent à la fin du contrat.
+12.3 Les articles 9 (données), 10 (responsabilité) et 13 (confidentialité) continuent de
+s'appliquer après la fin du contrat.
 
 ## 13. Confidentialité
 
 Chaque partie garde confidentielles les informations non publiques de l'autre, pendant le
-contrat et [3] ans après.
+contrat et aussi longtemps qu'elles ne sont pas devenues publiques sans faute de sa part.
 
 ## 14. Sous-traitance
 
-L'Éditeur peut recourir à des sous-traitants (hébergement : [HÉBERGEUR, PAYS]) dans les
-conditions de l'Annexe B.
+L'Éditeur fait héberger le Service par Hostinger International Ltd (Chypre), sur un
+serveur situé en France, dans les conditions du document 06.
 
-## 15. Loi applicable et litiges
+## 15. Modifications
 
-Droit de la République démocratique du Congo et Actes uniformes OHADA. Tentative de
-règlement amiable de [30] jours, puis [tribunal de commerce de Kinshasa/Gombe / arbitrage
-selon le Règlement d'arbitrage de la CCJA, siège Kinshasa, langue française] **[À
-VALIDER : V-02]**.
+L'Éditeur peut modifier les présentes conditions. Les modifications importantes sont
+annoncées au Client avant leur entrée en vigueur ; elles ne s'appliquent à une période déjà
+payée qu'avec son accord, sauf si une obligation légale les impose.
 
-## Signatures
+## 16. Loi applicable et litiges
 
-Fait à [VILLE], le [DATE], en deux exemplaires.
-
-| Pour l'Éditeur | Pour le Client |
-|---|---|
-| [NOM, FONCTION] | [NOM, FONCTION] |
-
----
-
-### Annexe A — Offre et prix
-
-| Offre | Utilisateurs | Caisses POS | Dépôts | Durée | Prix | Devise |
-|---|---|---|---|---|---|---|
-| [NOM] | [N] | [N] | [N] | [MOIS] | [MONTANT] | [USD/CDF] |
-
-Aucun prix n'est préconfiguré dans Nhill : les prix sont saisis par l'Éditeur dans Nhill
-Console et doivent correspondre à cette annexe.
+Les présentes conditions sont régies par le droit de la République démocratique du Congo,
+y compris les Actes uniformes OHADA. En cas de différend, les parties recherchent d'abord
+une solution amiable ; à défaut, les juridictions compétentes de Kinshasa sont saisies.
+Ces choix ne privent pas le Client de la protection des règles impératives de son pays.

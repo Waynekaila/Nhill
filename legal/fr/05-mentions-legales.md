@@ -2,47 +2,49 @@
 
 *English: [../en/05-legal-notice.md](../en/05-legal-notice.md)*
 
-> **MODÈLE — NE PAS PUBLIER EN L'ÉTAT.** Toutes les informations entre crochets doivent être
-> réelles et vérifiées ; aucune ne doit être inventée.
-
 | Cartouche | |
 |---|---|
-| Juridiction | RDC — Code du numérique (informations à fournir par le prestataire en ligne, art. 48 et suivants) ; OHADA (identification des commerçants) |
-| Hypothèses | H-01, H-12 |
-| Sources | S01, S14 — voir [00-recherche-juridique.md](00-recherche-juridique.md) § 7 |
-| Clauses à valider | liste exacte des mentions obligatoires |
-| Version | [NUMÉRO] du [DATE] |
+| Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
+| Version | 3.0.0 — 28 octobre 2026 |
+| Statut | rédigé sans relecture par un avocat ; liste des mentions obligatoires à faire confirmer (Code du numérique, art. 48 et suivants) |
+| Hypothèses | H-01, H-07, H-12 ([00](00-recherche-juridique.md) § 2) |
+| Publication | page « Mentions légales » du site (`website/src/pages/fr/mentions-legales.html`), identique sur le fond |
 
-## Éditeur du site
+## Éditeur
 
 | | |
 |---|---|
 | Nom commercial | Nhill Solution |
 | Siège | Kinshasa, République démocratique du Congo |
-| E-mail | info@nhill.online |
-| Assistance aux clients | support@nhill.online |
 | Directeur de la publication | Wayne TSHINGI, fondateur |
-| Autorisation / déclaration d'activité numérique | [RÉFÉRENCE, si applicable — voir H-07] |
+| Contact | info@nhill.online |
+| Assistance aux clients | support@nhill.online |
 
 ## Hébergement
 
 | | |
 |---|---|
-| Site vitrine | [HÉBERGEUR], [ADRESSE], [PAYS], [CONTACT] |
-| Service Nhill (API et base de données) | Hostinger International Ltd, 61 Lordou Vironos str., 6023 Larnaca, Chypre — serveur privé virtuel situé en France (Union européenne) |
+| Service Nhill (serveur et base de données) | Hostinger International Ltd, 61 Lordou Vironos str., 6023 Larnaca, Chypre — serveur situé en France (Union européenne) |
 
 ## Propriété intellectuelle
 
-« Nhill » et son logo sont [des marques déposées sous le n° [N°] / des signes dont le dépôt
-est en cours] **[À VALIDER : H-12]**. Les textes, visuels et captures d'écran du site sont
-la propriété de l'Éditeur, sauf mention contraire. Polices IBM Plex : licence SIL Open Font
-License 1.1.
+Le logiciel Nhill, le nom, les logos et les contenus du site sont protégés. Toute
+reproduction sans autorisation écrite est interdite. Les polices IBM Plex sont utilisées
+sous licence SIL Open Font License 1.1. Les captures d'écran montrent l'application réelle
+avec des données de démonstration.
 
-## Données personnelles
+## Données personnelles et cookies
 
 Voir la [politique de confidentialité](03-politique-confidentialite.md). Le site ne dépose
-aucun cookie (voir la [politique cookies](04-politique-cookies.md)).
+aucun cookie (voir la [politique relative aux cookies](04-politique-cookies.md)).
 
-## Signalement
+## Signalements
 
-Contenu illicite ou vulnérabilité de sécurité : support@nhill.online (objet « Signalement »).
+Contenu illicite, faille de sécurité ou usage abusif du service : support@nhill.online,
+objet « Signalement ».
+
+## Mention importante
+
+Nhill est un logiciel de gestion commerciale. Il n'est pas un dispositif de facturation
+agréé ou normalisé par une administration fiscale, notamment par la Direction générale des
+impôts de la RDC.

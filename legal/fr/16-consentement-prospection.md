@@ -1,58 +1,59 @@
-# 16 — Formulaire et registre de consentement à la prospection
+# 16 — Formulaire et registre d'accord pour recevoir des nouvelles
 
 *English: [../en/16-marketing-consent.md](../en/16-marketing-consent.md)*
 
-> **MODÈLE — À FAIRE VALIDER.** Pour toute collecte de contacts en vue d'envois commerciaux
-> (salon, porte-à-porte, WhatsApp, formulaire du site, partenaires).
-
 | Cartouche | |
 |---|---|
-| Juridiction | RDC — Code du numérique, art. 68 à 72 (prospection directe : consentement préalable ; le silence ne vaut pas consentement) |
-| Hypothèses | H-08 |
-| Sources | S01 — voir [00-recherche-juridique.md](00-recherche-juridique.md) § 7 |
-| Clauses à valider | V-08 (preuve, canal WhatsApp, durée de validité du consentement) |
-| Version | [NUMÉRO] du [DATE] |
+| Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
+| Version | 3.0.0 — 28 octobre 2026 |
+| Statut | rédigé sans relecture par un avocat ; point de relecture recommandé : V-08 (preuve, canal WhatsApp, durée de validité) ([00](00-recherche-juridique.md) § 5) |
+| Hypothèses | H-08 ([00](00-recherche-juridique.md) § 2) |
+| Usage | toute collecte de contacts en vue d'envois commerciaux hors du site (salon, rencontre, WhatsApp, partenaires) ; le formulaire du site enregistre l'accord automatiquement |
 
 ## 1. Règles
 
-- **Pas de case précochée**, pas de consentement déduit du silence ou d'une carte de visite
+- **Pas de case précochée**, pas d'accord déduit du silence ou d'une carte de visite
   laissée.
-- Un consentement **par canal** : e-mail, SMS, WhatsApp, appel.
-- Consentement distinct de la demande de démonstration : refuser les nouvelles n'empêche pas
+- Un accord **par canal** : e-mail, SMS, WhatsApp, appel.
+- Accord distinct de la demande de démonstration : refuser les nouvelles n'empêche pas
   d'être rappelé pour la démonstration demandée.
+- Au plus un envoi de nouvelles par mois.
 - Chaque message commercial indique l'expéditeur et un moyen simple de se désinscrire
-  (« STOP » sur WhatsApp/SMS, lien dans l'e-mail) ; la désinscription est appliquée sous
-  [48] heures.
-- Groupes et listes de diffusion WhatsApp : n'y ajouter que des personnes ayant consenti ;
-  préférer les listes de diffusion (les destinataires ne voient pas les autres numéros).
+  (« STOP » sur WhatsApp ou SMS, lien ou réponse dans l'e-mail) ; la désinscription est
+  appliquée sans attendre l'envoi suivant.
+- WhatsApp : n'ajouter que des personnes ayant donné leur accord ; préférer les listes de
+  diffusion (les destinataires ne voient pas les autres numéros).
 - Ne jamais acheter ni louer de fichier de contacts.
 
-## 2. Texte du formulaire (papier ou en ligne)
+## 2. Formulaire (papier ou en ligne)
 
 > **Recevoir des nouvelles de Nhill**
 >
-> [RAISON SOCIALE] (Nhill) souhaite vous envoyer des informations sur ses offres, ses
-> nouveautés et ses ateliers. Cochez les canaux que vous acceptez :
+> Nhill Solution souhaite vous envoyer des nouvelles de Nhill (nouveautés, ateliers,
+> offres), au plus une fois par mois. Cochez les canaux que vous acceptez :
 >
-> ☐ E-mail : ____________________  ☐ WhatsApp : ____________________  ☐ SMS
+> ☐ E-mail  ☐ WhatsApp  ☐ SMS
 >
 > Vous pouvez retirer votre accord à tout moment : répondez « STOP » ou écrivez à
-> info@nhill.online. Vos coordonnées ne sont pas transmises à des tiers. Détails : politique de
-> confidentialité, [ADRESSE].
->
-> Nom : ____________ Organisation : ____________ Date : ________ Signature : ________
+> info@nhill.online. Vos coordonnées ne sont transmises à aucun annonceur. Détails :
+> politique de confidentialité, nhill.online.
 
-## 3. Registre des consentements
+| Nom et prénom | Organisation | E-mail | Numéro WhatsApp ou SMS | Date | Signature |
+|---|---|---|---|---|---|
+| | | | | | |
 
-| Date et heure | Personne (nom, organisation) | Canal | Coordonnée | Texte présenté (version) | Source (site, salon, partenaire, appel) | Preuve (formulaire n°, capture, journal) | Retrait (date, moyen) |
+## 3. Registre des accords
+
+Les accords recueillis hors du site sont inscrits le jour même dans le registre, avec les
+colonnes suivantes :
+
+| Date et heure | Personne (nom, organisation) | Canal | Coordonnée | Texte présenté (version) | Source (salon, rencontre, partenaire, appel) | Preuve (formulaire, capture, message) | Retrait (date, moyen) |
 |---|---|---|---|---|---|---|---|
-| | | | | | | | |
 
 Le formulaire du site enregistre automatiquement la date, le choix et la version de la
-politique (`consent_marketing`, base du site). Les consentements recueillis hors ligne sont
-saisis dans ce registre le jour même.
+politique (colonne `consent_marketing` de la base du site).
 
 ## 4. Partenaires
 
-Un partenaire ne transmet que des contacts ayant consenti à être contactés par Nhill
-(modèle 10, article 8), avec la preuve correspondante.
+Un partenaire ne transmet que des contacts ayant accepté d'être contactés par Nhill
+Solution (document 10, article 6), avec la preuve correspondante.

@@ -44,9 +44,9 @@ legal/fr/03-politique-confidentialite.md -> legal/pdf/fr/03-politique-confidenti
 legal/fr/04-politique-cookies.md -> legal/pdf/fr/04-politique-cookies.pdf
 legal/fr/05-mentions-legales.md -> legal/pdf/fr/05-mentions-legales.pdf
 legal/fr/06-accord-traitement-donnees.md -> legal/pdf/fr/06-accord-traitement-donnees.pdf
-legal/fr/07-engagement-niveau-service.md -> legal/pdf/fr/07-engagement-niveau-service.pdf
+legal/fr/07-engagement-de-service.md -> legal/pdf/fr/07-engagement-de-service.pdf
 legal/fr/08-politique-utilisation-acceptable.md -> legal/pdf/fr/08-politique-utilisation-acceptable.pdf
-legal/fr/09-convention-programme-pilote.md -> legal/pdf/fr/09-convention-programme-pilote.pdf
+legal/fr/09-conditions-essai-accompagne.md -> legal/pdf/fr/09-conditions-essai-accompagne.pdf
 legal/fr/10-contrat-partenariat.md -> legal/pdf/fr/10-contrat-partenariat.pdf
 legal/fr/11-accord-confidentialite.md -> legal/pdf/fr/11-accord-confidentialite.pdf
 legal/fr/12-licence-applications.md -> legal/pdf/fr/12-licence-applications.pdf
@@ -66,9 +66,9 @@ legal/en/03-privacy-policy.md -> legal/pdf/en/03-privacy-policy.pdf
 legal/en/04-cookie-policy.md -> legal/pdf/en/04-cookie-policy.pdf
 legal/en/05-legal-notice.md -> legal/pdf/en/05-legal-notice.pdf
 legal/en/06-data-processing-agreement.md -> legal/pdf/en/06-data-processing-agreement.pdf
-legal/en/07-service-level-agreement.md -> legal/pdf/en/07-service-level-agreement.pdf
+legal/en/07-service-commitment.md -> legal/pdf/en/07-service-commitment.pdf
 legal/en/08-acceptable-use-policy.md -> legal/pdf/en/08-acceptable-use-policy.pdf
-legal/en/09-pilot-programme-agreement.md -> legal/pdf/en/09-pilot-programme-agreement.pdf
+legal/en/09-assisted-trial-terms.md -> legal/pdf/en/09-assisted-trial-terms.pdf
 legal/en/10-partnership-agreement.md -> legal/pdf/en/10-partnership-agreement.pdf
 legal/en/11-non-disclosure-agreement.md -> legal/pdf/en/11-non-disclosure-agreement.pdf
 legal/en/12-application-licence.md -> legal/pdf/en/12-application-licence.pdf

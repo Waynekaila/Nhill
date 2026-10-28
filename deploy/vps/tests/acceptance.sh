@@ -64,9 +64,12 @@ last="$(ls -1t /var/backups/nhill/archives/nhill-*.dump.age | head -1)"
 head -c 21 "$last" | grep -q 'age-encryption.org/v1' || fail "backup not encrypted"
 ! grep -aq 'nhill_owner' "$last" || fail "backup readable in clear"
 off="$(mktemp -d /tmp/offsite-XXXX)"; cp "$last" "$last.sha256" "$off/"; cp "$IDENTITY" "$off/key.txt"
+# The copy shipped in the package (the checkout is not readable by "nobody").
+rt=/usr/share/nhill/vps/nhill-restore-test.sh; [[ -f $rt ]] || rt="$HERE/nhill-restore-test.sh"
+cp "$rt" "$off/restore-test.sh"
 chmod 755 "$off"; chmod 644 "$off"/*; chown -R nobody "$off"
 # shellcheck disable=SC2024  # run as root: the output file is written by root
-sudo -u nobody env TMPDIR="$off" bash "$HERE/nhill-restore-test.sh" "$off/$(basename "$last")" "$off/key.txt" >/tmp/restore.txt 2>&1 \
+sudo -u nobody env TMPDIR="$off" bash "$off/restore-test.sh" "$off/$(basename "$last")" "$off/key.txt" >/tmp/restore.txt 2>&1 \
   || { cat /tmp/restore.txt; fail "restore test"; }
 grep -q 'RESTORE TEST PASSED' /tmp/restore.txt || fail "restore test verdict"
 rm -rf "$off"

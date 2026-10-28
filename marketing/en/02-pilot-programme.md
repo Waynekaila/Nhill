@@ -4,7 +4,7 @@
 
 Goal: confirm, with **8 to 12 real businesses**, that Nhill solves a problem they are
 willing to pay for, and set prices from measurements, not assumptions. Agreement:
-[`legal/en/09-pilot-programme-agreement.md`](../../legal/en/09-pilot-programme-agreement.md).
+[`legal/en/09-assisted-trial-terms.md`](../../legal/en/09-assisted-trial-terms.md).
 Public page: `website/src/pages/en/free-trial.html` ("Free assisted trial").
 
 ## 1. Offer to pilots (same as the website)

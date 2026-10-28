@@ -2,15 +2,13 @@
 
 *English: [../en/14-data-breach-procedure.md](../en/14-data-breach-procedure.md)*
 
-> **MODÈLE — DOCUMENT INTERNE.** À adapter à l'équipe réelle ; délais légaux à confirmer.
-
 | Cartouche | |
 |---|---|
-| Juridiction | RDC — Code du numérique, Livre III (sécurité, notification) |
-| Hypothèses | H-03, H-05 (autorité compétente), H-15 (délai de 72 heures, source secondaire) |
-| Sources | S01, S16 — voir [00-recherche-juridique.md](00-recherche-juridique.md) § 7 |
-| Clauses à valider | V-06 (délai et contenu de la notification) |
-| Version | [NUMÉRO] du [DATE] |
+| Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
+| Version | 3.0.0 — 28 octobre 2026 |
+| Statut | document interne ; rédigé sans relecture par un avocat ; délai et contenu de la notification à l'autorité à confirmer (V-06, [00](00-recherche-juridique.md) § 5) |
+| Hypothèses | H-03, H-05, H-15, H-19 ([00](00-recherche-juridique.md) § 2) |
+| Référence | droit de la RDC (Code du numérique, Livre III) ; le délai de 72 heures du RGPD est retenu comme référence de bonne pratique |
 
 ## 1. Définition
 
@@ -21,43 +19,44 @@ sauvegarde perdue, envoi à un mauvais destinataire, rançongiciel).
 
 ## 2. Rôles
 
-| Rôle | Personne | Suppléant |
-|---|---|---|
-| Responsable de l'incident | [NOM] | [NOM] |
-| Délégué à la protection des données | [NOM] | — |
-| Technique (serveur, base) | [NOM] | [NOM] |
-| Communication clients | [NOM] | [NOM] |
-| Conseil juridique | [CABINET] | — |
+Les rôles sont tenus par des personnes désignées par la direction de Nhill Solution ; la
+liste nominative à jour (titulaire et suppléant de chaque rôle) est conservée avec le
+registre des incidents.
+
+| Rôle | Mission |
+|---|---|
+| Responsable de l'incident | décide, coordonne, tient le registre ; par défaut, la direction |
+| Technique | contient l'incident sur le serveur et la base, conserve les traces |
+| Communication | informe les établissements et les personnes concernées |
+| Conseil juridique | qualifie la violation et la notification à l'autorité |
 
 ## 3. Étapes et délais
 
 | Délai (à partir de la détection) | Action |
 |---|---|
 | immédiat | consigner l'heure de détection dans le registre des incidents ; prévenir le responsable de l'incident |
-| < 4 h | contenir : couper l'accès compromis, révoquer les sessions (`sessions` révoquées par établissement ou globalement), changer les secrets concernés (`NH_SECRET_KEY` seulement si nécessaire : voir les conséquences dans le guide de configuration), conserver les journaux (`journalctl -u nhill-server`, journal d'audit) |
-| < 24 h | évaluer : données et personnes concernées, établissements touchés, risque pour les personnes ; **informer les établissements clients concernés** (nous sommes leur sous-traitant, modèle 06) |
-| < 72 h **[À VALIDER : V-06]** | **notifier l'autorité de protection des données** pour les traitements dont Nhill est responsable, si la violation présente un risque ; les établissements notifient pour leurs propres traitements, avec notre aide |
-| sans délai injustifié | informer les personnes concernées si le risque est élevé (langage simple : ce qui s'est passé, conséquences, mesures, conseils, contact) |
-| < 30 jours | analyse des causes, correctifs, test, compte rendu ; mise à jour de l'audit de sécurité |
+| moins de 4 heures | contenir : couper l'accès compromis, révoquer les sessions (par établissement ou globalement), changer les secrets concernés (`NH_SECRET_KEY` seulement si nécessaire : voir ses conséquences dans le guide de configuration), conserver les journaux (`journalctl -u nhill-server`, journal d'audit) |
+| moins de 24 heures | évaluer : données et personnes concernées, établissements touchés, risque pour les personnes ; **informer les établissements concernés** (Nhill Solution est leur sous-traitant, document 06) |
+| moins de 72 heures | **notifier l'autorité de protection des données compétente** pour les traitements dont Nhill Solution est responsable, si la violation présente un risque ; les établissements notifient pour leurs propres traitements, avec l'aide de Nhill Solution |
+| sans retard injustifié | informer les personnes concernées si le risque est élevé, en langage simple : ce qui s'est passé, conséquences, mesures prises, conseils, contact |
+| moins de 30 jours | analyse des causes, correctifs, test, compte rendu ; mise à jour de l'audit de sécurité |
 
 ## 4. Contenu de la notification à l'autorité
 
-Nature de la violation ; catégories et nombre approximatif de personnes et d'enregistrements ;
-coordonnées du délégué ; conséquences probables ; mesures prises ou envisagées. Si tout n'est
-pas connu, notifier ce qui l'est et compléter ensuite.
-
-Autorité : [NOM, ADRESSE, E-MAIL, FORMULAIRE — ARPTC à titre provisoire ou ARPTIC, à
-confirmer, H-05].
+Nature de la violation ; catégories et nombre approximatif de personnes et
+d'enregistrements ; contact pour obtenir des informations ; conséquences probables ;
+mesures prises ou envisagées. Si tout n'est pas connu, notifier ce qui l'est et compléter
+ensuite. L'autorité compétente et son mode de saisine sont vérifiés par le conseil
+juridique au moment de l'incident (H-05).
 
 ## 5. Registre des incidents
 
-Chaque incident, même non notifié, est consigné :
+Chaque incident, même non notifié, est consigné avec les colonnes suivantes :
 
-| Date de détection | Description | Données / personnes | Risque | Mesures | Notifié à l'autorité (date) | Personnes informées (date) | Clôture |
+| Date de détection | Description | Données et personnes | Risque | Mesures | Notification à l'autorité (date) | Information des personnes (date) | Clôture |
 |---|---|---|---|---|---|---|---|
-| | | | | | | | |
 
 ## 6. Exercice
 
-Simuler un incident [une fois par an] (par exemple : fuite d'une sauvegarde) et mesurer les
+Simuler un incident une fois par an (par exemple : perte d'une sauvegarde) et mesurer les
 délais réels.

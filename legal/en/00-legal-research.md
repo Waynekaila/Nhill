@@ -4,20 +4,19 @@
 
 | | |
 |---|---|
-| Version | 2.0.0 — 27 October 2026 |
+| Version | 3.0.0 — 28 October 2026 (2.0.0 of 27 October 2026 updated with management decisions) |
 | Main jurisdiction | Democratic Republic of the Congo (Congolese law and OHADA uniform law) |
 | Purpose | framework applicable to publishing and operating the Nhill online software (business management and point-of-sale SaaS) and its marketing website; basis of templates `01` to `19` |
-| Method | reading official texts when available online, otherwise secondary sources identified as such (legal commentary, specialised press); sources consulted on 26–27 October 2026 |
+| Method | reading official texts when available online, otherwise secondary sources identified as such (legal commentary, specialised press); sources consulted on 26–27 October 2026; management decisions of 28 October 2026 recorded in § 2 |
 | Status | **working document, not validated by a lawyer**. It is not legal advice |
 
 > **Warning.** This file was prepared without access to the DRC Official Journal and
 > without consulting a lawyer admitted to a Congolese bar. Several recent texts
 > (2024–2026) are only known through commentary or press reports; their exact scope,
-> validity and interplay must be confirmed. Nothing specific to the operating company
-> (legal form, RCCM trade-register number, national identification, tax number, address,
-> capital, managers) is known: these appear in square brackets in the templates and must
-> never be invented. French is the reference language of the templates; the English
-> versions are translations for information.
+> validity and interplay must be confirmed. The documents identify the publisher by its
+> trade name, **Nhill Solution**, and its head office, **Kinshasa**; no other identification
+> appears in them (management decision of 28 October 2026). French is the reference
+> language of the documents; the English versions are translations for information.
 
 ## 1. Executive summary
 
@@ -25,12 +24,12 @@
 |---|---|---|---|
 | Personal data | Digital Code (Ordinance-law No. 23/010 of 13 March 2023), Book III: principles, data-subject rights, security, data protection officer, prior formalities, controlled transfers outside the DRC | Nhill is **controller** for its prospects, paying customers and administrators, and **processor** for the data businesses enter | High on the framework; medium on details |
 | Supervisory authority | Data-protection authority tasks given provisionally to ARPTC (2024); press and commentary then report its replacement by a new authority, **ARPTIC** (2026) | Identify the authority **competent on the filing date** and the procedure in force | **Low: check first** |
-| Formalities and fees | Decision No. 039/ARPTC/CLG/2025 of 11 September 2025 (declaration, authorisation, transfer, fees, validity periods); its legality is disputed by commentators | Budget and timeline of the formalities; hosting outside the DRC (e.g. Supabase) a priori requires a **transfer authorisation** | Medium (secondary source), validity disputed |
+| Formalities and fees | Decision No. 039/ARPTC/CLG/2025 of 11 September 2025 (declaration, authorisation, transfer, fees, validity periods); its legality is disputed by commentators | Budget and timeline of the formalities; hosting outside the DRC (Hostinger server in France) a priori requires a **transfer authorisation** | Medium (secondary source), validity disputed |
 | Digital activities and services | Digital Code, art. 13–17 (regimes); orders No. 004 and No. 005 of 11 March 2026 (authorisation / declaration); 2026 interministerial order on fees, start-ups exempt according to the press | Determine whether Nhill's activity falls under declaration or authorisation ("application hosting") and whether the operator can be exempt | Low to medium |
 | E-commerce | Digital Code, art. 48–72: pre-contractual information, content of online offers, withdrawal, advertising, direct marketing (prior consent) | Website and terms disclosures; opt-in for commercial messages | Medium |
 | Consumer law | No adopted consumer code identified; a consumer-protection bill is under discussion; older sector texts and Law No. 18/020 of 9 July 2018 (prices and competition) | Nhill's customers are businesses: mainly B2B regime; care with sole traders | Medium |
 | Invoicing and VAT | 16 % VAT (Ordinance-law No. 10/001 of 20 August 2010); standardised invoice produced by an electronic tax device, only certified software allowed for VAT payers, penalties from 15 May 2026 according to the press | Nhill **is not certified**: management documents only; target non-VAT businesses first, or use alongside the DGI device | Medium to high |
-| Company law and accounting | DRC is an OHADA member (accession deposited on 13 July 2012); uniform acts apply (companies, general commercial law, accounting: 10-year retention) | Operator's company and trade registration to be created; document retention periods | High |
+| Commercial law and accounting | DRC is an OHADA member (accession deposited on 13 July 2012); uniform acts apply (general commercial law, accounting: 10-year retention) | Each business keeps its own accounting records for 10 years: Nhill lets it export everything | High |
 | Intellectual property | Law No. 82-001 of 7 January 1982 (industrial property, including trademarks); Ordinance-law No. 86-033 of 5 April 1986 (copyright, including software depending on its wording, to be confirmed) | Registration of the "Nhill" trademark to check (availability not checked); licence clauses | Medium |
 | Employment (activity log) | The named log of employees' actions is a processing of employee data | Staff information notice provided to businesses (template 17) | Medium |
 
@@ -41,23 +40,25 @@ reviewing the templates listed.
 
 | No. | Assumption | Templates | How to check | Status |
 |---|---|---|---|---|
-| H-01 | The operator is a company under Congolese law (OHADA form to choose: SARL, SAS, SA…) registered with the Kinshasa RCCM | all | articles of association, RCCM extract | **open** — no company identified |
+| H-01 | The publisher is identified by its trade name, Nhill Solution, and its head office in Kinshasa; no other identification is mentioned | all | management decision | **decided** on 28/10/2026 |
 | H-02 | Nhill's customers are businesses (traders, companies, associations) acting for their trade; there is no sale to consumers | 01, 02, 07, 09 | business model; lawyer: status of a sole trader | to validate |
 | H-03 | Nhill is controller for visitor, prospect, user-account and billing data, and processor for data entered by businesses | 03, 06, 15, 18 | lawyer; Digital Code, Book III | to validate |
-| H-04 | The production database may be hosted outside the DRC (Supabase, region to choose): international transfer requiring prior authorisation | 03, 06, 14, 18 | choice of host; competent authority | **open** — host and region not chosen |
+| H-04 | The production server and database are hosted outside the DRC, on a Hostinger International Ltd virtual private server located in France; the team accesses it from Kinshasa: international transfer, a priori requiring prior authorisation | 03, 06, 14, 18 | competent authority; lawyer | host **decided**; transfer regime **open** |
 | H-05 | The competent data-protection authority is ARPTC on a provisional basis, or ARPTIC if its creation and takeover of these tasks are effective | 03, 06, 14, 18, 19 | founding texts; authority's website | **open — priority** |
 | H-06 | The fees and procedures of Decision No. 039/ARPTC/CLG/2025 still apply despite challenges and the change of authority | checklist § 6 | authority; lawyer | open |
 | H-07 | Nhill's activity (online software hosted for third parties) may fall under the **authorisation** regime of orders No. 004 and 005/2026 if it is classed as application hosting; a young company could fall under declaration or an exemption | checklist § 6 | text of the orders; ministry / authority | open |
 | H-08 | Commercial prospecting by e-mail, SMS and WhatsApp requires the person's prior consent (opt-in); silence is not consent | 03, 16 | Digital Code, art. 68–72 | to validate |
 | H-09 | Documents issued by Nhill are not standardised invoices; a VAT payer must use a device or software certified by the DGI | 01, 02 | DGI; tax adviser | high, to confirm |
-| H-10 | Congolese law and the Kinshasa courts (Kinshasa/Gombe commercial court) are chosen in the contracts; OHADA CCJA arbitration is an option | 01, 02, 05, 09, 10, 11, 12 | lawyer | choice to make |
-| H-11 | Prices are set in USD and/or CDF; conversion uses the rate stated on the invoice | 02, 09 | pricing policy; Law No. 18/020; foreign-exchange rules | to validate |
+| H-10 | DRC law and the competent courts of Kinshasa, without depriving users of the mandatory rules of their country (consumer protection, personal data) | 01, 02, 09, 10, 11, 12 | lawyer (wording of the clause) | **decided** on 28/10/2026 |
+| H-11 | No price is published: plan, term, price, currency, payment methods and grace period are set in the written proposal accepted by the business | 02 | pricing policy; Law No. 18/020; foreign-exchange rules | decided (no public prices); payment currency to validate (V-03) |
 | H-12 | Availability of the name "Nhill" as a trademark and company name has not been checked | 01, 05, 12 | prior-rights search (DRC, international) | **open** |
-| H-13 | The marketing website sets no cookie and uses no third-party analytics | 04 | technical check of the site | true in 2.0.0 (checked in the code) |
-| H-14 | Business data is kept during the subscription, then 90 days after it ends to allow export, unless a legal obligation says otherwise | 02, 06, 15 | product policy; lawyer (10-year retention lies with the business) | proposal |
+| H-13 | The marketing website sets no cookie and uses no third-party analytics | 04 | technical check of the site | true in 3.0.0 (checked in the site code: no cookie, no browser storage, no third-party resource) |
+| H-14 | Business data is kept during the subscription, then 90 days after it ends to allow export, unless a legal obligation says otherwise | 02, 06, 15 | product policy; lawyer (10-year retention lies with the business) | decided (published on the 3.0.0 website) |
 | H-15 | A data breach is notified to the authority and, where needed, to individuals within the Digital Code deadlines (72 hours according to a secondary summary) | 06, 14 | official text | to confirm |
-| H-16 | The pilot programme is free, time-limited and without purchase commitment | 09 | pricing policy | proposal |
-| H-17 | Applications are provided under a non-exclusive licence tied to the subscription; the code remains the publisher's property | 01, 12 | articles / assignment of developers' rights | to validate |
+| H-16 | The assisted free trial lasts 30 days, with no payment details and no commitment; it replaces the pilot programme of version 2.0.0 | 09 | pricing policy | decided (3.0.0 website) |
+| H-17 | Applications are provided under a non-exclusive licence tied to the subscription; the code remains the publisher's property | 01, 12 | assignment of developers' rights | to validate |
+| H-19 | International positioning: the texts take European standards (in particular the GDPR) as a reference for good practice, without claiming compliance or certification | 03, 06, 13, 15, 19 | management decision | **decided** on 28/10/2026 |
+| H-20 | No numeric service level (availability rate, response time) is guaranteed; the publisher's liability is capped at the amounts paid over the 12 months before the event | 02, 07, 09, 12 | management decision; lawyer (validity of the cap, V-01) | **decided** on 28/10/2026 |
 | H-18 | Partners (referrers, integrators, trainers) are independent, paid by commission, with no power to sign on the operator's behalf | 10 | lawyer; tax adviser (withholding) | to validate |
 
 ## 3. Findings by area
@@ -146,48 +147,52 @@ reviewing the templates listed.
   staff (purpose, data, retention, rights). Template 17 provided to businesses; interplay
   with the Labour Code to validate.
 
-## 4. List of templates
+## 4. List of documents
 
-| No. | Template (FR, reference) | Template (EN) | Use |
+| No. | Document (FR, reference) | Document (EN) | Use |
 |---|---|---|---|
 | 01 | [Conditions générales d'utilisation](../fr/01-conditions-generales-utilisation.md) | [Terms of use](01-terms-of-use.md) | use of the website and applications |
-| 02 | [Conditions de service SaaS](../fr/02-conditions-service-saas.md) | [SaaS terms of service](02-saas-terms-of-service.md) | subscription contract with the business |
+| 02 | [Conditions de service](../fr/02-conditions-service-saas.md) | [Terms of service](02-saas-terms-of-service.md) | a business's subscription, with the accepted written proposal |
 | 03 | [Politique de confidentialité](../fr/03-politique-confidentialite.md) | [Privacy policy](03-privacy-policy.md) | information to individuals |
 | 04 | [Politique cookies](../fr/04-politique-cookies.md) | [Cookie policy](04-cookie-policy.md) | marketing website |
 | 05 | [Mentions légales](../fr/05-mentions-legales.md) | [Legal notice](05-legal-notice.md) | marketing website |
-| 06 | [Accord de traitement des données](../fr/06-accord-traitement-donnees.md) | [Data processing agreement](06-data-processing-agreement.md) | contract annex (processing) |
-| 07 | [Engagement de niveau de service](../fr/07-engagement-niveau-service.md) | [Service level agreement](07-service-level-agreement.md) | availability, support |
+| 06 | [Accord de traitement des données](../fr/06-accord-traitement-donnees.md) | [Data processing agreement](06-data-processing-agreement.md) | contractual document of the terms of service (processing) |
+| 07 | [Engagement de service](../fr/07-engagement-de-service.md) | [Service commitment](07-service-commitment.md) | operating and support means, without figures |
 | 08 | [Politique d'utilisation acceptable](../fr/08-politique-utilisation-acceptable.md) | [Acceptable use policy](08-acceptable-use-policy.md) | prohibited uses |
-| 09 | [Convention de programme pilote](../fr/09-convention-programme-pilote.md) | [Pilot programme agreement](09-pilot-programme-agreement.md) | supervised trial |
-| 10 | [Contrat de partenariat](../fr/10-contrat-partenariat.md) | [Partnership agreement](10-partnership-agreement.md) | referrers, integrators, trainers |
+| 09 | [Conditions de l'essai gratuit accompagné](../fr/09-conditions-essai-accompagne.md) | [Assisted free trial terms](09-assisted-trial-terms.md) | 30-day trial |
+| 10 | [Conditions générales de partenariat](../fr/10-contrat-partenariat.md) | [Partnership terms](10-partnership-agreement.md) | referral, installation, training, support of entrepreneurs |
 | 11 | [Accord de confidentialité](../fr/11-accord-confidentialite.md) | [Non-disclosure agreement](11-non-disclosure-agreement.md) | exchanges with partners, contractors |
 | 12 | [Licence des applications](../fr/12-licence-applications.md) | [Application licence](12-application-licence.md) | installed applications (Windows, Linux, Android) |
 | 13 | [Politique de sécurité](../fr/13-politique-securite.md) | [Security policy (public summary)](13-security-policy.md) | trust, tenders |
 | 14 | [Procédure de violation de données](../fr/14-procedure-violation-donnees.md) | [Data breach procedure](14-data-breach-procedure.md) | internal |
 | 15 | [Politique de conservation](../fr/15-politique-conservation.md) | [Retention and deletion policy](15-retention-policy.md) | internal and contractual |
-| 16 | [Consentement à la prospection](../fr/16-consentement-prospection.md) | [Marketing consent form and register](16-marketing-consent.md) | prospecting, WhatsApp, e-mail |
+| 16 | [Accord pour recevoir des nouvelles](../fr/16-consentement-prospection.md) | [Consent form and register for news](16-marketing-consent.md) | prospecting, WhatsApp, e-mail |
 | 17 | [Information du personnel](../fr/17-information-personnel.md) | [Staff information notice](17-staff-notice.md) | given to businesses (activity log) |
 | 18 | [Registre des traitements](../fr/18-registre-traitements.md) | [Record of processing activities](18-processing-register.md) | internal |
 | 19 | [Demande d'exercice des droits](../fr/19-demande-exercice-droits.md) | [Data subject request form](19-data-subject-request.md) | access, rectification, erasure |
 
-Every template starts with a header: jurisdiction, assumptions, sources, clauses to
-validate. Fields to complete are in square brackets `[…]`; clauses to have validated carry
-the mark **[TO VALIDATE]**.
+Every document starts with a header: version, status, assumptions, recommended review
+points. Since version 3.0.0, the body of the documents contains no field in square brackets
+and no "to validate" mark: the points to have reviewed by a lawyer are grouped in § 5.
+Items specific to each contract (identity of the other party, dates, price, commission)
+appear in the accepted written proposal or letter of agreement, not in the general terms;
+only the forms (16, 17, 19) and the agreements to sign (10, 11) have areas to be filled in
+by the signatory.
 
 ## 5. Clauses requiring legal validation
 
 | Ref. | Clause | Templates | Question for the lawyer |
 |---|---|---|---|
-| V-01 | Limitation of liability (cap = amounts paid over 12 months) | 02, 07, 12 | validity and enforceability under Congolese / OHADA law; exceptions (gross negligence, fraud) |
-| V-02 | Governing law and forum (Kinshasa) or arbitration | 01, 02, 09, 10, 11, 12 | best forum, arbitration clause |
-| V-03 | Prices in USD, payment in CDF at the day's rate | 02, 10 | foreign-exchange rules, Law 18/020 |
-| V-04 | Suspension for non-payment after a grace period, read-only mode | 02 | formal-notice periods |
-| V-05 | Transfer of data outside the DRC and safeguards | 03, 06 | prior authorisation, competent authority (H-04, H-05) |
+| V-01 | Limitation of liability (cap = amounts paid over 12 months, **decided**) | 02, 07, 09, 12 | validity and enforceability under Congolese / OHADA law; exceptions (gross negligence, fraud, personal injury) |
+| V-02 | Governing law (DRC) and Kinshasa courts (**decided**) | 01, 02, 09, 10, 11, 12 | wording of the clause; enforceability against a user established outside the DRC |
+| V-03 | Price currency and payment currency set in the written proposal | 02, 10 | foreign-exchange rules, Law 18/020 |
+| V-04 | Read-only mode after the grace period (automatic reminders before the due date) | 02 | need for a prior formal notice |
+| V-05 | Transfer of data outside the DRC (server in France) and safeguards | 03, 06, 18 | prior authorisation, competent authority (H-04, H-05) |
 | V-06 | Breach notification deadline (72 h) | 06, 14 | exact Digital Code deadline |
 | V-07 | Retention periods | 03, 15 | limitation periods, accounting obligations |
 | V-08 | Marketing consent (opt-in) and proof | 16 | art. 68–72 |
 | V-09 | Staff information about the activity log | 17 | Labour Code, staff representation |
-| V-10 | Withdrawal for sole traders | 02 | applicability of art. 61 |
+| V-10 | Withdrawal for sole traders | 01, 02 | applicability of art. 61 |
 | V-11 | Partner commission, non-compete, non-solicitation | 10 | validity, tax (withholding) |
 | V-12 | Tax disclaimer (management documents) | 01, 02 | sufficiency under the standardised-invoice reform |
 | V-13 | Appointment of a data protection officer | 03, 18 | obligation (art. 222) and thresholds |
@@ -196,19 +201,18 @@ the mark **[TO VALIDATE]**.
 
 | # | Action | Owner | Before |
 |---|---|---|---|
-| 1 | Set up the operating company (OHADA form), obtain RCCM, national identification, tax number | founders + lawyer / one-stop shop | any contract |
-| 2 | Check name availability and register the "Nhill" trademark | lawyer / IP adviser | public communication |
-| 3 | Identify the competent data-protection authority (ARPTC / ARPTIC) and the procedure in force | lawyer | filings |
-| 4 | Choose the host and region; if outside the DRC, apply for the transfer authorisation | technical lead + lawyer | production |
-| 5 | File the processing declarations / authorisations (prospects, customers, operator's staff, processing on behalf of customers) | DPO / lawyer | data collection |
-| 6 | Classify the activity under orders No. 004 and 005/2026; check eligibility for a start-up exemption | lawyer | billing subscriptions |
-| 7 | Appoint a data protection officer or document why not | management | filings |
-| 8 | Complete all `[…]` fields of templates 01 to 19 and have clauses V-01 to V-13 reviewed | lawyer | publication |
-| 9 | Validate the tax position: Nhill = management documents; operator's own invoicing (VAT, standardised invoice) | tax adviser | first payment |
-| 10 | Publish legal notice, terms, privacy policy on the website; remove the "draft" banners | management | opening the forms |
-| 11 | Set up the record of processing (template 18) and the breach procedure (template 14) | DPO | production |
-| 12 | Provide template 17 to businesses when the activity log is enabled | product team | first customers |
-| 13 | Review this file every 6 months and with every new text | DPO / lawyer | — |
+| 1 | Check name availability and register the "Nhill" trademark | lawyer / IP adviser | public communication |
+| 2 | Identify the competent data-protection authority (ARPTC / ARPTIC) and the procedure in force | lawyer | filings |
+| 3 | Hosting decided (Hostinger, server in France): have the regime of the transfer outside the DRC confirmed and complete the required formality | management + lawyer | production |
+| 4 | File the processing declarations / authorisations (prospects, customers, processing on behalf of customers) | management / lawyer | data collection |
+| 5 | Classify the activity under orders No. 004 and 005/2026; check eligibility for a start-up exemption | lawyer | billing subscriptions |
+| 6 | Appoint a data protection officer or document why not | management | filings |
+| 7 | Have documents 01 to 19 and points V-01 to V-13 reviewed by a lawyer admitted to a DRC bar | lawyer | publication |
+| 8 | Validate the tax position: Nhill = management documents; invoicing of subscriptions by Nhill Solution (VAT, standardised invoice) | tax adviser | first payment |
+| 9 | Publish the legal notice, terms of use and privacy policy (pages ready in the 3.0.0 website); add the marketing website's host to the legal notice once chosen | management | opening the forms |
+| 10 | Keep the record of processing (document 18) and the breach procedure (document 14) | management | production |
+| 11 | Provide document 17 to businesses when their account opens | onboarding team | first customers |
+| 12 | Review this file every 6 months and with every new text | management / lawyer | — |
 
 ## 7. Sources
 

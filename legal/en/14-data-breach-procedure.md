@@ -2,63 +2,59 @@
 
 *Français (version de référence) : [../fr/14-procedure-violation-donnees.md](../fr/14-procedure-violation-donnees.md)*
 
-> **TEMPLATE — INTERNAL DOCUMENT.** To be adapted to the real team; legal deadlines to be
-> confirmed.
-
 | Header | |
 |---|---|
-| Jurisdiction | DRC — Digital Code, Book III (security, notification) |
-| Assumptions | H-03, H-05 (competent authority), H-15 (72-hour deadline, secondary source) |
-| Sources | S01, S16 — see [00-legal-research.md](00-legal-research.md) § 7 |
-| Clauses to validate | V-06 (deadline and content of notification) |
-| Version | [NUMBER] of [DATE] |
+| Publisher | Nhill Solution, Kinshasa (Democratic Republic of the Congo) |
+| Version | 3.0.0 — 28 October 2026 |
+| Status | internal document; written without review by a lawyer; deadline and content of the notification to the authority to be confirmed (V-06, [00](00-legal-research.md) § 5). The French version is the reference text |
+| Assumptions | H-03, H-05, H-15, H-19 ([00](00-legal-research.md) § 2) |
+| Reference | DRC law (Digital Code, Book III); the GDPR's 72-hour deadline is used as a reference for good practice |
 
 ## 1. Definition
 
-Data breach: any security incident leading, accidentally or unlawfully, to destruction,
-loss, alteration, disclosure of or unauthorised access to personal data (examples: exposed
-database, compromised administrator account, lost backup, sending to the wrong recipient,
-ransomware).
+Data breach: any security incident leading, accidentally or unlawfully, to the
+destruction, loss, alteration, disclosure of or unauthorised access to personal data
+(examples: exposed database, compromised administrator account, lost backup, sending to
+the wrong recipient, ransomware).
 
 ## 2. Roles
 
-| Role | Person | Deputy |
-|---|---|---|
-| Incident lead | [NAME] | [NAME] |
-| Data protection officer | [NAME] | — |
-| Technical (server, database) | [NAME] | [NAME] |
-| Customer communication | [NAME] | [NAME] |
-| Legal counsel | [FIRM] | — |
+The roles are held by people appointed by Nhill Solution's management; the up-to-date list
+of names (holder and deputy for each role) is kept with the incident register.
+
+| Role | Task |
+|---|---|
+| Incident lead | decides, coordinates, keeps the register; by default, management |
+| Technical | contains the incident on the server and the database, preserves the traces |
+| Communication | informs the businesses and people concerned |
+| Legal adviser | qualifies the breach and the notification to the authority |
 
 ## 3. Steps and deadlines
 
 | Deadline (from detection) | Action |
 |---|---|
-| immediately | record the detection time in the incident register; alert the incident lead |
-| < 4 h | contain: cut the compromised access, revoke sessions (per business or globally), change the secrets involved (`NH_SECRET_KEY` only if necessary: see the consequences in the configuration guide), preserve logs (`journalctl -u nhill-server`, audit log) |
-| < 24 h | assess: data and people concerned, businesses affected, risk to individuals; **inform the customer businesses concerned** (we are their processor, template 06) |
-| < 72 h **[TO VALIDATE: V-06]** | **notify the data-protection authority** for processing where Nhill is controller, if the breach presents a risk; businesses notify for their own processing, with our help |
-| without undue delay | inform the people concerned if the risk is high (plain language: what happened, consequences, measures, advice, contact) |
-| < 30 days | root-cause analysis, fixes, testing, report; update of the security audit |
+| immediately | record the time of detection in the incident register; alert the incident lead |
+| under 4 hours | contain: cut the compromised access, revoke sessions (per business or globally), change the secrets concerned (`NH_SECRET_KEY` only if necessary: see its consequences in the configuration guide), preserve the logs (`journalctl -u nhill-server`, audit log) |
+| under 24 hours | assess: data and people concerned, businesses affected, risk for individuals; **inform the businesses concerned** (Nhill Solution is their processor, document 06) |
+| under 72 hours | **notify the competent data protection authority** for the processing Nhill Solution is responsible for, if the breach presents a risk; businesses notify for their own processing, with Nhill Solution's help |
+| without undue delay | inform the people concerned if the risk is high, in plain language: what happened, consequences, measures taken, advice, contact |
+| under 30 days | root-cause analysis, fixes, test, report; update of the security audit |
 
 ## 4. Content of the notification to the authority
 
-Nature of the breach; categories and approximate number of people and records; contact of
-the officer; likely consequences; measures taken or planned. If not everything is known,
-notify what is known and complete later.
-
-Authority: [NAME, ADDRESS, E-MAIL, FORM — ARPTC on a provisional basis or ARPTIC, to
-confirm, H-05].
+Nature of the breach; categories and approximate number of people and records; contact
+for further information; likely consequences; measures taken or planned. If not everything
+is known, notify what is known and complete later. The competent authority and how to
+reach it are checked by the legal adviser at the time of the incident (H-05).
 
 ## 5. Incident register
 
-Every incident, even if not notified, is recorded:
+Every incident, even if not notified, is recorded with the following columns:
 
-| Detection date | Description | Data / people | Risk | Measures | Notified to authority (date) | People informed (date) | Closed |
+| Detection date | Description | Data and people | Risk | Measures | Notification to the authority (date) | People informed (date) | Closure |
 |---|---|---|---|---|---|---|---|
-| | | | | | | | |
 
 ## 6. Exercise
 
-Simulate an incident [once a year] (for example: leaked backup) and measure the real
-response times.
+Simulate an incident once a year (for example: loss of a backup) and measure the actual
+times.

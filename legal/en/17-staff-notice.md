@@ -2,45 +2,51 @@
 
 *Français (version de référence) : [../fr/17-information-personnel.md](../fr/17-information-personnel.md)*
 
-> **TEMPLATE PROVIDED TO BUSINESSES.** The employing business is its author and is
-> responsible for it; it adapts it, has it validated if necessary and gives it to each
-> employee who uses Nhill before their account is opened.
-
 | Header | |
 |---|---|
-| Jurisdiction | DRC — Digital Code (information to individuals), Labour Code |
-| Assumptions | H-03 (the business is the controller) |
-| Sources | S01 — see [00-legal-research.md](00-legal-research.md) § 7 |
-| Clauses to validate | V-09 (consultation of staff representatives, internal rules) |
-| Version | [DATE] |
+| Publisher of the model | Nhill Solution, Kinshasa (Democratic Republic of the Congo) |
+| Version | 3.0.0 — 28 October 2026 |
+| Status | model provided to businesses, written without review by a lawyer; recommended review point: V-09 (consultation of staff representatives, internal rules) ([00](00-legal-research.md) § 5). The French version is the reference text |
+| Assumptions | H-03: the employing business is the controller ([00](00-legal-research.md) § 2) |
+| Use | the business gives the notice to each employee who uses Nhill, before their account opens, after filling in the "Business" box; it may adapt it |
 
 ---
 
-**[BUSINESS NAME]** — Information to employees about the use of the Nhill software
+**Information for employees on the use of the Nhill software**
 
-Our business uses the Nhill software for [sales, till, stock, invoicing]. For your security
-and the company's, this software records the actions done with each account.
+| Business | |
+|---|---|
+| Name | |
+| Person to contact about your data | |
+| Retention period of the log decided by the business | |
 
-**What is recorded**: your sign-ins (date, time, device, IP address), the documents you
+Our business uses the Nhill software for sales, the till, stock, invoicing or management.
+For your security and the company's, this software records the actions carried out with
+each account.
+
+**What is recorded**: your logins (date, time, device, IP address), the documents you
 create or issue (invoices, receipts, quotes), the payments and cash movements you record,
 stock corrections, approvals of discounts or cancellations, changes to settings.
 
-**What is not recorded**: your activity outside the software (browsing, personal messages,
-location).
+**What is not recorded**: your activity outside the software (browsing, personal
+messages, location).
 
-**Why**: internal control and prevention of errors and fraud, evidence of transactions,
-account security, till sessions and per-employee reports.
+**Why**: internal control, prevention of errors and fraud, proof of operations, account
+security, cash sessions and reports per employee.
 
-**Who can see it**: you see your own actions ("My activity"); [the owner, administrators and
-accountant] see the log of the whole business. The Nhill publisher does not look at this
-log, except during a support intervention, which is itself written to the log.
+**Who can see it**: you see your own actions; the people in the business whose role allows
+it (for example the account holder and administrators) see the log of the whole business.
+The Nhill Solution team does not consult this log; the overall usage figures it consults
+are themselves recorded in it.
 
-**How long**: [PERIOD DECIDED BY THE BUSINESS]. Nobody can modify the log from the software.
+**Changes**: nobody can change the log from the software.
 
 **Your rights**: you can ask for access to the data about you and its correction if it is
-inaccurate, by contacting [PERSON IN CHARGE, CONTACT].
+inaccurate, from the person named above.
 
-**Your obligations**: only use your own account, never share your password (not even with a
-colleague or manager), sign out of shared computers.
+**Your obligations**: use only your own account, never give your password (even to a
+colleague or a manager), log out of shared devices.
 
-Given on [DATE] to [EMPLOYEE NAME] — Signature: ____________
+| Given to (employee's name) | Date | Employee's signature |
+|---|---|---|
+| | | |
