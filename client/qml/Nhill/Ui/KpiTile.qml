@@ -9,8 +9,10 @@ FbCard {
     property string iconName: "chart"
     property string tone: "primary"
     Layout.fillWidth: true
-    implicitHeight: 112
+    // Grows when the label or the caption wraps (narrow phone screens).
+    implicitHeight: Math.max(112, col.implicitHeight + 2 * padding)
     ColumnLayout {
+        id: col
         anchors.fill: parent
         spacing: Theme.s1
         RowLayout {
@@ -20,6 +22,8 @@ FbCard {
                 font.family: Theme.font; font.pixelSize: Theme.fs_sm; font.weight: Font.Medium
                 color: Theme.textMuted
                 Layout.fillWidth: true
+                Layout.preferredWidth: 1
+                wrapMode: Text.Wrap; maximumLineCount: 2
                 elide: Text.ElideRight
             }
             Rectangle {
@@ -45,6 +49,8 @@ FbCard {
             font.family: Theme.font; font.pixelSize: Theme.fs_xs
             color: Theme.textFaint
             Layout.fillWidth: true
+            Layout.preferredWidth: 1
+            wrapMode: Text.Wrap; maximumLineCount: 2
             elide: Text.ElideRight
         }
     }

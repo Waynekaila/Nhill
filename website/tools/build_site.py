@@ -225,7 +225,7 @@ def render(lang, slug, meta, body, base_url, contacts=None):
       <div><h2>{f['start']}</h2><ul>{foot_start}</ul></div>
       <div><h2>{f['legal']}</h2><ul>{legal}</ul></div>
     </div>
-    <p class="fine">{html.escape(f['fine'])}</p>
+    <div class="fine"><p>{html.escape(f['fine'])}</p></div>
   </div>
 </footer>
 <script src="{root}/assets/js/site.js" defer></script>
