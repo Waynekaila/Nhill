@@ -4,6 +4,70 @@
 
 Format inspired by "Keep a Changelog"; semantic versioning.
 
+## [3.0.0] — unreleased (branch `release/3.0.0`)
+
+Major version: functions follow each business's plan, invoices shared by Nhill Business
+and Nhill POS, full export, data deletion at the end of the contract, tools to set up a
+virtual private server, new website and 3.0 legal documents. **Four migrations (0012 to
+0015)**. 2.x applications are asked to update.
+
+### Plans and rights
+
+- Catalogue of functions and limits; values per plan editable in Nhill Console; plan
+  conditions (trial, grace period, reminders, automatic renewal with express agreement,
+  fallback plan); assignment rules (migration 0012).
+- Effective rights = role permissions reduced to the plan's functions, checked by the server
+  on every route and on indirect data (lists, dashboard, payments, stock movements, log,
+  notifications); limits protected against concurrent access.
+- Applications: menus, tabs, buttons and settings hidden when the plan does not include
+  them; rights reloaded as soon as they change.
+- Access computed by the database from the dates: full, read-only (consultation and
+  export), none.
+
+### Documents and till
+
+- One model for every sales document, in A4 or as a 58 or 80 mm receipt, used by Nhill
+  Business and Nhill POS (same numbering, notices and rounding); configurable notices
+  (migration 0013).
+- Nhill POS: invoice in the name of an identified customer from the till; quantity-to-return
+  field without a truncated label.
+- Android: PDFs and exports open in another application or are shared (file provider,
+  `content://`); "Share" button on a document.
+- Dashboard: indicator titles on two lines on narrow screens.
+
+### Data
+
+- Full export by the account holder (ZIP archive: JSON, CSV, attachments, manifest with
+  SHA-256 fingerprints), whatever the subscription state.
+- **Erasure of a business** 90 days after the end of its access, from Nhill Console
+  (superadministrator, trade name to type; earlier only at the customer's request); paid
+  subscription orders archived for 10 years (migration 0014).
+- Retention: sent messages deleted after 30 days, ended sessions after 90 days.
+- 36 currencies (ISO 4217) and countries (ISO 3166-1) shared by the server and the
+  applications.
+- Searches: `%` and `_` taken literally (migration 0015).
+
+### Server and operations
+
+- No API address compiled into the applications: the address is entered and checked at
+  first use, and can be changed in the settings.
+- A server refuses a database migrated by a newer version; the first administrator's token
+  can be reissued until the first access is completed.
+- `NH_SUPPORT_EMAIL`: support address in the signature of automatic e-mails.
+- `deploy/vps` kit for a Hostinger virtual private server in France: installation, firewall,
+  encrypted backups, trial restore, monitoring every 5 minutes, update with a way back;
+  12-check acceptance test passed on a fresh machine in continuous integration.
+- Client: HTTP/1.1 only (HTTP/2 advisories of Qt 6.5.3).
+
+### Website, documents, contacts
+
+- Official contacts: `nhill.online`, `info@nhill.online`, `support@nhill.online`; publisher
+  Nhill Solution, Kinshasa.
+- New FR/EN marketing website, real 3.0 screenshots, social sharing image, live domain
+  check (`check_live.py`).
+- 3.0.0 legal documents (FR/EN) without fields to fill; compliance matrix between the
+  website and the application; 3.0.0 security audit.
+
 ## [2.1.0] — unreleased (branch `release/2.1.0`)
 
 Two requested fixes: the remembered session on Windows and Android, and recovery of a

@@ -69,13 +69,14 @@ Deux pare-feu, complémentaires :
    « plain OS » (sans panneau), 2 vCPU et 4 Go de RAM recommandés (2 Go minimum), une
    clé SSH ajoutée à la création.
 2. **DNS** : un enregistrement `A` (et `AAAA` si le VPS a une adresse IPv6) pour le nom
-   de l'API, par exemple `api.<votre-domaine>`, vers l'adresse du VPS. Le certificat n'est
+   de l'API vers l'adresse du VPS. Ce guide utilise `api.nhill.online`, sous-domaine du
+   domaine officiel ; un autre nom convient s'il est le même partout. Le certificat n'est
    délivré qu'une fois ce nom résolu vers le VPS.
 3. **Clé de sauvegarde, sur votre poste** (jamais sur le VPS) :
    `age-keygen -o nhill-backup-key.txt` ; notez la clé publique affichée (`age1…`) ;
    rangez le fichier dans votre coffre de mots de passe et une copie hors ligne. Sans
    lui, aucune sauvegarde ne peut être relue.
-4. **Paquet** : `nhill-server_<version>-1_amd64.deb` et son `SHA256SUMS`
+4. **Paquet** : `nhill-server_3.0.0-1_amd64.deb` et son `SHA256SUMS`
    (`dist/linux/ubuntu-24.04/` ou la livraison), plus le dossier `deploy/vps/` du dépôt
    (aussi installé par le paquet dans `/usr/share/nhill/vps/`).
 5. **Copie hors site** (recommandée) : un espace de stockage hors d'Hostinger, dans
@@ -84,18 +85,28 @@ Deux pare-feu, complémentaires :
 
 ## 4. Installation
 
+Les commandes lisent quatre valeurs propres à votre installation, à définir d'abord dans
+le terminal de votre poste : l'adresse IP du VPS (panneau Hostinger), la clé publique de
+sauvegarde (étape 3), l'adresse e-mail du premier administrateur de Nhill Console et son
+nom.
+
 ```bash
-scp -r nhill-server_3.0.0-1_amd64.deb SHA256SUMS deploy/vps root@<adresse-du-vps>:/root/
-ssh root@<adresse-du-vps>
-cd /root && sudo ./vps/provision.sh \
+export VPS_IP=…            # adresse IPv4 du VPS, affichée par Hostinger
+export BACKUP_KEY=age1…    # clé publique affichée par age-keygen (étape 3)
+export ADMIN_EMAIL=…       # adresse du premier administrateur de Nhill Console
+export ADMIN_NAME=…        # son nom, affiché dans la console
+scp -r nhill-server_3.0.0-1_amd64.deb SHA256SUMS deploy/vps root@"$VPS_IP":/root/
+ssh -t root@"$VPS_IP" "cd /root && ./vps/provision.sh \
   --deb nhill-server_3.0.0-1_amd64.deb --sha256sums SHA256SUMS \
-  --api-domain api.<votre-domaine> --acme-email <adresse-pour-les-avis-de-certificat> \
-  --admin-email <votre-adresse> --admin-name "<Votre nom>" \
-  --backup-recipient age1… \
+  --api-domain api.nhill.online --acme-email info@nhill.online \
+  --admin-email '$ADMIN_EMAIL' --admin-name '$ADMIN_NAME' \
+  --backup-recipient '$BACKUP_KEY' \
   --support-email support@nhill.online \
   --offsite-cmd 'rclone copy {} distant:nhill-sauvegardes/' \
-  --harden-ssh
+  --harden-ssh"
 ```
+
+Sans copie hors site configurée, retirez la ligne `--offsite-cmd`.
 
 Le script s'arrête à la première erreur ; relancé, il conserve ce qui est installé. Il :
 
@@ -109,7 +120,7 @@ Le script s'arrête à la première erreur ; relancé, il conserve ce qui est in
    super-utilisateur temporaire **supprimé aussitôt** (son mot de passe ne passe que par
    l'entrée standard) ; contrôle l'isolation (10 vérifications) ;
 6. configure les sauvegardes chiffrées et en fait une première ;
-7. écrit `/etc/caddy/Caddyfile` pour `api.<votre-domaine>` (Let's Encrypt) ;
+7. écrit `/etc/caddy/Caddyfile` pour `api.nhill.online` (Let's Encrypt) ;
 8. installe les contrôles de santé, la rétention des journaux et les outils
    `nhill-update`, `nhill-rollback` ;
 9. affiche le **jeton à usage unique** du premier administrateur de Nhill Console (30 minutes).
@@ -119,7 +130,7 @@ Ensuite :
 - **Sauvegardez `NH_SECRET_KEY`** (`sudo grep '^NH_SECRET_KEY=' /etc/nhill/server.env`)
   dans votre coffre, à part des sauvegardes : sans elle, les codes d'établissement et les
   seconds facteurs des administrateurs ne sont plus lisibles.
-- **Nhill Console** : adresse `https://api.<votre-domaine>`, « Premier accès », jeton,
+- **Nhill Console** : adresse `https://api.nhill.online`, « Premier accès », jeton,
   mot de passe (14 caractères minimum) et TOTP. Jeton expiré ou perdu, tant que personne
   n'a terminé le premier accès :
   `sudo -u nhill nhill-server --config /etc/nhill/server.env admin-bootstrap <même-adresse> "<Nom>"`.
@@ -144,7 +155,7 @@ Aucun secret n'est dans le dépôt, dans le paquet ni dans les journaux.
 
 ## 6. Certificats
 
-Caddy obtient le certificat de `api.<votre-domaine>` auprès de Let's Encrypt (défi HTTP-01
+Caddy obtient le certificat de `api.nhill.online` auprès de Let's Encrypt (défi HTTP-01
 sur le port 80) et le renouvelle seul, environ 30 jours avant l'échéance. Le contrôle de
 santé alerte s'il reste moins de 14 jours (`NH_HEALTH_CERT_MIN_DAYS` dans
 `/etc/nhill/health.env` ; 0 avec `--tls internal`, dont les certificats de courte durée sont
@@ -174,8 +185,10 @@ Vérifier : `systemctl list-timers nhill-backup.timer`, `ls -lh /var/backups/nhi
 **Test mensuel, hors du VPS** (poste d'administration ou VPS de recette, avec la clé privée) :
 
 ```bash
-scp root@<vps>:/var/backups/nhill/archives/nhill-<date>.dump.age* .
-deploy/vps/nhill-restore-test.sh nhill-<date>.dump.age nhill-backup-key.txt
+ssh root@"$VPS_IP" ls -1t /var/backups/nhill/archives | head -3   # dernières sauvegardes
+export BACKUP=…   # nom d'une sauvegarde de la liste, par exemple la plus récente
+scp root@"$VPS_IP":"/var/backups/nhill/archives/$BACKUP*" .
+deploy/vps/nhill-restore-test.sh "$BACKUP" nhill-backup-key.txt
 ```
 
 Le script démarre un PostgreSQL jetable (socket local, rien sur le réseau), restaure,
@@ -186,7 +199,7 @@ sécurité par ligne forcée et l'isolation du rôle applicatif, puis efface tou
 
 1. Copier la sauvegarde (avec son `.sha256`) et, **temporairement**, la clé privée dans
    `/var/lib/postgresql/restauration/` (propriétaire `postgres`, droits 700).
-2. `cd /var/lib/postgresql/restauration && sudo -u postgres env PGHOST=/var/run/postgresql nhill-restore.sh nhill-<date>.dump.age cle.txt nhill_restauree`
+2. `cd /var/lib/postgresql/restauration && sudo -u postgres env PGHOST=/var/run/postgresql nhill-restore.sh "$BACKUP" cle.txt nhill_restauree`
    (restaure dans une **nouvelle** base, puis l'affiche : migrations, établissements, sécurité par ligne).
 3. `sudo systemctl stop nhill-server`, puis renommer :
    `ALTER DATABASE nhill RENAME TO nhill_avant_restauration; ALTER DATABASE nhill_restauree RENAME TO nhill;`
@@ -208,7 +221,7 @@ si `NH_ALERT_CMD` est renseignée dans `/etc/nhill/alert.env`, votre commande d'
 (e-mail, messagerie, notification).
 
 Un VPS ne peut pas signaler sa propre panne totale : ajoutez une **sonde externe** sur
-`https://api.<votre-domaine>/health` (service de surveillance de disponibilité de votre choix).
+`https://api.nhill.online/health` (service de surveillance de disponibilité de votre choix).
 
 | Journal | Où | Conservation |
 |---|---|---|

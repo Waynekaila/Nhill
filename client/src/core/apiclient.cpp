@@ -103,6 +103,9 @@ void ApiClient::probeServer(const QString& input, const QJSValue& cb) {
         return;
     }
     QNetworkRequest req(url);
+    // HTTP/1.1 only: the HTTP/2 code of the Qt version bundled with the Windows and Android
+    // builds has published flaws (CVE-2023-51714, CVE-2024-39936); the API needs nothing more.
+    req.setAttribute(QNetworkRequest::Http2AllowedAttribute, false);
     req.setTransferTimeout(10000);
     req.setRawHeader("Accept", "application/json");
     req.setRawHeader("User-Agent", "Nhill-Client/" + QCoreApplication::applicationVersion().toUtf8());
@@ -175,6 +178,7 @@ void ApiClient::request(Request r, Callback cb) {
 void ApiClient::dispatch(Request r, Callback cb) {
     QUrl url = m_base.resolved(QUrl(r.path));
     QNetworkRequest req(url);
+    req.setAttribute(QNetworkRequest::Http2AllowedAttribute, false);   // HTTP/1.1 only (see probeServer)
     req.setTransferTimeout(r.timeoutMs > 0 ? r.timeoutMs : m_timeoutMs);
     req.setRawHeader("Accept", "application/json");
     req.setRawHeader("Accept-Language", m_lang.toUtf8());

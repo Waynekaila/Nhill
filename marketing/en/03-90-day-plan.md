@@ -7,7 +7,7 @@
 | Period | 13 weeks from the start date (W1 = week of [DATE]) |
 | Goal | 10 active pilots, 3 signed partners, first paid subscriptions after the pilot reviews |
 | Conversion | **1 USD = 2,264.0000 CDF**, official rate of the [Central Bank of the Congo](https://www.bcc.cd/marche-des-changes/cours-de-change) on **26/10/2026**; CDF amounts rounded to the unit. Recompute at the day's rate before any spending |
-| Prerequisites | company created, legal notice and privacy policy validated (`legal/` folder), deliverables checked (`release/V2.0.0/`) |
+| Prerequisites | legal notice, terms and privacy policy published (3.0 website, `legal/` folder), deliverables checked (`release/V3.0.0/`) |
 
 > The amounts below are **proposed budget envelopes**, not recorded prices: each line is
 > confirmed by a quote or receipt, logged in the spending tracker
@@ -54,8 +54,8 @@ Not budgeted in either scenario: salaries, the team's laptop, legal formalities 
 |---|---|---|---|
 | 1 | Preparation | WhatsApp Business account (catalogue, greeting, hours); pilot sheets printed; list of 60 target businesses in 3 communes (Gombe, Limete, Ngaliema) in the prospect tracker; rehearsed demo (script `07`) — B: roll-up and cards | 60 prospects listed |
 | 2 | First contacts | 30 door-to-door visits (script `05`); aim for 10 demo requests; 5 support organisations contacted (message template `06`) | 30 contacts, 8 demos booked |
-| 3 | Demos | 8 demos with the prospect's products; report after each demo; pilot selection (grid `04`) — B: ads launched (to the "Pilot programme" form) | 8 demos, 4 pilots selected |
-| 4 | Pilot wave 1 | agreements signed; onboarding of 4–6 pilots (half a day each); baseline measurements | 5 pilots installed |
+| 3 | Demos | 8 demos with the prospect's products; report after each demo; pilot selection (grid `04`) — B: ads launched (to the "Free trial" form) | 8 demos, 4 pilots selected |
+| 4 | Pilot wave 1 | trial terms accepted; onboarding of 4–6 pilots (half a day each); baseline measurements | 5 pilots installed |
 | 5 | Close follow-up | 2 short calls per pilot; problems fixed; 20 new visits | 0 blocking incident open > 48 h |
 | 6 | Partners | 2 partner meetings (integrator, trainer, association); partnership agreement (template `legal/10`) — B: 1st partner training | 2 partners in discussion |
 | 7 | Pilot wave 2 | 4–6 new pilots (including partner referrals); mid-pilot questionnaire wave 1 | 10 pilots in total |

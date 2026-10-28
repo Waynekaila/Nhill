@@ -7,7 +7,7 @@
 | Période | 13 semaines à partir de la date de démarrage (S1 = semaine du [DATE]) |
 | Objectif | 10 pilotes actifs, 3 partenaires signés, premiers abonnements payants après le bilan des pilotes |
 | Conversion | **1 USD = 2 264,0000 CDF**, taux officiel de la [Banque centrale du Congo](https://www.bcc.cd/marche-des-changes/cours-de-change) du **26/10/2026** ; montants CDF arrondis à l'unité. Recalculer au taux du jour avant toute dépense |
-| Préalables | société créée, mentions légales et politique de confidentialité validées (dossier `legal/`), livrables vérifiés (`release/V2.0.0/`) |
+| Préalables | mentions légales, conditions et politique de confidentialité publiées (site 3.0, dossier `legal/`), livrables vérifiés (`release/V3.0.0/`) |
 
 > Les montants ci-dessous sont des **enveloppes budgétaires proposées**, pas des prix
 > relevés : chaque ligne se confirme par un devis ou un reçu, consigné dans le suivi des
@@ -55,8 +55,8 @@ d'hébergement de production du service.
 |---|---|---|---|
 | 1 | Préparation | compte WhatsApp Business (catalogue, message d'accueil, horaires) ; fiches pilote imprimées ; liste de 60 établissements cibles sur 3 communes (Gombe, Limete, Ngaliema) dans le suivi des prospects ; démonstration rodée (script `07`) — B : kakémono et cartes | 60 prospects listés |
 | 2 | Premiers contacts | 30 visites en porte-à-porte (script `05`) ; 10 demandes de démonstration visées ; 5 organisations d'accompagnement contactées (modèle de message `06`) | 30 contacts, 8 démos fixées |
-| 3 | Démonstrations | 8 démonstrations sur les produits du prospect ; compte rendu après chaque démo ; sélection des pilotes (grille `04`) — B : lancement de la publicité (renvoi vers le formulaire « Programme pilote ») | 8 démos, 4 pilotes retenus |
-| 4 | Vague 1 de pilotes | signature des conventions ; mise en route de 4 à 6 pilotes (une demi-journée chacun) ; mesures de départ | 5 pilotes installés |
+| 3 | Démonstrations | 8 démonstrations sur les produits du prospect ; compte rendu après chaque démo ; sélection des pilotes (grille `04`) — B : lancement de la publicité (renvoi vers le formulaire « Essai gratuit ») | 8 démos, 4 pilotes retenus |
+| 4 | Vague 1 de pilotes | acceptation des conditions de l'essai ; mise en route de 4 à 6 pilotes (une demi-journée chacun) ; mesures de départ | 5 pilotes installés |
 | 5 | Suivi rapproché | 2 appels courts par pilote ; correction des problèmes ; 20 nouvelles visites | 0 incident bloquant ouvert > 48 h |
 | 6 | Partenaires | 2 rencontres partenaires (intégrateur, formateur, association) ; contrat de partenariat (modèle `legal/10`) — B : 1re session de formation des partenaires | 2 partenaires en discussion |
 | 7 | Vague 2 de pilotes | 4 à 6 nouveaux pilotes (dont apportés par les partenaires) ; questionnaire de mi-parcours vague 1 | 10 pilotes au total |

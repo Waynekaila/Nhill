@@ -28,13 +28,15 @@ personnelle d'un tiers pendant la démo.
 
 - **TVA** : si le prospect est assujetti, le dire avant la fin : Nhill ne produit pas la
   facture normalisée DGI.
-- **Prix** : pas encore fixés ; pilote gratuit ; proposition écrite avant toute facturation (pistes : document 16, non publiées).
+- **Prix** : aucun prix publié ; essai gratuit accompagné de 30 jours ; proposition écrite avant toute facturation (pistes : document 16, non publiées).
 - **Plates-formes** : vérifier ce qui est réellement livré (Windows, Linux, Android) dans
-  `release/V<version>/` avant d'en parler.
-- **Ce que Nhill ne fait pas en 2.1** : envoi direct des documents par e-mail ou SMS,
+  `release/V3.0.0/` avant d'en parler.
+- **Ce que Nhill ne fait pas en 3.0** : envoi des documents par e-mail ou SMS depuis le
+  serveur (le PDF se joint à un message ; partage direct depuis un téléphone Android),
   paiement intégré des ventes par Mobile Money, comptabilité générale, paie,
-  fonctionnement sans internet, certification fiscale. (Depuis la 2.1 : mot de passe
-  oublié par l'administrateur ou par code e-mail, session mémorisée.)
+  fonctionnement sans internet, certification fiscale.
+- **Selon la formule** : l'établissement ne voit que les fonctions de sa formule ; montrer
+  celles de la formule envisagée.
 
 ## Compte rendu de démonstration (à remplir le jour même)
 

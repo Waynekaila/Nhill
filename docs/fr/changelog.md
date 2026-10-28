@@ -4,6 +4,72 @@
 
 Format inspiré de « Keep a Changelog » ; numérotation sémantique.
 
+## [3.0.0] — non publiée (branche `release/3.0.0`)
+
+Version majeure : les fonctions suivent la formule de chaque établissement, factures
+communes à Nhill Business et Nhill POS, export complet, suppression des données en fin de
+contrat, outils de mise en service sur un serveur privé virtuel, nouveau site et documents
+juridiques 3.0. **Quatre migrations (0012 à 0015)**. Les applications 2.x sont invitées à
+se mettre à jour.
+
+### Formules et droits
+
+- Catalogue des fonctions et des limites ; valeurs par formule modifiables dans Nhill
+  Console ; conditions de formule (essai, période de grâce, rappels, renouvellement
+  automatique avec accord exprès, formule de repli) ; règles d'attribution (migration 0012).
+- Droits effectifs = permissions du rôle réduites aux fonctions de la formule, vérifiés par
+  le serveur sur chaque route et sur les données indirectes (listes, tableau de bord,
+  paiements, mouvements de stock, journal, notifications) ; limites protégées contre les
+  accès concurrents.
+- Applications : menus, onglets, boutons et réglages masqués quand la formule ne les
+  comprend pas ; droits rechargés dès qu'ils changent.
+- Accès calculé par la base à partir des dates : complet, lecture seule (consultation et
+  export), aucun.
+
+### Documents et caisse
+
+- Un seul modèle pour tous les documents de vente, en A4 ou en ticket de 58 ou 80 mm,
+  utilisé par Nhill Business et Nhill POS (même numérotation, mêmes mentions, mêmes
+  arrondis) ; mentions configurables (migration 0013).
+- Nhill POS : facture au nom d'un client identifié depuis la caisse ; champ de quantité à
+  retourner sans libellé tronqué.
+- Android : les PDF et exports s'ouvrent dans une autre application ou se partagent
+  (fournisseur de fichiers, `content://`) ; bouton « Partager » sur un document.
+- Tableau de bord : titres des indicateurs sur deux lignes sur les écrans étroits.
+
+### Données
+
+- Export complet par le titulaire (archive ZIP : JSON, CSV, pièces jointes, manifeste avec
+  empreintes SHA-256), quel que soit l'état de l'abonnement.
+- **Suppression d'un établissement** 90 jours après la fin de son accès, depuis Nhill
+  Console (super-administrateur, nom commercial à saisir ; plus tôt seulement à la demande
+  du client) ; commandes d'abonnement payées archivées 10 ans (migration 0014).
+- Rétention : messages envoyés supprimés après 30 jours, sessions terminées après 90 jours.
+- 36 devises (ISO 4217) et pays (ISO 3166-1) partagés par le serveur et les applications.
+- Recherches : `%` et `_` pris littéralement (migration 0015).
+
+### Serveur et exploitation
+
+- Aucune adresse d'API compilée dans les applications : l'adresse est saisie et vérifiée à
+  la première utilisation, modifiable dans les paramètres.
+- Un serveur refuse une base migrée par une version plus récente ; le jeton du premier
+  administrateur peut être réémis tant que le premier accès n'est pas terminé.
+- `NH_SUPPORT_EMAIL` : adresse d'assistance dans la signature des e-mails automatiques.
+- Kit `deploy/vps` pour un serveur privé virtuel Hostinger en France : installation,
+  pare-feu, sauvegardes chiffrées, restauration d'essai, surveillance toutes les 5 minutes,
+  mise à jour avec retour arrière ; recette de 12 contrôles réussie sur une machine neuve
+  en intégration continue.
+- Client : HTTP/1.1 seulement (avis HTTP/2 de Qt 6.5.3).
+
+### Site, documents, coordonnées
+
+- Coordonnées officielles : `nhill.online`, `info@nhill.online`, `support@nhill.online` ;
+  éditeur Nhill Solution, Kinshasa.
+- Nouveau site vitrine FR/EN, captures réelles de la version 3.0, image de partage,
+  contrôle du domaine en ligne (`check_live.py`).
+- Documents juridiques 3.0.0 (FR/EN) sans champ à compléter ; matrice de conformité entre
+  le site et l'application ; audit de sécurité 3.0.0.
+
 ## [2.1.0] — non publiée (branche `release/2.1.0`)
 
 Deux corrections demandées : la session mémorisée sous Windows et Android, et la

@@ -3,8 +3,8 @@
 *Français : [../fr/14-presentation-commerciale.md](../fr/14-presentation-commerciale.md)*
 
 Content of the presentation to project or show on a tablet (15 minutes before the demo).
-One idea per slide; screenshots are **real screens** of Nhill 2.0 (folder
-`docs/assets/v2/`, automatic CI captures of a demo business). Shareable version: PDF
+One idea per slide; screenshots are **real screens** of Nhill 3.0 (folder
+`website/assets/images/`, automatic CI captures of a demo business). Shareable version: PDF
 generated from this file (`marketing/pdf/en/14-sales-presentation.pdf`).
 
 ---
@@ -66,9 +66,9 @@ French / English · CDF / USD never mixed · network cut: no double recording ·
 support · Windows, Linux, Android (Nhill Business).
 **Nhill does not replace the DGI standardised invoice** for VAT payers.
 
-## Slide 9 — The pilot programme
+## Slide 9 — The assisted free trial
 
-8 weeks, free, no commitment: installation, product import, training, weekly check-in,
+30 days, free, no commitment: installation, product import, training, weekly check-in,
 export of your data at the end.
 
 ## Slide 10 — Next step
@@ -79,4 +79,4 @@ info@nhill.online
 ---
 
 Speaker notes: before each meeting, check that the platforms cited on slide 8 are actually
-delivered (`release/V2.0.0/`); never add a customer or partner logo without written consent.
+delivered (`release/V3.0.0/`); never add a customer or partner logo without written consent.

@@ -4,7 +4,7 @@
 
 Règles de tournage :
 
-- **Écrans réels uniquement** : filmer ou capturer Nhill 2.0 installé, sur un
+- **Écrans réels uniquement** : filmer ou capturer Nhill 3.0 installé, sur un
   établissement de démonstration (données « (démo) »). Pas d'écran retouché, pas de
   maquette, pas de fonction absente.
 - Personnes filmées : membres de l'équipe, ou pilote **avec accord écrit** (convention de
@@ -22,7 +22,7 @@ Règles de tournage :
 | 2 | 4-10 s | écran Nhill POS réel : vente de 3 articles, touche F9, paiement espèces, monnaie rendue | « Chaque vente, au nom du caissier » | « Avec Nhill, chaque vente est enregistrée au nom du caissier. » | "With Nhill, every sale is recorded under the cashier's name." |
 | 3 | 10-17 s | écran de clôture réel : comptage saisi, rapport Z avec écart | « Clôture en quelques minutes » | « À la clôture, le caissier compte, Nhill calcule l'écart. » | "At closing, the cashier counts; Nhill works out the difference." |
 | 4 | 17-24 s | téléphone du propriétaire : tableau de bord et activité par employé | « Même quand vous n'êtes pas là » | « Et vous voyez tout, même quand vous n'êtes pas au magasin. » | "And you see everything, even when you're away from the shop." |
-| 5 | 24-30 s | logo Nhill sur fond Nuit 900, adresse du site | « Programme pilote gratuit — nhill.online » | « Nhill. Programme pilote gratuit à Kinshasa. » | "Nhill. Free pilot programme in Kinshasa." |
+| 5 | 24-30 s | logo Nhill sur fond Nuit 900, adresse du site | « Essai gratuit accompagné — nhill.online » | « Nhill. Essai gratuit accompagné à Kinshasa. » | "Nhill. Assisted free trial in Kinshasa." |
 
 ## 2. Vidéo 60 secondes — « Ventes, stock, caisse »
 
@@ -34,7 +34,7 @@ Règles de tournage :
 | 4 | 26-36 s | demande de remise au-delà du plafond → validation du superviseur | « Les remises sous contrôle » | « Une remise trop forte ? Il faut l'accord d'un responsable, et c'est noté. » | "Too big a discount? A supervisor must approve it, and it's recorded." |
 | 5 | 36-46 s | journal d'activité réel, filtre par employé | « Qui a fait quoi » | « Le journal montre qui a fait quoi. Personne ne peut l'effacer. » | "The log shows who did what. Nobody can erase it." |
 | 6 | 46-54 s | facture d'un client à crédit, paiement partiel, solde | « Les ventes à crédit, suivies » | « Ventes à crédit : vous savez qui vous doit combien. » | "Credit sales: you know who owes you what." |
-| 7 | 54-60 s | logo, site, mention | « Pilote gratuit, 8 semaines — nhill.online » | « Nhill. Essayez-le gratuitement pendant huit semaines. » | "Nhill. Try it free for eight weeks." |
+| 7 | 54-60 s | logo, site, mention | « Essai gratuit accompagné, 30 jours — nhill.online » | « Nhill. Essayez-le gratuitement pendant 30 jours, accompagné. » | "Nhill. Try it free for eight weeks." |
 
 Mention écrite en fin de vidéo (petit texte, 2 s) : « Nhill est un logiciel de gestion ;
 il ne remplace pas la facture normalisée de la DGI. » / "Nhill is management software; it
@@ -47,14 +47,14 @@ l'équipe avec un établissement de démonstration.
 
 | Plan | Durée | Image | Voix off FR | Voix off EN |
 |---|---|---|---|---|
-| 1 | 0-8 s | rue commerçante de Kinshasa, devanture (avec autorisation) | « À Kinshasa, des commerçants testent Nhill pendant huit semaines. » | "In Kinshasa, shop owners are testing Nhill for eight weeks." |
+| 1 | 0-8 s | rue commerçante de Kinshasa, devanture (avec autorisation) | « À Kinshasa, des commerçants essaient Nhill pendant 30 jours, accompagnés. » | "In Kinshasa, shop owners are testing Nhill for eight weeks." |
 | 2 | 8-20 s | installation : ordinateur, tablette, import d'une liste d'articles | « On commence par installer Nhill sur vos appareils et importer vos produits. Comptez une demi-journée. » | "We start by installing Nhill on your devices and importing your products. Allow half a day." |
 | 3 | 20-32 s | formation d'un caissier, gros plan sur son compte personnel | « Chaque personne a son propre compte. Un mot de passe de huit caractères au moins, rien de compliqué. » | "Each person gets their own account. A password of at least eight characters, nothing complicated." |
 | 4 | 32-50 s | séquence vente → clôture → rapport Z (écrans réels) | « Pendant la journée, on vend. Le soir, le caissier compte son tiroir, Nhill calcule l'écart et prépare le rapport. » | "During the day, you sell. In the evening, the cashier counts the drawer; Nhill works out the difference and prepares the report." |
 | 5 | 50-62 s | point hebdomadaire entre l'équipe Nhill et le référent | « Chaque semaine, on fait le point ensemble et on corrige ce qui gêne. » | "Every week, we review together and fix what gets in the way." |
 | 6 | 62-76 s | *seulement avec accord écrit :* le pilote parle face caméra, avec ses propres mots, non scénarisés | *(propos du pilote, sous-titrés tels quels)* | *(pilot's own words, subtitled as said)* |
 | 7 | 76-84 s | export CSV/PDF à l'écran | « À la fin, vous gardez vos données, que vous continuiez ou non. » | "At the end, you keep your data, whether you continue or not." |
-| 8 | 84-90 s | logo, site, appel à candidature | « Programme pilote Nhill : candidatez sur nhill.online. » | "Nhill pilot programme: apply at nhill.online." |
+| 8 | 84-90 s | logo, site, appel à candidature | « Essai gratuit accompagné : demandez-le sur nhill.online. » | "Assisted free trial: request it at nhill.online." |
 
 Sans accord d'un pilote, remplacer le plan 6 par l'équipe qui présente les mesures du
 pilote **anonymisées et telles que mesurées**, ou supprimer le plan (vidéo de 76 s).

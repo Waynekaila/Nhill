@@ -28,13 +28,15 @@ data during the demo.
 
 - **VAT**: if the prospect is VAT-registered, say it before the end: Nhill does not produce
   the DGI standardised invoice.
-- **Price**: not yet set; free pilot; written proposal before any invoicing (options: document 16, not published).
+- **Price**: no price published; 30-day assisted free trial; written proposal before any invoicing (options: document 16, not published).
 - **Platforms**: check what is actually delivered (Windows, Linux, Android) in
-  `release/V<version>/` before mentioning it.
-- **What Nhill 2.1 does not do**: sending documents directly by e-mail or SMS, built-in
-  Mobile Money payment of sales, general accounting, payroll, working without Internet, tax
-  certification. (Since 2.1: forgotten password through the administrator or an e-mailed
-  code, remembered session.)
+  `release/V3.0.0/` before mentioning it.
+- **What Nhill 3.0 does not do**: sending documents by e-mail or SMS from the server (the PDF
+  is attached to a message; direct sharing from an Android phone), built-in Mobile Money
+  payment of sales, general accounting, payroll, working without Internet, tax
+  certification.
+- **Depending on the plan**: a business sees only its plan's functions; show those of the
+  plan considered.
 
 ## Demo report (fill in the same day)
 

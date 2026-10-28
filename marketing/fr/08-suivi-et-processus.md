@@ -9,9 +9,9 @@
 | 1 | `identifié` | établissement repéré (terrain, recommandation, formulaire) | premier contact fait | — |
 | 2 | `contacté` | visite, appel ou message (avec accord) | démo fixée, ou refus | 7 jours |
 | 3 | `démo fixée` | date confirmée | démo faite | 7 jours |
-| 4 | `démo faite` | compte rendu rempli, score calculé | pilote proposé ou relance | 2 jours |
-| 5 | `pilote proposé` | convention envoyée | signée, ou refus | 7 jours |
-| 6 | `pilote en cours` | mise en route faite | bilan S8 | 8 semaines |
+| 4 | `démo faite` | compte rendu rempli, score calculé | essai proposé ou relance | 2 jours |
+| 5 | `pilote proposé` | conditions de l'essai envoyées | acceptées par e-mail, ou refus | 7 jours |
+| 6 | `pilote en cours` | mise en route faite | bilan à J30 | 30 jours |
 | 7 | `proposition` | proposition écrite de suite envoyée | accepte / refuse | 14 jours |
 | 8 | `client` | premier paiement confirmé | — | — |
 | — | `perdu` | refus ou absence de réponse après 2 relances | motif noté (`motif_perte`) | — |
@@ -60,7 +60,7 @@ conservation selon `legal/fr/15-politique-conservation.md`, jamais partagé publ
 6. Note de 0 à 10 : recommanderiez-vous Nhill à un autre commerçant ?
 7. Une chose à changer en priorité ?
 
-## 5. Questionnaire de fin de pilote (S8, 10 minutes)
+## 5. Questionnaire de fin d'essai (J30, 10 minutes)
 
 1. Reprise des questions 1, 2, 3 et 6 de mi-parcours.
 2. Par rapport au début, la clôture de caisse prend : plus / autant / moins de temps.

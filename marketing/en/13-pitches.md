@@ -10,7 +10,7 @@
 > Nhill is simple management software: every sale is recorded under the cashier's name, the
 > stock follows, and the owner sees everything from their phone, even when away.
 >
-> We're running a free eight-week pilot programme, with installation and training. May I
+> We offer a 30-day assisted free trial, with installation and training. May I
 > show it to you with your products in fifteen minutes?
 
 ## 2. 2-minute pitch (≈ 300 words)
@@ -35,8 +35,8 @@
 > **What Nhill is not.** It is not standardised-invoice software certified by the DGI: VAT
 > payers keep their tax device and use Nhill for management.
 >
-> **Where we are.** Version 2.0 is built and tested; we are starting a free eight-week pilot
-> with about ten traders, to set prices from measured results.
+> **Where we are.** Version 3.0 is built and tested; we offer a 30-day assisted free trial to
+> a small number of businesses, to set prices from measured results.
 >
 > **What we ask.** [For a trader:] fifteen minutes for a demo with your products. [For a
 > partner:] introduce us to traders in your network, or host a workshop for your members.

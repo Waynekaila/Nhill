@@ -21,7 +21,7 @@ versions serve English-speaking prospects and partners.
 >
 > *[Listen. Ask 2 or 3 discovery questions, see `04` § 4.]*
 >
-> We're running a free eight-week pilot programme, with installation and training. I can
+> We offer a 30-day assisted free trial, with installation and training. I can
 > show you in fifteen minutes, with your own products, when you're less busy. Which day
 > suits you?
 

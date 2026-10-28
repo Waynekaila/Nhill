@@ -25,7 +25,7 @@ Napoleon Hill (viser plus haut) et évoque la colline que l'on gravit : progress
 |---|---|
 | logiciel de gestion, application | solution, plateforme disruptive |
 | ventes, stock, caisse, factures, crédit client | flux, process, KPI (avec les clients) |
-| programme pilote gratuit | essai révolutionnaire |
+| essai gratuit accompagné | essai révolutionnaire |
 | document de gestion ; ne remplace pas la facture normalisée DGI | conforme DGI, certifié, homologué |
 | a besoin d'internet pour enregistrer ; pas de double saisie après coupure | fonctionne hors ligne |
 | vos données vous appartiennent ; export à tout moment | données 100 % sécurisées, inviolable |

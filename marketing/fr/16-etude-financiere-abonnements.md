@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Version | 1.0 — 27 octobre 2026 |
+| Version | 1.1 — 28 octobre 2026 (hébergement Hostinger en France ; 1.0 du 27 octobre 2026) |
 | Statut | **recommandations soumises à la validation du propriétaire du produit** : aucun prix n'est publié sur le site ni chargé dans la base |
 | Méthode | prix publics relevés en ligne le 26 et le 27 octobre 2026 (§ 15), inspection du code de Nhill 2.1, modèle financier reproductible (`marketing/tools/subscription_model.py`) |
 | Légende | **V** donnée vérifiée, avec sa source et sa date ; **H** hypothèse à valider ; les calculs sont faits par le script, jamais à la main |
@@ -149,8 +149,8 @@ caisse ; les caisses gratuites ne couvrent pas les devis, les factures et les cr
    trimestriel (3 mois, sans remise) est proposé en zone A, où les trésoreries sont
    courtes ; les durées de 6, 24 et 36 mois existent dans le code mais ne sont pas
    recommandées au lancement.
-3. **Essai accompagné gratuit** (programme pilote de huit semaines, puis essai de
-   30 jours) : la conversion se fait sur l'usage réel.
+3. **Essai accompagné gratuit** de 30 jours (les premiers essais servent de pilote) : la
+   conversion se fait sur l'usage réel.
 4. **Services ponctuels facturés à part** (formation supplémentaire, reprise de données
    complexe, installation hors Kinshasa) : prix à fixer après mesure du temps passé
    pendant le pilote.
@@ -198,8 +198,8 @@ démonstration, pas le taux de signature seul.
 <!-- model:hypotheses -->
 | Hypothèse | Valeur | Nature |
 |---|---|---|
-| Serveur d'application Hetzner CX23 (2 vCPU, 4 Go, 40 Go) 5,99 € + sauvegardes 20 % | 8,26 $ / mois | vérifiée |
-| Base PostgreSQL gérée Supabase Pro (8 Go, sauvegarde quotidienne 7 jours) | 25 $ / mois | vérifiée |
+| Serveur privé virtuel Hostinger KVM 2 en France (2 vCPU, 8 Go, 100 Go NVMe, sauvegarde hebdomadaire incluse), prix de renouvellement | 14,99 $ / mois | vérifiée |
+| Base PostgreSQL sur le même serveur (kit deploy/vps), sans coût séparé | inclus (0 $) | vérifiée |
 | Sauvegardes chiffrées hors site (Backblaze B2, 6,95 $/To ; 10 Go gratuits) | 1 $ / mois | hypothèse |
 | Envoi d'e-mails (Amazon SES, 0,10 $ / 1 000 e-mails) | 1 $ / mois | hypothèse |
 | Nom de domaine (20 $ par an) | 1,67 $ / mois | hypothèse |
@@ -220,7 +220,7 @@ démonstration, pas le taux de signature seul.
 | Part des nouveaux clients venus par recommandation (1 mois offert au parrain) | 15,0 % | hypothèse |
 | Remises moyennes (codes promotionnels, gestes commerciaux) | 5,0 % | hypothèse |
 | Établissements actifs par serveur d'application (aucun test de charge réalisé) | 250 | hypothèse |
-| Établissements actifs au-delà desquels la base passe à la puissance supérieure (+15 $/mois) | 500 | hypothèse |
+| Établissements actifs au-delà desquels la base passe sur un second serveur KVM 2 (+15 $/mois) | 500 | hypothèse |
 <!-- /model -->
 
 Dépenses ponctuelles :
@@ -228,36 +228,36 @@ Dépenses ponctuelles :
 <!-- model:one_off -->
 | Mois | Dépense ponctuelle | Montant | Nature |
 |---|---|---|---|
-| M1 | Création de la société, conseil juridique et fiscal | 1 500 $ | hypothèse |
+| M1 | Conseil juridique et fiscal, formalités | 1 500 $ | hypothèse |
 | M1 | Matériel de démonstration (imprimante de tickets, lecteur, tablette Android) | 1 200 $ | hypothèse |
 | M1 | Compte développeur Google Play (paiement unique) | 25 $ | vérifiée |
 | M1 | Identité visuelle imprimée, cartes, kakémono | 500 $ | hypothèse |
 | M6 | Test d'intrusion externe avant un déploiement large | 5 000 $ | hypothèse |
 <!-- /model -->
 
-Sources des prix vérifiés : Hetzner CX23 à 5,99 € par mois avec IPv4 (relevé d'août 2026,
-après l'ajustement de prix du 15 juin 2026) et sauvegardes à 20 % du prix du serveur
-(documentation Hetzner) ; Supabase Pro à 25 $ par mois (8 Go de base, sauvegarde
-quotidienne conservée 7 jours, 10 $ de crédit de calcul) ; Backblaze B2 à 6,95 $ par To
+Sources des prix vérifiés : serveur privé virtuel Hostinger KVM 2 (2 vCPU, 8 Go, 100 Go
+NVMe, sauvegarde hebdomadaire incluse) à 14,99 $ par mois au renouvellement et 8,79 $ par
+mois les 24 premiers mois payés d'avance (210,96 $), relevé le 28 octobre 2026 ; la base
+PostgreSQL tourne sur le même serveur (kit `deploy/vps`) ; Backblaze B2 à 6,95 $ par To
 et par mois ; Amazon SES à 0,10 $ les 1 000 e-mails ; Google Play à 25 $ une fois.
 Le prix d'Azure Artifact Signing n'est pas affiché sur sa page : 9,99 $ par mois est le
-chiffre cité sur le forum de Microsoft (octobre 2025), **à confirmer**. Le dimensionnement
-de départ (2 vCPU, 4 Go, 40 Go) est celui du guide de déploiement de Nhill.
+chiffre cité sur le forum de Microsoft (octobre 2025), **à confirmer**. Le modèle retient
+le prix de renouvellement, plus prudent ; la variante « prix promotionnel » figure au § 10.
 
 ### 8.2 Coûts mensuels du scénario central
 
 <!-- model:costs -->
 | Poste (scénario central) | Mois 1 | Mois 12 | Mois 24 | Mois 36 |
 |---|---|---|---|---|
-| Infrastructure et signature | 47 $ | 47 $ | 47 $ | 55 $ |
+| Infrastructure et signature | 29 $ | 29 $ | 29 $ | 44 $ |
 | Équipe | 1 900 $ | 1 900 $ | 2 800 $ | 3 300 $ |
 | Outils, comptable, télécoms, marketing fixe | 425 $ | 425 $ | 425 $ | 425 $ |
 | Acquisition variable (primes, déplacements, parrainage) | 114 $ | 256 $ | 427 $ | 598 $ |
 | Commissions partenaires | 4 $ | 67 $ | 127 $ | 188 $ |
 | Frais d'encaissement | 14 $ | 66 $ | 165 $ | 286 $ |
-| Total des coûts récurrents | 2 504 $ | 2 761 $ | 3 991 $ | 4 853 $ |
+| Total des coûts récurrents | 2 486 $ | 2 743 $ | 3 973 $ | 4 841 $ |
 | Revenu mensuel récurrent | 94 $ | 1 669 $ | 4 340 $ | 7 707 $ |
-| Résultat d'exploitation | -2 399 $ | -1 085 $ | 361 $ | 2 870 $ |
+| Résultat d'exploitation | -2 381 $ | -1 067 $ | 380 $ | 2 882 $ |
 <!-- /model -->
 
 ### 8.3 Coût de service par client
@@ -265,10 +265,10 @@ de départ (2 vCPU, 4 Go, 40 Go) est celui du guide de déploiement de Nhill.
 <!-- model:unit_costs -->
 | Coût de service par client actif et par mois (central) | Mois 12 | Mois 36 |
 |---|---|---|
-| Serveurs, base, sauvegardes, e-mails, signature | 0,66 $ | 0,17 $ |
+| Serveurs, base, sauvegardes, e-mails, signature | 0,40 $ | 0,13 $ |
 | Assistance (agents) | 6,98 $ | 4,53 $ |
 | Frais d'encaissement | 0,92 $ | 0,87 $ |
-| Total | 8,56 $ | 5,57 $ |
+| Total | 8,31 $ | 5,53 $ |
 | Revenu moyen par client (ARPA) | 23,31 $ | 23,29 $ |
 <!-- /model -->
 
@@ -286,8 +286,8 @@ ARPA du mix central, remises déduites, moins les frais d'encaissement.
 <!-- model:break_even -->
 | Zone de prix | ARPA (mix central, remises déduites) | Coûts fixes du mois type | Contribution par client | Clients actifs pour l'équilibre |
 |---|---|---|---|---|
-| A (lancement) | 24,89 $ | 2 372 $ | 24,02 $ | 99 |
-| B | 38,57 $ | 2 372 $ | 37,22 $ | 64 |
+| A (lancement) | 24,89 $ | 2 354 $ | 24,02 $ | 98 |
+| B | 38,57 $ | 2 354 $ | 37,22 $ | 64 |
 <!-- /model -->
 
 Formule : clients nécessaires = coûts fixes ÷ (ARPA × (1 − frais d'encaissement)). Au-delà
@@ -324,13 +324,13 @@ Résultats :
 | Revenu annuel récurrent (ARR), mois 36 | 30 199 $ | 92 478 $ | 205 047 $ |
 | Revenu moyen par client (ARPA), mois 36 | 19 $ / mois | 23 $ / mois | 25 $ / mois |
 | Mois d'équilibre d'exploitation durable | non atteint en 36 mois | M23 | M15 |
-| Besoin de trésorerie maximal (creux cumulé) | 58 126 $ au mois 36 | 27 472 $ au mois 15 | 17 789 $ au mois 10 |
-| Trésorerie cumulée, mois 36 | -58 126 $ | 3 683 $ | 116 258 $ |
+| Besoin de trésorerie maximal (creux cumulé) | 57 469 $ au mois 36 | 27 198 $ au mois 15 | 17 606 $ au mois 10 |
+| Trésorerie cumulée, mois 36 | -57 469 $ | 4 294 $ | 116 747 $ |
 | Coût d'acquisition moyen (CAC) | 125 $ | 96 $ | 83 $ |
-| Marge brute (encaissement, serveurs, assistance) | 48 % | 72 % | 78 % |
-| Valeur vie client (LTV) | 182 $ | 556 $ | 978 $ |
-| LTV / CAC | 1,4 | 5,8 | 11,8 |
-| Récupération du CAC | 13,8 mois | 5,8 mois | 4,2 mois |
+| Marge brute (encaissement, serveurs, assistance) | 49 % | 72 % | 78 % |
+| Valeur vie client (LTV) | 188 $ | 560 $ | 981 $ |
+| LTV / CAC | 1,5 | 5,8 | 11,9 |
+| Récupération du CAC | 13,3 mois | 5,7 mois | 4,2 mois |
 | Démonstrations nécessaires au mois 12 | 20 | 45 | 80 |
 <!-- /model -->
 
@@ -345,19 +345,18 @@ Sensibilité du scénario central :
 <!-- model:sensitivity -->
 | Variante du scénario central | Mois d'équilibre | Besoin de trésorerie maximal | Trésorerie cumulée, mois 36 |
 |---|---|---|---|
-| Scénario central tel quel | M23 | 27 472 $ | 3 683 $ |
-| Prix −20 % | M27 | 34 596 $ | -21 378 $ |
-| Prix +20 % | M16 | 24 161 $ | 28 744 $ |
-| Résiliation 4 % par mois | M24 | 28 034 $ | -2 863 $ |
-| Fondateur non rémunéré pendant 36 mois | M13 | 14 690 $ | 39 683 $ |
-| Base de données auto-hébergée (2e CX23 au lieu de Supabase) | M23 | 27 221 $ | 4 286 $ |
+| Scénario central tel quel | M23 | 27 198 $ | 4 294 $ |
+| Prix −20 % | M27 | 34 158 $ | -20 767 $ |
+| Prix +20 % | M16 | 23 924 $ | 29 355 $ |
+| Résiliation 4 % par mois | M24 | 27 741 $ | -2 239 $ |
+| Fondateur non rémunéré pendant 36 mois | M13 | 14 508 $ | 40 294 $ |
+| Serveur au prix promotionnel Hostinger (8,79 $/mois, 24 mois payés d'avance) | M23 | 27 105 $ | 4 561 $ |
 <!-- /model -->
 
 Lecture : le prix et la résiliation pèsent le plus ; un prix inférieur de 20 % repousse
 l'équilibre de quatre mois et laisse la trésorerie négative au mois 36. La rémunération
-du fondateur est le principal levier de trésorerie à court terme. Le choix de la base
-(Supabase ou serveur auto-hébergé) change peu le résultat ; il se décide sur la fiabilité
-et le temps d'exploitation.
+du fondateur est le principal levier de trésorerie à court terme. Le coût du serveur
+(prix promotionnel ou de renouvellement) change peu le résultat.
 
 ## 11. Stratégie multidevise et internationale
 
@@ -410,7 +409,7 @@ conformité dédié. Les pays visés en premier doivent être choisis aussi sur 
 ## 12. Plan marketing et stratégie d'acquisition
 
 Principe : acquisition par la relation, sans publicité agressive, cohérente avec le
-programme pilote et le modèle de partenaires (documents 02 et 09).
+programme pilote (premiers essais accompagnés) et le modèle de partenaires (documents 02 et 09).
 
 | Levier | Mise en œuvre | Indicateur | Coût dans le modèle |
 |---|---|---|---|
@@ -442,7 +441,7 @@ du pilote dès qu'ils sont mesurés.
 
 Hypothèses à valider en priorité : salaires réels, temps d'assistance par client,
 conversion du pilote, frais d'encaissement réels, traitement de la TVA, capacité par
-serveur, entité juridique et moyens de paiement accessibles.
+serveur et moyens de paiement accessibles.
 
 Recommandations :
 
@@ -461,8 +460,8 @@ Recommandations :
 | Priorité | Action | Responsable | Échéance indicative | Condition |
 |---|---|---|---|---|
 | 1 | Valider la structure des formules et les zones de prix | propriétaire du produit | semaine 1 | — |
-| 1 | Questionnaire de prix et trois propositions tests pendant le pilote | équipe commerciale | pilote (8 semaines) | pilotes recrutés |
-| 1 | Valider TVA, entité juridique, comptes de paiement | propriétaire, fiscaliste | avant la 1re facture | — |
+| 1 | Questionnaire de prix et trois propositions tests pendant le pilote | équipe commerciale | premiers essais (30 jours) | pilotes recrutés |
+| 1 | Valider la TVA et les comptes de paiement | propriétaire, fiscaliste | avant la 1re facture | — |
 | 2 | Saisir les offres et grilles dans Nhill Console (sans les publier sur le site) | administrateur de la plateforme | après validation | prix validés |
 | 2 | Test de charge et supervision | équipe technique | avant 100 clients | — |
 | 2 | Adaptateur agrégateur Mobile Money (essai réel) | équipe technique | avant 100 clients | contrat d'agrégateur |
@@ -488,8 +487,7 @@ Consultées les 26 et 27 octobre 2026, sauf mention.
 | Square | [Square — unified pricing, 6 octobre 2025](https://squareup.com/us/en/press/unified-pricing-and-packaging) |
 | DoliCloud | [dolicloud.com — pricing](https://www.dolicloud.com/en-pricing.php) |
 | ERPNext | [Frappe — Small Business plan, 14 août 2023](https://frappe.io/blog/announcements/introducing-the-erpnext-small-business-plan) |
-| Hetzner | [Hausse du 15 juin 2026](https://privatedevops.com/news/hetzner-june-2026-cloud-price-increase-what-to-do) ; [comparatif août 2026](https://kimmo.suominen.com/stuff/cpc-2026-08.txt) ; [CX23](https://www.vpsbenchmarks.com/hosters/hetzner/plans/cx23) ; [FAQ facturation Hetzner](https://docs.hetzner.com/cloud/billing/faq/) |
-| Supabase | [supabase.com/pricing](https://supabase.com/pricing) |
+| Hostinger | [Offres VPS](https://www.hostinger.com/vps-hosting) (relevé du 28 octobre 2026) |
 | Backblaze B2 | [backblaze.com — pricing](https://www.backblaze.com/cloud-storage/pricing) |
 | Amazon SES | [aws.amazon.com/ses/pricing](https://aws.amazon.com/ses/pricing/) |
 | Google Play | [Play Console Help](https://support.google.com/googleplay/android-developer/answer/6112435?hl=en) |

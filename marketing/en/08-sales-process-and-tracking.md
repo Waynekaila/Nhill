@@ -12,8 +12,8 @@ The `statut` values are kept in French in the tracker so that both teams share o
 | 2 | `contacté` (contacted) | visit, call or message (with consent) | demo booked, or refusal | 7 days |
 | 3 | `démo fixée` (demo booked) | date confirmed | demo done | 7 days |
 | 4 | `démo faite` (demo done) | report filled in, score computed | pilot offered or follow-up | 2 days |
-| 5 | `pilote proposé` (pilot offered) | agreement sent | signed, or refusal | 7 days |
-| 6 | `pilote en cours` (pilot running) | onboarding done | W8 review | 8 weeks |
+| 5 | `pilote proposé` (pilot offered) | trial terms sent | accepted by e-mail, or refusal | 7 days |
+| 6 | `pilote en cours` (pilot running) | onboarding done | D30 review | 30 days |
 | 7 | `proposition` (proposal) | written follow-up proposal sent | accepts / declines | 14 days |
 | 8 | `client` (customer) | first payment confirmed | — | — |
 | — | `perdu` (lost) | refusal or no answer after 2 follow-ups | reason noted (`motif_perte`) | — |
@@ -62,7 +62,7 @@ The file holds personal data: access limited to the sales team, retention accord
 6. From 0 to 10: would you recommend Nhill to another trader?
 7. One thing to change first?
 
-## 5. End-of-pilot questionnaire (W8, 10 minutes)
+## 5. End-of-trial questionnaire (D30, 10 minutes)
 
 1. Questions 1, 2, 3 and 6 of the mid-pilot questionnaire again.
 2. Compared with the start, closing the till takes: more / the same / less time. (Complete

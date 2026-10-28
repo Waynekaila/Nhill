@@ -1,101 +1,76 @@
-# Paramètres légaux de Nhill 2.0
+# Paramètres légaux de Nhill 3.0
 
 *English: [../en/legal-parameters.md](../en/legal-parameters.md)*
 
-Ce document liste **toutes les informations juridiques et fiscales à fournir** avant le
-lancement commercial, et l'endroit où chacune doit être saisie : modèles juridiques, site
-vitrine, réglages de Nhill Console et de Nhill Business. Aucune de ces valeurs n'est
-connue à ce jour ; **aucune ne doit être inventée**. Analyse détaillée et sources :
-[`legal/fr/00-recherche-juridique.md`](../../legal/fr/00-recherche-juridique.md).
+Ce document indique où se trouvent les informations juridiques et commerciales de Nhill :
+documents juridiques (`legal/`), site vitrine et réglages de Nhill Console. Analyse
+détaillée, décisions et sources : [`legal/fr/00-recherche-juridique.md`](../../legal/fr/00-recherche-juridique.md).
 
-> Rien dans ce dépôt ne constitue un avis juridique. Les modèles doivent être relus par un
-> avocat inscrit à un barreau de la RDC et, pour la fiscalité, par un fiscaliste.
+> Rien dans ce dépôt ne constitue un avis juridique. Les documents ont été rédigés sans
+> relecture par un avocat ; les points à faire relire sont listés au § 5 du dossier
+> juridique.
 
-## 0. Valeurs fixées par Nhill Solution (28 octobre 2026)
+## 1. Valeurs fixées par Nhill Solution (28 octobre 2026)
 
-| Donnée | Valeur | Remarque |
+| Donnée | Valeur | Où elle apparaît |
 |---|---|---|
-| Nom commercial | Nhill Solution | aucune forme juridique, immatriculation ni certification n'est mentionnée tant qu'elle n'est pas confirmée |
-| Siège | Kinshasa, République démocratique du Congo | sans adresse postale publiée |
-| Domaine officiel | `nhill.online` | adresse publique `https://nhill.online`, à contrôler avant annonce : `website/tools/check_live.py` |
-| E-mail général | `info@nhill.online` | contact, protection des données, prospection |
-| E-mail d'assistance | `support@nhill.online` | assistance aux clients, signalement de sécurité ou de contenu illicite |
+| Éditeur | Nhill Solution (nom commercial), siège à Kinshasa (République démocratique du Congo) ; aucune autre donnée d'identification | documents 01 à 19, mentions légales, pied de page du site, métadonnées des installateurs |
+| Directeur de la publication | Wayne TSHINGI, fondateur | mentions légales (document 05 et site) |
+| Domaine officiel | `nhill.online` | site (`config/site.json`), documents |
+| E-mail général | `info@nhill.online` | site, documents, protection des données |
+| E-mail d'assistance | `support@nhill.online` | site, applications (« Aide et assistance »), e-mails automatiques (`NH_SUPPORT_EMAIL`), signalements de sécurité, `/.well-known/security.txt` |
 | Téléphone | aucun publié | — |
-| Hébergement du service (API et base) | Hostinger International Ltd (Larnaca, Chypre), serveur privé virtuel en France (UE) | entité contractante d'Hostinger pour un client hors Royaume-Uni et hors groupes 1 et 2 de ses conditions générales |
+| Hébergement du service | Hostinger International Ltd, 61 Lordou Vironos str., 6023 Larnaca, Chypre ; serveur privé virtuel situé en France | mentions légales, politique de confidentialité, accord de traitement, registre |
+| Droit applicable | droit de la RDC ; juridictions compétentes de Kinshasa, sous réserve des règles impératives du pays de l'utilisateur | documents 01, 02, 09 à 12, page « Conditions » |
+| Responsabilité | plafonnée aux sommes payées pendant les 12 mois précédant le fait générateur, hors faute lourde ou intentionnelle et dommage corporel | document 02, page « Conditions » |
+| Niveau de service | aucun taux ni délai chiffré garanti | documents 02 et 07, page « Conditions » |
+| Prix | aucun prix publié ; proposition écrite par établissement | site, documents 02 et 09 |
+| Fin de contrat | 90 jours d'export en lecture seule, puis suppression | documents 02, 06, 15 ; Nhill Console (« Supprimer… ») |
+| Référence de bonnes pratiques | normes européennes (RGPD), sans affirmation de conformité | documents 03, 06, 13, 14, 15, 19 |
 
-## 1. Identité de l'exploitant (champ → où il apparaît)
+## 2. Réglages de Nhill Console
 
-| Champ | Exemple de format | Modèles | Site vitrine | Application |
-|---|---|---|---|---|
-| `[RAISON SOCIALE]` | dénomination exacte du RCCM | 01, 02, 03, 05, 06, 09-12, 18 | `mentions-legales`, `confidentialite`, `conditions` (FR/EN) | facture d'abonnement (Nhill Console → paramètres de la plateforme, instructions de paiement) |
-| `[FORME JURIDIQUE]`, `[CAPITAL]` | SARL / SAS / SA (OHADA), montant et devise | 01, 02, 05 | `mentions-legales` | — |
-| `[RCCM]` | numéro du Registre du commerce et du crédit mobilier | 01, 02, 03, 05, 09, 18 | `mentions-legales` | — |
-| `[ID. NAT.]` | identification nationale | 01, 02, 05 | `mentions-legales` | — |
-| `[NIF]` | numéro d'impôt | 01, 02, 05 | `mentions-legales` | factures d'abonnement |
-| `[ADRESSE]` | siège social complet | tous | `mentions-legales`, `contact` | — |
-| ~~`[TÉLÉPHONE]`~~, `[E-MAIL]` | **fixé** : `info@nhill.online` (aucun téléphone) | 01, 05 | `contact`, pied de page (`SITE_CONTACT_EMAIL`, `SITE_SUPPORT_EMAIL`) | Aide et assistance (`support@nhill.online`) |
-| `[NOM, FONCTION]` | représentant légal / directeur de la publication | 02, 05, 06, 09-11 | `mentions-legales` | — |
-| `[E-MAIL DPO]`, `[NOM DU DPO]` | **e-mail fixé** : `info@nhill.online` ; aucun délégué désigné à ce jour | 03, 04, 14, 16, 18, 19 | `confidentialite` | — |
-| `[E-MAIL DE SÉCURITÉ]` | **fixé** : `support@nhill.online` (objet « Sécurité ») | 05, 08, 13 | `mentions-legales`, futur `/.well-known/security.txt` | — |
-
-## 2. Hébergement et transferts
-
-| Champ | Décision à prendre | Où |
+| Paramètre | Valeur par défaut | Où |
 |---|---|---|
-| `[HÉBERGEUR]`, `[PAYS / RÉGION]` du serveur d'API | fournisseur et pays | modèles 03, 05, 06, 18 ; `mentions-legales` |
-| Hébergeur de la base (Supabase ou PostgreSQL auto-hébergé), région | si hors RDC : **autorisation de transfert** (hypothèse H-04) | modèles 03, 06, 18 |
-| Hébergeur du site vitrine | — | modèle 05 ; `website/README.md` |
-| Référence de l'autorisation de transfert | n°, date, autorité | modèles 03, 06, 18 |
-| Autorité de protection des données compétente | ARPTC (provisoire) ou ARPTIC (H-05) : **à vérifier en priorité** | modèles 03, 14, 19 ; page `confidentialite` (mentionne aujourd'hui l'ARPTC) |
-| Références des déclarations / autorisations de traitement | n° et date par traitement | modèle 18 |
-| Qualification de l'activité numérique (arrêtés n° 004 et 005/2026) | déclaration, autorisation ou exonération (H-07) | modèle 05 (« autorisation / déclaration d'activité numérique ») |
+| Durée de l'essai gratuit | 30 jours (`trial_days`) | Paramètres de la plateforme ; par formule |
+| Période de grâce avant lecture seule | 7 jours (`grace_days`) | Paramètres de la plateforme ; par formule |
+| Rappels avant l'échéance | 14, 7, 3 et 1 jours | Paramètres de la plateforme ; par formule |
+| Renouvellement automatique | seulement avec l'accord exprès du titulaire, si la formule le permet | Offres (« Renouvellement automatique autorisé (avec consentement) ») |
+| Formules, droits, plafonds, prix par durée et devise | aucun prix préconfiguré | Offres et tarifs |
+| Validité du code d'établissement | 30 jours (`code_rotation_days`) | Paramètres de la plateforme |
 
-## 3. Conditions commerciales
+## 3. Fiscalité dans l'application
 
-| Paramètre | Valeur proposée | Où le régler | À valider |
-|---|---|---|---|
-| Durée de l'essai gratuit | 30 jours (défaut) | Nhill Console → Paramètres de la plateforme | — |
-| Période de grâce avant lecture seule | 7 jours | Nhill Console → Paramètres de la plateforme | V-04 |
-| Offres, plafonds, prix par durée et devise | **aucun prix préconfiguré** | Nhill Console → Offres et tarifs ; modèle 02 annexe A | V-03 |
-| Devise de facturation, TVA de l'abonnement | `[USD / CDF]`, `[HT/TTC]` | modèle 02 § 3 | fiscaliste |
-| Renouvellement tacite ou exprès | `[À CHOISIR]` | modèle 02 § 2.2 | avocat |
-| Réversibilité après la fin | 90 jours | modèles 02, 06, 15 | V-07 |
-| Commission partenaires | `[N] %` sur 12 mois | modèle 10 | V-11 |
-| Remise « pilote » | `[N] %` pendant `[N]` mois | modèle 09 ; Nhill Console → Codes promo | — |
-| Heures d'assistance, canaux | `[JOURS ET HORAIRES]`, WhatsApp professionnel, e-mail | modèles 02, 07 | — |
-
-## 4. Fiscalité dans l'application
-
-| Élément | Situation 2.0 | Action |
+| Élément | Situation 3.0 | Action |
 |---|---|---|
 | Profil fiscal RDC (`server/profiles/CD.json`) | TVA 16 %, 0 %, exonéré, non applicable | faire vérifier taux et mentions par un fiscaliste |
-| Facture normalisée (DEF / SFE homologué) | **Nhill n'est pas homologué** ; mention « document de gestion » sur les documents des assujettis ; saisie de la référence DEF | ne pas présenter Nhill comme logiciel de facturation conforme ; feuille de route d'homologation : `docs/conformite/conformite.md` |
-| Taux dit « TVA sociale » 8 % | non établi, non activé | à valider |
+| Facture normalisée de la RDC | **Nhill n'est pas un dispositif de facturation agréé** ; mention « document de gestion » sur les documents des assujettis ; champ pour la référence de la facture officielle | ne jamais présenter Nhill comme un logiciel de facturation agréé |
+| Profil international (`INTL`) | taux, identifiants et mentions saisis par l'établissement | l'établissement fait confirmer ses mentions par son comptable |
 
-## 5. Textes affichés par l'application
+## 4. Textes affichés par l'application
 
-| Paramètre | Contenu actuel | Où |
+| Paramètre | Contenu | Où |
 |---|---|---|
-| `platform_stats_notice` | texte FR/EN expliquant les statistiques agrégées consultées par l'équipe Nhill (migration 0006) | Nhill Console → Paramètres de la plateforme ; à reprendre dans la politique de confidentialité (modèle 03, tableau des traitements) |
+| `platform_stats_notice` | texte FR/EN expliquant les chiffres globaux consultés par l'équipe Nhill | Paramètres de la plateforme ; repris dans la politique de confidentialité |
 | Mention « document de gestion » | imprimée sur les documents des assujettis à la TVA | profils (`server/profiles/*.json`) |
-| Information du personnel (journal d'activité) | modèle 17 à remettre par chaque établissement | à proposer dans l'aide de Nhill Business et lors de l'activation des comptes |
+| Information du personnel (journal d'activité) | document 17, à remettre par chaque établissement | à proposer lors de l'ouverture des comptes |
 
-## 6. Site vitrine : pages à finaliser
+## 5. Pages juridiques du site
 
-| Page FR / EN | Source à aligner | État 2.0 |
+| Page FR / EN | Document de référence | État 3.0 |
 |---|---|---|
-| `mentions-legales` / `legal-notice` | modèle 05 | bandeau « projet », champs entre crochets |
-| `confidentialite` / `privacy` | modèle 03 | bandeau « projet » |
-| `conditions` / `terms` | modèles 01 et 02 | bandeau « projet » |
+| `mentions-legales` / `legal-notice` | document 05 | complète, sans champ à remplir ; la ligne « hébergeur du site vitrine » sera ajoutée quand l'hébergeur du site sera choisi |
+| `confidentialite` / `privacy` | document 03 | complète, durées alignées sur le code |
+| `conditions` / `terms` | documents 01 et 02 | complète |
 
-Les pages portent un bandeau « Projet à compléter et à faire valider par un juriste. Ne pas
-publier en l'état. » à retirer seulement après validation.
+## 6. Actions restant à l'exploitant
 
-## 7. Ordre conseillé
-
-1. Société, RCCM, NIF, ID. Nat. (section 1).
-2. Choix de l'hébergement ; vérification de l'autorité compétente ; dépôts (section 2).
-3. Relecture des modèles 01-19 par l'avocat (clauses V-01 à V-13).
-4. Saisie des offres et prix dans Nhill Console ; annexe A du modèle 02.
-5. Finalisation des pages du site ; retrait des bandeaux « projet ».
-6. Ouverture des formulaires du site (`SITE_API_BASE_URL`), puis des inscriptions.
+1. Faire relire les documents 01 à 19 par un avocat inscrit à un barreau de la RDC
+   (points V-01 à V-13) et la position fiscale par un fiscaliste.
+2. Vérifier la disponibilité du nom « Nhill » et décider d'un dépôt de marque.
+3. Identifier l'autorité de protection des données compétente et accomplir les formalités
+   (traitements, transfert vers la France).
+4. Configurer la messagerie de `nhill.online` (MX, SPF, DKIM, DMARC) avant de publier les
+   adresses.
+5. Publier le site, puis contrôler le domaine (`website/tools/check_live.py --require-site
+   --require-mail`).

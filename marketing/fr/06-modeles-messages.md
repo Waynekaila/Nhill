@@ -56,7 +56,7 @@ remplacer.
 > Je suis [PRÉNOM NOM], de Nhill, un logiciel de gestion des ventes, du stock et de la
 > caisse conçu pour les commerçants et PME de la RDC (français et anglais, CDF et USD).
 >
-> Nous menons à Kinshasa un programme pilote gratuit de huit semaines, avec installation et
+> Nous proposons à Kinshasa un essai gratuit accompagné de 30 jours, avec installation et
 > formation. Il pourrait intéresser les membres de [ORGANISATION] qui veulent mieux suivre
 > leur caisse et leur stock.
 >
@@ -79,7 +79,7 @@ remplacer.
 >
 > 1. **Atelier** de 1 h 30 pour vos membres : bien suivre sa caisse et son stock, avec
 >    démonstration de Nhill. Date proposée : [DATE].
-> 2. **Places réservées** au programme pilote gratuit pour [N] de vos membres.
+> 2. **Places réservées** à l'essai gratuit accompagné pour [N] de vos membres.
 > 3. **[Si accord de partenariat]** une commission de [N] % sur les abonnements de vos
 >    membres pendant 12 mois, ou une remise de [N] % pour eux — à fixer par contrat écrit.
 >
@@ -105,7 +105,7 @@ remplacer.
 > Merci pour votre temps aujourd'hui. Pour résumer :
 > - ce qui vous intéresse : [POINTS NOTÉS] ;
 > - ce qui vous inquiète : [POINTS NOTÉS] — [RÉPONSE OU ENGAGEMENT] ;
-> - proposition : participer au programme pilote du [DATE] au [DATE].
+> - proposition : essai gratuit accompagné de 30 jours, du [DATE] au [DATE].
 >
 > Je vous joins la convention de pilote à lire tranquillement. Si elle vous convient, nous
 > fixons la mise en route (une demi-journée).
@@ -118,7 +118,7 @@ remplacer.
 
 > Bonjour [PRÉNOM],
 >
-> Voici le bilan de vos huit semaines : [MESURES AVANT / APRÈS, telles que mesurées].
+> Voici le bilan de vos 30 jours d'essai : [MESURES AVANT / APRÈS, telles que mesurées].
 > Pour continuer, nous vous proposons l'offre [NOM] à [PRIX] [CDF/USD] par [mois], à partir
 > du [DATE]. Sans réponse de votre part, l'accès s'arrête le [DATE] et vous gardez l'export
 > de vos données.

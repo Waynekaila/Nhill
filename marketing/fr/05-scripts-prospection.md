@@ -21,7 +21,7 @@ langue : français, lingala ou anglais selon l'interlocuteur.
 >
 > *[Écouter. Poser 2 ou 3 questions de découverte, voir `04` § 4.]*
 >
-> Nous lançons un programme pilote gratuit de huit semaines, avec installation et
+> Nous proposons un essai gratuit accompagné de 30 jours, avec installation et
 > formation. Je peux vous montrer en quinze minutes, avec vos propres produits, quand vous
 > serez plus disponible. Quel jour vous arrange ?
 

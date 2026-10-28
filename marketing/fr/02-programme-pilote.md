@@ -11,7 +11,7 @@ Page publique : `website/src/pages/fr/essai-gratuit.html` (« Essai gratuit acco
 
 | Nous apportons | Nous demandons |
 |---|---|
-| Nhill Business (et Nhill POS si caisse) gratuits pendant 8 semaines | utiliser Nhill pour une partie réelle de l'activité, chaque jour ouvré si possible |
+| Nhill Business (et Nhill POS si caisse) gratuits pendant 30 jours | utiliser Nhill pour une partie réelle de l'activité, chaque jour ouvré si possible |
 | installation sur les appareils, import du catalogue | une personne référente, 20 à 30 minutes par semaine |
 | formation de départ pour chaque utilisateur | signaler les problèmes, répondre à 2 courts questionnaires |
 | point hebdomadaire, assistance aux heures de travail | une connexion internet sur les appareils |
@@ -33,25 +33,27 @@ avant la fin.
 
 Grille de notation : [`04-icp-qualification.md`](04-icp-qualification.md) § 3.
 
-## 3. Déroulé (8 semaines)
+## 3. Déroulé (30 jours)
 
-| Semaine | Étape | Livrable |
+Les premiers essais accompagnés servent de pilote : même offre que le site, avec des
+mesures avant et après.
+
+| Moment | Étape | Livrable |
 |---|---|---|
-| S0 | démonstration sur les produits du pilote ; signature de la convention ; mesure de départ (voir § 4) | convention signée, fiche de départ |
-| S0 | mise en route : installation, import du catalogue, création des comptes, formation | établissement opérationnel |
-| S1 | suivi rapproché : 2 appels de 10 minutes, passage sur place si besoin | journal des problèmes |
-| S2-S3 | point hebdomadaire de 20 minutes | — |
-| S4 | **questionnaire de mi-parcours** ([`08-suivi-et-processus.md`](08-suivi-et-processus.md) § 4) | réponses |
-| S5-S7 | points hebdomadaires ; corrections livrées | — |
-| S8 | **bilan** : mesures de fin, questionnaire de fin, proposition écrite de suite | rapport de pilote |
+| J0 | démonstration sur les produits de l'établissement ; acceptation des conditions de l'essai (`legal/fr/09-conditions-essai-accompagne.md`) ; mesure de départ (voir § 4) | acceptation par e-mail, fiche de départ |
+| J0 | mise en route : installation, import du catalogue, création des comptes, formation | établissement opérationnel |
+| semaine 1 | suivi rapproché : 2 appels de 10 minutes, passage sur place si besoin | journal des problèmes |
+| semaine 2 | point de 20 minutes ; **questionnaire de mi-parcours** ([`08-suivi-et-processus.md`](08-suivi-et-processus.md) § 4) | réponses |
+| semaine 3 | point de 20 minutes ; corrections livrées | — |
+| J30 | **bilan** : mesures de fin, questionnaire de fin, proposition écrite de suite | rapport d'essai |
 
 ## 4. Mesures (avant / après)
 
 | Mesure | Comment la mesurer | Qui |
 |---|---|---|
-| Temps de clôture de caisse quotidienne | chronomètre, 3 jours avant le pilote, 3 jours en S7 | référent |
+| Temps de clôture de caisse quotidienne | chronomètre, 3 jours avant l'essai, 3 jours la dernière semaine | référent |
 | Écart de caisse moyen | relevé du pilote avant ; rapports Z de Nhill pendant | Nhill |
-| Écarts de stock à l'inventaire | inventaire de 20 articles en S0 et en S8 | référent + Nhill |
+| Écarts de stock à l'inventaire | inventaire de 20 articles à J0 et à J30 | référent + Nhill |
 | Part des ventes saisies dans Nhill | ventes Nhill / ventes totales déclarées par le pilote | référent |
 | Utilisation | jours avec au moins une vente, utilisateurs actifs (statistiques agrégées de la console, visibles dans le journal du pilote) | Nhill |
 | Satisfaction | note de 0 à 10 « recommanderiez-vous Nhill ? » + verbatim (avec accord) | questionnaire |
@@ -63,7 +65,7 @@ Aucun résultat n'est publié sans l'accord écrit du pilote et tel que mesuré.
 
 | Indicateur | Seuil de décision |
 |---|---|
-| Pilotes actifs en S8 (au moins 4 jours d'usage par semaine) | ≥ 60 % des pilotes |
+| Pilotes actifs la dernière semaine (au moins 4 jours d'usage par semaine) | ≥ 60 % des pilotes |
 | Note de recommandation moyenne | ≥ 7 / 10 |
 | Pilotes prêts à payer au prix proposé | ≥ 40 % |
 | Incidents bloquants non résolus en 48 h | 0 |
@@ -75,7 +77,7 @@ deuxième vague de pilotes.
 
 | Rôle | Charge |
 |---|---|
-| Responsable du pilote (1 personne) | recrutement, convention, points hebdomadaires, rapport |
+| Responsable du pilote (1 personne) | recrutement, conditions de l'essai, points hebdomadaires, rapport |
 | Technicien d'installation (peut être un partenaire intégrateur) | mise en route, assistance sur place |
 | Développement | corrections, suivi des erreurs techniques remontées |
 
@@ -86,7 +88,7 @@ Capacité : 1 responsable suit au plus 6 pilotes en parallèle ; au-delà, deux 
 | Risque | Parade |
 |---|---|
 | Coupures d'électricité / internet chez le pilote | test de connexion à la sélection ; procédure papier de secours ; reprise sans double saisie |
-| Abandon après 2 semaines | référent engagé, appels S1, objectifs choisis par le pilote |
-| Pilote assujetti à la TVA qui croit Nhill homologué | message clair dès la démonstration et dans la convention |
+| Abandon après 2 semaines | référent engagé, appels de la première semaine, objectifs choisis par le pilote |
+| Pilote assujetti à la TVA qui croit Nhill homologué | message clair dès la démonstration et dans les conditions de l'essai |
 | Données importées incorrectes | import « tout ou rien » avec liste d'erreurs ; vérification à deux |
-| Version non construite pour une plate-forme | vérifier les livrables disponibles (`release/V2.0.0/checksums/MISSING.txt`) avant de promettre Windows ou Android |
+| Version non construite pour une plate-forme | vérifier les livrables disponibles (`release/V3.0.0/checksums/MISSING.txt`) avant de promettre Windows ou Android |

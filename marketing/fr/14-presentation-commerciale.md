@@ -4,8 +4,8 @@
 
 Contenu de la présentation à projeter ou à montrer sur tablette (15 minutes avant la
 démonstration). Une seule idée par diapositive ; les captures sont des **écrans réels** de
-Nhill 2.0 (dossier `docs/assets/v2/`, captures automatiques de la CI sur un établissement
-de démonstration). Version diffusable : PDF généré depuis ce fichier
+Nhill 3.0 (dossier `website/assets/images/`, captures automatiques de la CI sur un
+établissement de démonstration). Version diffusable : PDF généré depuis ce fichier
 (`marketing/pdf/fr/14-presentation-commerciale.pdf`).
 
 ---
@@ -67,9 +67,9 @@ Français / anglais · CDF / USD sans mélange · coupure de réseau : pas de do
 enregistrement · accompagnement sur place · Windows, Linux, Android (Nhill Business).
 **Nhill ne remplace pas la facture normalisée DGI** pour les assujettis à la TVA.
 
-## Diapositive 9 — Le programme pilote
+## Diapositive 9 — L'essai gratuit accompagné
 
-8 semaines, gratuit, sans engagement : installation, import des produits, formation, point
+30 jours, gratuit, sans engagement : installation, import des produits, formation, point
 chaque semaine, export de vos données à la fin.
 
 ## Diapositive 10 — Prochaine étape
@@ -80,5 +80,5 @@ info@nhill.online
 ---
 
 Notes pour l'orateur : vérifier avant chaque rendez-vous que les plates-formes citées en
-diapositive 8 sont bien livrées (`release/V2.0.0/`) ; ne jamais ajouter de logo de client
+diapositive 8 sont bien livrées (`release/V3.0.0/`) ; ne jamais ajouter de logo de client
 ou de partenaire sans accord écrit.

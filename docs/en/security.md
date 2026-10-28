@@ -1,8 +1,8 @@
-# Nhill 2.1 — Security
+# Nhill 3.0 — Security
 
 *Français : [../fr/securite.md](../fr/securite.md)*
 
-This document summarises the Nhill 2.1 security model, what changed since 0.1.0 and what
+This document summarises the Nhill 3.0 security model, what changed since 0.1.0 and what
 the operator must do. The detailed analysis, with evidence and sources, is in the
 [security audit](03-security-audit.md); the 0.1.0 internal audit (evidence through tests) is
 kept in `docs/securite.md` (French).
@@ -76,11 +76,25 @@ the user has not signed out; an Android device without a screen lock protects th
 less; 2.0 applications do not handle the required change (update the devices before using
 the reset by an administrator).
 
+## 4b. Security changes in 3.0
+
+| Change | Effect |
+|---|---|
+| Plans and rights checked by the server on every route | a function outside the plan is refused by the API, not only hidden in the application |
+| Point of sale: single-use supervisor approval (3 min) bound to the action, the requester and the session; blind close | a discount, return or void requires another person's password; the cashier does not see the expected amount before counting |
+| Full export reserved for the account holder, limited to 3 per 15 minutes | archive without passwords, tokens or codes |
+| Erasure of a business 90 days after the end of access (superadministrator, trade name to type) | data, accounts used only in that business and log deleted; paid subscription orders archived for 10 years; the application role cannot use the erasure mechanism |
+| Retention: sent messages deleted after 30 days, ended sessions after 90 days | less personal data kept (e-mail addresses, IP addresses) |
+| Searches: `%` and `_` taken literally | no wider patterns than intended |
+| Client: HTTP/1.1 only | avoids the HTTP/2 code of Qt 6.5.3 (CVE-2023-51714, CVE-2024-39936) |
+| Virtual private server kit (`deploy/vps`) | database and API local only, firewall, fail2ban, secrets in 0600, encrypted backups whose private key stays off the server, check every 5 minutes, update with a way back; 12 acceptance checks passed on a fresh machine |
+
 ## 5. Known dependency vulnerabilities
 
 | Dependency | Advisory | Status | Action |
 |---|---|---|---|
-| cpp-httplib 0.14 (Ubuntu 24.04 / Debian package) | CVE-2025-46728, CVE-2025-53629 (memory exhaustion, CVSS 7.5) | mitigated by Caddy (`request_body max_size`) | **priority 1**: move to cpp-httplib ≥ 0.23.0, rerun the server tests |
+| cpp-httplib 0.14.3 (Ubuntu 24.04 package) | CVE-2025-46728, CVE-2025-53629 (memory exhaustion, CVSS 7.5); 24.04 fixes only through Ubuntu Pro | mitigated: server local only, Caddy refuses bodies over 6 MB | **decision to take**: build against cpp-httplib ≥ 0.23 or use Ubuntu Pro (audit, R1) |
+| Qt 6.5.3 (Windows installers, Android APK) | CVE-2023-51714, CVE-2024-39936 (HTTP/2) and later advisories | mitigated: HTTP/2 disabled in the client | **decision to take**: maintained Qt version (audit, R2) |
 | Bundled Qt 6.4.2 ("debian-13-embedded" variant) | CVE-2024-39936 and later advisories | variant discouraged, not shipped by default | use the native packages |
 
 ## 6. What the operator must do
@@ -88,16 +102,18 @@ the reset by an administrator).
 Before commercial opening:
 
 - [ ] Back up `NH_SECRET_KEY` in a vault, separately from the database backups.
-- [ ] Caddy in front of the server (TLS, HSTS), server listening on `127.0.0.1` only,
-      firewall limited to 80/443 and administration.
-- [ ] Daily encrypted backups and a **restore test**; consider continuous WAL archiving
-      (otherwise up to 24 h of data can be lost).
-- [ ] Monitoring: `/health`, backup failures, certificate expiry, disk, 5xx errors.
+- [ ] Install the server with the `deploy/vps` kit ([vps-deployment-hostinger.md](vps-deployment-hostinger.md)):
+      Caddy (TLS, HSTS), server and database local only, firewall, encrypted backups,
+      monitoring; run the acceptance test `deploy/vps/tests/acceptance.sh`.
+- [ ] Copy the backups off the server and run a **trial restore** regularly
+      (`nhill-restore-test`); consider continuous WAL archiving (otherwise up to 24 h of
+      data can be lost).
+- [ ] Connect the alert (`NH_ALERT_CMD`) to a channel read every day.
 - [ ] Console accounts: minimal role, TOTP on a personal device, long passphrase.
 - [ ] Payment providers in test mode until a real control payment.
-- [ ] SMTP relay configured (`NH_EMAIL_TRANSPORT=smtp`, TLS, SPF/DKIM for the sender
-      domain) and tested: without it, owners and administrators cannot recover a
-      forgotten password.
+- [ ] E-mail for `nhill.online`: MX, SPF, DKIM and DMARC records; SMTP relay configured
+      (`NH_EMAIL_TRANSPORT=smtp`, TLS) and tested: without it, owners and administrators
+      cannot recover a forgotten password.
 - [ ] Personal-data formalities in the DRC (see [legal-parameters.md](legal-parameters.md)).
 - [ ] External penetration test before a wide roll-out.
 - [ ] Sign the Windows installers and the APK with the publisher's certificates.
@@ -108,7 +124,7 @@ administrator leaves.
 
 ## 7. Reporting a vulnerability
 
-Reporting address: **to be defined by the creators** (for example `security@<domain>`,
-published on the website and in a `security.txt` file). Commitments to set:
-acknowledgement, fix delay, credit to finders. Do not publish exploitable details before a
-fix.
+Write to **support@nhill.online**, subject "Security" (address published in
+`website/.well-known/security.txt` and in the acceptable use policy). Nhill Solution
+acknowledges the report and keeps the person informed of its handling. Do not publish
+exploitable details before a fix.

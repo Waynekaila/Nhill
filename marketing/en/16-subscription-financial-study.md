@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Version | 1.0 — 27 October 2026 |
+| Version | 1.1 — 28 October 2026 (Hostinger hosting in France; 1.0 of 27 October 2026) |
 | Status | **recommendations subject to the product owner's approval**: no price is published on the website or loaded into the database |
 | Method | public prices collected online on 26 and 27 October 2026 (§ 15), inspection of the Nhill 2.1 code, reproducible financial model (`marketing/tools/subscription_model.py`) |
 | Legend | **V** verified data, with its source and date; **H** assumption to validate; calculations are made by the script, never by hand |
@@ -144,7 +144,7 @@ do not cover quotes, invoices and receivables.
 2. **Monthly or annual payment**; annual gives two months (10 months paid). Quarterly
    (3 months, no discount) is offered in zone A, where cash cycles are short; 6, 24 and
    36-month durations exist in the code but are not recommended at launch.
-3. **Free assisted trial** (eight-week pilot programme, then a 30-day trial): conversion
+3. **Free assisted trial** of 30 days (the first trials serve as the pilot): conversion
    happens on real use.
 4. **One-off services invoiced separately** (extra training, complex data migration,
    installation outside Kinshasa): prices to be set after measuring the time spent
@@ -193,8 +193,8 @@ demo, not the signature rate alone.
 <!-- model:hypotheses -->
 | Assumption | Value | Type |
 |---|---|---|
-| Hetzner CX23 application server (2 vCPU, 4 GB, 40 GB) €5.99 + 20% backups | $8.26 / month | verified |
-| Supabase Pro managed PostgreSQL (8 GB, daily backup kept 7 days) | $25 / month | verified |
+| Hostinger KVM 2 virtual private server in France (2 vCPU, 8 GB, 100 GB NVMe, weekly backup included), renewal price | $14.99 / month | verified |
+| PostgreSQL database on the same server (deploy/vps kit), no separate cost | included ($0) | verified |
 | Encrypted off-site backups (Backblaze B2, $6.95/TB; first 10 GB free) | $1 / month | assumption |
 | E-mail delivery (Amazon SES, $0.10 per 1,000 e-mails) | $1 / month | assumption |
 | Domain name ($20 a year) | $1.67 / month | assumption |
@@ -215,7 +215,7 @@ demo, not the signature rate alone.
 | Share of new customers from referrals (1 month free for the referrer) | 15.0% | assumption |
 | Average discounts (promo codes, commercial gestures) | 5.0% | assumption |
 | Active establishments per application server (no load test performed) | 250 | assumption |
-| Active establishments above which the database moves to larger compute (+$15/month) | 500 | assumption |
+| Active establishments above which the database moves to a second KVM 2 server (+$15/month) | 500 | assumption |
 <!-- /model -->
 
 One-off expenses:
@@ -223,36 +223,36 @@ One-off expenses:
 <!-- model:one_off -->
 | Month | One-off expense | Amount | Type |
 |---|---|---|---|
-| M1 | Company set-up, legal and tax advice | $1,500 | assumption |
+| M1 | Legal and tax advice, formalities | $1,500 | assumption |
 | M1 | Demo hardware (receipt printer, scanner, Android tablet) | $1,200 | assumption |
 | M1 | Google Play developer account (one-time fee) | $25 | verified |
 | M1 | Printed brand material, cards, banner | $500 | assumption |
 | M6 | External penetration test before a wide roll-out | $5,000 | assumption |
 <!-- /model -->
 
-Sources of verified prices: Hetzner CX23 at €5.99 a month with IPv4 (August 2026
-reading, after the 15 June 2026 price adjustment) and backups at 20% of the server price
-(Hetzner documentation); Supabase Pro at $25 a month (8 GB database, daily backup kept
-7 days, $10 compute credit); Backblaze B2 at $6.95 per TB per month; Amazon SES at
+Sources of verified prices: Hostinger KVM 2 virtual private server (2 vCPU, 8 GB, 100 GB
+NVMe, weekly backup included) at $14.99 a month on renewal and $8.79 a month for the first
+24 months paid upfront ($210.96), read on 28 October 2026; the PostgreSQL database runs on
+the same server (`deploy/vps` kit); Backblaze B2 at $6.95 per TB per month; Amazon SES at
 $0.10 per 1,000 e-mails; Google Play at $25 once. The Azure Artifact Signing price is not
 shown on its page: $9.99 a month is the figure quoted on Microsoft's forum (October 2025),
-**to be confirmed**. The starting size (2 vCPU, 4 GB, 40 GB) is the one in Nhill's
-deployment guide.
+**to be confirmed**. The model uses the renewal price, the more prudent one; the
+"promotional price" variant is in § 10.
 
 ### 8.2 Monthly costs of the central scenario
 
 <!-- model:costs -->
 | Item (central scenario) | Month 1 | Month 12 | Month 24 | Month 36 |
 |---|---|---|---|---|
-| Infrastructure and signing | $47 | $47 | $47 | $55 |
+| Infrastructure and signing | $29 | $29 | $29 | $44 |
 | Team | $1,900 | $1,900 | $2,800 | $3,300 |
 | Tools, accountant, telecoms, fixed marketing | $425 | $425 | $425 | $425 |
 | Variable acquisition (bonuses, travel, referrals) | $114 | $256 | $427 | $598 |
 | Partner commissions | $4 | $67 | $127 | $188 |
 | Collection fees | $14 | $66 | $165 | $286 |
-| Total recurring costs | $2,504 | $2,761 | $3,991 | $4,853 |
+| Total recurring costs | $2,486 | $2,743 | $3,973 | $4,841 |
 | Monthly recurring revenue | $94 | $1,669 | $4,340 | $7,707 |
-| Operating result | -$2,399 | -$1,085 | $361 | $2,870 |
+| Operating result | -$2,381 | -$1,067 | $380 | $2,882 |
 <!-- /model -->
 
 ### 8.3 Cost to serve per customer
@@ -260,10 +260,10 @@ deployment guide.
 <!-- model:unit_costs -->
 | Cost to serve per active customer per month (central) | Month 12 | Month 36 |
 |---|---|---|
-| Servers, database, backups, e-mail, signing | $0.66 | $0.17 |
+| Servers, database, backups, e-mail, signing | $0.40 | $0.13 |
 | Support (agents) | $6.98 | $4.53 |
 | Collection fees | $0.92 | $0.87 |
-| Total | $8.56 | $5.57 |
+| Total | $8.31 | $5.53 |
 | Average revenue per account (ARPA) | $23.31 | $23.29 |
 <!-- /model -->
 
@@ -281,8 +281,8 @@ ARPA of the central mix, after discounts, minus collection fees.
 <!-- model:break_even -->
 | Price zone | ARPA (central mix, after discounts) | Fixed costs of a typical month | Contribution per customer | Active customers to break even |
 |---|---|---|---|---|
-| A (launch) | $24.89 | $2,372 | $24.02 | 99 |
-| B | $38.57 | $2,372 | $37.22 | 64 |
+| A (launch) | $24.89 | $2,354 | $24.02 | 98 |
+| B | $38.57 | $2,354 | $37.22 | 64 |
 <!-- /model -->
 
 Formula: customers needed = fixed costs ÷ (ARPA × (1 − collection fees)). Above 150
@@ -318,13 +318,13 @@ Results:
 | Annual recurring revenue (ARR), month 36 | $30,199 | $92,478 | $205,047 |
 | Average revenue per account (ARPA), month 36 | $19 / month | $23 / month | $25 / month |
 | Month of lasting operating break-even | not reached in 36 months | M23 | M15 |
-| Maximum cash need (cumulative low point) | $58,126 in month 36 | $27,472 in month 15 | $17,789 in month 10 |
-| Cumulative cash, month 36 | -$58,126 | $3,683 | $116,258 |
+| Maximum cash need (cumulative low point) | $57,469 in month 36 | $27,198 in month 15 | $17,606 in month 10 |
+| Cumulative cash, month 36 | -$57,469 | $4,294 | $116,747 |
 | Average acquisition cost (CAC) | $125 | $96 | $83 |
-| Gross margin (collection, servers, support) | 48% | 72% | 78% |
-| Customer lifetime value (LTV) | $182 | $556 | $978 |
-| LTV / CAC | 1.4 | 5.8 | 11.8 |
-| CAC payback | 13.8 months | 5.8 months | 4.2 months |
+| Gross margin (collection, servers, support) | 49% | 72% | 78% |
+| Customer lifetime value (LTV) | $188 | $560 | $981 |
+| LTV / CAC | 1.5 | 5.8 | 11.9 |
+| CAC payback | 13.3 months | 5.7 months | 4.2 months |
 | Demos needed in month 12 | 20 | 45 | 80 |
 <!-- /model -->
 
@@ -339,18 +339,18 @@ Sensitivity of the central scenario:
 <!-- model:sensitivity -->
 | Variant of the central scenario | Break-even month | Maximum cash need | Cumulative cash, month 36 |
 |---|---|---|---|
-| Central scenario as is | M23 | $27,472 | $3,683 |
-| Prices −20% | M27 | $34,596 | -$21,378 |
-| Prices +20% | M16 | $24,161 | $28,744 |
-| Churn 4% a month | M24 | $28,034 | -$2,863 |
-| Founder unpaid for 36 months | M13 | $14,690 | $39,683 |
-| Self-hosted database (2nd CX23 instead of Supabase) | M23 | $27,221 | $4,286 |
+| Central scenario as is | M23 | $27,198 | $4,294 |
+| Prices −20% | M27 | $34,158 | -$20,767 |
+| Prices +20% | M16 | $23,924 | $29,355 |
+| Churn 4% a month | M24 | $27,741 | -$2,239 |
+| Founder unpaid for 36 months | M13 | $14,508 | $40,294 |
+| Server at Hostinger's promotional price ($8.79/month, 24 months paid upfront) | M23 | $27,105 | $4,561 |
 <!-- /model -->
 
 Reading: price and churn weigh the most; prices 20% lower push break-even back by four
 months and leave cash negative in month 36. The founder's pay is the main short-term cash
-lever. The database choice (Supabase or self-hosted server) changes the result little; it
-is decided on reliability and operating time.
+lever. The server cost (promotional or renewal price) changes the
+result little.
 
 ## 11. Multi-currency and international strategy
 
@@ -402,7 +402,7 @@ should also be chosen on this criterion.
 ## 12. Marketing plan and acquisition strategy
 
 Principle: relationship-based acquisition, with no aggressive advertising, consistent with
-the pilot programme and the partner model (documents 02 and 09).
+the pilot programme (first assisted trials) and the partner model (documents 02 and 09).
 
 | Lever | Implementation | Indicator | Cost in the model |
 |---|---|---|---|
@@ -433,8 +433,8 @@ are measured.
 | Team cost assumptions | sensitive result | enter the real budget in the script, rerun the scenarios |
 
 Assumptions to validate first: real salaries, support time per customer, pilot
-conversion, real collection fees, VAT treatment, capacity per server, legal entity and
-accessible payment methods.
+conversion, real collection fees, VAT treatment, capacity per server and accessible
+payment methods.
 
 Recommendations:
 
@@ -453,8 +453,8 @@ Recommendations:
 | Priority | Action | Owner | Indicative deadline | Condition |
 |---|---|---|---|---|
 | 1 | Approve the plan structure and price zones | product owner | week 1 | — |
-| 1 | Price questionnaire and three test proposals during the pilot | sales team | pilot (8 weeks) | pilot customers recruited |
-| 1 | Validate VAT, legal entity, payment accounts | product owner, tax adviser | before the first invoice | — |
+| 1 | Price questionnaire and three test proposals during the pilot | sales team | first trials (30 days) | pilot customers recruited |
+| 1 | Validate VAT and payment accounts | product owner, tax adviser | before the first invoice | — |
 | 2 | Enter the plans and price lists in Nhill Console (without publishing them on the website) | platform administrator | after approval | prices approved |
 | 2 | Load test and monitoring | technical team | before 100 customers | — |
 | 2 | Mobile Money aggregator adapter (real test) | technical team | before 100 customers | aggregator contract |
@@ -480,8 +480,7 @@ Consulted on 26 and 27 October 2026 unless stated.
 | Square | [Square — unified pricing, 6 October 2025](https://squareup.com/us/en/press/unified-pricing-and-packaging) |
 | DoliCloud | [dolicloud.com — pricing](https://www.dolicloud.com/en-pricing.php) |
 | ERPNext | [Frappe — Small Business plan, 14 August 2023](https://frappe.io/blog/announcements/introducing-the-erpnext-small-business-plan) |
-| Hetzner | [15 June 2026 increase](https://privatedevops.com/news/hetzner-june-2026-cloud-price-increase-what-to-do); [August 2026 comparison](https://kimmo.suominen.com/stuff/cpc-2026-08.txt); [CX23](https://www.vpsbenchmarks.com/hosters/hetzner/plans/cx23); [Hetzner billing FAQ](https://docs.hetzner.com/cloud/billing/faq/) |
-| Supabase | [supabase.com/pricing](https://supabase.com/pricing) |
+| Hostinger | [VPS plans](https://www.hostinger.com/vps-hosting) (read on 28 October 2026) |
 | Backblaze B2 | [backblaze.com — pricing](https://www.backblaze.com/cloud-storage/pricing) |
 | Amazon SES | [aws.amazon.com/ses/pricing](https://aws.amazon.com/ses/pricing/) |
 | Google Play | [Play Console Help](https://support.google.com/googleplay/android-developer/answer/6112435?hl=en) |

@@ -10,7 +10,7 @@
 > Nhill est un logiciel de gestion simple : chaque vente est enregistrée au nom du caissier,
 > le stock suit, et le propriétaire voit tout depuis son téléphone, même absent.
 >
-> Nous lançons un programme pilote gratuit de huit semaines, avec installation et formation.
+> Nous proposons un essai gratuit accompagné de 30 jours, avec installation et formation.
 > Je peux vous le montrer sur vos produits en quinze minutes ?
 
 ## 2. Pitch de 2 minutes (≈ 300 mots)
@@ -38,8 +38,8 @@
 > la DGI : les assujettis à la TVA gardent leur dispositif fiscal, et utilisent Nhill pour la
 > gestion.
 >
-> **Où nous en sommes.** La version 2.0 est construite et testée ; nous lançons un programme
-> pilote gratuit de huit semaines avec une dizaine de commerçants, pour fixer les prix à
+> **Où nous en sommes.** La version 3.0 est construite et testée ; nous proposons un essai
+> gratuit accompagné de 30 jours à un petit nombre d'entreprises, pour fixer les prix à
 > partir de résultats mesurés.
 >
 > **Ce que nous vous demandons.** [Pour un commerçant :] quinze minutes pour une

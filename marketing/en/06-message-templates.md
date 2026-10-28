@@ -51,7 +51,7 @@ the `[BRACKETS]`.
 > I am [FIRST NAME LAST NAME], from Nhill, sales, stock and till management software
 > designed for traders and SMEs in the DRC (French and English, CDF and USD).
 >
-> We are running a free eight-week pilot programme in Kinshasa, with installation and
+> We offer in Kinshasa a 30-day assisted free trial, with installation and
 > training. It may interest members of [ORGANISATION] who want to keep better track of their
 > till and stock.
 >
@@ -74,7 +74,7 @@ the `[BRACKETS]`.
 >
 > 1. **A 90-minute workshop** for your members: keeping track of your till and stock, with a
 >    Nhill demo. Proposed date: [DATE].
-> 2. **Reserved places** in the free pilot programme for [N] of your members.
+> 2. **Reserved places** in the assisted free trial for [N] of your members.
 > 3. **[If a partnership is agreed]** a [N] % commission on your members' subscriptions for
 >    12 months, or a [N] % discount for them — to be set in a written contract.
 >
@@ -100,7 +100,7 @@ the `[BRACKETS]`.
 > Thank you for your time today. To sum up:
 > - what interests you: [NOTED POINTS];
 > - what worries you: [NOTED POINTS] — [ANSWER OR COMMITMENT];
-> - proposal: join the pilot programme from [DATE] to [DATE].
+> - proposal: 30-day assisted free trial, from [DATE] to [DATE].
 >
 > I attach the pilot agreement for you to read at your own pace. If it suits you, we'll set
 > the onboarding (half a day).
@@ -113,7 +113,7 @@ the `[BRACKETS]`.
 
 > Hello [FIRST NAME],
 >
-> Here is the review of your eight weeks: [BEFORE / AFTER MEASUREMENTS, as measured].
+> Here is the review of your 30-day trial: [BEFORE / AFTER MEASUREMENTS, as measured].
 > To continue, we propose the [NAME] plan at [PRICE] [CDF/USD] per [month], from [DATE].
 > Without a reply, access stops on [DATE] and you keep the export of your data.
 >

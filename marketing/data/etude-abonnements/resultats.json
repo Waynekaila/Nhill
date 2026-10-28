@@ -1,16 +1,16 @@
 {
  "hypotheses": {
   "app_server": {
-   "v": 8.26,
+   "v": 14.99,
    "src": "V",
-   "fr": "Serveur d'application Hetzner CX23 (2 vCPU, 4 Go, 40 Go) 5,99 € + sauvegardes 20 %",
-   "en": "Hetzner CX23 application server (2 vCPU, 4 GB, 40 GB) €5.99 + 20% backups"
+   "fr": "Serveur privé virtuel Hostinger KVM 2 en France (2 vCPU, 8 Go, 100 Go NVMe, sauvegarde hebdomadaire incluse), prix de renouvellement",
+   "en": "Hostinger KVM 2 virtual private server in France (2 vCPU, 8 GB, 100 GB NVMe, weekly backup included), renewal price"
   },
   "database": {
-   "v": 25.0,
+   "v": 0.0,
    "src": "V",
-   "fr": "Base PostgreSQL gérée Supabase Pro (8 Go, sauvegarde quotidienne 7 jours)",
-   "en": "Supabase Pro managed PostgreSQL (8 GB, daily backup kept 7 days)"
+   "fr": "Base PostgreSQL sur le même serveur (kit deploy/vps), sans coût séparé",
+   "en": "PostgreSQL database on the same server (deploy/vps kit), no separate cost"
   },
   "offsite_backup": {
    "v": 1.0,
@@ -135,8 +135,8 @@
   "db_upgrade_above": {
    "v": 500,
    "src": "H",
-   "fr": "Établissements actifs au-delà desquels la base passe à la puissance supérieure (+15 $/mois)",
-   "en": "Active establishments above which the database moves to larger compute (+$15/month)"
+   "fr": "Établissements actifs au-delà desquels la base passe sur un second serveur KVM 2 (+15 $/mois)",
+   "en": "Active establishments above which the database moves to a second KVM 2 server (+$15/month)"
   }
  },
  "plans": {
@@ -223,8 +223,8 @@
    1,
    1500.0,
    "H",
-   "Création de la société, conseil juridique et fiscal",
-   "Company set-up, legal and tax advice"
+   "Conseil juridique et fiscal, formalités",
+   "Legal and tax advice, formalities"
   ],
   [
    1,
@@ -263,13 +263,13 @@
   "pessimiste": {
    "scenario": "pessimiste",
    "break_even_month": null,
-   "min_cum_cash": -58126,
+   "min_cum_cash": -57469,
    "min_cash_month": 36,
    "cac": 125.4,
-   "gross_margin": 0.475,
-   "ltv": 182,
-   "ltv_cac": 1.4,
-   "payback_months": 13.8,
+   "gross_margin": 0.491,
+   "ltv": 188,
+   "ltv_cac": 1.5,
+   "payback_months": 13.3,
    "arpa_m36": 19.14,
    "active": {
     "12": 31,
@@ -287,9 +287,9 @@
     "36": 30199
    },
    "cum_cash": {
-    "12": -33569,
-    "24": -50988,
-    "36": -58126
+    "12": -33350,
+    "24": -50549,
+    "36": -57469
    },
    "new_m12": 4,
    "new_m36": 10,
@@ -298,13 +298,13 @@
   "central": {
    "scenario": "central",
    "break_even_month": 23,
-   "min_cum_cash": -27472,
+   "min_cum_cash": -27198,
    "min_cash_month": 15,
    "cac": 96.3,
-   "gross_margin": 0.716,
-   "ltv": 556,
+   "gross_margin": 0.721,
+   "ltv": 560,
    "ltv_cac": 5.8,
-   "payback_months": 5.8,
+   "payback_months": 5.7,
    "arpa_m36": 23.29,
    "active": {
     "12": 72,
@@ -322,9 +322,9 @@
     "36": 92478
    },
    "cum_cash": {
-    "12": -26544,
-    "24": -24432,
-    "36": 3683
+    "12": -26325,
+    "24": -23994,
+    "36": 4294
    },
    "new_m12": 9,
    "new_m36": 21,
@@ -333,12 +333,12 @@
   "optimiste": {
    "scenario": "optimiste",
    "break_even_month": 15,
-   "min_cum_cash": -17789,
+   "min_cum_cash": -17606,
    "min_cash_month": 10,
    "cac": 82.6,
-   "gross_margin": 0.779,
-   "ltv": 978,
-   "ltv_cac": 11.8,
+   "gross_margin": 0.781,
+   "ltv": 981,
+   "ltv_cac": 11.9,
    "payback_months": 4.2,
    "arpa_m36": 25.11,
    "active": {
@@ -357,9 +357,9 @@
     "36": 205047
    },
    "cum_cash": {
-    "12": -17403,
-    "24": 16094,
-    "36": 116258
+    "12": -17184,
+    "24": 16492,
+    "36": 116747
    },
    "new_m12": 16,
    "new_m36": 40,

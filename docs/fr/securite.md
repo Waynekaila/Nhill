@@ -1,8 +1,8 @@
-# Nhill 2.1 — Sécurité
+# Nhill 3.0 — Sécurité
 
 *English: [../en/security.md](../en/security.md)*
 
-Ce document résume le modèle de sécurité de Nhill 2.1, ce qui a changé depuis la 0.1.0 et
+Ce document résume le modèle de sécurité de Nhill 3.0, ce qui a changé depuis la 0.1.0 et
 ce que l'exploitant doit faire. L'analyse détaillée, avec preuves et sources, est dans
 l'[audit de sécurité](03-audit-securite.md) ; l'audit interne 0.1.0 (preuves par tests) est
 conservé dans `docs/securite.md`.
@@ -79,11 +79,25 @@ verrouillage d'écran protège moins le Keystore ; les applications 2.0 ne gère
 changement obligatoire (mettre à jour les postes avant d'utiliser la réinitialisation par
 l'administrateur).
 
+## 4 ter. Changements de sécurité en 3.0
+
+| Changement | Effet |
+|---|---|
+| Formules et droits vérifiés par le serveur sur chaque route | une fonction hors formule est refusée par l'API, pas seulement masquée dans l'application |
+| Caisse : accord de responsable à usage unique (3 min), lié à l'action, au demandeur et à la session ; clôture à l'aveugle | une remise, un retour ou une annulation exige le mot de passe d'une autre personne ; le caissier ne voit pas le montant attendu avant de compter |
+| Export complet réservé au titulaire, limité à 3 par 15 minutes | archive sans mot de passe, jeton ni code |
+| Suppression d'un établissement 90 jours après la fin de l'accès (super-administrateur, nom commercial à saisir) | données, comptes utilisés uniquement dans l'établissement et journal supprimés ; commandes d'abonnement payées archivées 10 ans ; le rôle applicatif ne peut pas utiliser le mécanisme de suppression |
+| Rétention : messages envoyés supprimés après 30 jours, sessions terminées après 90 jours | moins de données personnelles conservées (adresses e-mail, adresses IP) |
+| Recherches : `%` et `_` pris littéralement | pas de motifs plus larges que prévu |
+| Client : HTTP/1.1 seulement | évite le code HTTP/2 de Qt 6.5.3 (CVE-2023-51714, CVE-2024-39936) |
+| Kit de serveur privé virtuel (`deploy/vps`) | base et API en local seulement, pare-feu, fail2ban, secrets en 0600, sauvegardes chiffrées dont la clé privée reste hors du serveur, contrôle toutes les 5 minutes, mise à jour avec retour arrière ; 12 contrôles de recette réussis sur une machine neuve |
+
 ## 5. Vulnérabilités connues des dépendances
 
 | Dépendance | Avis | Situation | Action |
 |---|---|---|---|
-| cpp-httplib 0.14 (paquet Ubuntu 24.04 / Debian) | CVE-2025-46728, CVE-2025-53629 (épuisement mémoire, CVSS 7,5) | atténué par Caddy (`request_body max_size`) | **priorité 1** : passer à cpp-httplib ≥ 0.23.0, relancer les tests serveur |
+| cpp-httplib 0.14.3 (paquet Ubuntu 24.04) | CVE-2025-46728, CVE-2025-53629 (épuisement mémoire, CVSS 7,5) ; correctifs 24.04 seulement par Ubuntu Pro | atténué : serveur en local, Caddy refuse les corps de plus de 6 Mo | **décision à prendre** : construire contre cpp-httplib ≥ 0.23 ou utiliser Ubuntu Pro (audit, R1) |
+| Qt 6.5.3 (installateurs Windows, APK Android) | CVE-2023-51714, CVE-2024-39936 (HTTP/2) et avis postérieurs | atténué : HTTP/2 désactivé dans le client | **décision à prendre** : version de Qt maintenue (audit, R2) |
 | Qt 6.4.2 embarqué (variante « debian-13-embedded ») | CVE-2024-39936 et avis postérieurs | variante déconseillée, non livrée par défaut | utiliser les paquets natifs |
 
 ## 6. Ce que l'exploitant doit faire
@@ -91,18 +105,19 @@ l'administrateur).
 Avant l'ouverture commerciale :
 
 - [ ] Sauvegarder `NH_SECRET_KEY` dans un coffre, séparément des sauvegardes de la base.
-- [ ] Caddy devant le serveur (TLS, HSTS), serveur à l'écoute sur `127.0.0.1` uniquement,
-      pare-feu limité à 80/443 et à l'administration.
-- [ ] Sauvegardes chiffrées quotidiennes et **test de restauration** ; envisager
-      l'archivage continu des WAL (perte possible jusqu'à 24 h sinon).
-- [ ] Supervision : `/health`, échecs de sauvegarde, expiration du certificat, disque,
-      erreurs 5xx.
+- [ ] Installer le serveur avec le kit `deploy/vps` ([deploiement-vps-hostinger.md](deploiement-vps-hostinger.md)) :
+      Caddy (TLS, HSTS), serveur et base en local, pare-feu, sauvegardes chiffrées,
+      surveillance ; lancer la recette `deploy/vps/tests/acceptance.sh`.
+- [ ] Copier les sauvegardes hors du serveur et faire régulièrement une **restauration
+      d'essai** (`nhill-restore-test`) ; envisager l'archivage continu des WAL (perte
+      possible jusqu'à 24 h sinon).
+- [ ] Brancher l'alerte (`NH_ALERT_CMD`) sur un canal lu chaque jour.
 - [ ] Comptes de la console : rôle minimal, TOTP sur un appareil personnel, phrase de passe
       longue.
 - [ ] Prestataires de paiement en mode test jusqu'à un paiement réel de contrôle.
-- [ ] Relais SMTP configuré (`NH_EMAIL_TRANSPORT=smtp`, TLS, SPF/DKIM du domaine
-      expéditeur) et testé : sans lui, propriétaires et administrateurs ne peuvent pas
-      récupérer un mot de passe oublié.
+- [ ] Messagerie de `nhill.online` : enregistrements MX, SPF, DKIM et DMARC ; relais SMTP
+      configuré (`NH_EMAIL_TRANSPORT=smtp`, TLS) et testé : sans lui, propriétaires et
+      administrateurs ne peuvent pas récupérer un mot de passe oublié.
 - [ ] Formalités « données personnelles » en RDC (voir
       [parametres-legaux.md](parametres-legaux.md)).
 - [ ] Test d'intrusion externe avant un déploiement large.
@@ -114,7 +129,7 @@ identifiants après tout départ d'un administrateur.
 
 ## 7. Signaler une vulnérabilité
 
-Adresse de signalement : **à définir par les créateurs** (par exemple `security@<domaine>`,
-publiée sur le site et dans un fichier `security.txt`). Engagements à fixer : accusé de
-réception, délai de correction, mention des découvreurs. Ne publiez pas de détail
-exploitable avant la correction.
+Écrivez à **support@nhill.online**, objet « Sécurité » (adresse publiée dans
+`website/.well-known/security.txt` et dans la politique d'utilisation acceptable). Nhill
+Solution accuse réception et tient la personne informée du traitement. Ne publiez pas de
+détail exploitable avant la correction.

@@ -50,11 +50,11 @@ ANNUAL_MONTHS_PAID = 10     # H : deux mois offerts sur l'annuel
 
 HYP = {
     # coûts d'infrastructure (USD / mois)
-    "app_server": {"v": round(5.99 * EUR_USD * 1.20, 2), "src": "V",
-                   "fr": "Serveur d'application Hetzner CX23 (2 vCPU, 4 Go, 40 Go) 5,99 € + sauvegardes 20 %",
-                   "en": "Hetzner CX23 application server (2 vCPU, 4 GB, 40 GB) €5.99 + 20% backups"},
-    "database": {"v": 25.0, "src": "V", "fr": "Base PostgreSQL gérée Supabase Pro (8 Go, sauvegarde quotidienne 7 jours)",
-                 "en": "Supabase Pro managed PostgreSQL (8 GB, daily backup kept 7 days)"},
+    "app_server": {"v": 14.99, "src": "V",
+                   "fr": "Serveur privé virtuel Hostinger KVM 2 en France (2 vCPU, 8 Go, 100 Go NVMe, sauvegarde hebdomadaire incluse), prix de renouvellement",
+                   "en": "Hostinger KVM 2 virtual private server in France (2 vCPU, 8 GB, 100 GB NVMe, weekly backup included), renewal price"},
+    "database": {"v": 0.0, "src": "V", "fr": "Base PostgreSQL sur le même serveur (kit deploy/vps), sans coût séparé",
+                 "en": "PostgreSQL database on the same server (deploy/vps kit), no separate cost"},
     "offsite_backup": {"v": 1.0, "src": "H", "fr": "Sauvegardes chiffrées hors site (Backblaze B2, 6,95 $/To ; 10 Go gratuits)",
                        "en": "Encrypted off-site backups (Backblaze B2, $6.95/TB; first 10 GB free)"},
     "email": {"v": 1.0, "src": "H", "fr": "Envoi d'e-mails (Amazon SES, 0,10 $ / 1 000 e-mails)",
@@ -96,11 +96,11 @@ HYP = {
                  "en": "Average discounts (promo codes, commercial gestures)"},
     "customers_per_app_server": {"v": 250, "src": "H", "fr": "Établissements actifs par serveur d'application (aucun test de charge réalisé)",
                                  "en": "Active establishments per application server (no load test performed)"},
-    "db_upgrade_above": {"v": 500, "src": "H", "fr": "Établissements actifs au-delà desquels la base passe à la puissance supérieure (+15 $/mois)",
-                         "en": "Active establishments above which the database moves to larger compute (+$15/month)"},
+    "db_upgrade_above": {"v": 500, "src": "H", "fr": "Établissements actifs au-delà desquels la base passe sur un second serveur KVM 2 (+15 $/mois)",
+                         "en": "Active establishments above which the database moves to a second KVM 2 server (+$15/month)"},
 }
 ONE_OFF = [  # (mois, USD, source, fr, en)
-    (1, 1500.0, "H", "Création de la société, conseil juridique et fiscal", "Company set-up, legal and tax advice"),
+    (1, 1500.0, "H", "Conseil juridique et fiscal, formalités", "Legal and tax advice, formalities"),
     (1, 1200.0, "H", "Matériel de démonstration (imprimante de tickets, lecteur, tablette Android)", "Demo hardware (receipt printer, scanner, Android tablet)"),
     (1, 25.0, "V", "Compte développeur Google Play (paiement unique)", "Google Play developer account (one-time fee)"),
     (1, 500.0, "H", "Identité visuelle imprimée, cartes, kakémono", "Printed brand material, cards, banner"),
@@ -262,7 +262,9 @@ def tables(results, sums, lang):
     lines = [L("| Hypothèse | Valeur | Nature |", "| Assumption | Value | Type |"), "|---|---|---|"]
     for k, v in HYP.items():
         val = v["v"]
-        if isinstance(val, float) and val < 1:
+        if k == "database":   # no separate cost: same server as the application
+            sval = L("inclus (0 $)", "included ($0)")
+        elif isinstance(val, float) and val < 1:
             sval = fmt(val * 100, lang, 1) + " %" if lang == "fr" else fmt(val * 100, lang, 1) + "%"
         elif k in ("customers_per_support", "customers_per_app_server", "db_upgrade_above"):
             sval = fmt(val, lang)
@@ -362,8 +364,9 @@ def sensitivity_variants(lang):
         (L("Prix +20 %", "Prices +20%"), lambda: [PLANS[p].__setitem__("zoneA", PLANS[p]["zoneA"] * 1.2) for p in PLANS]),
         (L("Résiliation 4 % par mois", "Churn 4% a month"), lambda: SCENARIOS["central"].__setitem__("churn", 0.04)),
         (L("Fondateur non rémunéré pendant 36 mois", "Founder unpaid for 36 months"), lambda: HYP["founder"].__setitem__("v", 0.0)),
-        (L("Base de données auto-hébergée (2e CX23 au lieu de Supabase)", "Self-hosted database (2nd CX23 instead of Supabase)"),
-         lambda: HYP["database"].__setitem__("v", HYP["app_server"]["v"])),
+        (L("Serveur au prix promotionnel Hostinger (8,79 $/mois, 24 mois payés d'avance)",
+           "Server at Hostinger's promotional price ($8.79/month, 24 months paid upfront)"),
+         lambda: HYP["app_server"].__setitem__("v", 8.79)),
     ]
 
 

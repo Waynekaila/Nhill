@@ -65,13 +65,14 @@ Two complementary firewalls:
 
 1. **Create the VPS** at Hostinger: location **France**, **Ubuntu 24.04** plain OS (no
    panel), 2 vCPU and 4 GB RAM recommended (2 GB minimum), an SSH key added at creation.
-2. **DNS**: an `A` record (and `AAAA` if the VPS has IPv6) for the API name, for example
-   `api.<your-domain>`, pointing to the VPS. The certificate is issued only once that name
+2. **DNS**: an `A` record (and `AAAA` if the VPS has IPv6) for the API name, pointing to
+   the VPS. This guide uses `api.nhill.online`, a subdomain of the official domain; another
+   name works if it is the same everywhere. The certificate is issued only once that name
    resolves to the VPS.
 3. **Backup key, on your computer** (never on the VPS): `age-keygen -o nhill-backup-key.txt`;
    note the public key it prints (`age1…`); keep the file in your password safe and an
    offline copy. Without it, no backup can be read.
-4. **Package**: `nhill-server_<version>-1_amd64.deb` and its `SHA256SUMS`
+4. **Package**: `nhill-server_3.0.0-1_amd64.deb` and its `SHA256SUMS`
    (`dist/linux/ubuntu-24.04/` or the release), plus the repository's `deploy/vps/` folder
    (also installed by the package in `/usr/share/nhill/vps/`).
 5. **Off-site copy** (recommended): storage outside Hostinger, in the European Union, and a
@@ -79,18 +80,27 @@ Two complementary firewalls:
 
 ## 4. Installation
 
+The commands read four values specific to your installation, to set first in the terminal
+of your computer: the VPS IP address (Hostinger panel), the backup public key (step 3), the
+e-mail address of the first Nhill Console administrator and their name.
+
 ```bash
-scp -r nhill-server_3.0.0-1_amd64.deb SHA256SUMS deploy/vps root@<vps-address>:/root/
-ssh root@<vps-address>
-cd /root && sudo ./vps/provision.sh \
+export VPS_IP=…            # IPv4 address of the VPS, shown by Hostinger
+export BACKUP_KEY=age1…    # public key printed by age-keygen (step 3)
+export ADMIN_EMAIL=…       # address of the first Nhill Console administrator
+export ADMIN_NAME=…        # their name, shown in the console
+scp -r nhill-server_3.0.0-1_amd64.deb SHA256SUMS deploy/vps root@"$VPS_IP":/root/
+ssh -t root@"$VPS_IP" "cd /root && ./vps/provision.sh \
   --deb nhill-server_3.0.0-1_amd64.deb --sha256sums SHA256SUMS \
-  --api-domain api.<your-domain> --acme-email <address-for-certificate-notices> \
-  --admin-email <your-address> --admin-name "<Your name>" \
-  --backup-recipient age1… \
+  --api-domain api.nhill.online --acme-email info@nhill.online \
+  --admin-email '$ADMIN_EMAIL' --admin-name '$ADMIN_NAME' \
+  --backup-recipient '$BACKUP_KEY' \
   --support-email support@nhill.online \
   --offsite-cmd 'rclone copy {} remote:nhill-backups/' \
-  --harden-ssh
+  --harden-ssh"
 ```
+
+Without an off-site copy, remove the `--offsite-cmd` line.
 
 The script stops at the first error; re-run, it keeps what is installed. It:
 
@@ -104,7 +114,7 @@ The script stops at the first error; re-run, it keeps what is installed. It:
    superuser **deleted immediately** (its password only goes through standard input);
    checks the isolation (10 checks);
 6. sets up the encrypted backups and takes a first one;
-7. writes `/etc/caddy/Caddyfile` for `api.<your-domain>` (Let's Encrypt);
+7. writes `/etc/caddy/Caddyfile` for `api.nhill.online` (Let's Encrypt);
 8. installs the health checks, log retention and the `nhill-update`, `nhill-rollback` tools;
 9. prints the **one-time token** of the first Nhill Console administrator (30 minutes).
 
@@ -113,7 +123,7 @@ Then:
 - **Back up `NH_SECRET_KEY`** (`sudo grep '^NH_SECRET_KEY=' /etc/nhill/server.env`) in your
   password safe, apart from the backups: without it, establishment codes and administrators'
   second factors can no longer be read.
-- **Nhill Console**: address `https://api.<your-domain>`, "First access", token, password
+- **Nhill Console**: address `https://api.nhill.online`, "First access", token, password
   (14 characters minimum) and TOTP. Token expired or lost, while nobody has completed the
   first access: `sudo -u nhill nhill-server --config /etc/nhill/server.env admin-bootstrap <same-address> "<Name>"`.
 - **E-mails**: set the SMTP relay (`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`,
@@ -137,7 +147,7 @@ No secret is in the repository, the package or the logs.
 
 ## 6. Certificates
 
-Caddy obtains the certificate of `api.<your-domain>` from Let's Encrypt (HTTP-01 challenge on
+Caddy obtains the certificate of `api.nhill.online` from Let's Encrypt (HTTP-01 challenge on
 port 80) and renews it by itself, about 30 days before expiry. The health check alerts when
 fewer than 14 days remain (`NH_HEALTH_CERT_MIN_DAYS` in `/etc/nhill/health.env`; 0 with
 `--tls internal`, whose short-lived certificates Caddy renews itself). On failure: `journalctl -u caddy`, DNS resolution of the name,
@@ -165,8 +175,10 @@ Check: `systemctl list-timers nhill-backup.timer`, `ls -lh /var/backups/nhill/ar
 **Monthly test, outside the VPS** (administrator's computer or staging VPS, with the private key):
 
 ```bash
-scp root@<vps>:/var/backups/nhill/archives/nhill-<date>.dump.age* .
-deploy/vps/nhill-restore-test.sh nhill-<date>.dump.age nhill-backup-key.txt
+ssh root@"$VPS_IP" ls -1t /var/backups/nhill/archives | head -3   # latest backups
+export BACKUP=…   # name of a backup from the list, for example the latest
+scp root@"$VPS_IP":"/var/backups/nhill/archives/$BACKUP*" .
+deploy/vps/nhill-restore-test.sh "$BACKUP" nhill-backup-key.txt
 ```
 
 The script starts a throw-away PostgreSQL (local socket, nothing on the network), restores,
@@ -177,7 +189,7 @@ row-level security and the isolation of the application role, then deletes every
 
 1. Copy the backup (with its `.sha256`) and, **temporarily**, the private key into
    `/var/lib/postgresql/restore/` (owner `postgres`, mode 700).
-2. `cd /var/lib/postgresql/restore && sudo -u postgres env PGHOST=/var/run/postgresql nhill-restore.sh nhill-<date>.dump.age key.txt nhill_restored`
+2. `cd /var/lib/postgresql/restore && sudo -u postgres env PGHOST=/var/run/postgresql nhill-restore.sh "$BACKUP" key.txt nhill_restored`
    (restores into a **new** database, then shows migrations, establishments, row-level security).
 3. `sudo systemctl stop nhill-server`, then rename:
    `ALTER DATABASE nhill RENAME TO nhill_before_restore; ALTER DATABASE nhill_restored RENAME TO nhill;`
@@ -198,7 +210,7 @@ journal (priority `err`) and, when `NH_ALERT_CMD` is set in `/etc/nhill/alert.en
 alert command (e-mail, chat, notification).
 
 A VPS cannot report its own total outage: add an **external probe** on
-`https://api.<your-domain>/health` (uptime monitoring service of your choice).
+`https://api.nhill.online/health` (uptime monitoring service of your choice).
 
 | Log | Where | Retention |
 |---|---|---|
