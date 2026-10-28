@@ -6,7 +6,12 @@
 set -euo pipefail
 backup="$1"; identity="$2"; target="$3"
 [ -f "$backup" ] && [ -f "$identity" ] || { echo "usage: $0 BACKUP.dump.age IDENTITY TARGET_DB" >&2; exit 2; }
-if [ -f "$backup.sha256" ]; then sha256sum -c "$backup.sha256"; fi
+# Compares the hash only (the .sha256 file may name another directory).
+if [ -f "$backup.sha256" ]; then
+  [ "$(cut -d' ' -f1 "$backup.sha256")" = "$(sha256sum < "$backup" | cut -d' ' -f1)" ] \
+    || { echo "checksum mismatch: $backup" >&2; exit 1; }
+  echo "checksum ok: $backup"
+fi
 psql -v ON_ERROR_STOP=1 -d postgres -c "CREATE DATABASE \"$target\" OWNER nhill_owner"
 # As superuser: ownership (nhill_owner) and grants come from the dump; the
 # superuser can load rows into tables with forced row-level security.

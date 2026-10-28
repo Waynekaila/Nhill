@@ -2071,6 +2071,54 @@
         <source>read and export only</source>
         <translation>lecture et export uniquement</translation>
     </message>
+    <message>
+        <source>Suspended: reactivate the establishment or cancel its subscription before any erasure.</source>
+        <translation>Suspendu : réactivez l'établissement ou annulez son abonnement avant toute suppression.</translation>
+    </message>
+    <message>
+        <source>Access ended on %1 and the 90 days of export are over: the establishment's data must now be erased.</source>
+        <translation>Accès terminé le %1 et 90 jours d'export écoulés : les données de l'établissement doivent maintenant être supprimées.</translation>
+    </message>
+    <message>
+        <source>Access ended on %1. The data stays available for export until %2, then must be erased (earlier only at the customer's request).</source>
+        <translation>Accès terminé le %1. Les données restent exportables jusqu'au %2, puis doivent être supprimées (plus tôt seulement à la demande du client).</translation>
+    </message>
+    <message>
+        <source>Erase…</source>
+        <translation>Supprimer…</translation>
+    </message>
+    <message>
+        <source>Erase this establishment permanently</source>
+        <translation>Supprimer définitivement cet établissement</translation>
+    </message>
+    <message>
+        <source>Its documents, customers, products, stock, payments, activity log and the accounts used only here are deleted. This cannot be undone. Paid subscription orders are kept for Nhill Solution's accounts.</source>
+        <translation>Ses documents, clients, produits, stock, paiements, son journal d'activité et les comptes utilisés uniquement ici sont supprimés. C'est irréversible. Les commandes d'abonnement payées sont conservées pour la comptabilité de Nhill Solution.</translation>
+    </message>
+    <message>
+        <source>Reason (recorded in the platform log)</source>
+        <translation>Motif (inscrit au journal de la plateforme)</translation>
+    </message>
+    <message>
+        <source>Type the trade name to confirm: %1</source>
+        <translation>Saisissez le nom commercial pour confirmer : %1</translation>
+    </message>
+    <message>
+        <source>Trade name</source>
+        <translation>Nom commercial</translation>
+    </message>
+    <message>
+        <source>The customer asked for the erasure (before the end of the 90 days)</source>
+        <translation>Le client a demandé la suppression (avant la fin des 90 jours)</translation>
+    </message>
+    <message>
+        <source>Erase permanently</source>
+        <translation>Supprimer définitivement</translation>
+    </message>
+    <message>
+        <source>Establishment erased: %1 document(s), %2 account(s) deleted.</source>
+        <translation>Établissement supprimé : %1 document(s), %2 compte(s) supprimé(s).</translation>
+    </message>
 </context>
 <context>
     <name>EstablishmentsPage</name>
@@ -2149,6 +2197,10 @@
     <message>
         <source>No establishment</source>
         <translation>Aucun établissement</translation>
+    </message>
+    <message>
+        <source>To erase (90 days over)</source>
+        <translation>À supprimer (90 jours écoulés)</translation>
     </message>
 </context>
 <context>

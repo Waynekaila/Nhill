@@ -59,7 +59,7 @@ step "APK Android"
 APKS=("$DIST"/android/*.apk)
 if (( ${#APKS[@]} )); then
   for a in "${APKS[@]}"; do
-    if unzip -l "$a" 2>/dev/null | grep -q AndroidManifest.xml; then ok "$(basename "$a")"; else bad "$a : APK invalide"; fi
+    if unzip -l "$a" 2>/dev/null | grep -c AndroidManifest.xml >/dev/null; then ok "$(basename "$a")"; else bad "$a : APK invalide"; fi
   done
   check_sums "$DIST/android"
 else required android && bad "aucun APK" || warn "aucun APK (non construit)"; fi
@@ -68,7 +68,7 @@ step "Site vitrine"
 SITES=("$DIST"/website/*.tar.gz)
 if (( ${#SITES[@]} )); then
   for s in "${SITES[@]}"; do
-    if tar -tzf "$s" | grep -qE '(^|/)\.env$'; then bad "$s contient un fichier .env"; else ok "$(basename "$s") (sans .env)"; fi
+    if tar -tzf "$s" | grep -cE '(^|/)\.env$' >/dev/null; then bad "$s contient un fichier .env"; else ok "$(basename "$s") (sans .env)"; fi
   done
   check_sums "$DIST/website"
 else required website && bad "archive du site absente" || warn "archive du site absente (non construite)"; fi

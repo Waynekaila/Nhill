@@ -33,16 +33,28 @@ FbPage {
         for (var i = 0; i < capabilities.length; ++i) if (capabilities[i].key === k) return Prefs.language === "fr" ? capabilities[i].label_fr : capabilities[i].label_en
         return k
     }
+    function erasureText() {
+        if (!d || !d.erasure) return ""
+        var x = d.erasure
+        if (x.reason === "suspended") return qsTr("Suspended: reactivate the establishment or cancel its subscription before any erasure.")
+        if (x.eligible) return qsTr("Access ended on %1 and the 90 days of export are over: the establishment's data must now be erased.").arg(Fmt.date(x.access_ended_at))
+        return qsTr("Access ended on %1. The data stays available for export until %2, then must be erased (earlier only at the customer's request).").arg(Fmt.date(x.access_ended_at)).arg(Fmt.date(x.erasable_from))
+    }
     function accessText(s) { return s === "full" ? qsTr("full") : s === "read_only" ? qsTr("read and export only") : qsTr("none") }
     actions: [
         FbButton { text: qsTr("Back"); variant: "ghost"; iconName: "close"; onClicked: ConsoleNav.shell.navigate("establishments") },
         FbButton { visible: !!page.e && ConsoleNav.can("billing"); text: qsTr("Subscription…"); iconName: "receipt"; variant: "secondary"; onClicked: subDialog.start() },
         FbButton { visible: !!page.e && ConsoleNav.can("support"); text: qsTr("Reissue the code"); iconName: "refresh"; variant: "secondary"; onClicked: reasonDialog.ask("reissue") },
+        FbButton { visible: !!page.d && !!page.d.erasure && ConsoleNav.can("superadmin") && page.d.erasure.reason !== "access_active"
+                   text: qsTr("Erase…"); iconName: "close"; variant: "danger"; onClicked: eraseDialog.start() },
         FbButton { visible: !!page.e && ConsoleNav.can("support"); text: page.e && page.e.status === "suspended" ? qsTr("Reactivate") : qsTr("Suspend")
                    iconName: page.e && page.e.status === "suspended" ? "check" : "alert"; variant: page.e && page.e.status === "suspended" ? "primary" : "danger"
                    onClicked: reasonDialog.ask(page.e.status === "suspended" ? "reactivate" : "suspend") }
     ]
     Banner { Layout.fillWidth: true; visible: !!page.e && page.e.status === "suspended"; tone: "danger"; text: page.e ? qsTr("Suspended: %1").arg(page.e.status_reason || "—") : "" }
+    // Retention (terms of service): 90 days of export after the end of access, then erasure.
+    Banner { Layout.fillWidth: true; visible: !!page.d && !!page.d.erasure && page.d.erasure.reason !== "access_active"
+             tone: page.d && page.d.erasure && page.d.erasure.eligible ? "warning" : "info"; text: page.erasureText() }
     GridLayout {
         Layout.fillWidth: true
         columns: 2
@@ -224,6 +236,31 @@ FbPage {
                     Api.send("POST", path, { reason: why.text.trim() }, function(r) { if (r.ok) { reasonDialog.close(); ConsoleNav.toast(qsTr("Done"), "success"); page.reload() } else ConsoleNav.fail(r) })
                 } },
             FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: reasonDialog.close() }
+        ]
+    }
+    FbDialog {
+        id: eraseDialog
+        title: qsTr("Erase this establishment permanently")
+        subtitle: qsTr("Its documents, customers, products, stock, payments, activity log and the accounts used only here are deleted. This cannot be undone. Paid subscription orders are kept for Nhill Solution's accounts.")
+        preferredWidth: 560
+        readonly property bool early: !!page.d && !!page.d.erasure && !page.d.erasure.eligible
+        function start() { eraseWhy.text = ""; eraseName.text = ""; eraseRequest.checked = false; open() }
+        Field { label: qsTr("Reason (recorded in the platform log)"); required: true; FbTextArea { id: eraseWhy } }
+        Field { label: qsTr("Type the trade name to confirm: %1").arg(page.e ? page.e.trade_name : ""); required: true
+                FbTextField { id: eraseName; Accessible.name: qsTr("Trade name") } }
+        FbSwitch { id: eraseRequest; visible: eraseDialog.early; text: qsTr("The customer asked for the erasure (before the end of the 90 days)") }
+        footer: [
+            FbButton { text: qsTr("Erase permanently"); variant: "danger"
+                       enabled: !!page.e && eraseName.text === page.e.trade_name && eraseWhy.text.trim().length >= 5 && (!eraseDialog.early || eraseRequest.checked)
+                       onClicked: Api.send("POST", "/api/v1/admin/establishments/" + page.establishmentId + "/erase",
+                                           { reason: eraseWhy.text.trim(), confirm_trade_name: eraseName.text, customer_request: eraseDialog.early && eraseRequest.checked },
+                                           function(r) {
+                                               if (!r.ok) { ConsoleNav.fail(r); return }
+                                               eraseDialog.close()
+                                               ConsoleNav.toast(qsTr("Establishment erased: %1 document(s), %2 account(s) deleted.").arg(r.data.documents).arg(r.data.users_deleted), "success")
+                                               ConsoleNav.shell.navigate("establishments")
+                                           }) },
+            FbButton { text: qsTr("Cancel"); variant: "secondary"; onClicked: eraseDialog.close() }
         ]
     }
     FbDialog {

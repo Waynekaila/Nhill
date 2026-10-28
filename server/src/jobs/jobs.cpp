@@ -372,6 +372,11 @@ Stats runAll(Env& env) {
         tx.q("DELETE FROM auth_throttle WHERE window_start < now() - interval '1 day'");
         // Recovery secrets are only hashes; finished ones are kept 30 days for investigations.
         tx.q("DELETE FROM password_resets WHERE expires_at < now() - interval '30 days'");
+        // Retention (privacy policy): e-mails sent or abandoned 30 days ago, sessions ended
+        // 90 days ago (they hold an IP address and a device name).
+        tx.q("DELETE FROM email_outbox WHERE status IN ('sent', 'failed') AND COALESCE(sent_at, created_at) < "
+             "now() - interval '30 days'");
+        tx.q("DELETE FROM sessions WHERE COALESCE(revoked_at, refresh_expires_at) < now() - interval '90 days'");
     });
     return total;
 }

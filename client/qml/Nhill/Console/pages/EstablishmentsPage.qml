@@ -13,10 +13,11 @@ FbPage {
     property int total: 0
     property string search: ""
     property string status: ""
+    property bool erasable: false
     property bool loading: false
     function reload() {
         loading = true
-        var q = "/api/v1/admin/establishments?limit=200" + (search ? "&search=" + encodeURIComponent(search) : "") + (status ? "&subscription_status=" + status : "")
+        var q = "/api/v1/admin/establishments?limit=200" + (search ? "&search=" + encodeURIComponent(search) : "") + (status ? "&subscription_status=" + status : "") + (erasable ? "&erasable=true" : "")
         Api.get(q, function(r) { loading = false; if (r.ok) { page.rows = r.data.items; page.total = r.data.total } else ConsoleNav.fail(r) })
     }
     Component.onCompleted: reload()
@@ -29,6 +30,7 @@ FbPage {
                          { value: "active", text: Labels.subscription("active").text }, { value: "past_due", text: Labels.subscription("past_due").text },
                          { value: "suspended", text: Labels.subscription("suspended").text }, { value: "canceled", text: Labels.subscription("canceled").text }]
                          onActivated: { page.status = currentValue; page.reload() } }
+            FbSwitch { text: qsTr("To erase (90 days over)"); checked: page.erasable; onToggled: { page.erasable = checked; page.reload() } }
             Item { Layout.fillWidth: true }
             Text { text: qsTr("%1 establishment(s)").arg(page.total); color: Theme.textMuted; font.family: Theme.font }
         }

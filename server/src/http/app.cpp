@@ -104,6 +104,12 @@ void writeError(Ctx& ctx, const std::exception& e) {
         } else if (state == "NH002") {
             status = 409;
             err = {{"code", "document_immutable"}, {"message", "issued documents cannot be modified"}};
+        } else if (state == "NH010") {
+            status = 404;
+            err = {{"code", "not_found"}, {"message", "resource not found"}};
+        } else if (state == "NH011") {
+            status = 409;
+            err = {{"code", "not_erasable"}, {"message", "the establishment cannot be erased yet"}};
         } else if (state == "NH003" || state == "NH004") {
             status = 422;
             err = {{"code", state == "NH003" ? "invalid_reference" : "product_not_stocked"},

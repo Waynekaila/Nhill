@@ -14,7 +14,8 @@ recips=()
 for r in $NH_BACKUP_RECIPIENTS; do recips+=(-r "$r"); done
 pg_dump --format=custom --compress=6 | age "${recips[@]}" -o "$out.partial"
 mv "$out.partial" "$out"
-sha256sum "$out" > "$out.sha256"
+# File name only (no directory): the check also works on an off-site copy.
+(cd "$NH_BACKUP_DIR" && sha256sum "$(basename "$out")") > "$out.sha256"
 echo "backup written: $out ($(du -h "$out" | cut -f1))"
 if [ -n "${NH_BACKUP_OFFSITE_CMD:-}" ]; then
   eval "${NH_BACKUP_OFFSITE_CMD//\{\}/$out}"

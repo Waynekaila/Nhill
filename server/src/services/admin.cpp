@@ -238,10 +238,13 @@ void registerAdminRoutes(App& app, Env& env) {
         auto search = ctx.query("search");
         auto status = ctx.query("status");
         auto sub = ctx.query("subscription_status");
+        // erasable=true: establishments whose 90 days of export after the end of access are over.
+        const bool erasable = ctx.query("erasable").value_or("") == "true";
         json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
             std::string where = "WHERE ($1::text IS NULL OR e.trade_name ILIKE '%' || $1 || '%' OR e.email ILIKE '%' || $1 || "
                                 "'%' OR e.id::text = $1) AND ($2::text IS NULL OR e.status = $2) AND ($3::text IS NULL OR "
                                 "s.status = $3) ";
+            if (erasable) where += "AND COALESCE((SELECT x.eligible FROM nh_establishment_erasure(e.id) x), false) ";
             int total = tx.one("SELECT count(*) FROM establishments e LEFT JOIN subscriptions s ON s.establishment_id = e.id " +
                                    where,
                                search, status, sub)[0].as<int>();
@@ -299,6 +302,9 @@ void registerAdminRoutes(App& app, Env& env) {
                                 "WHERE establishment_id = $1 AND day > current_date - 30",
                                 id);
             auto members = tx.one("SELECT count(*) FROM memberships WHERE establishment_id = $1 AND status = 'active'", id);
+            auto er = tx.one("SELECT eligible, reason, nh_iso(access_ended_at), nh_iso(erasable_from) "
+                             "FROM nh_establishment_erasure($1)",
+                             id);
             return {{"establishment",
                      {{"id", db::str(e[0])}, {"trade_name", db::str(e[1])}, {"legal_name", db::str(e[2])},
                       {"kind", db::str(e[3])}, {"country_code", db::str(e[4])}, {"city", db::str(e[5])},
@@ -312,6 +318,9 @@ void registerAdminRoutes(App& app, Env& env) {
                      }()},
                     {"subscription_events", events},
                     {"codes", codes},
+                    {"erasure", {{"eligible", db::boolean(er[0])}, {"reason", db::str(er[1])},
+                                 {"access_ended_at", er[2].is_null() ? json(nullptr) : json(db::str(er[2]))},
+                                 {"erasable_from", er[3].is_null() ? json(nullptr) : json(db::str(er[3]))}}},
                     {"usage_30_days", {{"documents_issued", usage[0].as<int64_t>()}, {"payments_recorded", usage[1].as<int64_t>()}}}};
         });
         ctx.json(200, out);
@@ -342,6 +351,37 @@ void registerAdminRoutes(App& app, Env& env) {
              [setStatus](Ctx& ctx) { setStatus(ctx, "suspended"); });
     app.post("/api/v1/admin/establishments/:id/reactivate", {Access::Admin, "", false, {"support"}},
              [setStatus](Ctx& ctx) { setStatus(ctx, "active"); });
+
+    // Permanent erasure (terms of service: data kept 90 days after the end of access, then
+    // deleted). Superadmin only; the exact trade name must be typed to confirm. Before the
+    // 90 days only at the customer's request, and never while the establishment has full
+    // access. Paid subscription orders are archived for Nhill Solution's accounts.
+    app.post("/api/v1/admin/establishments/:id/erase", {Access::Admin, "", false, {"superadmin"}}, [&env](Ctx& ctx) {
+        std::string id = in::uuidParam(ctx.param("id"), "establishment");
+        const json& b = ctx.body();
+        std::string why = reason(b);
+        std::string confirm = in::reqStr(b, "confirm_trade_name", 200);
+        bool early = b.contains("customer_request") && b["customer_request"].is_boolean() && b["customer_request"].get<bool>();
+        json out = db::run(env.pool, std::nullopt, [&](db::Tx& tx) -> json {
+            auto e = tx.one("SELECT trade_name FROM establishments WHERE id = $1 FOR UPDATE", id);
+            const std::string name = db::str(e[0]);
+            if (confirm != name) throw invalid("confirm_trade_name", "does_not_match");
+            auto er = tx.one("SELECT eligible, reason, nh_iso(erasable_from) FROM nh_establishment_erasure($1)", id);
+            const bool eligible = db::boolean(er[0]);
+            const std::string accessReason = db::str(er[1]);
+            if (!eligible && (!early || accessReason == "access_active"))
+                throw conflict("not_erasable", "the establishment cannot be erased yet",
+                               {{"reason", accessReason}, {"erasable_from", er[2].is_null() ? json(nullptr) : json(db::str(er[2]))}});
+            json summary = json::parse(db::str(tx.one("SELECT nh_erase_establishment($1, $2)::text", id, early)[0]));
+            // Platform-level entry (the establishment's own trail is gone with it).
+            Actor a = ctx.actor;
+            a.establishmentId.clear();
+            audit(tx, a, "admin.establishment_erased", "establishment", id,
+                  {{"reason", why}, {"customer_request", early}, {"summary", summary}});
+            return summary;
+        });
+        ctx.json(200, out);
+    });
 
     // Revokes the current code and issues a new one. The new code is never
     // shown to the administrator: the owner reads it in the application.

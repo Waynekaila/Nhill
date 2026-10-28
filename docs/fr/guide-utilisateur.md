@@ -287,6 +287,7 @@ journal d'audit. La console ne donne **aucun accès aux factures, clients ou sto
 |---|---|
 | Vue d'ensemble | Établissements, abonnements par état, utilisateurs actifs, activité sur 30 jours, revenus confirmés |
 | Établissements | Recherche ; fiche : identité, abonnement, codes (sans leur valeur), statistiques ; **Suspendre / Réactiver / Réémettre le code**, **Abonnement…** — motif obligatoire |
+| Établissements à supprimer | Filtre « À supprimer (90 jours écoulés) » ; sur la fiche, bandeau indiquant la fin de l'accès et la date à partir de laquelle les données doivent être supprimées ; **Supprimer…** (super-administrateur seulement) : motif, saisie exacte du nom commercial ; avant les 90 jours, seulement si le client l'a demandé et jamais tant que l'établissement a un accès complet. Tout est supprimé (documents, clients, produits, stock, paiements, journal d'activité, comptes utilisés uniquement dans cet établissement) ; les commandes d'abonnement payées sont archivées 10 ans pour la comptabilité ; la suppression est inscrite au journal de la plateforme |
 | Rapports | Rapport global par établissement et par devise — CSV/PDF |
 | Demandes de rattachement | Vérifier l'identité, accepter/refuser avec une note |
 | Notifications | Assistance, paiements reçus ou en écart, erreurs techniques |

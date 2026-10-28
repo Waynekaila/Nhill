@@ -61,16 +61,17 @@ BUILD="$ROOT/build/android" OUT="$OUT" run "$ROOT/packaging/android/build-androi
 step "Vérification"
 APK="$OUT/nhill-business-$VERSION-arm64-v8a.apk"
 expect_file "$APK" 3000000
-unzip -l "$APK" | grep -q 'AndroidManifest.xml' || die "$APK : AndroidManifest.xml absent"
-unzip -l "$APK" | grep -q 'lib/arm64-v8a/' || die "$APK : bibliothèques arm64-v8a absentes"
+unzip -l "$APK" | grep -c 'AndroidManifest.xml' >/dev/null || die "$APK : AndroidManifest.xml absent"
+unzip -l "$APK" | grep -c 'lib/arm64-v8a/' >/dev/null || die "$APK : bibliothèques arm64-v8a absentes"
 # Ouverture des PDF/CSV téléchargés dans une autre application (Android 7+ : content://) :
 # le fournisseur doit être déclaré ET sa classe présente, sinon l'application ne démarre pas.
-unzip -p "$APK" AndroidManifest.xml | tr -d '\000' | grep -q 'androidx.core.content.FileProvider' \
+unzip -p "$APK" AndroidManifest.xml | tr -d '\000' | grep -c 'androidx.core.content.FileProvider' >/dev/null \
   || die "$APK : fournisseur de fichiers (FileProvider) absent du manifeste"
-unzip -p "$APK" 'classes*.dex' | grep -aq 'Landroidx/core/content/FileProvider;' \
+# grep -c reads to the end (grep -q would close the pipe early and fail under pipefail).
+unzip -p "$APK" 'classes*.dex' | grep -ac 'Landroidx/core/content/FileProvider;' >/dev/null \
   || die "$APK : classe androidx FileProvider absente (dépendance androidx.core manquante)"
 # Release builds shorten resource paths (optimizeReleaseResources): the resource is looked
 # up by its name in the resource table, not by its path in the archive.
-unzip -p "$APK" resources.arsc | tr -d '\000' | grep -aq 'qtprovider_paths' \
+unzip -p "$APK" resources.arsc | tr -d '\000' | grep -ac 'qtprovider_paths' >/dev/null \
   || die "$APK : ressource xml/qtprovider_paths absente de resources.arsc"
 write_checksums "$OUT"

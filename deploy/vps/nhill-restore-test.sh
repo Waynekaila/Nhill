@@ -37,7 +37,8 @@ if [[ -z "$PGBIN" ]]; then
 fi
 for b in initdb pg_ctl pg_restore psql; do [[ -x "$PGBIN/$b" ]] || die "$b not found in $PGBIN (--pg-bin DIR)"; done
 if [[ -f "$BACKUP.sha256" ]]; then
-  (cd "$(dirname "$BACKUP")" && sha256sum -c --quiet "$(basename "$BACKUP").sha256") || die "checksum mismatch: $BACKUP"
+  # Hash only: the .sha256 file of older backups names the server's directory.
+  [[ "$(cut -d' ' -f1 "$BACKUP.sha256")" == "$(sha256sum < "$BACKUP" | cut -d' ' -f1)" ]] || die "checksum mismatch: $BACKUP"
   echo "ok    checksum            $(basename "$BACKUP").sha256"
 fi
 head -c 21 "$BACKUP" | grep -q 'age-encryption.org/v1' || die "$BACKUP is not an age-encrypted file"

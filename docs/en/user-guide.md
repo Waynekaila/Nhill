@@ -275,6 +275,7 @@ businesses.
 |---|---|
 | Overview | Businesses, subscriptions by state, active users, 30-day activity, confirmed revenue |
 | Businesses | Search; record: identity, subscription, codes (without their value), statistics; **Suspend / Reactivate / Reissue code**, **Subscription…** — reason required |
+| Businesses to erase | "To erase (90 days over)" filter; on the record, a banner shows when access ended and from when the data must be erased; **Erase…** (superadministrator only): reason, exact trade name typed; before the 90 days, only if the customer asked, and never while the business has full access. Everything is deleted (documents, customers, products, stock, payments, activity log, accounts used only in that business); paid subscription orders are archived for 10 years for the accounts; the erasure is recorded in the platform log |
 | Reports | Global report per business and currency — CSV/PDF |
 | Link requests | Check identity, accept/decline with a note |
 | Notifications | Support, payments received or mismatched, technical errors |
