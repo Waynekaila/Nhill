@@ -45,6 +45,7 @@
     "required_when": "vat_registered",
     "implemented": false,
     "reference_fields": ["def_nid", "def_auth_code", "normalized_invoice_number"],
+    "reference_label": {"fr": "Référence facture normalisée (DEF)", "en": "Standardised invoice reference (DEF)"},
     "note": "Nhill is not a homologated SFE and is not connected to a DEF. Users record the DEF reference manually for reconciliation."
   },
   "retention_years": 10,

@@ -40,6 +40,8 @@ struct SalesDocView {
     std::vector<KV> totals;      // before grand total
     KV grandTotal;
     std::vector<KV> afterTotals; // paid / balance
+    std::string paymentsTitle;   // "Paiements reçus"
+    std::vector<KV> payments;    // method · date -> amount (left of the totals)
     std::vector<std::string> notices;
     std::vector<KV> footnotes;   // payment terms, payment info, notes
     std::string footerLeft;      // "Généré par Nhill · Empreinte …"

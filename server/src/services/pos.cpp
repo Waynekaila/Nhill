@@ -13,6 +13,7 @@
 #include "nhill/money.hpp"
 #include "pdf/pdf.hpp"
 #include "services/sales.hpp"
+#include "services/documents.hpp"
 #include "services/entitlements.hpp"
 #include "services/services.hpp"
 #include "util/crypto.hpp"
@@ -175,12 +176,13 @@ json summary(db::Tx& tx, const std::string& sessionId, bool withExpected) {
                     sessionId);
     const std::string cur = db::str(s[3]);
     auto m = [&](int64_t v) { return money(v, cur); };
-    auto docs = tx.one("SELECT count(*) FILTER (WHERE doc_type = 'receipt'), "
-                       "COALESCE(sum(total_minor) FILTER (WHERE doc_type = 'receipt'), 0), "
+    // Sales of the session: receipts and invoices issued at the till.
+    auto docs = tx.one("SELECT count(*) FILTER (WHERE doc_type IN ('receipt','invoice')), "
+                       "COALESCE(sum(total_minor) FILTER (WHERE doc_type IN ('receipt','invoice')), 0), "
                        "count(*) FILTER (WHERE doc_type = 'credit_note'), "
                        "COALESCE(sum(total_minor) FILTER (WHERE doc_type = 'credit_note'), 0), "
-                       "COALESCE(sum(discount_minor) FILTER (WHERE doc_type = 'receipt'), 0), "
-                       "COALESCE(sum(net_minor) FILTER (WHERE doc_type = 'receipt'), 0) - "
+                       "COALESCE(sum(discount_minor) FILTER (WHERE doc_type IN ('receipt','invoice')), 0), "
+                       "COALESCE(sum(net_minor) FILTER (WHERE doc_type IN ('receipt','invoice')), 0) - "
                        "COALESCE(sum(net_minor) FILTER (WHERE doc_type = 'credit_note'), 0) "
                        "FROM sales_documents WHERE pos_session_id = $1 AND status <> 'draft'",
                        sessionId);
@@ -346,69 +348,6 @@ void identityBlocks(db::Tx& tx, const std::string& est, pdf::TicketView& v) {
             ids += (ids.empty() ? "" : " · ") + k + " " + db::str(r[1]);
         }
     if (!ids.empty()) v.blocks.push_back({pdf::TicketBlock::Center, ids});
-}
-
-std::string receiptPdf(Env& env, db::Tx& tx, const Actor& a, const std::string& docId) {
-    json d = loadSalesDocument(tx, docId);
-    auto x = tx.one("SELECT d.pos_session_id, s.number, r.code, r.name, u.full_name, nh_iso(d.issued_at), p.name, "
-                    "ps.receipt_footer, ps.receipt_width_mm, ps.walk_in_party_id = d.party_id, rel.number "
-                    "FROM sales_documents d JOIN pos_sessions s ON s.id = d.pos_session_id JOIN pos_registers r ON "
-                    "r.id = s.register_id LEFT JOIN users u ON u.id = d.issued_by JOIN parties p ON p.id = d.party_id "
-                    "LEFT JOIN pos_settings ps ON ps.establishment_id = d.establishment_id LEFT JOIN sales_documents rel "
-                    "ON rel.id = d.related_document_id WHERE d.id = $1",
-                    docId);
-    const std::string lang = d["language"], cur = d["currency"];
-    auto t = [&](const std::string& k) { return env.i18n.t(lang, k); };
-    pdf::TicketView v;
-    v.widthMm = x[8].is_null() ? 80.0f : static_cast<float>(x[8].as<int>());
-    v.title = d["number"].get<std::string>();
-    v.creationDateIso = db::str(x[5]);
-    identityBlocks(tx, a.establishmentId, v);
-    v.blocks.push_back({pdf::TicketBlock::Rule});
-    bool credit = d["doc_type"] == "credit_note";
-    v.blocks.push_back({pdf::TicketBlock::KVStrong, credit ? t("pos.return") : t("doc.receipt"), d["number"]});
-    v.blocks.push_back({pdf::TicketBlock::KV, t("pos.date"), localTime(tx, db::str(x[5]), a.establishmentId)});
-    v.blocks.push_back({pdf::TicketBlock::KV, t("pos.register"), db::str(x[2]) + " · " + t("pos.session") + " " +
-                                                                    std::to_string(x[1].as<int>())});
-    v.blocks.push_back({pdf::TicketBlock::KV, t("pos.cashier"), db::str(x[4])});
-    if (!x[9].is_null() && !db::boolean(x[9])) v.blocks.push_back({pdf::TicketBlock::KV, t("pos.customer"), db::str(x[6])});
-    if (credit && !x[10].is_null()) v.blocks.push_back({pdf::TicketBlock::KV, t("pos.original"), db::str(x[10])});
-    v.blocks.push_back({pdf::TicketBlock::Rule});
-    for (const auto& l : d["lines"]) {
-        std::string q = l["quantity"].get<std::string>();
-        std::string detail = q + " × " + fmtMoney(l["unit_price"], cur, lang);
-        if (l.value("discount_bp", 0) > 0) detail += " (−" + nhill::formatDecimal(l["discount_bp"].get<int>(), 2, lang, true) + " %)";
-        v.blocks.push_back({pdf::TicketBlock::Item, l["description"], detail, fmtMoney(l["net"], cur, lang)});
-    }
-    v.blocks.push_back({pdf::TicketBlock::Rule});
-    if (d["discount"] != money(0, cur)) v.blocks.push_back({pdf::TicketBlock::KV, t("pos.discount"), "−" + fmtMoney(d["discount"], cur, lang)});
-    v.blocks.push_back({pdf::TicketBlock::KV, t("pos.subtotal"), fmtMoney(d["net"], cur, lang)});
-    for (const auto& tb : d["taxes"]) {
-        std::string rate = nhill::formatDecimal(tb["rate_bp"].get<int>(), 2, lang, true) + " %";
-        v.blocks.push_back({pdf::TicketBlock::KV, t("pos.tax") + " " + rate, fmtMoney(tb["tax"], cur, lang)});
-    }
-    v.blocks.push_back({pdf::TicketBlock::KVStrong, t("pos.total"), fmtMoney(d["total"], cur, lang)});
-    auto ms = methods(tx, false);
-    int64_t paid = 0;
-    for (const auto& p : tx.q("SELECT substr(note, 5), amount_minor FROM payments WHERE document_id = $1 ORDER BY created_at",
-                              docId)) {
-        auto it = ms.find(db::str(p[0]));
-        paid += p[1].as<int64_t>();
-        v.blocks.push_back({pdf::TicketBlock::KV, (credit ? t("pos.refund") + " · " : "") + (it == ms.end() ? db::str(p[0]) : it->second.label),
-                            fmtMoney(money(p[1].as<int64_t>(), cur), cur, lang)});
-    }
-    auto change = tx.opt("SELECT (details->>'change_minor')::bigint FROM audit_log WHERE establishment_id = $2 AND "
-                         "entity = 'sales_document' AND entity_id = $1 AND action = 'pos.sale' LIMIT 1",
-                         docId, a.establishmentId);
-    if (change && !(*change)[0].is_null() && (*change)[0].as<int64_t>() > 0)
-        v.blocks.push_back({pdf::TicketBlock::KV, t("pos.change"), fmtMoney(money((*change)[0].as<int64_t>(), cur), cur, lang)});
-    v.blocks.push_back({pdf::TicketBlock::Rule});
-    if (!x[7].is_null() && !db::str(x[7]).empty()) v.blocks.push_back({pdf::TicketBlock::Center, db::str(x[7])});
-    v.blocks.push_back({pdf::TicketBlock::Center, t("pos.thanks")});
-    v.blocks.push_back({pdf::TicketBlock::Space});
-    v.blocks.push_back({pdf::TicketBlock::Muted, t("pos.receipt_notice")});
-    v.blocks.push_back({pdf::TicketBlock::Muted, t("pos.generated") + (d["pdf_sha256"].is_string() ? " · " + d["pdf_sha256"].get<std::string>().substr(0, 12) : "")});
-    return pdf::renderTicket(v, pdf::Fonts::fromDir(env.cfg.fontDir));
 }
 
 std::string sessionPdf(Env& env, db::Tx& tx, const Actor& a, const std::string& sessionId, bool withExpected) {
@@ -950,6 +889,10 @@ void registerPosRoutes(App& app, Env& env) {
     app.post("/api/v1/pos/sales", {Access::User, "pos.sell", true, {}, entitlements::key::kPos}, [&env](Ctx& ctx) {
         const auto& b = ctx.body();
         std::string sid = in::reqUuid(b, "session_id");
+        // A till sale gives a receipt, or an invoice for an identified customer (same
+        // invoice type, numbering and template as Nhill Business).
+        const std::string docType = in::optEnum(b, "document", {"receipt", "invoice"}).value_or("receipt");
+        if (docType == "invoice") entitlements::requireFeature(ctx.actor, entitlements::key::kInvoices);
         auto [status, body] = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             return idempotent(tx, ctx, [&]() -> Result {
                 Session s = loadSession(tx, ctx.actor, sid, true);
@@ -963,6 +906,7 @@ void registerPosRoutes(App& app, Env& env) {
                     if (!p || !db::boolean((*p)[0]) || !db::boolean((*p)[1])) throw invalid("customer_id", "not_an_active_customer");
                     party = *c;
                 }
+                if (docType == "invoice" && party == db::str(st[0])) throw invalid("customer_id", "required_for_invoice");
                 if (!b.contains("lines") || !b["lines"].is_array() || b["lines"].empty()) throw invalid("lines", "at_least_one_line");
                 // Discount and price checks (server-side catalogue prices).
                 bool needDiscount = false, needOverride = false;
@@ -1019,11 +963,12 @@ void registerPosRoutes(App& app, Env& env) {
                 std::string id = db::str(tx.one(
                     "INSERT INTO sales_documents (establishment_id, doc_type, party_id, currency, language, main_currency, "
                     "tax_rounding, gross_minor, discount_minor, net_minor, tax_minor, total_minor, tax_breakdown, notes, "
-                    "created_by, pos_session_id) VALUES ($1,'receipt',$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,$13,$14,$15) "
+                    "created_by, pos_session_id) VALUES ($1,$16,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,$13,$14,$15) "
                     "RETURNING id",
                     ctx.actor.establishmentId, party, s.currency, db::str(es[1]), db::str(es[0]), rounding, totals.grossMinor,
                     totals.discountMinor, totals.netMinor, totals.taxMinor, totals.totalMinor,
-                    sales::breakdownJson(totals).dump(), in::optStr(b, "note", 300).value_or(""), ctx.actor.userId, sid)[0]);
+                    sales::breakdownJson(totals).dump(), in::optStr(b, "note", 300).value_or(""), ctx.actor.userId, sid,
+                    docType)[0]);
                 sales::writeLines(tx, ctx.actor.establishmentId, id, lc, totals);
                 sales::history(tx, ctx.actor, id, std::nullopt, "draft");
                 json doc = sales::issue(env, tx, ctx.actor, id, json::object(), s.warehouseId);
@@ -1037,7 +982,7 @@ void registerPosRoutes(App& app, Env& env) {
                          "VALUES ($1,$2,$3,$4)",
                          ctx.actor.establishmentId, *promoId, id, totals.discountMinor);
                 audit(tx, ctx.actor, "pos.sale", "sales_document", id,
-                      {{"number", doc["number"]}, {"session_id", sid}, {"total", money(totals.totalMinor, s.currency)},
+                      {{"number", doc["number"]}, {"doc_type", docType}, {"session_id", sid}, {"total", money(totals.totalMinor, s.currency)},
                        {"change_minor", change}, {"approved_by", approver ? json(*approver) : json(nullptr)},
                        {"promo", promoId ? json(*promoId) : json(nullptr)}});
                 return {201, {{"receipt", loadSalesDocument(tx, id)}, {"change", money(change, s.currency)}}};
@@ -1057,7 +1002,11 @@ void registerPosRoutes(App& app, Env& env) {
                        !has(ctx.actor, "pos.supervise")))
                 throw notFound("document");
             number = db::str((*d)[0]);
-            bytes = receiptPdf(env, tx, ctx.actor, id);
+            auto vis = tx.one("SELECT doc_type FROM sales_documents WHERE id = $1", id);
+            if (!entitlements::docVisible(ctx.actor, db::str(vis[0]), true)) throw notFound("document");
+            // Same model and templates as Nhill Business: ticket by default for receipts,
+            // A4 by default for invoices; ?format=a4|ticket and ?width=58|80.
+            bytes = documents::render(env, documents::build(env, tx, id), ctx.query("format"), ctx.query("width"));
         });
         ctx.file(bytes, "application/pdf", number + ".pdf");
     });
@@ -1075,7 +1024,10 @@ void registerPosRoutes(App& app, Env& env) {
                 auto r = tx.opt("SELECT doc_type, status, currency, total_minor, credited_minor, pos_session_id, party_id, "
                                 "language FROM sales_documents WHERE id = $1 FOR UPDATE",
                                 rid);
-                if (!r || db::str((*r)[0]) != "receipt" || (*r)[5].is_null()) throw notFound("document");
+                // Receipts and invoices issued at the till.
+                if (!r || (db::str((*r)[0]) != "receipt" && db::str((*r)[0]) != "invoice") || (*r)[5].is_null())
+                    throw notFound("document");
+                if (!entitlements::docVisible(ctx.actor, db::str((*r)[0]), true)) throw notFound("document");
                 if (db::str((*r)[2]) != s.currency) throw invalid("session_id", "currency_mismatch");
                 if (db::str((*r)[1]) == "credited") throw conflict("already_refunded");
                 std::optional<std::string> approver;
@@ -1172,8 +1124,10 @@ void registerPosRoutes(App& app, Env& env) {
         auto number = ctx.query("number");
         if (!number || number->size() < 3) throw invalid("number", "required");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) -> json {
-            auto r = tx.opt("SELECT id FROM sales_documents WHERE doc_type = 'receipt' AND number = $1", upperAscii(*number));
-            if (!r) throw notFound("document");
+            auto r = tx.opt("SELECT id, doc_type FROM sales_documents WHERE pos_session_id IS NOT NULL "
+                            "AND doc_type IN ('receipt','invoice') AND number = $1",
+                            upperAscii(*number));
+            if (!r || !entitlements::docVisible(ctx.actor, db::str((*r)[1]), true)) throw notFound("document");
             return loadSalesDocument(tx, db::str((*r)[0]));
         });
         ctx.json(200, out);

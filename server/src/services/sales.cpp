@@ -4,6 +4,7 @@
 
 #include "nhill/money.hpp"
 #include "pdf/pdf.hpp"
+#include "services/documents.hpp"
 #include "services/entitlements.hpp"
 #include "services/sales.hpp"
 #include "services/services.hpp"
@@ -32,16 +33,6 @@ std::string formatDate(const std::string& iso, const std::string& lang) {
     int m = std::stoi(iso.substr(5, 2));
     return iso.substr(8, 2) + " " + (m >= 1 && m <= 12 ? months[m - 1] : "") + " " + iso.substr(0, 4);
 }
-
-namespace {
-
-std::string percent(int bp, const std::string& lang) {
-    // 1600 -> "16 %" (fr) / "16%" (en); 1250 -> "12,5 %"
-    std::string s = nhill::formatDecimal(bp, 2, lang, true);
-    return lang == "fr" ? s + "\xC2\xA0%" : s + "%";
-}
-
-}  // namespace
 
 namespace sales {
 
@@ -248,156 +239,10 @@ json loadSalesDocument(db::Tx& tx, const std::string& id) {
 
 // --------------------------------------------------------------------- PDF
 
+// A4 layout of the shared document model (services/documents.cpp): the same template
+// for Nhill Business and Nhill POS.
 std::string renderSalesPdf(Env& env, db::Tx& tx, const std::string& id) {
-    json d = loadSalesDocument(tx, id);
-    const std::string lang = d["language"];
-    const std::string cur = d["currency"];
-    auto row = tx.one(
-        "SELECT d.seller_snapshot, d.buyer_snapshot, e.trade_name, e.legal_name, e.address, e.city, e.country_code, "
-        "e.phone, e.email, e.vat_registered, e.compliance_profile_code, s.payment_instructions, s.invoice_footer, "
-        "p.name, p.address, p.city, p.country_code, p.email, p.phone, p.tax_ids, o.mime, encode(o.data,'hex') "
-        "FROM sales_documents d JOIN establishments e ON e.id = d.establishment_id "
-        "JOIN establishment_settings s ON s.establishment_id = d.establishment_id JOIN parties p ON p.id = d.party_id "
-        "LEFT JOIN objects o ON o.id = e.logo_object_id WHERE d.id = $1",
-        id);
-    const bool draft = d["status"] == "draft";
-    json seller, buyer;
-    if (!draft && !row[0].is_null()) {
-        seller = json::parse(db::str(row[0]));
-        buyer = json::parse(db::str(row[1]));
-    } else {
-        seller = {{"trade_name", db::str(row[2])}, {"legal_name", db::str(row[3])}, {"address", db::str(row[4])},
-                  {"city", db::str(row[5])},       {"country", db::str(row[6])},    {"phone", db::str(row[7])},
-                  {"email", db::str(row[8])},      {"vat_registered", db::boolean(row[9])},
-                  {"profile", db::str(row[10])},   {"payment_instructions", db::str(row[11])},
-                  {"footer", db::str(row[12])}};
-        json ids = json::object();
-        for (const auto& r : tx.q("SELECT kind, value FROM establishment_identifiers WHERE establishment_id = "
-                                  "(SELECT establishment_id FROM sales_documents WHERE id = $1)",
-                                  id))
-            ids[db::str(r[0])] = db::str(r[1]);
-        seller["legal_ids"] = ids;
-        buyer = {{"name", db::str(row[13])}, {"address", db::str(row[14])}, {"city", db::str(row[15])},
-                 {"country", db::str(row[16])}, {"email", db::str(row[17])}, {"phone", db::str(row[18])},
-                 {"tax_ids", json::parse(db::str(row[19]))}};
-    }
-    const json& profile = env.profiles.get(seller.value("profile", std::string("INTL")));
-    auto t = [&](const std::string& k) { return env.i18n.t(lang, k); };
-    auto fmtMoney = [&](const std::string& plain) {
-        auto v = nhill::parseMoney(plain, minorUnits(cur));
-        std::string s = nhill::formatDecimal(v.value_or(0), minorUnits(cur), lang);
-        // The PDF fonts carry U+00A0 for sure; normalise the narrow space.
-        for (size_t p; (p = s.find("\xE2\x80\xAF")) != std::string::npos;) s.replace(p, 3, "\xC2\xA0");
-        return s;
-    };
-    auto fmtQty = [&](const std::string& plain) {
-        std::string s = nhill::formatDecimal(nhill::parseQuantity(plain).value_or(0), 3, lang, true);
-        for (size_t p; (p = s.find("\xE2\x80\xAF")) != std::string::npos;) s.replace(p, 3, "\xC2\xA0");
-        return s;
-    };
-
-    pdf::SalesDocView v;
-    v.title = t("doc." + d["doc_type"].get<std::string>());
-    v.number = d["number"].is_null() ? "" : d["number"].get<std::string>();
-    if (draft) v.watermark = t("doc.draft_watermark");
-    v.sellerName = seller.value("trade_name", "");
-    auto addIf = [](std::vector<std::string>& vec, const std::string& s) {
-        if (!s.empty()) vec.push_back(s);
-    };
-    if (seller.value("legal_name", "") != v.sellerName) addIf(v.sellerLines, seller.value("legal_name", ""));
-    addIf(v.sellerLines, seller.value("address", ""));
-    addIf(v.sellerLines, seller.value("city", ""));
-    std::string contact = seller.value("phone", "");
-    if (!seller.value("email", "").empty()) contact += (contact.empty() ? "" : " · ") + seller.value("email", "");
-    addIf(v.sellerLines, contact);
-    std::string ids;
-    for (const auto& def : profile.at("legal_ids")) {
-        std::string k = def.at("kind");
-        if (seller.contains("legal_ids") && seller["legal_ids"].contains(k))
-            ids += (ids.empty() ? "" : " · ") + t("id." + k) + " " + seller["legal_ids"][k].get<std::string>();
-    }
-    addIf(v.sellerLines, ids);
-    v.buyerLabel = t("doc.bill_to");
-    v.buyerName = buyer.value("name", "");
-    addIf(v.buyerLines, buyer.value("address", ""));
-    addIf(v.buyerLines, buyer.value("city", ""));
-    std::string bids;
-    if (buyer.contains("tax_ids"))
-        for (auto it = buyer["tax_ids"].begin(); it != buyer["tax_ids"].end(); ++it)
-            bids += (bids.empty() ? "" : " · ") + t("id." + it.key()) + " " + it.value().get<std::string>();
-    addIf(v.buyerLines, bids);
-    std::string bcontact = buyer.value("phone", "");
-    if (!buyer.value("email", "").empty()) bcontact += (bcontact.empty() ? "" : " · ") + buyer.value("email", "");
-    addIf(v.buyerLines, bcontact);
-    if (!row[20].is_null()) {
-        v.logoBytes = *crypto::fromHex(db::str(row[21]));
-        v.logoMime = db::str(row[20]);
-    }
-
-    v.meta.push_back({t("doc.issue_date"), formatDate(d["issue_date"], lang)});
-    if (!d["due_date"].is_null() && d["doc_type"] == "invoice")
-        v.meta.push_back({t("doc.due_date"), formatDate(d["due_date"], lang)});
-    if (!d["valid_until"].is_null() && d["doc_type"] == "quote")
-        v.meta.push_back({t("doc.valid_until"), formatDate(d["valid_until"], lang)});
-    if (!d["related_number"].is_null()) v.meta.push_back({t("doc.related"), d["related_number"]});
-    v.meta.push_back({t("doc.currency"), cur});
-    if (!d["fx_rate"].is_null()) {
-        auto rate = nhill::ExchangeRate::parse(d["fx_rate"].get<std::string>());
-        v.meta.push_back({t("doc.fx"), "1 " + cur + " = " + (rate ? rate->toString() : "") + " " +
-                                           d["main_currency"].get<std::string>() + " (" +
-                                           formatDate(d["fx_rate_date"].get<std::string>(), lang) + ")"});
-    }
-
-    v.columns = {t("doc.col.ref"), t("doc.col.description"), t("doc.col.qty"), t("doc.col.unit_price"),
-                 t("doc.col.discount"), t("doc.col.tax"), t("doc.col.total")};
-    for (const auto& l : d["lines"]) {
-        pdf::Line pl;
-        pl.ref = l["sku"].is_null() ? "" : l["sku"].get<std::string>();
-        pl.description = l["description"];
-        std::string unit = l["unit"];
-        std::string unitLabel = t("unit." + unit);
-        pl.qty = fmtQty(l["quantity"]) + " " + (unitLabel == "unit." + unit ? unit : unitLabel);
-        pl.unitPrice = fmtMoney(l["unit_price"]);
-        pl.discount = l["discount_bp"].get<int>() > 0 ? percent(l["discount_bp"], lang) : "";
-        pl.tax = percent(l["tax_rate_bp"], lang);
-        pl.total = fmtMoney(l["net"]);
-        v.lines.push_back(pl);
-    }
-    if (d["discount"] != money(0, cur)) {
-        v.totals.push_back({t("doc.subtotal"), fmtMoney(d["gross"])});
-        v.totals.push_back({t("doc.discount"), "-" + fmtMoney(d["discount"])});
-    }
-    v.totals.push_back({t("doc.net"), fmtMoney(d["net"])});
-    for (const auto& tb : d["taxes"])
-        v.totals.push_back({percent(tb["rate_bp"], lang) + " " + t("doc.tax_on") + " " + fmtMoney(tb["base"]),
-                            fmtMoney(tb["tax"])});
-    v.grandTotal = {t("doc.total"), fmtMoney(d["total"]) + " " + cur};
-    if (d["doc_type"] == "invoice" && !draft) {
-        if (d["paid"] != money(0, cur)) v.afterTotals.push_back({t("doc.paid"), fmtMoney(d["paid"])});
-        if (d["credited"] != money(0, cur)) v.afterTotals.push_back({t("doc.credited"), fmtMoney(d["credited"])});
-        v.afterTotals.push_back({t("doc.balance"), fmtMoney(d["balance"]) + " " + cur});
-    }
-    if (seller.value("vat_registered", false) && profile.contains("document_notices") &&
-        profile["document_notices"].contains("vat_registered"))
-        v.notices.push_back(profile["document_notices"]["vat_registered"].value(lang, ""));
-    if (!d["fiscal_reference"].is_null()) {
-        std::string fr;
-        for (auto it = d["fiscal_reference"].begin(); it != d["fiscal_reference"].end(); ++it)
-            if (it.value().is_string()) fr += (fr.empty() ? "" : " · ") + it.value().get<std::string>();
-        v.notices.push_back(t("doc.fiscal_reference") + " : " + fr);
-    }
-    if (!d["terms"].get<std::string>().empty()) v.footnotes.push_back({t("doc.payment_terms"), d["terms"]});
-    if (!seller.value("payment_instructions", "").empty())
-        v.footnotes.push_back({t("doc.payment_info"), seller.value("payment_instructions", "")});
-    if (!d["notes"].get<std::string>().empty()) v.footnotes.push_back({t("doc.notes"), d["notes"]});
-    std::string fingerprint = crypto::sha256Hex(d["id"].get<std::string>() + "|" + v.number + "|" + d["issue_date"].get<std::string>() +
-                                                "|" + d["total"].get<std::string>() + "|" + cur + "|" + v.buyerName)
-                                  .substr(0, 16);
-    v.footerLeft = seller.value("footer", "");
-    v.footerLeft += (v.footerLeft.empty() ? "" : "  ·  ") + t("doc.generated_by") + "  ·  " + t("doc.fingerprint") + " " + fingerprint;
-    v.pageLabel = t("doc.page");
-    v.creationDateIso = d["issued_at"].is_null() ? d["updated_at"].get<std::string>() : d["issued_at"].get<std::string>();
-    return pdf::renderSalesDocument(v, pdf::Fonts::fromDir(env.cfg.fontDir));
+    return documents::renderA4(env, documents::build(env, tx, id));
 }
 
 // --------------------------------------------------------------------- routes
@@ -602,7 +447,8 @@ void registerSalesRoutes(App& app, Env& env) {
             requireVisible(tx, ctx.actor, id);
             auto r = tx.one("SELECT COALESCE(number, 'brouillon') FROM sales_documents WHERE id = $1", id);
             number = db::str(r[0]);
-            return renderSalesPdf(env, tx, id);
+            // ?format=a4|ticket and ?width=58|80: the same document in both layouts.
+            return documents::render(env, documents::build(env, tx, id), ctx.query("format"), ctx.query("width"));
         });
         ctx.file(bytes, "application/pdf", number + ".pdf", ctx.query("inline").has_value());
     });

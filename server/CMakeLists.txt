@@ -5,6 +5,8 @@ pkg_check_modules(PNG REQUIRED IMPORTED_TARGET libpng)
 find_package(OpenSSL REQUIRED)
 find_package(nlohmann_json 3.10 REQUIRED)
 find_package(Threads REQUIRED)
+# Data export archives (ZIP, DEFLATE).
+find_package(ZLIB REQUIRED)
 pkg_check_modules(HTTPLIB REQUIRED IMPORTED_TARGET cpp-httplib)
 # SMTP delivery of e-mails (password recovery codes, notices): libcurl with TLS.
 pkg_check_modules(CURL REQUIRED IMPORTED_TARGET libcurl)
@@ -24,6 +26,7 @@ add_library(nhill_server_core STATIC
     src/http/app.cpp
     src/util/crypto.cpp
     src/util/mailer.cpp
+    src/util/zip.cpp
     src/pdf/pdf.cpp
     src/jobs/jobs.cpp
     src/services/common.cpp
@@ -43,10 +46,12 @@ add_library(nhill_server_core STATIC
     src/services/parties.cpp
     src/services/stock.cpp
     src/services/sales.cpp
+    src/services/documents.cpp
     src/services/purchases.cpp
     src/services/payments.cpp
     src/services/expenses.cpp
     src/services/reports.cpp
+    src/services/export.cpp
     src/services/admin.cpp
 )
 target_include_directories(nhill_server_core PUBLIC src ${HPDF_INCLUDE_DIR})
@@ -61,6 +66,7 @@ target_link_libraries(nhill_server_core PUBLIC
     nlohmann_json::nlohmann_json
     ${HPDF_LIBRARY}
     Threads::Threads
+    ZLIB::ZLIB
 )
 
 add_executable(nhill-server src/main.cpp)

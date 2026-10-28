@@ -9,6 +9,7 @@ add_executable(test_server
     test_pos.cpp
     test_password.cpp
     test_entitlements.cpp
+    test_documents.cpp
 )
 target_compile_definitions(test_server PRIVATE NHILL_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 target_link_libraries(test_server PRIVATE nhill_server_core GTest::gtest_main)

@@ -4,10 +4,15 @@
 // (lists, details, reports, dashboard, payments, stock movements, activity, notifications).
 // Also: limits, plan changes, expiry, grace and suspension, fallback plans, assignment
 // rules, retried requests after a connection loss and concurrent requests on a limit.
+#include <cstdlib>
+#include <fstream>
 #include <future>
+#include <map>
 #include <set>
 
 #include "harness.hpp"
+#include "util/crypto.hpp"
+#include "util/zip.hpp"
 
 using namespace nht;
 
@@ -598,4 +603,70 @@ TEST(Plans, AssignmentRuleGivesItsPlanToANewEstablishment) {
     Tenant other = createTenant("company");
     auto osub = h.su("SELECT plan_id IS NULL FROM subscriptions WHERE establishment_id = '" + other.id + "'");
     EXPECT_TRUE(osub[0][0].as<bool>());
+}
+
+// ------------------------------------------------------------------ full export (option 1)
+
+TEST(Plans, OwnerExportsAllDataWhateverThePlanAndTheSubscription) {
+    auto& h = Harness::get();
+    Tenant t = createTenant("company");
+    putOn(t, makePlan({}));
+    std::string c = createCustomer(t, "Client Export");
+    std::string inv = draftInvoice(t, c, json::array({{{"description", "Prestation"}, {"quantity", "1"}, {"unit_price", "250.00"}}}));
+    auto issued = issue(t, inv);
+    ASSERT_EQ(issued.status, 200);
+    std::string number = issued.body["number"];
+    ASSERT_EQ(call("POST", "/api/v1/expenses", {{"description", "Carburant groupe"}, {"amount", "40.00"}, {"currency", "CDF"}}, t.token)
+                  .status,
+              201);
+    std::string sales = addMember(t, "sales");
+    // Plan without invoices nor expenses, subscription expired: the owner still exports everything.
+    putOn(t, makePlan({"sales.invoices", "expenses"}));
+    h.su("UPDATE subscriptions SET status = 'past_due', period_start = now() - interval '50 days', "
+         "period_end = now() - interval '20 days', grace_until = now() - interval '1 day' WHERE establishment_id = '" + t.id + "'");
+    EXPECT_EQ(h.get("/api/v1/sales-documents/" + inv, t.token).status, 404);  // hidden in the applications
+    auto r = h.get("/api/v1/establishment/export", t.token);
+    ASSERT_EQ(r.status, 200) << r.raw.substr(0, 300);
+    EXPECT_NE(r.header("Content-Type").find("application/zip"), std::string::npos);
+    EXPECT_NE(r.header("Content-Disposition").find(".zip"), std::string::npos);
+    if (const char* dir = std::getenv("NH_SAMPLES_DIR")) {  // checked with standard tools (unzip -t)
+        std::ofstream(std::string(dir) + "/export-sample.zip", std::ios::binary) << r.raw;
+    }
+    auto entries = nh::zip::read(r.raw);
+    std::map<std::string, std::string> files(entries.begin(), entries.end());
+    ASSERT_TRUE(files.count("README.txt"));
+    ASSERT_TRUE(files.count("manifest.json"));
+    json manifest = json::parse(files["manifest.json"]);
+    EXPECT_EQ(manifest["format"], "nhill-export");
+    EXPECT_EQ(manifest["establishment"]["id"], t.id);
+    // Every file listed with its SHA-256.
+    for (const auto& f : manifest["files"]) {
+        ASSERT_TRUE(files.count(f["path"].get<std::string>())) << f["path"];
+        EXPECT_EQ(nh::crypto::sha256Hex(files[f["path"].get<std::string>()]), f["sha256"]);
+    }
+    json docs = json::parse(files["json/sales_documents.json"]);
+    bool found = false;
+    for (const auto& d : docs) found |= d.value("number", json(nullptr)) == number;
+    EXPECT_TRUE(found) << "invoice of a feature outside the plan is in the export";
+    EXPECT_NE(files["csv/expenses.csv"].find("Carburant groupe"), std::string::npos);
+    EXPECT_NE(files["csv/parties.csv"].find("Client Export"), std::string::npos);
+    EXPECT_EQ(files["csv/sales_documents.csv"].rfind("\xEF\xBB\xBF", 0), 0u);
+    // No secret, no hash, no other establishment.
+    Tenant other = createTenant("company");
+    createCustomer(other, "Client Voisin");
+    for (const auto& [name, content] : files) {
+        EXPECT_EQ(content.find("$argon2"), std::string::npos) << name;
+        EXPECT_EQ(content.find("password_hash"), std::string::npos) << name;
+        EXPECT_EQ(content.find("token_hash"), std::string::npos) << name;
+        EXPECT_EQ(content.find(other.id), std::string::npos) << name;
+    }
+    auto again = nh::zip::read(h.get("/api/v1/establishment/export", other.token).raw);
+    for (const auto& [name, content] : again) EXPECT_EQ(content.find("Client Export"), std::string::npos) << name;
+    // Owner only; audited.
+    auto refused = h.get("/api/v1/establishment/export", sales);
+    EXPECT_EQ(refused.status, 403);
+    EXPECT_EQ(refused.body["error"]["code"], "owner_only");
+    EXPECT_GE(h.su("SELECT count(*) FROM audit_log WHERE establishment_id = '" + t.id + "' AND action = 'establishment.exported'")[0][0]
+                  .as<int>(),
+              1);
 }

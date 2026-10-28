@@ -35,7 +35,7 @@
   "doc.page": "Page",
   "doc.generated_by": "Généré par Nhill",
   "doc.fingerprint": "Empreinte",
-  "doc.fiscal_reference": "Référence facture normalisée (DEF)",
+  "doc.fiscal_reference": "Référence fiscale",
   "id.rccm": "RCCM",
   "id.id_nat": "Id. Nat.",
   "id.nif": "NIF",
@@ -398,5 +398,18 @@
   "detail.severity": "Gravité",
   "detail.type": "Type",
   "email.plan_changed.subject": "Votre formule Nhill a changé",
-  "email.plan_changed.body": "Bonjour,\n\nLa formule Nhill de {establishment} est désormais « {plan} ». Les fonctionnalités disponibles dans Nhill Business et Nhill POS suivent cette formule dès maintenant. Le détail figure dans Nhill Business, Paramètres › Abonnement."
+  "email.plan_changed.body": "Bonjour,\n\nLa formule Nhill de {establishment} est désormais « {plan} ». Les fonctionnalités disponibles dans Nhill Business et Nhill POS suivent cette formule dès maintenant. Le détail figure dans Nhill Business, Paramètres › Abonnement.",
+  "doc.status": "Statut",
+  "doc.customer": "Client",
+  "doc.payments": "Paiements reçus",
+  "doc.refunds": "Remboursements",
+  "doc.state.invoice.issued": "Émise — à payer",
+  "doc.state.invoice.partially_paid": "Partiellement payée",
+  "doc.state.invoice.paid": "Payée",
+  "doc.state.invoice.credited": "Annulée par avoir",
+  "doc.state.receipt.issued": "Émis",
+  "doc.state.receipt.partially_paid": "Partiellement payé",
+  "doc.state.receipt.paid": "Payé",
+  "doc.state.receipt.credited": "Annulé par avoir",
+  "doc.state.credit_note.issued": "Émis"
 }

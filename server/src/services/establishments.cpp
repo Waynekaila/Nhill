@@ -107,7 +107,7 @@ json establishmentJson(Env& env, db::Tx& tx, const std::string& est) {
         est);
     auto s = tx.one(
         "SELECT allow_negative_stock, tax_rounding, default_payment_terms_days, document_language, invoice_footer, "
-        "payment_instructions FROM establishment_settings WHERE establishment_id = $1",
+        "payment_instructions, document_mentions FROM establishment_settings WHERE establishment_id = $1",
         est);
     const json& profile = env.profiles.get(db::str(e[14]));
     json notice = nullptr;
@@ -140,7 +140,8 @@ json establishmentJson(Env& env, db::Tx& tx, const std::string& est) {
               {"default_payment_terms_days", s[2].as<int>()},
               {"document_language", db::str(s[3])},
               {"invoice_footer", db::str(s[4])},
-              {"payment_instructions", db::str(s[5])}}},
+              {"payment_instructions", db::str(s[5])},
+              {"document_mentions", db::str(s[6])}}},
             {"compliance_notice", notice},
             {"profile_validation_status", profile.value("validation_status", "")}};
 }
@@ -574,13 +575,16 @@ void registerEstablishmentRoutes(App& app, Env& env) {
         std::optional<std::string> footer, payInfo;
         if (b.contains("invoice_footer")) footer = in::optStr(b, "invoice_footer", 500).value_or("");
         if (b.contains("payment_instructions")) payInfo = in::optStr(b, "payment_instructions", 500).value_or("");
+        // Mentions printed on every document (A4 and ticket), written by the establishment.
+        std::optional<std::string> mentions;
+        if (b.contains("document_mentions")) mentions = in::optStr(b, "document_mentions", 1000).value_or("");
         json out = db::run(env.pool, ctx.actor.establishmentId, [&](db::Tx& tx) {
             tx.q("UPDATE establishment_settings SET allow_negative_stock = COALESCE($2, allow_negative_stock), "
                  "tax_rounding = COALESCE($3, tax_rounding), default_payment_terms_days = COALESCE($4, "
                  "default_payment_terms_days), document_language = COALESCE($5, document_language), "
                  "invoice_footer = COALESCE($6, invoice_footer), payment_instructions = COALESCE($7, payment_instructions), "
-                 "updated_at = now() WHERE establishment_id = $1",
-                 ctx.actor.establishmentId, neg, rounding, terms, docLang, footer, payInfo);
+                 "document_mentions = COALESCE($8, document_mentions), updated_at = now() WHERE establishment_id = $1",
+                 ctx.actor.establishmentId, neg, rounding, terms, docLang, footer, payInfo, mentions);
             audit(tx, ctx.actor, "establishment.settings_updated", "establishment", ctx.actor.establishmentId, b);
             return establishmentJson(env, tx, ctx.actor.establishmentId);
         });

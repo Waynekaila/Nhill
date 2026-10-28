@@ -38,6 +38,7 @@ void registerAll(App& app, Env& env) {
     registerConsoleRoutes(app, env);
     registerSupportRoutes(app, env);
     registerPosRoutes(app, env);
+    registerExportRoutes(app, env);
     entitlements::registerRoutes(app, env);
 }
 

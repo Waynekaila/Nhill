@@ -396,6 +396,7 @@ std::string renderSalesDocument(const SalesDocView& v, const Fonts& fonts) {
         return top - 18;
     };
     const float bottomLimit = M + 30;
+    float payBottom = H;  // lowest point of the payments block, when there is one
     y = header(p, y);
     for (const auto& l : v.lines) {
         auto desc = wrap(p, f.regular, 8.5f, l.description, colW[1] - 8);
@@ -420,14 +421,32 @@ std::string renderSalesDocument(const SalesDocView& v, const Fonts& fonts) {
         rule(p, M, y, right, 0.4f);
     }
 
-    // ---- totals
-    float needed = 16.0f * (v.totals.size() + v.afterTotals.size()) + 40;
+    // ---- totals (right) and payments received (left)
+    float needed = 16.0f * std::max(v.totals.size() + v.afterTotals.size(), v.payments.size() + 1) + 40;
     if (y - needed < bottomLimit) {
         p = newPage();
         y = H - M;
     }
     y -= 10;
     const float tx = right - 230;
+    if (!v.payments.empty()) {
+        float py = y;
+        text(p, f.semibold, 7.5f, M, py - 10, v.paymentsTitle, kMuted);
+        py -= 16;
+        const float pw = tx - 24 - M;
+        for (const auto& [k, val] : v.payments) {
+            float aw = width(p, f.regular, 8.5f, val);
+            auto ls = wrap(p, f.regular, 8.5f, k, std::max(60.0f, pw - aw - 10));
+            textRight(p, f.regular, 8.5f, M + pw, py - 10, val);
+            for (const auto& l : ls) {
+                text(p, f.regular, 8.5f, M, py - 10, l);
+                py -= 12;
+            }
+            py -= 3;
+            rule(p, M, py + 1, M + pw, 0.3f);
+        }
+        payBottom = py;
+    }
     for (const auto& [k, val] : v.totals) {
         text(p, f.regular, 8.5f, tx, y - 10, k, kMuted);
         textRight(p, f.regular, 8.5f, right, y - 10, val);
@@ -443,6 +462,7 @@ std::string renderSalesDocument(const SalesDocView& v, const Fonts& fonts) {
         textRight(p, f.semibold, 8.5f, right, y - 10, val);
         y -= 15;
     }
+    y = std::min(y, payBottom);
 
     // ---- notices (e.g. "does not replace the DEF standardised invoice")
     y -= 8;

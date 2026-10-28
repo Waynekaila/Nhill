@@ -37,4 +37,30 @@ TEST(Samples, GenerateDocumentSamples) {
     std::string today = h.su("SELECT (now() AT TIME ZONE 'Africa/Kinshasa')::date::text")[0][0].c_str();
     save("exemple-journal-ventes.pdf", h.get("/api/v1/reports/sales?format=pdf&from=2026-01-01&to=" + today, t.token).raw);
     save("exemple-journal-ventes.csv", h.get("/api/v1/reports/sales?format=csv&from=2026-01-01&to=" + today, t.token).raw);
+    // The same invoice on a roll (Business), then documents issued at the till (POS).
+    save("exemple-facture-ticket-80mm.pdf", h.get("/api/v1/sales-documents/" + draft + "/pdf?format=ticket", t.token).raw);
+    auto reg = h.post("/api/v1/pos/registers", {{"code", "c1"}, {"name", "Caisse 1"}}, t.token, newKey());
+    auto sess = h.post("/api/v1/pos/sessions", {{"register_id", reg.body["id"]}}, t.token, newKey());
+    // Amounts: 18 500,00 + 16 % VAT per item (VAT-registered example).
+    auto inv = h.post("/api/v1/pos/sales", {{"session_id", sess.body["id"]}, {"document", "invoice"}, {"customer_id", cust},
+                                            {"lines", {{{"product_id", p}, {"quantity", "2"}}}},
+                                            {"payments", {{{"method", "cash"}, {"amount", "42920.00"}}}}},
+                      t.token, newKey());
+    if (inv.status == 201) {
+        std::string id = inv.body["receipt"]["id"];
+        save("exemple-facture-caisse-a4.pdf", h.get("/api/v1/pos/sales/" + id + "/receipt.pdf", t.token).raw);
+        save("exemple-facture-caisse-ticket.pdf", h.get("/api/v1/pos/sales/" + id + "/receipt.pdf?format=ticket", t.token).raw);
+    } else {
+        save("exemple-facture-caisse-erreur.json", inv.raw);
+    }
+    auto rc = h.post("/api/v1/pos/sales", {{"session_id", sess.body["id"]}, {"lines", {{{"product_id", p}, {"quantity", "1"}}}},
+                                           {"payments", {{{"method", "cash"}, {"amount", "21460.00"}, {"tendered", "25000.00"}}}}},
+                     t.token, newKey());
+    if (rc.status == 201) {
+        std::string id = rc.body["receipt"]["id"];
+        save("exemple-ticket-58mm.pdf", h.get("/api/v1/pos/sales/" + id + "/receipt.pdf?width=58", t.token).raw);
+        save("exemple-ticket-80mm.pdf", h.get("/api/v1/pos/sales/" + id + "/receipt.pdf", t.token).raw);
+    } else {
+        save("exemple-ticket-erreur.json", rc.raw);
+    }
 }

@@ -25,6 +25,7 @@ void registerAdminRoutes(App& app, Env& env);
 void registerConsoleRoutes(App& app, Env& env);
 void registerSupportRoutes(App& app, Env& env);
 void registerPosRoutes(App& app, Env& env);
+void registerExportRoutes(App& app, Env& env);
 
 // Technical error journal (support.cpp). Best effort: never throws.
 void recordErrorEvent(db::Pool& pool, const std::string& source, const std::string& level, const std::string& code,
