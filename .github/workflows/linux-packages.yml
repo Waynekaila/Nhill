@@ -111,3 +111,61 @@ jobs:
           JOB_STATUS: ${{ job.status }}
           MATRIX_NAME: ${{ matrix.name }}
         run: src/.github/scripts/publish-results.sh ci-results/install-${{ matrix.name }} install-report
+  vps-test:
+    # Installation complète sur une machine Ubuntu 24.04 neuve (machine virtuelle GitHub,
+    # avec systemd), comme sur un VPS : deploy/vps/provision.sh puis contrôles d'acceptation
+    # (exposition réseau, secrets, HTTPS par Caddy, sauvegarde chiffrée, restauration hors du
+    # serveur, mise à jour avec retour arrière, refus d'une base plus récente). Certificat de
+    # l'autorité locale de Caddy (aucun nom public) ; ce n'est pas un déploiement réel.
+    name: VPS — installation et exploitation (Ubuntu 24.04 neuf)
+    needs: deb
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: nhill-deb-ubuntu-24.04
+          path: debs
+      - name: ShellCheck des scripts d'exploitation
+        run: shellcheck -S warning deploy/vps/*.sh deploy/vps/tests/*.sh deploy/backup/*.sh
+      - name: Clé de sauvegarde créée hors du « serveur » (simulation du poste d'administration)
+        run: |
+          sudo apt-get install -y -q age >/dev/null
+          age-keygen -o "$RUNNER_TEMP/backup-key.txt" 2> "$RUNNER_TEMP/backup-pub.txt"
+          grep -o 'age1[0-9a-z]*' "$RUNNER_TEMP/backup-pub.txt" > "$RUNNER_TEMP/recipient.txt"
+      - name: provision.sh
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p vps-report
+          deb="$(find debs -name 'nhill-server_*_amd64.deb' | head -1)"; sums="$(dirname "$deb")/SHA256SUMS"
+          echo "DEB=$deb" >> "$GITHUB_ENV"; echo "SUMS=$sums" >> "$GITHUB_ENV"
+          sudo deploy/vps/provision.sh --deb "$deb" --sha256sums "$sums" --api-domain api.nhill-ci.test --tls internal \
+            --admin-email ci-admin@example.com --admin-name "CI" --backup-recipient "$(cat "$RUNNER_TEMP/recipient.txt")" \
+            --support-email support@nhill.online --yes 2>&1 | tee vps-report/provision.log
+      - name: Contrôles d'acceptation
+        shell: bash
+        run: |
+          set -o pipefail
+          sudo deploy/vps/tests/acceptance.sh api.nhill-ci.test "$RUNNER_TEMP/backup-key.txt" "$DEB" "$SUMS" 2>&1 | tee vps-report/acceptance.log
+      - name: Journaux
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p vps-report
+          sudo journalctl -u nhill-server -u caddy -u nhill-backup -u nhill-healthcheck --no-pager -n 400 > vps-report/journal.log 2>&1 || true
+          sudo cat /var/lib/nhill/health.json > vps-report/health.json 2>/dev/null || true
+          sudo ufw status verbose > vps-report/ufw.txt 2>&1 || true
+          sudo ss -ltnup > vps-report/listening.txt 2>&1 || true
+          # Jetons à usage unique et chemins locaux : le journal d'installation est publié tel quel
+          # (machine éphémère détruite à la fin du job, aucune donnée réelle).
+      - name: Publication des résultats (branche ci-results/vps-test)
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ job.status }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/vps-test vps-report

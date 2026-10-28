@@ -21,7 +21,7 @@
 | Head office | Kinshasa, Democratic Republic of the Congo |
 | E-mail | info@nhill.online |
 | Customer support | support@nhill.online |
-| Publication director | [NAME, TITLE] |
+| Publication director | Wayne TSHINGI, founder |
 | Digital-activity authorisation / declaration | [REFERENCE, if applicable — see H-07] |
 
 ## Hosting

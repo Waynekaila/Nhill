@@ -28,6 +28,8 @@ api.example.com {
 		output file /var/log/caddy/nhill-access.log {
 			roll_size 50MiB
 			roll_keep 10
+			# Access logs hold IP addresses: kept 90 days at most.
+			roll_keep_for 2160h
 		}
 		format json
 	}

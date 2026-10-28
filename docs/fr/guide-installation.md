@@ -94,6 +94,10 @@ guide utilisateur, Partie A § 1.
 
 ## 4. Serveur (production)
 
+> Procédure retenue pour la production : **VPS Hostinger en France**, script
+> `deploy/vps/provision.sh` — voir [deploiement-vps-hostinger.md](deploiement-vps-hostinger.md).
+> Cette section décrit l'installation manuelle, utile pour un autre hébergement.
+
 Cible : serveur Linux pour l'API, base PostgreSQL 15+ (**Supabase** ou auto-hébergée),
 nom de domaine, proxy TLS (Caddy). La procédure complète n'a pas encore été exécutée sur
 un serveur de production public avec TLS : faites-la d'abord sur un serveur de recette.

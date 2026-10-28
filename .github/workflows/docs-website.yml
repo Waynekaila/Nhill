@@ -104,6 +104,7 @@ jobs:
       - name: Contrôle de nhill.online
         id: live
         continue-on-error: true
+        shell: bash
         run: |
           mkdir -p domain-report
           python3 website/tools/check_live.py --domain nhill.online --require-site --require-mail \

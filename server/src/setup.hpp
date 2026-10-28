@@ -63,9 +63,12 @@ void writeConfigValues(const std::string& path, const std::map<std::string, std:
 // Ensures the file exists with NH_SECRET_KEY (generated when absent). Returns true if created/updated.
 bool ensureSecretKey(const std::string& path);
 
-// Creates the first (pending) superadmin; returns {token, expires_at}. Fails if an admin exists.
+// Creates the first (pending) superadmin; returns {token, expires_at} (one-time token, 30 minutes).
+// While no administrator has completed the first access, calling it again with the address
+// of the pending administrator issues a new token (the previous one expired or was lost).
+// Fails once an administrator is active, or for another address.
 std::pair<std::string, std::string> createFirstAdmin(const std::string& appUrl, const std::string& email,
-                                                     const std::string& name);
+                                                     const std::string& name, const std::string& via = "setup");
 
 // Full headless installation (used by `nhill-server setup` and by the HTTP setup endpoint).
 json install(const std::string& configPath, const Config& cfg, const Target& t,

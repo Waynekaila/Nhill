@@ -101,13 +101,13 @@
    "title": "Nhill 2.1 — Developer guide"
   },
   "docs/pdf/en/installation-guide.pdf": {
-   "bytes": 89459,
+   "bytes": 90726,
    "engine": "playwright",
-   "generated": "2026-10-28T09:06:01+00:00",
+   "generated": "2026-10-28T09:32:21+00:00",
    "lang": "en",
-   "pdf_sha256": "0a5f9ff3e7b967157403960131475edfc7da373c8092e59aaa5694761c349ec8",
+   "pdf_sha256": "82b1ca3c7d1931993fc1e66ed566570a3bbfc572ec02e3e7caed24e7d3b24094",
    "source": "docs/en/installation-guide.md",
-   "source_sha256": "fe71a0b47268722dfa1ba37c985115f6476ebff4631b3bff97506227dae75ab3",
+   "source_sha256": "584d11f3d9d4a90053e0072f011f27e380910c4143e0ea62e2674a8d3c51ad6a",
    "title": "Nhill 2.1 — Installation guide"
   },
   "docs/pdf/en/legal-parameters.pdf": {
@@ -149,6 +149,16 @@
    "source": "docs/en/validation-report.md",
    "source_sha256": "94a051f322ecdd6f4be84980fd12a40e95c9436d5fff9d14f5475ce77092a34d",
    "title": "Validation report — Nhill 2.1.0"
+  },
+  "docs/pdf/en/vps-deployment-hostinger.pdf": {
+   "bytes": 132850,
+   "engine": "playwright",
+   "generated": "2026-10-28T09:32:05+00:00",
+   "lang": "en",
+   "pdf_sha256": "a8d50bfb8e54ff88ef8028e436a93ace9feab4f2770cf19f475eebed4cfa2ff8",
+   "source": "docs/en/vps-deployment-hostinger.md",
+   "source_sha256": "52b25a32f6ac6cfdde9843d1f1cd5980f1a4f1f46c72101d1da24b883866a0db",
+   "title": "Deploying Nhill Server on a Hostinger VPS (France)"
   },
   "docs/pdf/en/website.pdf": {
    "bytes": 180372,
@@ -200,6 +210,16 @@
    "source_sha256": "655faf501f33f36c56372fb692777d20c45da9920e6443e8df253a1fc4baf992",
    "title": "Journal des modifications"
   },
+  "docs/pdf/fr/deploiement-vps-hostinger.pdf": {
+   "bytes": 135914,
+   "engine": "playwright",
+   "generated": "2026-10-28T09:32:05+00:00",
+   "lang": "fr",
+   "pdf_sha256": "2397c7516de5e6ad7f7ea4da324b08f350f46d5f20a6fb550ca956f98e666eeb",
+   "source": "docs/fr/deploiement-vps-hostinger.md",
+   "source_sha256": "71a6fd3ab4e17c43257129c67ecb094fcef4a5e6210da51081c4cce21ef036f2",
+   "title": "Déploiement de Nhill Server sur un VPS Hostinger (France)"
+  },
   "docs/pdf/fr/guide-compilation.pdf": {
    "bytes": 107754,
    "engine": "playwright",
@@ -231,13 +251,13 @@
    "title": "Nhill 2.1 — Guide du développeur"
   },
   "docs/pdf/fr/guide-installation.pdf": {
-   "bytes": 91798,
+   "bytes": 94720,
    "engine": "playwright",
-   "generated": "2026-10-28T09:05:51+00:00",
+   "generated": "2026-10-28T09:32:20+00:00",
    "lang": "fr",
-   "pdf_sha256": "bde8656f7dcbabdcf5c3ffad741770782629e865c8ea8cab0a33ae6491690814",
+   "pdf_sha256": "c196df551eba5bf8e671591516292325b5402f10c8b300c1c7b843632bd3c65d",
    "source": "docs/fr/guide-installation.md",
-   "source_sha256": "1dc8b7629d1c83d8b90eb46fc8b936e2513a76ba947b1933be601533ff8c4b4a",
+   "source_sha256": "dcf1592fd8ee5d05291c99dd3e2b84c6104b4dc778e89a22a8e8c92e4f2b03a2",
    "title": "Nhill 2.1 — Guide d'installation"
   },
   "docs/pdf/fr/guide-utilisateur.pdf": {
@@ -341,13 +361,13 @@
    "title": "04 — Cookie and tracker policy (marketing website)"
   },
   "legal/pdf/en/05-legal-notice.pdf": {
-   "bytes": 29108,
+   "bytes": 29350,
    "engine": "playwright",
-   "generated": "2026-10-28T09:06:23+00:00",
+   "generated": "2026-10-28T09:32:11+00:00",
    "lang": "en",
-   "pdf_sha256": "d2c0725bdf883c37bd780e72248e9da53f944c0268c0251ccb295d54cc0a1824",
+   "pdf_sha256": "aeb4f0194df245417478f1c1eb2b9ba1457c38be2a8a95730e2c34b4e0f28fe0",
    "source": "legal/en/05-legal-notice.md",
-   "source_sha256": "97d8295a33b57290ec4930463398baeaeb8d76f27a886c398ba9e4b6f0442b90",
+   "source_sha256": "694e63cb65259e043ec5f48f9d15ae346e95f4171d9471fd855146ad21acd1a7",
    "title": "05 — Legal notice (marketing website)"
   },
   "legal/pdf/en/06-data-processing-agreement.pdf": {
@@ -541,13 +561,13 @@
    "title": "04 — Politique relative aux cookies et traceurs (site vitrine)"
   },
   "legal/pdf/fr/05-mentions-legales.pdf": {
-   "bytes": 30341,
+   "bytes": 30472,
    "engine": "playwright",
-   "generated": "2026-10-28T09:06:09+00:00",
+   "generated": "2026-10-28T09:32:10+00:00",
    "lang": "fr",
-   "pdf_sha256": "809d5f137cf00123e4d590662ba5d1ecdf753a8862b72f237d2aa1a69e77c12e",
+   "pdf_sha256": "2909a5fa3455d8c4a8c9eba40ebbd84c2807be1ceb4dd7c33a8640c9d9cc312c",
    "source": "legal/fr/05-mentions-legales.md",
-   "source_sha256": "0362266bffafda01ea38c85c8478b160cabfbdf0c2fdc6aedef1bccf3dca254e",
+   "source_sha256": "d33317dc6e2b7fcdafbcc1fdbd9d01679d084d282c5df4018585d10ae7aef2fd",
    "title": "05 — Mentions légales (site vitrine)"
   },
   "legal/pdf/fr/06-accord-traitement-donnees.pdf": {

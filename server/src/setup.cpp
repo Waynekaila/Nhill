@@ -324,7 +324,7 @@ bool ensureSecretKey(const std::string& path) {
 
 // ------------------------------------------------------------------ first administrator
 std::pair<std::string, std::string> createFirstAdmin(const std::string& appUrl, const std::string& email,
-                                                     const std::string& name) {
+                                                     const std::string& name, const std::string& via) {
     std::string e = email;
     for (auto& ch : e) ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
     const std::string token = crypto::randomToken(24);
@@ -332,15 +332,30 @@ std::pair<std::string, std::string> createFirstAdmin(const std::string& appUrl, 
     pqxx::work w(c);
     w.exec("SET LOCAL search_path TO nhill");
     w.exec("LOCK TABLE admin_users IN EXCLUSIVE MODE");
-    if (w.exec("SELECT count(*) FROM admin_users")[0][0].as<int>() > 0)
-        throw std::runtime_error("an administrator already exists");
+    auto n = w.exec("SELECT count(*), count(*) FILTER (WHERE status <> 'pending') FROM admin_users")[0];
+    if (n[0].as<int>() > 0) {
+        if (n[1].as<int>() > 0) throw std::runtime_error("an administrator already exists: use the console to invite others");
+        // Nobody completed the first access yet: new token for the same pending administrator.
+        auto again = w.exec_params("UPDATE admin_users SET setup_token_hash = decode($2,'hex'), "
+                                   "setup_expires_at = now() + interval '30 minutes' WHERE email = $1 AND status = 'pending' "
+                                   "RETURNING id, nh_iso(setup_expires_at)",
+                                   e, crypto::sha256Hex(token));
+        if (again.empty())
+            throw std::runtime_error("an administrator already exists (not activated yet, another address): issue the token "
+                                     "for that address");
+        w.exec_params("INSERT INTO audit_log (actor_type, action, entity, entity_id, details) VALUES "
+                      "('system', 'admin.bootstrap_reissued', 'admin_user', $1, jsonb_build_object('email', $2::text, 'via', $3::text))",
+                      again[0][0].c_str(), e, via);
+        w.commit();
+        return {token, again[0][1].c_str()};
+    }
     auto r = w.exec_params("INSERT INTO admin_users (email, full_name, role, setup_token_hash, setup_expires_at) VALUES "
                            "($1, $2, 'superadmin', decode($3,'hex'), now() + interval '30 minutes') "
                            "RETURNING id, nh_iso(setup_expires_at)",
                            e, name, crypto::sha256Hex(token));
     w.exec_params("INSERT INTO audit_log (actor_type, action, entity, entity_id, details) VALUES "
-                  "('system', 'admin.bootstrapped', 'admin_user', $1, jsonb_build_object('email', $2::text, 'via', 'setup'))",
-                  r[0][0].c_str(), e);
+                  "('system', 'admin.bootstrapped', 'admin_user', $1, jsonb_build_object('email', $2::text, 'via', $3::text))",
+                  r[0][0].c_str(), e, via);
     w.commit();
     return {token, r[0][1].c_str()};
 }

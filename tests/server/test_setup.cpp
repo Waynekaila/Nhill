@@ -14,6 +14,7 @@
 #include <thread>
 
 #include "config.hpp"
+#include "migrate.hpp"
 #include "setup.hpp"
 #include "util/crypto.hpp"
 
@@ -221,6 +222,46 @@ TEST(Setup, InstallOnSelfHostedPostgresAsSuperuser) {
     EXPECT_FALSE(canConnect(kv["NH_DATABASE_URL"]));  // old password no longer valid
     auto kv2 = nh::readConfigFile(cfgPath);
     EXPECT_TRUE(canConnect(kv2["NH_DATABASE_URL"]));
+
+    // Token of the first administrator expired or lost before the first access: a new one
+    // is issued for the same pending address only; once an administrator is active, never.
+    {
+        auto [t1, exp1] = nh::setup::createFirstAdmin(kv2["NH_DATABASE_URL"], "BOSS@example.org", "Chef", "cli");
+        EXPECT_EQ(t1.size(), report["first_admin"]["setup_token"].get<std::string>().size());
+        EXPECT_FALSE(exp1.empty());
+        EXPECT_NE(t1, report["first_admin"]["setup_token"].get<std::string>());
+        EXPECT_THROW(nh::setup::createFirstAdmin(kv2["NH_DATABASE_URL"], "intruder@example.org", "X", "cli"), std::runtime_error);
+        pqxx::connection c(kv2["NH_MIGRATION_DATABASE_URL"]);
+        pqxx::work w(c);
+        EXPECT_EQ(w.exec("SELECT count(*) FROM nhill.audit_log WHERE action = 'admin.bootstrap_reissued'")[0][0].as<int>(), 1);
+        EXPECT_EQ(w.exec("SELECT count(*) FROM nhill.admin_users")[0][0].as<int>(), 1);
+        w.exec("UPDATE nhill.admin_users SET status = 'active'");
+        w.commit();
+        EXPECT_THROW(nh::setup::createFirstAdmin(kv2["NH_DATABASE_URL"], "boss@example.org", "Chef", "cli"), std::runtime_error);
+    }
+
+    // A database migrated by a newer version (rollback of the program only) is refused by
+    // the older server, for migrations and for serving; the copy taken before the update
+    // is what must be restored.
+    const std::string dir = baseConfig().migrationsDir;
+    EXPECT_TRUE(nh::unknownMigrations(kv2["NH_DATABASE_URL"], dir).empty());
+    {
+        pqxx::connection c(kv2["NH_MIGRATION_DATABASE_URL"]);
+        pqxx::work w(c);
+        w.exec("INSERT INTO nhill.schema_migrations (version, checksum) VALUES ('9999_from_a_newer_version', 'x')");
+        w.commit();
+    }
+    auto unknown = nh::unknownMigrations(kv2["NH_DATABASE_URL"], dir);
+    ASSERT_EQ(unknown.size(), 1u);
+    EXPECT_EQ(unknown[0], "9999_from_a_newer_version");
+    EXPECT_THROW(nh::runMigrations(kv2["NH_MIGRATION_DATABASE_URL"], dir), std::runtime_error);
+    {
+        pqxx::connection c(kv2["NH_MIGRATION_DATABASE_URL"]);
+        pqxx::work w(c);
+        w.exec("DELETE FROM nhill.schema_migrations WHERE version = '9999_from_a_newer_version'");
+        w.commit();
+    }
+    EXPECT_NO_THROW(nh::runMigrations(kv2["NH_MIGRATION_DATABASE_URL"], dir));
 }
 
 // Hosted platform (Supabase-like): the administrator is not a superuser, does not own

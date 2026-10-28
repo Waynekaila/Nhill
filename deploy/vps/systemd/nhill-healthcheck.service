@@ -1,0 +1,13 @@
+[Unit]
+Description=Nhill health check (API, HTTPS, database, ports, firewall, disk, backups)
+After=nhill-server.service caddy.service postgresql.service
+OnFailure=nhill-alert.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/nhill-healthcheck
+# Reads the services' state and writes only /var/lib/nhill/health*.
+ProtectSystem=strict
+ReadWritePaths=/var/lib/nhill
+PrivateTmp=yes
+NoNewPrivileges=yes

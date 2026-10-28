@@ -70,12 +70,35 @@ void grantReadToApp(pqxx::connection& c) {
 
 }  // namespace
 
+namespace {
+std::vector<std::string> unknownIn(pqxx::connection& c, const std::vector<File>& files) {
+    std::vector<std::string> known;
+    for (const auto& f : files) known.push_back(f.version);
+    pqxx::work w(c);
+    std::vector<std::string> unknown;
+    if (!w.exec("SELECT to_regclass('nhill.schema_migrations') IS NOT NULL")[0][0].as<bool>()) return unknown;
+    for (const auto& r : w.exec("SELECT version FROM nhill.schema_migrations ORDER BY version"))
+        if (std::find(known.begin(), known.end(), r[0].c_str()) == known.end()) unknown.emplace_back(r[0].c_str());
+    return unknown;
+}
+}  // namespace
+
+std::vector<std::string> unknownMigrations(const std::string& url, const std::string& dir) {
+    auto files = listFiles(dir);
+    pqxx::connection c(url);
+    return unknownIn(c, files);
+}
+
 MigrationResult runMigrations(const std::string& ownerUrl, const std::string& dir) {
     MigrationResult result;
     auto files = listFiles(dir);
     pqxx::connection c(ownerUrl);
     useSchema(c, true);
     ensureTable(c);
+    if (auto unknown = unknownIn(c, files); !unknown.empty())
+        throw std::runtime_error("the database was migrated by a newer version of Nhill (migration " + unknown.back() +
+                                 " unknown to this server): install that version, or restore the copy of the "
+                                 "database taken before the update");
     for (const auto& f : files) {
         pqxx::work w(c);
         // Serialises concurrent migrators (e.g. two servers starting together).

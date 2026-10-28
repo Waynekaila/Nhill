@@ -1,5 +1,8 @@
 # Procédure de déploiement en production
 
+> **Production sur VPS Hostinger (France), version 3.0 : [fr/deploiement-vps-hostinger.md](fr/deploiement-vps-hostinger.md)**
+> (script `deploy/vps/provision.sh`, sauvegardes, restauration, mises à jour avec retour arrière).
+>
 > **Document de la version 0.1.0, repris** dans [docs/fr/guide-installation.md](fr/guide-installation.md) § 4 (EN : [installation-guide](en/installation-guide.md)). En 2.0, le mot de passe de la console compte 8 caractères minimum (TOTP toujours obligatoire).
 
 Cible : un serveur Linux (Ubuntu 24.04 LTS recommandé) pour l'API, une base PostgreSQL

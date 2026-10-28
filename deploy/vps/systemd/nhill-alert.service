@@ -1,0 +1,6 @@
+[Unit]
+Description=Nhill alert after a failed health check
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/nhill-alert

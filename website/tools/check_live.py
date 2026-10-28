@@ -57,6 +57,28 @@ def doh(name, rtype):
     return {"status": None, "error": last, "answers": []}
 
 
+def rdap_owner(ip):
+    """Holder of the network of an address (public RDAP registry), for the evidence."""
+    req = urllib.request.Request(f"https://rdap.org/ip/{ip}", headers={"accept": "application/rdap+json", "user-agent": UA})
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+            data = json.load(r)
+    except Exception:  # noqa: BLE001
+        return ""
+    names = []
+    for ent in data.get("entities", []):
+        for item in (ent.get("vcardArray") or [None, []])[1]:
+            if item and item[0] == "fn" and item[3] not in names:
+                names.append(item[3])
+    return " / ".join(filter(None, [data.get("name"), data.get("country"), ", ".join(names[:2])]))
+
+
+def page_title(body):
+    import re
+    m = re.search(r"<title[^>]*>(.*?)</title>", body or "", re.I | re.S)
+    return " ".join(m.group(1).split())[:100] if m else "(no title)"
+
+
 def addresses(host):
     try:
         return sorted({i[4][0] for i in socket.getaddrinfo(host, 443, type=socket.SOCK_STREAM)}), None
@@ -114,6 +136,9 @@ def main(argv=None):
     for host in (d, www):
         ips, err = addresses(host)
         add("dns", f"addresses {host}", bool(ips), ", ".join(ips) if ips else f"no address ({err})", host == d)
+        for ip in ips[:2] if host == d else []:
+            owner = rdap_owner(ip)
+            add("dns", f"network holder of {ip}", bool(owner), owner or "RDAP lookup failed", False)
 
     t = tls_info(d)
     add("https", f"certificate {d}", t.get("ok"),
@@ -140,8 +165,9 @@ def main(argv=None):
 
     canonical = f'<link rel="canonical" href="https://{d}/">'
     add("site", "home page is the Nhill site (canonical link)", canonical in home["body"],
-        "canonical link found" if canonical in home["body"] else "canonical link of the Nhill home page absent "
-        "(another page is served: parking page, hosting default page or older site)", a.require_site)
+        f"canonical link found; title: {page_title(home['body'])}" if canonical in home["body"] else
+        f"canonical link of the Nhill home page absent; page served: \"{page_title(home['body'])}\" "
+        f"({len(home['body'])} bytes)", a.require_site)
     for path in ("robots.txt", "sitemap.xml"):
         r = fetch(f"https://{d}/{path}")
         ok = r["status"] == 200 and (f"https://{d}/sitemap.xml" in r["body"] if path == "robots.txt" else f"<loc>https://{d}/" in r["body"])

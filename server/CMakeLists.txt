@@ -91,4 +91,8 @@ if(UNIX AND NOT APPLE)
             DESTINATION ${CMAKE_INSTALL_DATADIR}/nhill/examples COMPONENT server)
     install(FILES ${PROJECT_SOURCE_DIR}/deploy/caddy/Caddyfile DESTINATION ${CMAKE_INSTALL_DATADIR}/nhill/examples
             RENAME Caddyfile.example COMPONENT server)
+    # VPS kit (installation, health checks, update with a way back, restore test):
+    # /usr/share/nhill/vps; provision.sh installs the tools in /usr/sbin.
+    install(DIRECTORY ${PROJECT_SOURCE_DIR}/deploy/vps/ DESTINATION ${CMAKE_INSTALL_DATADIR}/nhill/vps
+            USE_SOURCE_PERMISSIONS COMPONENT server)
 endif()

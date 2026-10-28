@@ -90,6 +90,10 @@ environment variable replaces it (desktop only). Then: user guide, Part A § 1.
 
 ## 4. Server (production)
 
+> Procedure chosen for production: **Hostinger VPS in France**, script
+> `deploy/vps/provision.sh` — see [vps-deployment-hostinger.md](vps-deployment-hostinger.md).
+> This section describes the manual installation, useful for another hosting.
+
 Target: a Linux server for the API, a PostgreSQL 15+ database (**Supabase** or
 self-hosted), a domain name and a TLS proxy (Caddy). The full procedure has not yet been
 run on a public production server with TLS: run it on a staging server first.

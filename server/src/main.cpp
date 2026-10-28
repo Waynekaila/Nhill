@@ -127,6 +127,10 @@ int main(int argc, char** argv) {
         if (cfg.databaseUrl.empty()) throw std::runtime_error("NH_DATABASE_URL is required");
         auto pending = nh::pendingMigrations(cfg.databaseUrl, cfg.migrationsDir);
         if (!pending.empty()) throw std::runtime_error("pending migrations (" + pending.front() + "...): run `migrate` first");
+        if (auto unknown = nh::unknownMigrations(cfg.databaseUrl, cfg.migrationsDir); !unknown.empty())
+            throw std::runtime_error("the database was migrated by a newer version of Nhill (migration " + unknown.back() +
+                                     " unknown to this server): install that version, or restore the copy of the "
+                                     "database taken before the update");
 
         nh::db::Pool pool(cfg.databaseUrl, cfg.dbPoolSize);
         nh::Profiles profiles;
@@ -151,21 +155,10 @@ int main(int argc, char** argv) {
         }
         if (cmd == "admin-bootstrap") {
             if (args.size() < 3) return usage();
-            std::string email = args[1], name = args[2];
-            for (auto& ch : email) ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
-            std::string token = nh::crypto::randomToken(24);
-            std::string expires = nh::db::run(pool, std::nullopt, [&](nh::db::Tx& tx) {
-                tx.q("LOCK TABLE admin_users IN EXCLUSIVE MODE");
-                if (tx.one("SELECT count(*) FROM admin_users")[0].as<int>() > 0)
-                    throw std::runtime_error("an administrator already exists: use the console to invite others");
-                auto r = tx.one("INSERT INTO admin_users (email, full_name, role, setup_token_hash, setup_expires_at) "
-                                "VALUES ($1, $2, 'superadmin', decode($3,'hex'), now() + interval '30 minutes') "
-                                "RETURNING id, nh_iso(setup_expires_at)",
-                                email, name, nh::crypto::sha256Hex(token));
-                nh::auditSystem(tx, std::nullopt, "admin.bootstrapped", "admin_user", nh::db::str(r[0]), {{"email", email}});
-                return nh::db::str(r[1]);
-            });
-            std::cout << "First administrator created (pending).\n"
+            // First administrator, or a new token while that administrator has not completed
+            // the first access (token expired or lost).
+            auto [token, expires] = nh::setup::createFirstAdmin(cfg.databaseUrl, args[1], args[2], "cli");
+            std::cout << "First administrator pending.\n"
                       << "One-time setup token (valid until " << expires << "):\n"
                       << token << "\n"
                       << "Open the admin console, choose 'First access', and enter this token.\n";
