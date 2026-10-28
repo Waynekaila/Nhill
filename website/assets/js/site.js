@@ -9,8 +9,8 @@
   var T = {
     fr: {
       required: "Ce champ est obligatoire.",
-      email: "Saisissez une adresse e-mail valide, par exemple nom@entreprise.cd.",
-      phone: "Saisissez un numéro de téléphone valide, par exemple +243 81 234 5678.",
+      email: "Saisissez une adresse e-mail valide, par exemple nom@example.com.",
+      phone: "Saisissez un numéro de téléphone valide, avec l'indicatif du pays.",
       consent: "Cochez cette case pour que nous puissions traiter votre demande.",
       sending: "Envoi en cours…",
       sent: "Demande reçue. Nous vous répondrons par e-mail ou par téléphone.",
@@ -23,8 +23,8 @@
     },
     en: {
       required: "This field is required.",
-      email: "Enter a valid e-mail address, for example name@company.com.",
-      phone: "Enter a valid phone number, for example +243 81 234 5678.",
+      email: "Enter a valid e-mail address, for example name@example.com.",
+      phone: "Enter a valid phone number, with the country code.",
       consent: "Tick this box so that we can process your request.",
       sending: "Sending…",
       sent: "Request received. We will answer by e-mail or phone.",

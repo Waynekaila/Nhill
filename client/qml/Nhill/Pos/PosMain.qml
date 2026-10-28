@@ -105,7 +105,7 @@ ApplicationWindow {
         id: tour
         property var cfg: typeof tourConfig !== "undefined" ? tourConfig : ({})
         property int step: 0
-        function shot(name) { if (!Tools.grabWindow(win, tour.cfg.dir + "/" + name + ".png")) console.warn("tour: capture failed", name) }
+        function shot(name) { if (!Tools.grabWindow(win, tour.cfg.dir + "/" + (tour.cfg.tag || "") + name + ".png")) console.warn("tour: capture failed", name) }
         property var plan: [
             function() { shot("p01-connexion") },
             function() { Api.send("POST", "/api/v1/auth/login", { email: tour.cfg.email, password: tour.cfg.password }, function(r) {

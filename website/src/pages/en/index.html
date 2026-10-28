@@ -1,191 +1,183 @@
-<!--{"title": "Nhill — business management and point of sale for freelancers and SMEs", "description": "Quotes, invoices, stock, till and payments in one piece of software, in English and French, in your customers' currency. Demo and free assisted trial.", "nav": "home", "pair": "index", "features": ["Point of sale: counter sales, split payments, returns, closing with variance, X and Z reports", "Quotes, orders, invoices and credit notes as PDF", "Stock per warehouse with threshold alerts", "Purchases, expenses and payments", "Customer receivables and payables per currency", "Roles per employee and a tamper-proof activity log", "PDF and CSV reports", "English and French; 10 currencies, including USD, EUR, GBP, CHF, XAF, XOF and CDF"]}-->
+<!--{"title": "Nhill — business management and point of sale for freelancers and SMEs", "description": "Quotes, invoices, stock, till and payments in one software, in your customers' currency. A demo on your own products and a free 30-day assisted trial.", "nav": "home", "pair": "index", "features": ["Point of sale: counter sales, several payment methods, returns, closing with cash difference, X and Z reports", "Receipt or A4 invoice at the counter, identical to the back-office documents", "Quotes, orders, invoices and credit notes as PDF", "Stock per warehouse with threshold alerts", "Purchases, expenses and payments", "Customer receivables and amounts payable per currency", "Roles per employee and tamper-proof activity log", "PDF and CSV reports, full data export", "English and French; 36 currencies (ISO 4217)"]}-->
 <section class="hero">
   <div class="wrap">
-    <div class="hero-text">
-      <h1>Your sales, stock and till, crystal clear.</h1>
-      <p class="lede">Nhill is business management and point-of-sale software for freelancers, shops and SMEs. Quotes, invoices, stock, till and payments share the same data: <strong>every sale carries the name of the person who takes the money, stock updates itself</strong>, and you see where your money stands, wherever you are.</p>
+    <div>
+      <h1>Your sales, your stock and your till, clear.</h1>
+      <p class="lede">Nhill is business management and point-of-sale software for freelancers, shops and SMEs. Quotes, invoices, stock, till and payments share the same data: every sale carries the name of the person who rang it up, stock updates itself, and you see where your money stands, wherever you are.</p>
       <div class="actions">
-        <a class="btn btn-gold" href="{{p:contact}}#demonstration">Book a demo</a>
-        <a class="btn btn-ghost" href="{{p:free-trial}}">Try it free</a>
+        <a class="btn btn-main" href="{{p:contact}}#demonstration">Book a demo</a>
+        <a class="btn btn-line" href="{{p:free-trial}}">Try it free</a>
       </div>
-      <p class="reassure">A 45-minute demo on your own products, by video call. Free assisted trial: set-up and training included.</p>
+      <p class="reassure">A 45-minute demo on your own products, by video call. A free 30-day assisted trial: setup and training included.</p>
     </div>
-    <figure class="counter">
-      <div class="stage">
-      <div class="screen"><img src="{{root}}/assets/images/capture-caisse-ticket.webp" width="1280" height="800" alt="Nhill POS sales screen: products on the left, current ticket on the right with three items and a total of 67,860 CDF, Pay button."></div>
-      <div class="ticket" role="img" aria-label="Closing ticket of a demo till session: sales 228,520 CDF, returns minus 21,460, opening float 50,000, expected cash 257,060, counted cash 256,560, variance minus 500 CDF.">
-        <div class="ticket-slot"></div>
-        <div class="ticket-clip">
-          <div class="ticket-paper" aria-hidden="true">
-            <div class="t-head">TILL CLOSING<span>Register C1 · demo session</span></div>
-            <div class="row"><span>Sales</span><span>228,520.00</span></div>
-            <div class="row"><span>Returns</span><span>−21,460.00</span></div>
-            <div class="row"><span>Opening float</span><span>50,000.00</span></div>
-            <div class="row sum"><span>Expected</span><span>257,060.00</span></div>
-            <div class="row"><span>Counted</span><span>256,560.00</span></div>
-            <div class="row gap"><span>Variance</span><span>−500.00</span></div>
-            <p class="t-foot">Amounts in CDF. The cashier counts without seeing the expected amount; Nhill computes and keeps the variance.</p>
-          </div>
-        </div>
+    <figure class="session-wrap" aria-labelledby="session-cap">
+      <div class="session">
+        <div class="session-top"><strong>Till C1 · session 1</strong><span>Nhill POS</span></div>
+        <ol>
+          <li><span class="kind">Opening</span><span class="what">Opening float</span><span class="amt">50,000.00</span></li>
+          <li><span class="kind">Sale</span><span class="what">3 items <span class="ref">TK-2026-000001</span></span><span class="amt">67,860.00</span></li>
+          <li><span class="kind">Return</span><span class="what">Credit note <span class="ref">AV-2026-000001</span></span><span class="amt neg">−21,460.00</span></li>
+          <li class="close"><span class="kind">Closing</span><span class="what">The cashier counts the drawer</span><span class="amt"></span></li>
+        </ol>
+        <dl class="count">
+          <dt>Expected cash</dt><dd>96,400.00</dd>
+          <dt>Counted cash</dt><dd>95,900.00</dd>
+          <div class="gap"><dt>Difference</dt><dd>−500.00</dd></div>
+        </dl>
       </div>
-      </div>
-      <figcaption>Nhill POS sales screen: real screenshot, demo data.</figcaption>
+      <figcaption class="session-cap" id="session-cap">A Nhill POS demo session, amounts in CDF. The cashier counts without seeing the expected amount; Nhill works out the difference and keeps it in the Z report.</figcaption>
     </figure>
   </div>
-  <svg class="summit" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path d="M-10 166 L210 140 L330 152 L520 104 L640 120 L860 64 L960 80 L1180 26 L1260 40 L1352 14"/>
-    <polygon points="1352,14 1352,0 1378,7"/>
-  </svg>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <div class="section-head">
+    <div class="head">
       <h2>For small businesses that want a clear view</h2>
-      <p>One piece of software, whether you work alone or with a team, in one shop or on several sites.</p>
+      <p>One software, whether you work alone or with a team, in one shop or on several sites.</p>
     </div>
-    <ul class="who">
-      <li>
-        <h3>Freelancers and solopreneurs</h3>
-        <p>Quotes and invoices as PDF in your name, payments attached to each invoice, expenses noted as you go. You always know who owes you what, in each customer's currency.</p>
-        <a class="more" href="{{p:features}}#invoices">Invoices and payments</a>
-      </li>
-      <li>
+    <div class="audiences">
+      <div>
+        <h3>Freelancers and sole traders</h3>
+        <p>Your quotes and invoices as PDF in your name, payments matched to each invoice, expenses noted as you go. You always know who owes you what, in each customer's currency.</p>
+        <p><a class="more" href="{{p:features}}#invoices">Invoices and payments</a></p>
+      </div>
+      <div>
         <h3>Shops and points of sale</h3>
-        <p>A fast till for the counter, stock that moves with every sale, and a closing that computes the variance. Each cashier has their own access and session.</p>
-        <a class="more" href="{{p:features}}#till">The till</a>
-      </li>
-      <li>
+        <p>A fast till for the counter, stock that moves with every sale, and a closing that works out the cash difference. Each cashier has their own access and session.</p>
+        <p><a class="more" href="{{p:features}}#till">The till</a></p>
+      </div>
+      <div>
         <h3>SMEs and multi-site businesses</h3>
-        <p>Several warehouses, roles per employee, an activity log nobody can edit, and reports for management as well as for the accountant.</p>
-        <a class="more" href="{{p:features}}#team">Team and controls</a>
-      </li>
-    </ul>
+        <p>Several warehouses, roles per employee, an activity log nobody can change, and reports for management as well as for the accountant.</p>
+        <p><a class="more" href="{{p:features}}#team">The team and the controls</a></p>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section section-mist">
+<section class="section tint">
   <div class="wrap">
-    <div class="section-head">
+    <div class="head">
       <h2>What Nhill changes in your day</h2>
       <p>Four moments every small business knows, and what happens with Nhill.</p>
     </div>
     <ul class="shifts">
-      <li><p class="before">In the evening the cash book does not add up, and nobody knows where the difference comes from.</p><span class="arrow" aria-hidden="true">→</span>
-        <p class="after"><strong>Every sale carries the cashier's name.</strong>At closing, Nhill computes the expected cash and records the variance. You know which session, which day, which person.</p></li>
-      <li><p class="before">A stock-out is discovered in front of the customer.</p><span class="arrow" aria-hidden="true">→</span>
-        <p class="after"><strong>Stock moves with every sale and every received purchase.</strong>An alert flags the products that fall below their threshold, warehouse by warehouse.</p></li>
-      <li><p class="before">Customer credit is tracked from memory or in a notebook.</p><span class="arrow" aria-hidden="true">→</span>
-        <p class="after"><strong>Every invoice keeps its balance.</strong>You see what each customer owes you, in the currency of their invoice, and partial payments are attached to the right invoice.</p></li>
-      <li><p class="before">You cannot leave the shop without losing track.</p><span class="arrow" aria-hidden="true">→</span>
-        <p class="after"><strong>You follow everything remotely.</strong>Dashboard, sales per employee and activity log, from your computer or your Android phone.</p></li>
+      <li><p class="before">In the evening, the cash book does not add up, and nobody knows where the difference comes from.</p>
+          <p class="after"><strong>Every sale carries the cashier's name.</strong> At closing, Nhill works out the expected cash and records the difference. You know which session, which day, which person.</p></li>
+      <li><p class="before">A stock-out is discovered in front of the customer.</p>
+          <p class="after"><strong>Stock moves with every sale and every purchase received.</strong> An alert flags the products that fall below their threshold, warehouse by warehouse.</p></li>
+      <li><p class="before">Customer credit is tracked from memory or in a notebook.</p>
+          <p class="after"><strong>Every invoice keeps its balance.</strong> You see what each customer owes you, in the currency of their invoice, and part payments are matched to the right invoice.</p></li>
+      <li><p class="before">You cannot be away without losing track of the shop.</p>
+          <p class="after"><strong>You follow everything remotely.</strong> Dashboard, sales per employee and activity log, from your computer or your Android phone.</p></li>
     </ul>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <div class="section-head">
+    <div class="head">
       <h2>Two applications, one account</h2>
-      <p>The till at the counter, the management at the office or on the move. Both share the same products, the same customers and the same stock.</p>
+      <p>The till at the counter, management at the office or on the move. Both share the same products, the same customers, the same stock and the same document templates.</p>
     </div>
     <div class="apps">
-      <div class="app">
-        <figure class="shot"><img src="{{root}}/assets/images/capture-rendu-monnaie.webp" width="1280" height="800" loading="lazy" alt="Nhill POS after a payment: sale recorded, ticket TK-2026-000005 of 67,860 CDF, change to give 2,140 CDF."></figure>
+      <div>
+        <figure class="shot"><img src="{{root}}/assets/images/capture-rendu-monnaie.webp" width="1280" height="707" loading="lazy" alt="Nhill POS after a payment: sale recorded, receipt TK-2026-000001 for 67,860 CDF, change due 2,140 CDF (French interface)."></figure>
         <p class="where">At the counter</p>
         <h3>Nhill POS, to sell fast</h3>
-        <ul>
-          <li>Sell by touch or with a barcode scanner; change is computed for you.</li>
-          <li>Several payment methods on one ticket: cash, card, Mobile Money.</li>
-          <li>Discounts above the limit, returns and voids approved by a supervisor.</li>
-          <li>58 or 80 mm tickets, closing with variance, X and Z reports.</li>
+        <ul class="ticks">
+          <li>Sales by touch or barcode scanner, change worked out for you.</li>
+          <li>Several payment methods on one sale: cash, card, Mobile Money, bank transfer, cheque.</li>
+          <li>A receipt, or an A4 invoice in the customer's name, identical to the office one.</li>
+          <li>Discounts above the limit, returns and voids approved by a manager.</li>
         </ul>
-        <p class="platforms">Windows 10 and 11, Linux</p>
+        <span class="platform">Windows 10 and 11 · Linux</span>
       </div>
-      <div class="app">
-        <figure class="shot"><img src="{{root}}/assets/images/capture-tableau-de-bord.webp" width="1280" height="707" loading="lazy" alt="Nhill Business dashboard: revenue of the month, unpaid invoices, expenses, stock alerts, recent sales and best sellers."></figure>
+      <div>
+        <figure class="shot"><img src="{{root}}/assets/images/capture-tableau-de-bord.webp" width="1280" height="707" loading="lazy" alt="Nhill Business dashboard: revenue for the month, unpaid invoices, expenses, stock alerts, recent sales and best sellers (French interface)."></figure>
         <p class="where">At the office and on the move</p>
         <h3>Nhill Business, to manage</h3>
-        <ul>
+        <ul class="ticks">
           <li>Quotes, orders, invoices and credit notes as PDF, in your name and with your logo.</li>
           <li>Stock per warehouse, supplier purchases, expenses with receipts.</li>
           <li>Customers, suppliers, payments received and made.</li>
-          <li>Reports for you and for your accountant, as PDF or CSV.</li>
+          <li>Reports for you and your accountant, as PDF or CSV.</li>
         </ul>
-        <p class="platforms">Windows 10 and 11, Linux, Android 7 and later</p>
+        <span class="platform">Windows 10 and 11 · Linux · Android 7 and later</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section-mist">
-  <div class="wrap">
-    <div class="split">
-      <div>
-        <h2>Stay in control, even when away</h2>
-        <p>Every employee has their own access and a role that fits: cashier, sales, accountant, manager. A large discount or a void needs a supervisor's approval.</p>
-        <p>The activity log shows who created, collected, discounted or cancelled what, and when. Nobody can edit it, not even the owner.</p>
-        <p><a class="more" href="{{p:features}}#team">See team management</a></p>
-      </div>
-      <figure class="shot"><img src="{{root}}/assets/images/capture-journal.webp" width="1280" height="707" loading="lazy" alt="Nhill Business activity log: dated list of each employee's actions, with filters by employee, type of action and period."><figcaption>The activity log. Real screenshot, demo data.</figcaption></figure>
+<section class="section tint">
+  <div class="wrap split">
+    <div>
+      <h2>Stay in control, even when away</h2>
+      <p>Each employee has their own access and a suitable role: cashier, seller, accountant, manager. A large discount or a void needs a manager's approval.</p>
+      <p>The activity log shows who created, collected, discounted or voided what, and when. Nobody can change it.</p>
+      <p><a class="more" href="{{p:features}}#team">See team management</a></p>
     </div>
-    <div class="split reverse">
-      <div>
-        <h2>Your business in your pocket</h2>
-        <p>Nhill Business also runs on Android phones and tablets. Today's sales, unpaid invoices, stock alerts: check them wherever you are, and write an invoice on the spot at a customer's.</p>
-        <p>What you enter on the phone is visible at the office straight away, and the other way round: both work on the same customers, products and stock.</p>
-      </div>
-      <figure class="phone"><img src="{{root}}/assets/images/capture-telephone-tableau-de-bord.webp" width="390" height="844" loading="lazy" alt="Nhill Business on a phone: dashboard with revenue, unpaid invoices, expenses, stock alerts and recent sales."></figure>
+    <figure class="shot"><img src="{{root}}/assets/images/capture-journal.webp" width="1280" height="707" loading="lazy" alt="Nhill Business activity log: dated list of each employee's actions, with filters by employee, action type and period (French interface)."><figcaption>The activity log. Real screenshot, demo data, French interface.</figcaption></figure>
+  </div>
+</section>
+
+<section class="section tint">
+  <div class="wrap split flip">
+    <div>
+      <h2>Your business in your pocket</h2>
+      <p>Nhill Business also runs on Android phones and tablets. Today's takings, unpaid invoices, stock alerts: you check them wherever you are, and you can make an invoice on the spot at a customer's, then send it by e-mail or messaging.</p>
+      <p>What you enter on the phone is visible at the office straight away, and the other way round: both work on the same customers, products and stock.</p>
     </div>
+    <figure class="shot phone"><img src="{{root}}/assets/images/capture-telephone-tableau-de-bord.webp" width="390" height="844" loading="lazy" alt="Nhill Business on a phone: dashboard with revenue, unpaid invoices, expenses, stock alerts and recent sales (French interface)."></figure>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <div class="section-head">
+    <div class="head">
       <h2>Built to sell anywhere, in several currencies</h2>
-      <p>Nhill follows the way small businesses really work: customers who pay in different ways, sometimes in several currencies, at the counter as well as on the move.</p>
+      <p>Nhill follows the way small businesses really work: customers who pay in several ways, sometimes in several currencies, at the counter as well as on the move.</p>
     </div>
-    <ul class="facts">
-      <li><strong>Several currencies, exact amounts</strong><span>Each document has its currency: US dollar, euro, pound sterling, Swiss franc, CFA francs, Congolese franc, Kenyan shilling, Rwandan franc, rand. Amounts are computed exactly, the day's rate is saved with the document, and your totals are shown currency by currency.</span></li>
-      <li><strong>English and French</strong><span>Interface, invoices, tickets and reports in each user's language.</span></li>
-      <li><strong>A mobile connection is enough</strong><span>Your data is saved in real time on a secure server; if the network drops during a sale, it is sent again without being counted twice.</span></li>
-      <li><strong>All your payment methods</strong><span>Cash, card, bank transfer, Mobile Money: on the same ticket or invoice, with their reference.</span></li>
-      <li><strong>Support from real people</strong><span>Demo and training by video call, wherever you are; on site in Kinshasa, we install Nhill and train your team.</span></li>
-      <li><strong>Your data stays yours</strong><span>Each establishment is kept apart from the others, traffic is encrypted, and you export everything as CSV or PDF whenever you want.</span></li>
-    </ul>
+    <dl class="facts">
+      <div><dt>36 currencies, exact amounts</dt><dd>Each document has its currency: dollar, euro, pound sterling, Swiss franc, CFA francs, Congolese franc, naira, Kenyan shilling, dirham, rand and others. Amounts are computed exactly, the day's rate is recorded with the document, and your totals stay presented currency by currency.</dd></div>
+      <div><dt>English and French</dt><dd>Interface, invoices, receipts and reports in each user's language.</dd></div>
+      <div><dt>A mobile connection is enough</dt><dd>Your data is recorded in real time on a secure server. If the network drops during a sale, you confirm it again: it is never counted twice.</dd></div>
+      <div><dt>All your payment methods</dt><dd>Cash, card, bank transfer, cheque, Mobile Money: on the same receipt or invoice, with their reference.</dd></div>
+      <div><dt>Support from real people</dt><dd>Demo and training by video call, wherever you are; in Kinshasa, we can also install Nhill and train your team on site.</dd></div>
+      <div><dt>Your data stays yours</dt><dd>Each business is kept apart from the others, exchanges are encrypted, data is hosted in France, and you export everything whenever you want.</dd></div>
+    </dl>
   </div>
 </section>
 
-<section class="section section-mist" id="erp">
+<section class="section" id="erp">
   <div class="wrap">
-    <div class="section-head">
-      <h2>Everything you need to sell and manage, ready from day one</h2>
-      <p>A modular ERP such as Odoo is assembled application by application. Nhill brings together, from the start, the tools a small business uses every day, already connected, with support to get going.</p>
+    <div class="head">
+      <h2>Everything you need to sell and manage, ready on day one</h2>
+      <p>A modular ERP such as Odoo is assembled app by app. Nhill brings together from the start the tools a small business uses every day, already linked, with support to get going.</p>
     </div>
     <div class="table-scroll">
-      <table class="plain compare">
+      <table class="grid">
         <caption class="visually-hidden">What Nhill brings, compared with a modular ERP</caption>
         <thead><tr><th scope="col">What matters to you</th><th scope="col">With Nhill</th><th scope="col">With a modular ERP (for example Odoo)</th></tr></thead>
         <tbody>
-          <tr><th scope="row">Getting started</th><td data-label="With Nhill">Up and running in about half a day: demo on your products, catalogue import and training, included in the assisted trial</td><td data-label="With a modular ERP">Choosing the applications, then setting them up, yourself or with an implementation partner</td></tr>
-          <tr><th scope="row">Your everyday tools</th><td data-label="With Nhill">Sales, till, stock, purchases, expenses and payments, together and connected as soon as the account opens</td><td data-label="With a modular ERP">Applications to select and configure for your needs</td></tr>
-          <tr><th scope="row">Your subscription</th><td data-label="With Nhill">One subscription per establishment, with your users, tills and warehouses included according to the plan</td><td data-label="With a modular ERP">A licence per user and per month, with a price that varies by country</td></tr>
-          <tr><th scope="row">Your till</th><td data-label="With Nhill">The Nhill POS till is part of the solution: blind cash count, recorded variance, supervisor approval for discounts and voids</td><td data-label="With a modular ERP">A point-of-sale application to add and set up</td></tr>
-          <tr><th scope="row">Your support</th><td data-label="With Nhill">A team that follows you from the demo to the first weeks of use</td><td data-label="With a modular ERP">Support from the publisher or the partner, depending on the contract</td></tr>
+          <tr><th scope="row">Getting started</th><td class="us">About half a day: demo on your products, catalogue import and training, included in the assisted trial</td><td>Choice of apps, then configuration, by yourself or with an integration partner</td></tr>
+          <tr><th scope="row">Your everyday tools</th><td class="us">Sales, till, stock, purchases, expenses and payments together and linked from the moment the account opens</td><td>Apps to select and configure as you need them</td></tr>
+          <tr><th scope="row">Your subscription</th><td class="us">One subscription per business, with your users, tills and warehouses included according to the plan</td><td>A licence per user per month</td></tr>
+          <tr><th scope="row">Your till</th><td class="us">Nhill POS is part of the solution: blind count, recorded difference, manager approval for discounts and voids</td><td>Point-of-sale app to add and configure</td></tr>
+          <tr><th scope="row">Your support</th><td class="us">A team that follows you from the demo to your first weeks of use</td><td>Support from the publisher or the partner, depending on the contract</td></tr>
         </tbody>
       </table>
     </div>
-    <p>You sell, take payments and follow your stock from the first day, and your accountant receives ready-to-use exports.</p>
-    <p class="small">Odoo is a trademark of Odoo S.A., not affiliated with Nhill. Information taken from public sources in October 2026.</p>
+    <p class="source">Odoo is a trademark of Odoo S.A., not affiliated with Nhill. Information from public sources read in October 2026.</p>
   </div>
 </section>
 
-<section class="section">
+<section class="section tint">
   <div class="wrap">
-    <div class="section-head">
+    <div class="head">
       <h2>Getting started, in four steps</h2>
-      <p>We support you from the first conversation to the first weeks of use.</p>
+      <p>We support you from the first conversation to your first weeks of use.</p>
     </div>
     <ol class="steps">
       <li><h3>The demo</h3><p>45 minutes, on your own products, by video call.</p></li>
@@ -200,18 +192,14 @@
   </div>
 </section>
 
-<section class="band">
+<section class="band on-night">
   <div class="wrap">
     <h2>See Nhill on your own products.</h2>
     <p>Tell us what you sell and how you work: we show you Nhill on your case, then you decide whether you want to try it for free.</p>
     <div class="actions">
-      <a class="btn btn-gold" href="{{p:contact}}#demonstration">Book a demo</a>
-      <a class="btn btn-ghost" href="{{p:free-trial}}">Request a free trial</a>
+      <a class="btn btn-main" href="{{p:contact}}#demonstration">Book a demo</a>
+      <a class="btn btn-line" href="{{p:free-trial}}">Request a free trial</a>
     </div>
-    <p class="reassure">Limited places for the assisted trial: we follow a small number of businesses at a time.</p>
+    <p class="small">Limited places for the assisted trial: we follow a small number of businesses at a time.</p>
   </div>
-  <svg class="summit" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-    <path d="M-10 118 L240 96 L420 106 L640 70 L860 80 L1080 40 L1250 50 L1352 16"/>
-    <polygon points="1352,16 1352,2 1378,9"/>
-  </svg>
 </section>

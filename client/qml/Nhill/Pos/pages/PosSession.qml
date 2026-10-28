@@ -119,13 +119,16 @@ Rectangle {
                                else PosNav.fail(r) })
         }
         readonly property bool returnable: !!full && (full.doc_type === "receipt" || full.doc_type === "invoice") && full.status !== "credited" && root.open
+        Text { visible: docDialog.returnable; Layout.fillWidth: true; wrapMode: Text.Wrap; color: Theme.textMuted; font.family: Theme.font; font.pixelSize: Theme.fs_sm
+               text: qsTr("To return goods, enter the quantity on each line concerned.") }
         Repeater {
             model: docDialog.full ? docDialog.full.lines : []
             delegate: RowLayout {
                 Layout.fillWidth: true
                 Text { text: modelData.description; color: Theme.text; font.family: Theme.font; Layout.fillWidth: true; elide: Text.ElideRight }
                 Text { text: modelData.quantity + " × " + Fmt.money(modelData.unit_price, docDialog.full.currency); color: Theme.textMuted; font.family: Theme.font }
-                FbTextField { visible: docDialog.returnable; Layout.preferredWidth: 80; placeholderText: qsTr("Qty to return"); inputMethodHints: Qt.ImhFormattedNumbersOnly
+                FbTextField { visible: docDialog.returnable; Layout.preferredWidth: 80; placeholderText: "0"; inputMethodHints: Qt.ImhFormattedNumbersOnly
+                              Accessible.name: qsTr("Quantity to return: %1").arg(modelData.description)
                               onTextChanged: { var q = docDialog.qty; q[modelData.line_no] = text.trim(); docDialog.qty = q } }
             }
         }

@@ -146,7 +146,9 @@ Aucun secret n'est dans le dépôt, dans le paquet ni dans les journaux.
 
 Caddy obtient le certificat de `api.<votre-domaine>` auprès de Let's Encrypt (défi HTTP-01
 sur le port 80) et le renouvelle seul, environ 30 jours avant l'échéance. Le contrôle de
-santé alerte s'il reste moins de 14 jours. En cas d'échec : `journalctl -u caddy`,
+santé alerte s'il reste moins de 14 jours (`NH_HEALTH_CERT_MIN_DAYS` dans
+`/etc/nhill/health.env` ; 0 avec `--tls internal`, dont les certificats de courte durée sont
+renouvelés par Caddy). En cas d'échec : `journalctl -u caddy`,
 résolution DNS du nom, ports 80 et 443 ouverts dans **les deux** pare-feu.
 
 ## 7. Sauvegardes
@@ -197,8 +199,8 @@ est d'un jour avec la fréquence par défaut.
 
 ## 9. Surveillance et journaux
 
-`nhill-healthcheck.timer` vérifie toutes les 5 minutes : services `nhill-server`,
-`postgresql`, `caddy` ; `/health` en local et en HTTPS par Caddy ; échéance du
+`nhill-healthcheck.timer` vérifie toutes les 5 minutes : services `nhill-server` et
+`caddy` ; réponse de PostgreSQL (`pg_isready`) ; `/health` en local et en HTTPS par Caddy ; échéance du
 certificat ; ports 5432 et 8080 en local seulement ; ufw actif ; disque (< 85 %) ;
 dernière sauvegarde de moins de 26 heures. Résultat : `/var/lib/nhill/health.json`.
 Un échec démarre `nhill-alert` : message dans le journal système (priorité `err`) et,

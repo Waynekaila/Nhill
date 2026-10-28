@@ -11,6 +11,7 @@ CAFILE="${NH_HEALTH_CAFILE:-}"
 BACKUP_DIR="${NH_HEALTH_BACKUP_DIR:-/var/backups/nhill/archives}"
 MAX_BACKUP_AGE_H="${NH_HEALTH_MAX_BACKUP_AGE_HOURS:-26}"
 DISK_MAX="${NH_HEALTH_DISK_MAX_PERCENT:-85}"
+# 0 with Caddy's local authority (short-lived certificates renewed by Caddy itself).
 CERT_MIN_DAYS="${NH_HEALTH_CERT_MIN_DAYS:-14}"
 
 failed=() results=()
@@ -21,9 +22,12 @@ check() { # check ID OK(0/1) DETAIL
   results+=("$(jq -cn --arg id "$id" --argjson ok "$([[ $ok == 0 ]] && echo true || echo false)" --arg d "$detail" '{id:$id, ok:$ok, detail:$d}')")
 }
 
-for unit in nhill-server postgresql caddy; do
+for unit in nhill-server caddy; do
   st="$(systemctl is-active "$unit" 2>/dev/null)"; check "service $unit" "$([[ $st == active ]]; echo $?)" "$st"
 done
+# PostgreSQL: the cluster unit (postgresql@16-main), not the umbrella "postgresql" unit.
+pg="$(pg_isready -h 127.0.0.1 -p 5432 2>&1)"
+check "postgresql" "$(pg_isready -q -h 127.0.0.1 -p 5432 >/dev/null 2>&1; echo $?)" "$pg"
 
 body="$(curl -sS --max-time 5 http://127.0.0.1:8080/health 2>&1)"
 check "api local" "$(jq -e '.status == "ok" and .database == true' <<<"$body" >/dev/null 2>&1; echo $?)" "${body:0:120}"

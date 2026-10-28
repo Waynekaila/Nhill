@@ -198,6 +198,7 @@ max_connections = 100
 log_min_duration_statement = 2000
 log_lock_waits = on
 EOF
+systemctl enable postgresql >/dev/null 2>&1 || true
 systemctl enable --now "postgresql@$PGV-main" >/dev/null 2>&1 || systemctl enable --now postgresql >/dev/null
 systemctl restart "postgresql@$PGV-main"
 for _ in $(seq 1 30); do sudo -u postgres pg_isready -q && break; sleep 1; done
@@ -332,6 +333,7 @@ set_kv "$HEF" NH_HEALTH_PUBLIC_URL "https://$API_DOMAIN/health"
 set_kv "$HEF" NH_HEALTH_PUBLIC_HOST "$API_DOMAIN"
 set_kv "$HEF" NH_HEALTH_CAFILE "$([[ $TLS == internal ]] && echo /var/lib/caddy/.local/share/caddy/pki/authorities/local/root.crt)"
 set_kv "$HEF" NH_HEALTH_BACKUP_DIR /var/backups/nhill/archives
+set_kv "$HEF" NH_HEALTH_CERT_MIN_DAYS "$([[ $TLS == internal ]] && echo 0 || echo 14)"
 ALF=/etc/nhill/alert.env
 [[ -f $ALF ]] || cat >"$ALF" <<'EOF'
 # Command run when a health check fails (the failed checks are in $NH_ALERT_TEXT).

@@ -4962,6 +4962,14 @@
         <source>Invoice</source>
         <translation>Facture</translation>
     </message>
+    <message>
+        <source>To return goods, enter the quantity on each line concerned.</source>
+        <translation>Pour un retour, saisissez la quantité sur chaque ligne concernée.</translation>
+    </message>
+    <message>
+        <source>Quantity to return: %1</source>
+        <translation>Quantité à retourner : %1</translation>
+    </message>
 </context>
 <context>
     <name>ProductDialog</name>

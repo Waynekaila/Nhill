@@ -36,22 +36,22 @@ CTA = {"fr": ("contact", "#demonstration", "Demander une démo"), "en": ("contac
 FOOT = {
     "fr": {"product": "Produit", "start": "Démarrer", "legal": "Informations légales",
            "start_links": [("contact", "#demonstration", "Demander une démonstration"), ("essai-gratuit", "", "Essai gratuit accompagné"),
-                           ("contact", "?sujet=formule#question", "Discuter d'une formule"), ("contact", "#question", "Contacter l'équipe")],
+                           ("contact", "#question", "Contacter l'équipe")],
            "privacy": ("confidentialite", "Politique de confidentialité"), "terms": ("conditions", "Conditions d'utilisation"),
            "notice": ("mentions-legales", "Mentions légales"),
-           "tagline": "Le logiciel de gestion et de caisse des indépendants, des commerces et des PME, en français et en anglais.",
-           "fine": "Nhill, logiciel de gestion commerciale et de caisse. Les captures d'écran montrent l'application "
-                   "réelle, avec des données de démonstration.",
+           "tagline": "Le logiciel de gestion et de caisse des indépendants, des commerces et des PME.",
+           "fine": "Nhill, logiciel de gestion commerciale et de caisse, édité par Nhill Solution. Les captures d'écran "
+                   "montrent l'application réelle, avec des données de démonstration.",
            "skip": "Aller au contenu", "menu": "Menu", "lang": "English", "home": "Accueil",
            "contact": "Écrire à l'équipe", "support": "Assistance aux clients"},
     "en": {"product": "Product", "start": "Get started", "legal": "Legal information",
            "start_links": [("contact", "#demonstration", "Book a demo"), ("free-trial", "", "Free assisted trial"),
-                           ("contact", "?topic=plan#question", "Discuss a plan"), ("contact", "#question", "Contact the team")],
+                           ("contact", "#question", "Contact the team")],
            "privacy": ("privacy", "Privacy policy"), "terms": ("terms", "Terms of use"),
            "notice": ("legal-notice", "Legal notice"),
-           "tagline": "Business management and point of sale for freelancers, shops and SMEs, in English and French.",
-           "fine": "Nhill, business management and point-of-sale software. Screenshots show the real application "
-                   "with demo data.",
+           "tagline": "Business management and point-of-sale software for freelancers, shops and SMEs.",
+           "fine": "Nhill, business management and point-of-sale software, published by Nhill Solution. Screenshots "
+                   "show the real application with demo data.",
            "skip": "Skip to content", "menu": "Menu", "lang": "Français", "home": "Home",
            "contact": "Write to the team", "support": "Customer support"},
 }
@@ -131,7 +131,7 @@ def render(lang, slug, meta, body, base_url, contacts=None):
         cur = ' aria-current="page"' if meta.get("nav") == key else ""
         nav_items.append(f'<a href="{L(out_path(lang, s_))}"{cur}>{html.escape(label)}</a>')
     cta_page, cta_anchor, cta_label = CTA[lang]
-    cta = f'<a class="btn btn-gold btn-small head-cta" href="{L(out_path(lang, cta_page))}{cta_anchor}">{html.escape(cta_label)}</a>'
+    cta = f'<a class="btn btn-main btn-small head-cta" href="{L(out_path(lang, cta_page))}{cta_anchor}">{html.escape(cta_label)}</a>'
     # Sélecteur de langue hors du menu : visible sur ordinateur comme sur téléphone.
     lang_link = (f'<a class="lang" href="{L(pair_path)}" lang="{other}" hreflang="{other}" '
                  f'data-lang="{other}">{f["lang"]}</a>')
