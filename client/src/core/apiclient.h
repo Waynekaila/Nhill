@@ -85,8 +85,14 @@ public:
     Q_INVOKABLE void sendLong(const QString& method, const QString& path, const QVariant& body, const QJSValue& cb,
                               int timeoutMs);
     Q_INVOKABLE void upload(const QString& method, const QString& path, const QUrl& localFile, const QJSValue& cb);
-    // Downloads a file (PDF/CSV) into the user's Downloads/Nhill folder and opens it.
+    // Downloads a file (PDF/CSV/ZIP) into the user's Downloads/Nhill folder and opens it
+    // (Android: in a viewer chosen by the user, through the FileProvider).
     Q_INVOKABLE void download(const QString& path, const QString& fileName, const QJSValue& cb);
+    // Same download, then the system share sheet (e-mail, messaging) where there is one
+    // (Android); elsewhere the file is opened, to be attached from the e-mail program.
+    Q_INVOKABLE void downloadAndShare(const QString& path, const QString& fileName, const QString& title, const QJSValue& cb);
+    // True where downloadAndShare() opens a share sheet.
+    Q_INVOKABLE bool canShare() const;
     // Authenticated image fetch for display (e.g. the establishment logo): data = "data:<mime>;base64,...".
     Q_INVOKABLE void fetchImage(const QString& path, const QJSValue& cb);
     Q_INVOKABLE QString newIdempotencyKey() const;
@@ -111,6 +117,7 @@ signals:
     void rightsChanged(const QString& version);
 
 private:
+    void fetchToFile(const QString& path, const QString& fileName, bool share, const QString& title, const QJSValue& cb);
     void dispatch(Request r, Callback cb);
     void setConnection(ConnectionState s);
     void tryRefresh(std::function<void(bool)> done);

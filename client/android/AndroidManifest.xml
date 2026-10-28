@@ -23,5 +23,13 @@
             <meta-data android:name="android.app.arguments" android:value="-- %%INSERT_APP_ARGUMENTS%% --"/>
             <meta-data android:name="android.app.extract_android_style" android:value="minimal"/>
         </activity>
+        <!-- Opening a downloaded PDF or CSV (invoice, ticket, report, export) in another app:
+             Qt hands file:// addresses to the viewer as content:// through this provider
+             (Android 7+ refuses file:// between apps). Read access is granted per file. -->
+        <provider android:name="androidx.core.content.FileProvider"
+                  android:authorities="${applicationId}.qtprovider"
+                  android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/qtprovider_paths"/>
+        </provider>
     </application>
 </manifest>

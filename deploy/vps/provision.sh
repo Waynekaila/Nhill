@@ -34,7 +34,6 @@
 set -euo pipefail
 umask 022
 HERE="$(cd "$(dirname "$0")" && pwd)"
-ROOT="$(cd "$HERE/../.." && pwd)"
 
 DEB="" SUMS="" SHA="" API_DOMAIN="" ACME_EMAIL="" ADMIN_EMAIL="" ADMIN_NAME="" RECIPIENTS=""
 OFFSITE="" SUPPORT_EMAIL="" SSH_PORT=22 SSH_ALLOW="" HARDEN_SSH=0 TLS=acme YES=0 FORCE_DISTRO=0
@@ -229,6 +228,7 @@ ALTER ROLE nhill_setup WITH LOGIN SUPERUSER PASSWORD :'pw';
 SQL
   report="$(mktemp /root/nhill-setup-XXXX.json)"; chmod 600 "$report"
   set +e
+  # shellcheck disable=SC2024  # the script runs as root: root writes the report, not nhill
   printf '%s\n' "$setup_pw" | sudo -u nhill /usr/bin/nhill-server --config "$ENVF" setup \
     --host 127.0.0.1 --port 5432 --database nhill --user nhill_setup >"$report" 2>/root/nhill-setup.log
   rc=$?

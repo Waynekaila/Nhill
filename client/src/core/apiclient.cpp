@@ -13,6 +13,11 @@
 #include <QStandardPaths>
 #include <QUuid>
 
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#include <QtCore/qcoreapplication_platform.h>
+#endif
+
 namespace nhc {
 
 QVariantMap ApiResult::toVariant() const {
@@ -358,11 +363,55 @@ void ApiClient::upload(const QString& method, const QString& path, const QUrl& l
     request(r, [this, cb](const ApiResult& res) { callJs(cb, res); });
 }
 
+namespace {
+QString mimeOf(const QString& file) {
+    const QString suffix = QFileInfo(file).suffix().toLower();
+    if (suffix == QLatin1String("pdf")) return QStringLiteral("application/pdf");
+    if (suffix == QLatin1String("csv")) return QStringLiteral("text/csv");
+    if (suffix == QLatin1String("zip")) return QStringLiteral("application/zip");
+    return QStringLiteral("application/octet-stream");
+}
+
+// Hands a downloaded file to the system: viewer, or share sheet when `share`.
+bool handOver(const QString& file, bool share, const QString& title) {
+#ifdef Q_OS_ANDROID
+    // file:// cannot leave the app on Android 7+: content:// through the FileProvider
+    // (client/android/src/cd/nhill/business/NhillFiles.java).
+    QJniObject context = QNativeInterface::QAndroidApplication::context();
+    return QJniObject::callStaticMethod<jboolean>(
+        "cd/nhill/business/NhillFiles", "open",
+        "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;)Z", context.object(),
+        QJniObject::fromString(file).object<jstring>(), QJniObject::fromString(mimeOf(file)).object<jstring>(),
+        jboolean(share), QJniObject::fromString(title).object<jstring>());
+#else
+    Q_UNUSED(share);
+    Q_UNUSED(title);
+    return QDesktopServices::openUrl(QUrl::fromLocalFile(file));
+#endif
+}
+}  // namespace
+
+bool ApiClient::canShare() const {
+#ifdef Q_OS_ANDROID
+    return true;
+#else
+    return false;
+#endif
+}
+
+void ApiClient::downloadAndShare(const QString& path, const QString& fileName, const QString& title, const QJSValue& cb) {
+    fetchToFile(path, fileName, true, title, cb);
+}
+
 void ApiClient::download(const QString& path, const QString& fileName, const QJSValue& cb) {
+    fetchToFile(path, fileName, false, fileName, cb);
+}
+
+void ApiClient::fetchToFile(const QString& path, const QString& fileName, bool share, const QString& title, const QJSValue& cb) {
     Request r;
     r.path = path;
     r.timeoutMs = 120000;   // reports and data exports are generated on request
-    request(r, [this, cb, fileName](const ApiResult& res) {
+    request(r, [this, cb, fileName, share, title](const ApiResult& res) {
         if (!res.ok) {
             callJs(cb, res);
             return;
@@ -382,7 +431,8 @@ void ApiClient::download(const QString& path, const QString& fileName, const QJS
         } else {
             out.close();
             done.data = target;
-            QDesktopServices::openUrl(QUrl::fromLocalFile(target));
+            // The file is saved even when no app can show it (done.data gives where).
+            if (!handOver(target, share, title)) done.errorCode = QStringLiteral("no_viewer");
         }
         callJs(cb, done);
     });

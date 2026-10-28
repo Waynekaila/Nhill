@@ -83,7 +83,9 @@ echo "  ok  $pre (${db_mb} MB)"
 
 say "Installation of $new"
 cp -f "$DEB" "$REL/$(basename "$DEB")"
-apt-get install -y -q --allow-downgrades $([[ $REINSTALL == 1 ]] && echo --reinstall) "$REL/$(basename "$DEB")" >/dev/null
+apt_opts=(-y -q --allow-downgrades)
+[[ $REINSTALL == 1 ]] && apt_opts+=(--reinstall)
+apt-get install "${apt_opts[@]}" "$REL/$(basename "$DEB")" >/dev/null
 systemctl start nhill-server || true
 okay=0
 for _ in $(seq 1 90); do

@@ -63,4 +63,11 @@ APK="$OUT/nhill-business-$VERSION-arm64-v8a.apk"
 expect_file "$APK" 3000000
 unzip -l "$APK" | grep -q 'AndroidManifest.xml' || die "$APK : AndroidManifest.xml absent"
 unzip -l "$APK" | grep -q 'lib/arm64-v8a/' || die "$APK : bibliothèques arm64-v8a absentes"
+# Ouverture des PDF/CSV téléchargés dans une autre application (Android 7+ : content://) :
+# le fournisseur doit être déclaré ET sa classe présente, sinon l'application ne démarre pas.
+unzip -p "$APK" AndroidManifest.xml | tr -d '\000' | grep -q 'androidx.core.content.FileProvider' \
+  || die "$APK : fournisseur de fichiers (FileProvider) absent du manifeste"
+unzip -p "$APK" 'classes*.dex' | grep -aq 'Landroidx/core/content/FileProvider;' \
+  || die "$APK : classe androidx FileProvider absente (dépendance androidx.core manquante)"
+unzip -l "$APK" | grep -q 'res/xml/qtprovider_paths.xml' || die "$APK : res/xml/qtprovider_paths.xml absent"
 write_checksums "$OUT"

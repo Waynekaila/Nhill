@@ -1597,6 +1597,10 @@
         <source>Ticket</source>
         <translation>Ticket</translation>
     </message>
+    <message>
+        <source>Share</source>
+        <translation>Partager</translation>
+    </message>
 </context>
 <context>
     <name>ErrorsPage</name>

@@ -36,6 +36,10 @@ FbPage {
         FbButton { visible: !!page.doc && !page.isDraft; text: qsTr("Ticket"); iconName: "download"; variant: "ghost"
                    onClicked: Api.download("/api/v1/sales-documents/" + page.docId + "/pdf?format=ticket", (page.doc.number || "brouillon") + "-ticket.pdf",
                                            function(r) { r.ok ? Nav.toast(qsTr("Saved in %1").arg(r.data)) : Nav.fail(r) }) },
+        // Phone: the PDF goes straight to e-mail or messaging (share sheet of the system).
+        FbButton { visible: !!page.doc && Api.canShare(); text: qsTr("Share"); iconName: "share"; variant: "ghost"
+                   onClicked: Api.downloadAndShare("/api/v1/sales-documents/" + page.docId + "/pdf?format=a4", (page.doc.number || "brouillon") + ".pdf",
+                                                   page.doc.number || qsTr("Document"), function(r) { if (!r.ok) Nav.fail(r) }) },
         FbButton { visible: page.payable && Session.can("payments.write"); text: page.doc && page.doc.doc_type === "credit_note" ? qsTr("Record refund") : qsTr("Record payment"); iconName: "payment"
                    onClicked: payDialog.start("document_id", page.docId, page.doc.currency, page.doc.balance) },
         FbButton { visible: page.isDraft && Session.can("sales.write"); text: qsTr("Edit"); iconName: "edit"; variant: "secondary"

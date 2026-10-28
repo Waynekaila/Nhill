@@ -129,7 +129,12 @@ jobs:
           name: nhill-deb-ubuntu-24.04
           path: debs
       - name: ShellCheck des scripts d'exploitation
-        run: shellcheck -S warning deploy/vps/*.sh deploy/vps/tests/*.sh deploy/backup/*.sh
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p vps-report
+          shellcheck --version | head -2
+          shellcheck -S warning deploy/vps/*.sh deploy/vps/tests/*.sh deploy/backup/*.sh 2>&1 | tee vps-report/shellcheck.txt
       - name: Clé de sauvegarde créée hors du « serveur » (simulation du poste d'administration)
         run: |
           sudo apt-get install -y -q age >/dev/null

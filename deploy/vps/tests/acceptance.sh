@@ -65,6 +65,7 @@ head -c 21 "$last" | grep -q 'age-encryption.org/v1' || fail "backup not encrypt
 ! grep -aq 'nhill_owner' "$last" || fail "backup readable in clear"
 off="$(mktemp -d /tmp/offsite-XXXX)"; cp "$last" "$last.sha256" "$off/"; cp "$IDENTITY" "$off/key.txt"
 chmod 755 "$off"; chmod 644 "$off"/*; chown -R nobody "$off"
+# shellcheck disable=SC2024  # run as root: the output file is written by root
 sudo -u nobody env TMPDIR="$off" bash "$HERE/nhill-restore-test.sh" "$off/$(basename "$last")" "$off/key.txt" >/tmp/restore.txt 2>&1 \
   || { cat /tmp/restore.txt; fail "restore test"; }
 grep -q 'RESTORE TEST PASSED' /tmp/restore.txt || fail "restore test verdict"
