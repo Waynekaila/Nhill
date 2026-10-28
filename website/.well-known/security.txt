@@ -1,0 +1,4 @@
+# Nhill Solution — security contact (RFC 9116). Renew "Expires" before that date.
+Contact: mailto:support@nhill.online
+Expires: 2027-10-27T23:00:00Z
+Preferred-Languages: fr, en

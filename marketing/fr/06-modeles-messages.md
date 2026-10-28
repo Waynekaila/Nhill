@@ -45,7 +45,7 @@ remplacer.
 >
 > Bien cordialement,
 > [PRÉNOM NOM] — Nhill
-> [TÉLÉPHONE / WHATSAPP] · [SITE]
+> info@nhill.online · nhill.online
 
 ## 5. E-mail — demande de rendez-vous à une organisation (association, incubateur)
 
@@ -67,7 +67,7 @@ remplacer.
 > DGI pour la facture normalisée.
 >
 > Bien cordialement,
-> [PRÉNOM NOM] — Nhill — [TÉLÉPHONE]
+> [PRÉNOM NOM] — Nhill Solution — info@nhill.online
 
 ## 6. Proposition de collaboration (après la rencontre)
 
@@ -94,7 +94,7 @@ remplacer.
 > Bonjour [PRÉNOM], merci encore pour votre participation au pilote. Vous m'avez dit que
 > [BÉNÉFICE CITÉ PAR LE PILOTE]. Connaissez-vous un ou deux commerçants à qui Nhill pourrait
 > rendre le même service ? Si oui, demandez-leur d'abord s'ils sont d'accord, puis
-> envoyez-moi leur nom et leur numéro, ou donnez-leur le mien : [TÉLÉPHONE].
+> envoyez-moi leur nom et leur numéro, ou donnez-leur notre adresse : info@nhill.online.
 
 ## 8. Suivi après démonstration
 

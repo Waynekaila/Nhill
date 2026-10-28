@@ -2,7 +2,7 @@
 # installateur .exe par application (NSIS). À exécuter sous Windows dans
 # « x64 Native Tools Command Prompt for VS 2022 » puis PowerShell :
 #   powershell -ExecutionPolicy Bypass -File build-windows.ps1 -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 `
-#       [-KeychainDir C:\build\qtkeychain] [-ServerUrl https://api.exemple.com] [-BuildDir C:\build\nhill-win]
+#       [-KeychainDir C:\build\qtkeychain] [-BuildDir C:\build\nhill-win]
 # Prérequis (vérifiés ci-dessous) : Visual Studio 2022 (C++), CMake >= 3.21, Ninja, Git, Qt 6.5+ MSVC 64 bits
 # (Qt Quick, Qt Svg, Qt Linguist, Qt Test), NSIS 3 (makensis).
 # QtKeychain (session mémorisée dans le Gestionnaire d'identification Windows) est obligatoire :

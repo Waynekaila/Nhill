@@ -1,10 +1,16 @@
 # Nhill website: static files + form backend on the same address (no CORS needed then).
-# Replace www.example.cd; Caddy obtains the TLS certificate automatically.
-www.example.cd {
+# Public address: https://nhill.online (www.nhill.online is redirected to it). Caddy obtains
+# and renews the TLS certificates automatically once both names point to this server (DNS).
+www.nhill.online {
+	redir https://nhill.online{uri} permanent
+}
+
+nhill.online {
 	encode zstd gzip
 	root * /var/www/nhill-site
 	header {
-		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		# includeSubDomains only once every subdomain of nhill.online serves HTTPS.
+		Strict-Transport-Security "max-age=31536000"
 		X-Content-Type-Options "nosniff"
 		X-Frame-Options "DENY"
 		Referrer-Policy "strict-origin-when-cross-origin"

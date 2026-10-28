@@ -15,7 +15,7 @@
 
 ---
 
-**Demande à adresser à** : [E-MAIL DPO] ou [ADRESSE POSTALE]
+**Demande à adresser à** : info@nhill.online
 
 **1. Vous**
 

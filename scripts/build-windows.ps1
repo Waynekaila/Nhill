@@ -1,7 +1,7 @@
 # Point d'entrée Windows : délègue à packaging\windows\build-windows.ps1 (implémentation unique).
 # Windows entry point: forwards to packaging\windows\build-windows.ps1 (single implementation).
 #   powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1 -Source C:\src\nhill `
-#     -QtDir C:\Qt\6.5.3\msvc2019_64 [-VcpkgRoot C:\vcpkg] [-ServerUrl https://api.exemple.com]
+#     -QtDir C:\Qt\6.5.3\msvc2019_64 [-VcpkgRoot C:\vcpkg]
 param(
   [Parameter(Mandatory = $true)][string]$Source,
   [Parameter(Mandatory = $true)][string]$QtDir,

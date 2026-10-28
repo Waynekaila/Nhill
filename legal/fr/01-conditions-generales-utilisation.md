@@ -16,17 +16,17 @@
 
 ## 1. Éditeur
 
-Le site [ADRESSE DU SITE] et les applications Nhill Business, Nhill POS et Nhill Console
+Le site nhill.online et les applications Nhill Business, Nhill POS et Nhill Console
 sont édités par [RAISON SOCIALE], [FORME JURIDIQUE] au capital de [CAPITAL], immatriculée au
 RCCM de [VILLE] sous le n° [RCCM], identification nationale [ID. NAT.], NIF [NIF], dont le
-siège est situé [ADRESSE] (ci-après « l'Éditeur »). Contact : [E-MAIL], [TÉLÉPHONE].
+siège est situé [ADRESSE] (ci-après « l'Éditeur »). Contact : info@nhill.online ; assistance aux clients : support@nhill.online.
 
 ## 2. Objet et acceptation
 
 Les présentes CGU définissent les conditions d'accès et d'utilisation du site et des
 applications Nhill (ci-après « le Service »). Créer un compte, rejoindre un établissement
 ou utiliser le Service vaut acceptation des CGU dans leur version en vigueur, consultable à
-tout moment sur [ADRESSE DES CGU].
+tout moment sur le site nhill.online (page « Conditions d'utilisation »).
 
 ## 3. Accès au Service
 
@@ -118,4 +118,4 @@ V-02 — juridiction ou arbitrage]**.
 
 ## 12. Contact
 
-[E-MAIL DE CONTACT] — [ADRESSE POSTALE].
+info@nhill.online.

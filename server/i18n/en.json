@@ -49,6 +49,7 @@
   "email.subscription_grace.subject": "Payment not received — grace period",
   "email.subscription_suspended.subject": "Subscription suspended — read-only access",
   "email.signature": "\n\n— Nhill\nAutomatic message: please do not reply to this e-mail.",
+  "email.signature_support": "\n\n— Nhill\nAutomatic message. For any question, write to {support_email}.",
   "email.code_rotated.body": "Hello,\n\nThe establishment code of {establishment} was renewed automatically. The new code is shown in Nhill Business, Settings › Establishment code. Give it only to the people you invite.",
   "email.subscription_reminder.body": "Hello,\n\nThe Nhill subscription of {establishment} expires on {period_end}. To continue without interruption, renew it from Nhill Business, Settings › Subscription.",
   "email.subscription_grace.body": "Hello,\n\nThe payment of the Nhill subscription of {establishment} has not been received yet. The service stays available until {grace_until} (grace period); after that, data can still be read and exported but no longer modified.",

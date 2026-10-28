@@ -4,7 +4,7 @@
 Every name, amount and rate created here is fictional and labelled "démo".
 Never run this against a production server.
 
-Usage: seed-demo.py [--server http://127.0.0.1:8080] [--email demo@example.cd] [--password ...]
+Usage: seed-demo.py [--server http://127.0.0.1:8080] [--email demo@example.com] [--password ...]
 Prints the owner credentials and the establishment code at the end.
 """
 import argparse
@@ -43,7 +43,7 @@ class Api:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--server", default="http://127.0.0.1:8080")
-    ap.add_argument("--email", default=f"demo-{uuid.uuid4().hex[:6]}@example.cd")
+    ap.add_argument("--email", default=f"demo-{uuid.uuid4().hex[:6]}@example.com")
     ap.add_argument("--password", default="Demo-Nhill-2026")
     a = ap.parse_args()
     if not (a.server.startswith("http://127.0.0.1") or a.server.startswith("http://localhost")):

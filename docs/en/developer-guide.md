@@ -57,7 +57,7 @@ Invariants never to break:
 scripts/install-deps-linux.sh --with-packaging --with-docs --yes   # Debian 13 / Ubuntu 24.04
 scripts/build-linux.sh                                             # build + tests
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build       # throwaway PostgreSQL + API 127.0.0.1:8080
-python3 scripts/dev/seed-demo.py --email demo@example.cd           # DEMO data
+python3 scripts/dev/seed-demo.py --email demo@example.com           # DEMO data
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-business
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh stop
 ```

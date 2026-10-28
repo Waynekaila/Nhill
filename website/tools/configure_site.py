@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Nhill — writes the PUBLIC site configuration (config/site.json) for one deployment.
 
-  SITE_PUBLIC_BASE_URL=https://www.exemple.cd SITE_API_BASE_URL=https://www.exemple.cd \
-  SITE_CONTACT_EMAIL=contact@exemple.cd python3 website/tools/configure_site.py [--site DIR]
+  SITE_PUBLIC_BASE_URL=https://nhill.online SITE_API_BASE_URL=https://nhill.online \
+  SITE_CONTACT_EMAIL=info@nhill.online SITE_SUPPORT_EMAIL=support@nhill.online \
+  python3 website/tools/configure_site.py [--site DIR]
 
-config/site.json is downloaded by every visitor: it only ever holds the three public
+config/site.json is downloaded by every visitor: it only ever holds the four public
 values below. Database settings and passwords stay in the backend environment
 (/etc/nhill-site/site.env) and are refused here.
 """
@@ -14,10 +15,14 @@ import os
 import re
 import sys
 
-PUBLIC = {"publicBaseUrl": "SITE_PUBLIC_BASE_URL", "apiBaseUrl": "SITE_API_BASE_URL", "contactEmail": "SITE_CONTACT_EMAIL"}
-COMMENT = ("Public configuration read by the browser (assets/js/site.js) and by tools/build_site.py. NEVER put a "
-           "secret here: this file is downloaded by every visitor. apiBaseUrl: address of the form backend (empty = "
-           "forms say they are not connected). contactEmail: shown when forms are not connected.")
+PUBLIC = {"publicBaseUrl": "SITE_PUBLIC_BASE_URL", "apiBaseUrl": "SITE_API_BASE_URL", "contactEmail": "SITE_CONTACT_EMAIL",
+          "supportEmail": "SITE_SUPPORT_EMAIL"}
+EMAILS = ("contactEmail", "supportEmail")
+COMMENT = ("Public configuration read by the browser (assets/js/site.js) and by tools/build_site.py. NEVER put a secret here: "
+           "this file is downloaded by every visitor. publicBaseUrl: canonical address of the site (check it with "
+           "tools/check_live.py before announcing it). apiBaseUrl: address of the form backend (empty = forms say they are not "
+           "connected). contactEmail: general address (footer, forms not connected). supportEmail: customer support address "
+           "(footer, contact page).")
 
 
 def main(argv=None):
@@ -29,7 +34,7 @@ def main(argv=None):
         cfg = json.load(f)
     for key, var in PUBLIC.items():
         if var in os.environ:
-            cfg[key] = os.environ[var].strip().rstrip("/") if key != "contactEmail" else os.environ[var].strip()
+            cfg[key] = os.environ[var].strip() if key in EMAILS else os.environ[var].strip().rstrip("/")
     for key in ("publicBaseUrl", "apiBaseUrl"):
         v = cfg.get(key, "")
         if v and not re.fullmatch(r"https://[A-Za-z0-9.-]+(:\d+)?(/[A-Za-z0-9._~/-]*)?", v):
@@ -37,9 +42,10 @@ def main(argv=None):
                 sys.exit(f"{key} : adresse https:// attendue (reçu {v!r})")
         if v and "@" in v:
             sys.exit(f"{key} : identifiants interdits dans une adresse publique")
-    email = cfg.get("contactEmail", "")
-    if email and not re.fullmatch(r"[^@\s]+@[^@\s]+\.[A-Za-z]{2,}", email):
-        sys.exit(f"contactEmail invalide : {email!r}")
+    for key in EMAILS:
+        email = cfg.get(key, "")
+        if email and not re.fullmatch(r"[^@\s<>\"]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", email):
+            sys.exit(f"{key} invalide : {email!r}")
     unknown = set(cfg) - set(PUBLIC) - {"_comment"}
     if unknown:
         sys.exit(f"clés non publiques refusées dans site.json : {', '.join(sorted(unknown))}")

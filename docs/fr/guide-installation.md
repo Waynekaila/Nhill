@@ -85,9 +85,12 @@ Nhill POS et Nhill Console ne sont pas proposées sur Android (applications de b
 
 ### 3.4 Premier démarrage
 
-L'adresse du serveur est compilée dans l'application (`NHILL_SERVER_URL`). Pour un essai
-sur un autre serveur, définissez la variable d'environnement `NHILL_SERVER` (bureau
-seulement). Ensuite : guide utilisateur, Partie A § 1.
+Aucune adresse de serveur n'est compilée dans l'application. Nhill Business la demande à la
+création d'un établissement ; Nhill Console et Nhill POS la demandent à leur première connexion.
+Saisissez l'adresse fournie par votre prestataire (HTTPS) : elle est vérifiée, puis enregistrée
+sur l'appareil, et reste modifiable dans les paramètres. Pour un essai ponctuel sur un autre
+serveur, la variable d'environnement `NHILL_SERVER` la remplace (bureau seulement). Ensuite :
+guide utilisateur, Partie A § 1.
 
 ## 4. Serveur (production)
 

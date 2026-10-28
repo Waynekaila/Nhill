@@ -26,6 +26,7 @@
 
 #include <cstdio>
 #include <functional>
+#include <memory>
 
 #include "apiclient.h"
 #include "session.h"
@@ -47,6 +48,14 @@ bool waitFor(const std::function<bool()>& cond, int ms = 15000) {
     return true;
 }
 
+// Port of the fake API. The stored session is keyed by server (host and port), so every
+// phase - each in its own process - must reach the same address: a fixed port, overridable
+// with NHILL_KEYCHAIN_TEST_PORT when it is taken on the machine.
+quint16 fakeApiPort() {
+    const int p = qEnvironmentVariableIntValue("NHILL_KEYCHAIN_TEST_PORT");
+    return static_cast<quint16>(p > 0 && p < 65536 ? p : 47321);
+}
+
 // Minimal HTTP/1.1 API (one request per connection).
 class FakeApi : public QObject {
 public:
@@ -54,8 +63,9 @@ public:
     QStringList presentedRefresh;
     int meHits = 0;
     quint16 port() const { return m_server.serverPort(); }
+    bool listening() const { return m_server.isListening(); }
     FakeApi() {
-        m_server.listen(QHostAddress::LocalHost, 0);
+        m_server.listen(QHostAddress::LocalHost, fakeApiPort());
         connect(&m_server, &QTcpServer::newConnection, this, [this] {
             while (QTcpSocket* s = m_server.nextPendingConnection()) {
                 connect(s, &QTcpSocket::readyRead, this, [this, s] { onData(s); });
@@ -110,13 +120,19 @@ private:
     QHash<QTcpSocket*, QByteArray> m_buffers;
 };
 
+// One application instance. A second instance in the same process (a restart simulated
+// after a logout) shares the fake API of the first: there is one server, at one address.
 struct Rig {
-    FakeApi api;
+    std::unique_ptr<FakeApi> owned;
+    FakeApi& api;
     ApiClient client;
     SecureStore store{nullptr, kTestService};
     Session session{&client, &store};
-    Rig() { client.setBaseUrl(QStringLiteral("http://127.0.0.1:%1").arg(api.port())); }
-    QString key() const { return QStringLiteral("refresh@127.0.0.1"); }
+    explicit Rig(FakeApi* shared = nullptr) : owned(shared ? nullptr : new FakeApi), api(shared ? *shared : *owned) {
+        client.setBaseUrl(QStringLiteral("http://127.0.0.1:%1").arg(fakeApiPort()));
+    }
+    // Same key as Session (server host and port).
+    QString key() const { return QStringLiteral("refresh@127.0.0.1:%1").arg(fakeApiPort()); }
     // Value in the store: {found, value}
     QPair<bool, QString> stored() {
         bool done = false, found = false;
@@ -148,6 +164,8 @@ void configureSettings() {
 QString runPhase(const QString& phase) {
     if (!SecureStore::supported()) return QStringLiteral("SKIP built without QtKeychain");
     Rig rig;
+    if (!rig.api.listening())
+        return QStringLiteral("FAIL fake API cannot listen on port %1 (set NHILL_KEYCHAIN_TEST_PORT)").arg(fakeApiPort());
     if (phase == QLatin1String("write")) {
         rig.store.remove(rig.key());
         rig.session.setRemember(true);
@@ -175,7 +193,7 @@ QString runPhase(const QString& phase) {
         waitFor([&] { return rig.stored().second == QLatin1String("ref-9"); }, 10000);
         rig.session.logout();
         if (!waitFor([&] { return !rig.stored().first; }, 10000)) return QStringLiteral("FAIL token kept after logout");
-        Rig again;
+        Rig again(&rig.api);
         again.api.expectedRefresh = QStringLiteral("ref-9");
         if (again.restore()) return QStringLiteral("FAIL session restored after logout");
         return QStringLiteral("OK");
@@ -194,7 +212,7 @@ QString runPhase(const QString& phase) {
         waitFor([&] { return rig.session.loggedIn(); });
         QThread::msleep(300);
         if (rig.stored().first) return QStringLiteral("FAIL token stored without remember me");
-        Rig next;
+        Rig next(&rig.api);
         next.api.expectedRefresh = QStringLiteral("ref-4");
         if (next.restore()) return QStringLiteral("FAIL session restored without remember me");
         return QStringLiteral("OK");

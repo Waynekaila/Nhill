@@ -1,5 +1,7 @@
 #include "appcontext.h"
 
+#include <nhill/version.hpp>
+
 #include <QJsonObject>
 #include <cstdio>
 #include <QMutex>
@@ -443,4 +445,7 @@ QString Tools::systemCountry() const {
         if (cc == QLatin1String(c.code)) return cc;
     return QString();
 }
+QString Tools::publisherName() const { return QString::fromUtf8(nhill::kPublisherName); }
+QString Tools::contactEmail() const { return QString::fromUtf8(nhill::kContactEmail); }
+QString Tools::supportEmail() const { return QString::fromUtf8(nhill::kSupportEmail); }
 }  // namespace nhc

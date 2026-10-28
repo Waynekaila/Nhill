@@ -40,7 +40,7 @@ the `[BRACKETS]`.
 >
 > Kind regards,
 > [FIRST NAME LAST NAME] — Nhill
-> [PHONE / WHATSAPP] · [WEBSITE]
+> info@nhill.online · nhill.online
 
 ## 5. E-mail — meeting request to an organisation (association, incubator)
 
@@ -62,7 +62,7 @@ the `[BRACKETS]`.
 > standardised invoice.
 >
 > Kind regards,
-> [FIRST NAME LAST NAME] — Nhill — [PHONE]
+> [FIRST NAME LAST NAME] — Nhill Solution — info@nhill.online
 
 ## 6. Collaboration proposal (after the meeting)
 
@@ -89,7 +89,7 @@ the `[BRACKETS]`.
 > Hello [FIRST NAME], thank you again for taking part in the pilot. You told me that
 > [BENEFIT MENTIONED BY THE PILOT]. Do you know one or two traders Nhill could help in the
 > same way? If so, ask them first whether they agree, then send me their name and number, or
-> give them mine: [PHONE].
+> give them our address: info@nhill.online.
 
 ## 8. Post-demo follow-up
 

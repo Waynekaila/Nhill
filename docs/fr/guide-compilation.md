@@ -31,7 +31,7 @@ propres.
 | `--dry-run` | affiche les commandes sans rien exécuter ni installer |
 | `--force` | autorise l'écrasement d'un dossier de sortie existant |
 | `--output DIR` | dossier de sortie |
-| `--server-url URL` | adresse du serveur compilée dans les applications (HTTPS en production) |
+| `--server-url URL` | **retirée en 3.0.0** : refusée ; aucune adresse de serveur n'est compilée, l'utilisateur la saisit au premier lancement (vérifiée, puis enregistrée sur l'appareil) |
 | `-h`, `--help` | aide |
 | code 0 | succès |
 | code 1 | échec (compilation, test, contrôle) |
@@ -65,20 +65,20 @@ les correctifs de sécurité (cpp-httplib 0.14 en particulier, voir l'audit de s
 ```bash
 scripts/build-linux.sh                         # tout + tests
 scripts/build-linux.sh --server-only --jobs 4
-scripts/build-linux.sh --client-only --no-tests --server-url https://api.exemple.cd
+scripts/build-linux.sh --client-only --no-tests
 ```
 
 ### 3.3 Paquets Debian
 
 ```bash
-scripts/build-deb.sh --server-url https://api.exemple.cd
-# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_2.1.0-1_amd64.deb
+scripts/build-deb.sh
+# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_3.0.0-1_amd64.deb
 #    (ou dist/linux/debian-13/ sur Debian 13)
 ```
 
 Les dépendances de chaque paquet sont calculées par `dpkg-shlibdeps` ; `lintian` contrôle
 les paquets. Contrôle d'installation sur une machine propre :
-`sudo apt install ./dist/linux/<distribution>/nhill-business_2.1.0-1_amd64.deb`.
+`sudo apt install ./dist/linux/<distribution>/nhill-business_3.0.0-1_amd64.deb`.
 
 ## 4. Windows
 
@@ -92,7 +92,7 @@ en bibliothèque **statique**.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
-  -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 -ServerUrl https://api.exemple.cd `
+  -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 `
   -BuildDir C:\src\nhill\build-windows
 ```
 
@@ -145,8 +145,8 @@ signature, SmartScreen avertit l'utilisateur (voir le guide d'installation).
 ```bash
 QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
-scripts/build-android.sh --server-url https://api.exemple.cd
-# -> dist/android/nhill-business-2.1.0-arm64-v8a.apk
+scripts/build-android.sh
+# -> dist/android/nhill-business-3.0.0-arm64-v8a.apk
 ```
 
 QtKeychain (« Se souvenir de moi », Keystore Android) est obligatoire. Construisez-le une
@@ -156,7 +156,7 @@ son préfixe :
 ```bash
 QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a packaging/android/build-qtkeychain-android.sh ~/build/qtkeychain-android
 KEYCHAIN_PREFIX=~/build/qtkeychain-android QT_ANDROID=… QT_HOST=… ANDROID_SDK_ROOT=… ANDROID_NDK_ROOT=… \
-scripts/build-android.sh --server-url https://api.exemple.cd
+scripts/build-android.sh
 ```
 
 Sans `KEYCHAIN_PREFIX`, la construction s'arrête ; `ALLOW_NO_KEYCHAIN=1` produit un APK qui

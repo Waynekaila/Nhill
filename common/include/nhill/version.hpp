@@ -13,4 +13,11 @@ inline constexpr const char* kApiVersion = "v1";
 // refuses those features anyway). See docs/fr/changelog.md.
 inline constexpr const char* kMinClientVersion = "3.0.0";
 
+// Publisher contacts shown by the applications (help screens, installers). The public web
+// address is not written here: the applications never link to a site whose HTTPS has not
+// been checked, and the API address is always the one entered by the user.
+inline constexpr const char* kPublisherName = "Nhill Solution";
+inline constexpr const char* kContactEmail = "info@nhill.online";
+inline constexpr const char* kSupportEmail = "support@nhill.online";
+
 }  // namespace nhill

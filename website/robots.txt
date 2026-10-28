@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Sitemap: https://www.nhill.example/sitemap.xml
+Sitemap: https://nhill.online/sitemap.xml

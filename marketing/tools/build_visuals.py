@@ -7,7 +7,8 @@
 Sources : marketing/visuals/src/*.html (+ visuals.css) — modifiables dans un éditeur de
 texte ou un navigateur. Exports : marketing/visuals/export/ (Playwright/Chromium).
 Captures d'écran : écrans réels de Nhill 2.0 (docs/assets/v2/, CI, données de démonstration).
-Les coordonnées entre crochets sont à remplacer avant impression : rien n'est inventé.
+Coordonnées : nhill.online et info@nhill.online (aucun numéro de téléphone n'est publié).
+Signature e-mail nominative : --sig-name "Prénom Nom" --sig-role "Fonction" (sinon signature d'équipe).
 """
 import argparse, os, sys
 
@@ -30,7 +31,7 @@ T = {
   b3="Depuis votre téléphone, vous voyez tout, même absent.",
   cta="Programme pilote gratuit — 8 semaines",
   cta2="Installation, formation et suivi inclus. Sans engagement.",
-  contact="[ADRESSE DU SITE] · WhatsApp [NUMÉRO]",
+  contact="nhill.online · info@nhill.online",
   legal="Nhill est un logiciel de gestion ; il ne remplace pas la facture normalisée de la DGI.",
   shot="Capture réelle de Nhill 2.0 — établissement de démonstration, données fictives.",
   sq_head="La caisse du soir, <span class='gold'>juste</span>.",
@@ -50,7 +51,7 @@ T = {
              ("Accompagnement d'entrepreneurs","Vous proposez Nhill aux entreprises que vous suivez.","Places au programme pilote, atelier gratuit pour vos membres.")],
   part_cols=("Forme","Votre rôle","Ce que vous y gagnez"),
   part_rules="Nos règles communes", part_rules_l=["Présenter Nhill tel qu'il est : un logiciel de gestion, non homologué pour la facture normalisée DGI","Ne transmettre un contact qu'avec l'accord de la personne","Ne jamais demander de mot de passe à un commerçant","Aucun partenariat annoncé sans contrat signé"],
-  sig_role="[Fonction]", sig_name="[Prénom Nom]",
+  sig_role="", sig_name="L'équipe Nhill Solution",
   lang_label="Français"),
  "en": dict(
   head="Your sales, stock and till, clear.",
@@ -60,7 +61,7 @@ T = {
   b3="From your phone, you see everything, even when away.",
   cta="Free pilot programme — 8 weeks",
   cta2="Installation, training and follow-up included. No commitment.",
-  contact="[WEBSITE ADDRESS] · WhatsApp [NUMBER]",
+  contact="nhill.online · info@nhill.online",
   legal="Nhill is management software; it does not replace the DGI standardised invoice.",
   shot="Real Nhill 2.0 screenshot (French interface) — demo business, fictitious data.",
   sq_head="The evening till, <span class='gold'>right</span>.",
@@ -80,7 +81,7 @@ T = {
              ("Entrepreneur support","You offer Nhill to the businesses you support.","Pilot places, free workshop for your members.")],
   part_cols=("Type","Your role","What you get"),
   part_rules="Our shared rules", part_rules_l=["Present Nhill as it is: management software, not certified for the DGI standardised invoice","Only pass on a contact with the person's consent","Never ask a trader for a password","No partnership announced without a signed contract"],
-  sig_role="[Title]", sig_name="[First Last]",
+  sig_role="", sig_name="The Nhill Solution team",
   lang_label="English"),
 }
 
@@ -180,21 +181,26 @@ def partner(t, lang):  # A4 portrait
 <p class="note muted" style="font-size:2.8mm;margin-top:2mm">{t['legal']} {t['shot']}</p></div></div>"""
     return page("Nhill — fiche partenaire A4" if lang == "fr" else "Nhill — A4 partner sheet", "210mm 297mm", b, lang)
 
-def signature(t, lang):
-    # Courriel : styles en ligne, logo à héberger sur le site (adresse absolue requise par les messageries).
+def signature(t, lang, name=None, role=None):
+    # Courriel : styles en ligne, sans image distante (souvent bloquée par les messageries) ;
+    # le domaine est écrit en clair : le lien https:// n'est ajouté qu'une fois le site vérifié
+    # (website/tools/check_live.py).
+    import html as _h
+    name = _h.escape(name or t['sig_name'])
+    role = _h.escape(role or t['sig_role'])
+    role_line = f'<span style="color:#56606B">{role} — Nhill Solution</span><br>\n' if role else ""
+    support_label = "assistance&nbsp;:" if lang == "fr" else "support:"
     return f"""<!doctype html>
 <html lang="{lang}"><head><meta charset="utf-8"><title>Nhill — {'signature e-mail' if lang == 'fr' else 'e-mail signature'}</title></head>
 <body style="margin:24px;background:#F7F5F0">
-<!-- Copier le tableau ci-dessous dans le client de messagerie. Remplacer [LOGO_URL] par l'adresse
-     publique du logo (ex. https://[SITE]/assets/images/nhill-logo.png) et les crochets par les vraies valeurs. -->
+<!-- {'Copier le tableau ci-dessous dans le client de messagerie.' if lang == 'fr' else 'Copy the table below into the e-mail client.'} -->
 <table cellpadding="0" cellspacing="0" role="presentation" style="font-family:Arial,Helvetica,sans-serif;color:#14181F;font-size:13px;line-height:1.45">
 <tr><td style="padding-right:14px;border-right:3px solid #B7862A;vertical-align:top">
-<img src="[LOGO_URL]" alt="Nhill" width="96" style="display:block;border:0"></td>
+<strong style="font-size:20px;letter-spacing:-.01em;color:#173F5F">Nhill</strong></td>
 <td style="padding-left:14px;vertical-align:top">
-<strong style="font-size:14px;color:#173F5F">{t['sig_name']}</strong><br>
-<span style="color:#56606B">{t['sig_role']} — Nhill</span><br>
-[TÉLÉPHONE / WHATSAPP] · <a href="mailto:[E-MAIL]" style="color:#173F5F">[E-MAIL]</a><br>
-<a href="https://[SITE]" style="color:#8E6519">[SITE]</a></td></tr>
+<strong style="font-size:14px;color:#173F5F">{name}</strong><br>
+{role_line}<a href="mailto:info@nhill.online" style="color:#173F5F">info@nhill.online</a> · {support_label} <a href="mailto:support@nhill.online" style="color:#173F5F">support@nhill.online</a><br>
+<span style="color:#8E6519">nhill.online</span></td></tr>
 <tr><td colspan="2" style="padding-top:10px;font-size:11px;color:#56606B">{t['cta']}</td></tr>
 </table></body></html>
 """
@@ -206,7 +212,8 @@ VISUALS = [("affiche-a3", "a3-poster", poster, ("297mm", "420mm")),
            ("fiche-partenaire-a4", "partner-sheet-a4", partner, ("210mm", "297mm"))]
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--no-export", action="store_true"); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument("--no-export", action="store_true")
+    ap.add_argument("--sig-name"); ap.add_argument("--sig-role"); a = ap.parse_args()
     os.makedirs(SRC, exist_ok=True); os.makedirs(EXP, exist_ok=True)
     jobs = []
     for lang in ("fr", "en"):
@@ -216,7 +223,7 @@ def main():
             p = os.path.join(SRC, name + ".html")
             open(p, "w", encoding="utf-8").write(fn(t, lang)); jobs.append((p, name, size))
         sp = os.path.join(SRC, f"signature-email-{lang}.html")
-        open(sp, "w", encoding="utf-8").write(signature(t, lang))
+        open(sp, "w", encoding="utf-8").write(signature(t, lang, a.sig_name, a.sig_role))
     # Les modèles de messages renvoient vers marketing/visuals/signature-email-<lang>.html
     for lang in ("fr", "en"):
         open(os.path.join(ROOT, "marketing", "visuals", f"signature-email-{lang}.html"), "w", encoding="utf-8").write(

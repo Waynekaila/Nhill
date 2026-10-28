@@ -36,7 +36,7 @@ SRC="$(cd "$SRC" && pwd)"; BUILD="$(cd "$BUILD" && pwd)"; mkdir -p "$OUT"; OUT="
 ARCH="$(dpkg --print-architecture)"; MA="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
 VERSION="$(sed -nE 's/^project\([^)]*VERSION[[:space:]]+([0-9.]+).*/\1/p' "$SRC/CMakeLists.txt" | head -n1)"
 DEBV="${VERSION}-${REV}+deb13"
-MAINT="${DEBFULLNAME:-Nhill} <${DEBEMAIL:-support@nhill.invalid}>"
+MAINT="${DEBFULLNAME:-Nhill Solution} <${DEBEMAIL:-support@nhill.online}>"
 QTLIB="/usr/lib/$MA"; QTPLUG="$QTLIB/qt6/plugins"; QTQML="$QTLIB/qt6/qml"
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/nhill-deb13.XXXXXXXX")"
 trap 'rm -rf --one-file-system -- "$TMP"' EXIT

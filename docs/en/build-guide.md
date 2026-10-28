@@ -30,7 +30,7 @@ package to Debian (or the reverse). The CI builds both sets in clean containers.
 | `--dry-run` | prints the commands without running or installing anything |
 | `--force` | allows overwriting an existing output folder |
 | `--output DIR` | output folder |
-| `--server-url URL` | server address compiled into the applications (HTTPS in production) |
+| `--server-url URL` | **removed in 3.0.0**: refused; no server address is compiled in, the user enters it at first launch (checked, then saved on the device) |
 | `-h`, `--help` | help |
 | code 0 | success |
 | code 1 | failure (build, test, check) |
@@ -65,20 +65,20 @@ audit).
 ```bash
 scripts/build-linux.sh                         # everything + tests
 scripts/build-linux.sh --server-only --jobs 4
-scripts/build-linux.sh --client-only --no-tests --server-url https://api.example.cd
+scripts/build-linux.sh --client-only --no-tests
 ```
 
 ### 3.3 Debian packages
 
 ```bash
-scripts/build-deb.sh --server-url https://api.example.cd
-# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_2.1.0-1_amd64.deb
+scripts/build-deb.sh
+# -> dist/linux/ubuntu-24.04/nhill-{server,business,pos,console}_3.0.0-1_amd64.deb
 #    (or dist/linux/debian-13/ on Debian 13)
 ```
 
 Each package's dependencies are computed by `dpkg-shlibdeps`; `lintian` checks the
 packages. Installation check on a clean machine:
-`sudo apt install ./dist/linux/<distribution>/nhill-business_2.1.0-1_amd64.deb`.
+`sudo apt install ./dist/linux/<distribution>/nhill-business_3.0.0-1_amd64.deb`.
 
 ## 4. Windows
 
@@ -92,7 +92,7 @@ as a **static** library.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
-  -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 -ServerUrl https://api.example.cd `
+  -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 `
   -BuildDir C:\src\nhill\build-windows
 ```
 
@@ -144,8 +144,8 @@ signature, SmartScreen warns the user (see the installation guide).
 ```bash
 QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
-scripts/build-android.sh --server-url https://api.example.cd
-# -> dist/android/nhill-business-2.1.0-arm64-v8a.apk
+scripts/build-android.sh
+# -> dist/android/nhill-business-3.0.0-arm64-v8a.apk
 ```
 
 QtKeychain ("Remember me", Android Keystore) is required. Build it once from its verified
@@ -154,7 +154,7 @@ source (tag 0.17.0, static library), then give its prefix:
 ```bash
 QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a packaging/android/build-qtkeychain-android.sh ~/build/qtkeychain-android
 KEYCHAIN_PREFIX=~/build/qtkeychain-android QT_ANDROID=… QT_HOST=… ANDROID_SDK_ROOT=… ANDROID_NDK_ROOT=… \
-scripts/build-android.sh --server-url https://api.example.cd
+scripts/build-android.sh
 ```
 
 Without `KEYCHAIN_PREFIX` the build stops; `ALLOW_NO_KEYCHAIN=1` produces an APK that never

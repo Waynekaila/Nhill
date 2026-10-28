@@ -39,7 +39,7 @@ Details, limitations and human actions: [validation report](docs/en/validation-r
 scripts/install-deps-linux.sh --with-packaging --with-docs --yes
 scripts/build-linux.sh                                          # build + tests
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build    # throwaway PostgreSQL + API 127.0.0.1:8080
-python3 scripts/dev/seed-demo.py --email demo@example.cd        # DEMO business
+python3 scripts/dev/seed-demo.py --email demo@example.com        # DEMO business
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-business
 ```
 
@@ -74,7 +74,7 @@ documents are kept in French in `docs/*.md` (technical, API, backup, compliance�
 common/      shared C++ library (amounts, codes, validation, portable 128-bit integer)
 server/      C++17 API (http, services, setup, jobs, pdf), country profiles, translations
 client/      Qt 6 applications: src/, qml/Nhill/{Ui,Business,Console,Pos}, i18n/, android/
-db/          migrations 0001–0011 (digests checked)
+db/          migrations 0001–0013 (digests checked)
 tests/       common, server (throwaway PostgreSQL), client, standalone test tool
 packaging/   Debian, Windows (NSIS, MinGW), Android
 scripts/     build, verification, release, QA, i18n, development
@@ -83,7 +83,12 @@ docs/ legal/ marketing/   documentation, legal and commercial files (FR/EN, MD +
 .github/     CI workflows (tests, Linux packages, Windows, Android, documentation and website)
 ```
 
+## Contact
+
+Nhill Solution — head office in Kinshasa (Democratic Republic of the Congo).
+General contact: info@nhill.online · Customer support: support@nhill.online.
+
 ## Licence
 
-Project code: proprietary (licence to be defined by the creators). Dependencies:
+Project code: proprietary, Nhill Solution, all rights reserved. Dependencies:
 `docs/licences-dependances.md` (Qt under LGPL v3: dynamic linking and notice required).

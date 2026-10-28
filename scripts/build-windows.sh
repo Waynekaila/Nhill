@@ -7,7 +7,7 @@
 # Trois façons de construire / three ways to build:
 #   1. Sous Windows (recommandé, vérifié par la CI) :
 #        powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
-#          -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64 [-ServerUrl https://api.exemple.com]
+#          -Source C:\src\nhill -QtDir C:\Qt\6.5.3\msvc2019_64
 #   2. Intégration continue : .github/workflows/windows.yml (runner windows-2022, Qt 6.5.3
 #      MSVC, NSIS) — artefact « nhill-windows-installers ».
 #   3. Depuis Linux (compilation croisée MinGW, ce script) : nécessite Qt pour Windows

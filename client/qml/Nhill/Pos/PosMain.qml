@@ -110,6 +110,7 @@ ApplicationWindow {
             function() { shot("p01-connexion") },
             function() { Api.send("POST", "/api/v1/auth/login", { email: tour.cfg.email, password: tour.cfg.password }, function(r) {
                 if (r.ok) Session.start(r.data, function(ok) { if (ok) win.loadConfig(function() { PosNav.session ? win.openSale() : win.openHome() }) }) }) },
+            function() { if (stack.currentItem && stack.currentItem.tourOpen) { shot("p02-ouverture-caisse"); stack.currentItem.tourOpen() } },
             function() { shot("p02-vente") },
             function() { if (stack.currentItem && stack.currentItem.tourFill) stack.currentItem.tourFill() },
             function() { shot("p03-panier") },

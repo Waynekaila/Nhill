@@ -52,8 +52,9 @@ service : le serveur démarre en **mode installation**. Lire le jeton avec
 construits pour Ubuntu 24.04 ; reconstruire sur la distribution cible pour une autre
 version.
 
-Options CMake : `NHILL_BUILD_SERVER`, `NHILL_BUILD_CLIENT`, `NHILL_BUILD_TESTS`,
-`NHILL_SERVER_URL` (adresse par défaut compilée dans le client — HTTPS en production).
+Options CMake : `NHILL_BUILD_SERVER`, `NHILL_BUILD_CLIENT`, `NHILL_BUILD_TESTS`. Aucune adresse
+de serveur n'est compilée dans le client (3.0.0) : elle est saisie au premier lancement,
+vérifiée et enregistrée sur l'appareil.
 
 Les tests serveur démarrent un PostgreSQL 16 jetable (`initdb`/`pg_ctl` de
 `/usr/lib/postgresql/16/bin`) ; exécutés en root, ils utilisent l'utilisateur `postgres`.
@@ -68,7 +69,7 @@ Secret Service (GNOME Keyring, KWallet).
 
 ```bash
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build   # PostgreSQL :55433 + API 127.0.0.1:8080
-python3 scripts/dev/seed-demo.py --email demo@example.cd        # établissement de DÉMONSTRATION
+python3 scripts/dev/seed-demo.py --email demo@example.com        # établissement de DÉMONSTRATION
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-business
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-pos
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh stop

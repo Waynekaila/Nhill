@@ -215,7 +215,7 @@ declare -A PKGCONFIG_MAP=(
 )
 declare -A FINDPKG_MAP=(
     [OpenSSL]=libssl-dev [nlohmann_json]=nlohmann-json3-dev [Threads]="" [PkgConfig]=pkgconf
-    [GTest]=libgtest-dev [Qt6Keychain]=qtkeychain-qt6-dev
+    [GTest]=libgtest-dev [Qt6Keychain]=qtkeychain-qt6-dev [ZLIB]=zlib1g-dev
 )
 declare -A FINDLIB_MAP=( [hpdf]=libhpdf-dev )
 declare -A QT_COMPONENT_MAP=(

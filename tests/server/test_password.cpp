@@ -601,6 +601,22 @@ TEST(PasswordEmailDelivery, TemplatesAreTranslatedAndFilled) {
         }
 }
 
+TEST(PasswordEmailDelivery, SignatureGivesTheSupportAddressOnlyWhenConfigured) {
+    auto& h = Harness::get();
+    const std::string saved = h.cfg().supportEmail;
+    h.cfg().supportEmail.clear();
+    auto plain = nh::jobs::renderEmail(h.env(), "a@example.com", "fr", "password_changed", json::object());
+    EXPECT_NE(plain.body.find("ne répondez pas"), std::string::npos) << plain.body;
+    EXPECT_EQ(plain.body.find('@'), std::string::npos) << plain.body;
+    h.cfg().supportEmail = "support@nhill.online";
+    for (const char* lang : {"fr", "en"}) {
+        auto m = nh::jobs::renderEmail(h.env(), "a@example.com", lang, "password_changed", json::object());
+        EXPECT_NE(m.body.find("support@nhill.online."), std::string::npos) << lang << m.body;
+        EXPECT_EQ(m.body.find('{'), std::string::npos) << lang << m.body;
+    }
+    h.cfg().supportEmail = saved;
+}
+
 // ------------------------------------------------------------------ configuration
 
 TEST(PasswordEmailConfig, SmtpRequiresTlsExceptOnLoopbackAndNoCredentialsInTheUrl) {
@@ -632,4 +648,19 @@ TEST(PasswordEmailConfig, SmtpRequiresTlsExceptOnLoopbackAndNoCredentialsInTheUr
     for (const char* k : {"NH_SECRET_KEY", "NH_EMAIL_TRANSPORT", "NH_SMTP_FROM", "NH_SMTP_URL", "NH_SMTP_TLS",
                           "NH_SMTP_USERNAME", "NH_SMTP_PASSWORD"})
         ::unsetenv(k);
+}
+
+TEST(PasswordEmailConfig, SupportAddressIsOneValidAddress) {
+    ::setenv("NH_SECRET_KEY", "8f3a0c5e7b9d1f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a", 1);
+    ::setenv("NH_EMAIL_TRANSPORT", "log", 1);
+    ::setenv("NH_SUPPORT_EMAIL", "support@nhill.online", 1);
+    EXPECT_EQ(nh::Config::load(std::nullopt).supportEmail, "support@nhill.online");
+    for (const char* bad : {"support", "@nhill.online", "a@b, c@d", "Support <support@nhill.online>", "a@b\r\nBcc: x@y"}) {
+        ::setenv("NH_SUPPORT_EMAIL", bad, 1);
+        EXPECT_THROW(nh::Config::load(std::nullopt), std::runtime_error) << bad;
+    }
+    ::unsetenv("NH_SUPPORT_EMAIL");
+    EXPECT_TRUE(nh::Config::load(std::nullopt).supportEmail.empty());
+    ::unsetenv("NH_EMAIL_TRANSPORT");
+    ::unsetenv("NH_SECRET_KEY");
 }

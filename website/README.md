@@ -64,13 +64,19 @@ SQLite jetable). Contrôle des pages : `python3 website/tools/check_site.py webs
 
 ### 3.1 Configuration publique (`config/site.json`, téléchargée par chaque visiteur)
 
-| Variable de déploiement | Clé JSON | Exemple | Effet |
+| Variable de déploiement | Clé JSON | Valeur Nhill Solution | Effet |
 |---|---|---|---|
-| `SITE_PUBLIC_BASE_URL` | `publicBaseUrl` | `https://www.exemple.cd` | balises canoniques, hreflang, sitemap |
-| `SITE_API_BASE_URL` | `apiBaseUrl` | `https://www.exemple.cd` | adresse du backend ; vide = les formulaires affichent « non connecté » |
-| `SITE_CONTACT_EMAIL` | `contactEmail` | `contact@exemple.cd` | adresse affichée si les formulaires ne sont pas connectés |
+| `SITE_PUBLIC_BASE_URL` | `publicBaseUrl` | `https://nhill.online` | balises canoniques, hreflang, sitemap, données structurées |
+| `SITE_API_BASE_URL` | `apiBaseUrl` | `https://nhill.online` (backend derrière le même Caddy) | adresse du backend ; vide = les formulaires affichent « non connecté » |
+| `SITE_CONTACT_EMAIL` | `contactEmail` | `info@nhill.online` | pied de page, page contact, formulaires non connectés |
+| `SITE_SUPPORT_EMAIL` | `supportEmail` | `support@nhill.online` | pied de page, page contact (assistance aux clients) |
 
-`python3 website/tools/configure_site.py` écrit ces trois valeurs depuis l'environnement et
+`publicBaseUrl` est l'adresse canonique : avant d'annoncer le site, vérifiez depuis une machine
+reliée à Internet que le domaine, le certificat HTTPS et les enregistrements e-mail sont en place :
+`python3 website/tools/check_live.py --domain nhill.online --require-site --require-mail`
+(lecture seule ; le job CI `domain-check` l'exécute et publie son rapport dans `ci-results/domain-check`).
+
+`python3 website/tools/configure_site.py` écrit ces quatre valeurs depuis l'environnement et
 refuse toute autre clé, toute adresse non `https://` (sauf `localhost`) et tout identifiant
 dans une URL. Après un changement de `SITE_PUBLIC_BASE_URL`, régénérez les pages :
 `python3 website/tools/build_site.py`.
@@ -219,8 +225,8 @@ sudo cp website/backend/deploy/nhill-site*.service website/backend/deploy/nhill-
 sudo systemctl daemon-reload
 sudo systemctl enable --now nhill-site nhill-site-purge.timer
 # site statique
-SITE_PUBLIC_BASE_URL=https://www.exemple.cd SITE_API_BASE_URL=https://www.exemple.cd \
-SITE_CONTACT_EMAIL=contact@exemple.cd python3 website/tools/configure_site.py
+SITE_PUBLIC_BASE_URL=https://nhill.online SITE_API_BASE_URL=https://nhill.online \
+SITE_CONTACT_EMAIL=info@nhill.online SITE_SUPPORT_EMAIL=support@nhill.online python3 website/tools/configure_site.py
 python3 website/tools/build_site.py
 sudo install -d /var/www/nhill-site
 sudo rsync -a --delete --exclude backend --exclude src --exclude tools --exclude 'README*' website/ /var/www/nhill-site/
@@ -238,7 +244,7 @@ sécurité du contenu (CSP) stricte, et refuse les fichiers sources ou de config
 | | Développement | Production |
 |---|---|---|
 | Base | SQLite dans `website/backend/data/` | SQLite `/var/lib/nhill-site/` ou PostgreSQL dédié |
-| Origines | `http://localhost:8000` | `https://www.<domaine>` uniquement |
+| Origines | `http://localhost:8000` | `https://nhill.online` uniquement |
 | `SITE_TRUST_PROXY` | `0` | `1` (derrière Caddy) |
 | TLS | aucun | Caddy (certificat automatique), `sslmode=require` ou `verify-full` |
 | Secrets | variables du terminal | `/etc/nhill-site/site.env` (600, propriétaire `nhill-site`) ou gestionnaire de secrets |

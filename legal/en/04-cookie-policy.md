@@ -14,7 +14,7 @@
 
 ## 1. Current situation
 
-The website [WEBSITE ADDRESS] **sets no cookie** and uses **no tracker**: no analytics, no
+The website nhill.online **sets no cookie** and uses **no tracker**: no analytics, no
 advertising, no embedded social-network button, no font or script loaded from a third-party
 service. Fonts and scripts are served by the website itself.
 
@@ -38,4 +38,4 @@ Before adding an analytics tool or third-party content:
 
 ## 3. Contact
 
-[DPO E-MAIL].
+info@nhill.online.

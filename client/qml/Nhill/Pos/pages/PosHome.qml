@@ -11,6 +11,20 @@ Rectangle {
     color: Theme.bg
     property var selected: null
     readonly property var regs: PosNav.config ? PosNav.config.registers : []
+    function openSession(register, openingFloat) {
+        Api.send("POST", "/api/v1/pos/sessions", { register_id: register.id, opening_float: openingFloat || "0" }, function(r) {
+            if (!r.ok) { PosNav.fail(r); return }
+            PosNav.session = r.data; PosNav.register = register
+            PosNav.window.loadConfig(function() { PosNav.window.openSale() })
+        }, Api.newIdempotencyKey())
+    }
+    // documentation tour hook: first free register, opening float of the demo.
+    function tourOpen() {
+        var free = regs.filter(function(x) { return !x.open_session })[0]
+        if (!free) return
+        root.selected = free
+        openSession(free, "50000")
+    }
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: Theme.s6
@@ -61,11 +75,7 @@ Rectangle {
                 Field { label: qsTr("Opening float (cash in the drawer)"); help: qsTr("Count the cash before opening; it is part of the expected amount at closing.")
                         MoneyField { id: floatField; currency: PosNav.config ? PosNav.config.currency : Session.currency } }
                 FbButton { text: qsTr("Open the cash session"); iconName: "check"; Layout.fillWidth: true
-                           onClicked: Api.send("POST", "/api/v1/pos/sessions", { register_id: root.selected.id, opening_float: floatField.value || "0" }, function(r) {
-                               if (!r.ok) { PosNav.fail(r); return }
-                               PosNav.session = r.data; PosNav.register = root.selected
-                               PosNav.window.loadConfig(function() { PosNav.window.openSale() })
-                           }, Api.newIdempotencyKey()) }
+                           onClicked: root.openSession(root.selected, floatField.value) }
             }
         }
         Item { Layout.fillHeight: true }

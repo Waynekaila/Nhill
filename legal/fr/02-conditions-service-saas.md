@@ -99,8 +99,8 @@ la TVA émet ses factures normalisées par un dispositif homologué. **[À VALID
 
 ## 7. Assistance
 
-Assistance par le menu « Aide et assistance » de l'application et par [E-MAIL / WHATSAPP
-PROFESSIONNEL], aux heures [JOURS ET HORAIRES, fuseau de Kinshasa]. Délais cibles : modèle
+Assistance par le menu « Aide et assistance » de l'application et par e-mail à
+support@nhill.online, aux heures [JOURS ET HORAIRES, fuseau de Kinshasa]. Délais cibles : modèle
 07 s'il est souscrit, sinon meilleurs efforts.
 
 ## 8. Données du Client

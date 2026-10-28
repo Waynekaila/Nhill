@@ -40,7 +40,7 @@ Détails, limites et actions humaines : [rapport de validation](docs/fr/rapport-
 scripts/install-deps-linux.sh --with-packaging --with-docs --yes
 scripts/build-linux.sh                                          # compile + tests
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build    # PostgreSQL jetable + API 127.0.0.1:8080
-python3 scripts/dev/seed-demo.py --email demo@example.cd        # établissement de DÉMONSTRATION
+python3 scripts/dev/seed-demo.py --email demo@example.com        # établissement de DÉMONSTRATION
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-business
 ```
 
@@ -75,7 +75,7 @@ Chaque document Markdown a son PDF généré (`docs/pdf/`, `legal/pdf/`, `market
 common/      bibliothèque C++ partagée (montants, codes, validations, entier 128 bits portable)
 server/      API C++17 (http, services, setup, jobs, pdf), profils pays, traductions
 client/      applications Qt 6 : src/, qml/Nhill/{Ui,Business,Console,Pos}, i18n/, android/
-db/          migrations 0001-0011 (empreintes vérifiées)
+db/          migrations 0001-0013 (empreintes vérifiées)
 tests/       common, server (PostgreSQL jetable), client, outil de test autonome
 packaging/   Debian, Windows (NSIS, MinGW), Android
 scripts/     construction, vérification, livraison, QA, i18n, développement
@@ -84,7 +84,12 @@ docs/ legal/ marketing/   documentation, dossiers juridique et commercial (FR/EN
 .github/     workflows CI (tests, paquets Linux, Windows, Android, documentation et site)
 ```
 
+## Contact
+
+Nhill Solution — siège à Kinshasa (République démocratique du Congo).
+Contact général : info@nhill.online · Assistance aux clients : support@nhill.online.
+
 ## Licence
 
-Code du projet : propriétaire (licence à définir par les créateurs). Dépendances :
+Code du projet : propriétaire, Nhill Solution, tous droits réservés. Dépendances :
 `docs/licences-dependances.md` (Qt en LGPL v3 : liaison dynamique et notice obligatoires).

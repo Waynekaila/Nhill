@@ -37,7 +37,7 @@
 > ☐ E-mail : ____________________  ☐ WhatsApp : ____________________  ☐ SMS
 >
 > Vous pouvez retirer votre accord à tout moment : répondez « STOP » ou écrivez à
-> [E-MAIL DPO]. Vos coordonnées ne sont pas transmises à des tiers. Détails : politique de
+> info@nhill.online. Vos coordonnées ne sont pas transmises à des tiers. Détails : politique de
 > confidentialité, [ADRESSE].
 >
 > Nom : ____________ Organisation : ____________ Date : ________ Signature : ________

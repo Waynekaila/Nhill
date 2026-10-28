@@ -63,13 +63,19 @@ throwaway SQLite database). Page checks: `python3 website/tools/check_site.py we
 
 ### 3.1 Public configuration (`config/site.json`, downloaded by every visitor)
 
-| Deployment variable | JSON key | Example | Effect |
+| Deployment variable | JSON key | Nhill Solution value | Effect |
 |---|---|---|---|
-| `SITE_PUBLIC_BASE_URL` | `publicBaseUrl` | `https://www.example.cd` | canonical tags, hreflang, sitemap |
-| `SITE_API_BASE_URL` | `apiBaseUrl` | `https://www.example.cd` | backend address; empty = forms say "not connected" |
-| `SITE_CONTACT_EMAIL` | `contactEmail` | `contact@example.cd` | address shown when forms are not connected |
+| `SITE_PUBLIC_BASE_URL` | `publicBaseUrl` | `https://nhill.online` | canonical tags, hreflang, sitemap, structured data |
+| `SITE_API_BASE_URL` | `apiBaseUrl` | `https://nhill.online` (backend behind the same Caddy) | backend address; empty = forms say "not connected" |
+| `SITE_CONTACT_EMAIL` | `contactEmail` | `info@nhill.online` | footer, contact page, forms not connected |
+| `SITE_SUPPORT_EMAIL` | `supportEmail` | `support@nhill.online` | footer, contact page (customer support) |
 
-`python3 website/tools/configure_site.py` writes these three values from the environment
+`publicBaseUrl` is the canonical address: before announcing the site, check from a machine
+connected to the Internet that the domain, the HTTPS certificate and the e-mail records are in place:
+`python3 website/tools/check_live.py --domain nhill.online --require-site --require-mail`
+(read-only; the CI job `domain-check` runs it and publishes its report in `ci-results/domain-check`).
+
+`python3 website/tools/configure_site.py` writes these four values from the environment
 and refuses any other key, any non-`https://` address (except `localhost`) and any
 credentials inside a URL. After changing `SITE_PUBLIC_BASE_URL`, regenerate the pages:
 `python3 website/tools/build_site.py`.
@@ -216,8 +222,8 @@ sudo cp website/backend/deploy/nhill-site*.service website/backend/deploy/nhill-
 sudo systemctl daemon-reload
 sudo systemctl enable --now nhill-site nhill-site-purge.timer
 # static website
-SITE_PUBLIC_BASE_URL=https://www.example.cd SITE_API_BASE_URL=https://www.example.cd \
-SITE_CONTACT_EMAIL=contact@example.cd python3 website/tools/configure_site.py
+SITE_PUBLIC_BASE_URL=https://nhill.online SITE_API_BASE_URL=https://nhill.online \
+SITE_CONTACT_EMAIL=info@nhill.online SITE_SUPPORT_EMAIL=support@nhill.online python3 website/tools/configure_site.py
 python3 website/tools/build_site.py
 sudo install -d /var/www/nhill-site
 sudo rsync -a --delete --exclude backend --exclude src --exclude tools --exclude 'README*' website/ /var/www/nhill-site/
@@ -235,7 +241,7 @@ Content Security Policy, and refuses source or configuration files.
 | | Development | Production |
 |---|---|---|
 | Database | SQLite in `website/backend/data/` | SQLite in `/var/lib/nhill-site/` or dedicated PostgreSQL |
-| Origins | `http://localhost:8000` | `https://www.<domain>` only |
+| Origins | `http://localhost:8000` | `https://nhill.online` only |
 | `SITE_TRUST_PROXY` | `0` | `1` (behind Caddy) |
 | TLS | none | Caddy (automatic certificate), `sslmode=require` or `verify-full` |
 | Secrets | terminal variables | `/etc/nhill-site/site.env` (600, owner `nhill-site`) or a secrets manager |

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Compilation croisée des applications Windows depuis Linux (après build-qt-mingw.sh) :
 # nhill-business.exe, nhill-console.exe, nhill-pos.exe + un installateur NSIS chacun.
-#   ./build-windows-cross.sh /chemin/vers/nhill [/opt/nhill-win/qt6] [https://api.exemple.com]
+#   ./build-windows-cross.sh /chemin/vers/nhill [/opt/nhill-win/qt6]
 # Prérequis : g++-mingw-w64-x86-64-posix, cmake, ninja, nsis (makensis), Qt hôte 6.4.2
 # (paquets Ubuntu 24.04) et Qt 6.4.2 pour Windows construit par build-qt-mingw.sh.
 set -Eeuo pipefail

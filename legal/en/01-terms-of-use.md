@@ -16,16 +16,16 @@
 
 ## 1. Publisher
 
-The website [WEBSITE ADDRESS] and the Nhill Business, Nhill POS and Nhill Console
+The website nhill.online and the Nhill Business, Nhill POS and Nhill Console
 applications are published by [COMPANY NAME], [LEGAL FORM] with a capital of [CAPITAL],
 registered with the [CITY] RCCM under No. [RCCM], national identification [NAT. ID], tax
-number [NIF], registered office [ADDRESS] (the "Publisher"). Contact: [E-MAIL], [PHONE].
+number [NIF], registered office [ADDRESS] (the "Publisher"). Contact: info@nhill.online; customer support: support@nhill.online.
 
 ## 2. Purpose and acceptance
 
 These terms set the conditions for accessing and using the Nhill website and applications
 (the "Service"). Creating an account, joining a business or using the Service means
-accepting these terms in their current version, available at any time at [TERMS ADDRESS].
+accepting these terms in their current version, available at any time on the nhill.online website ("Terms of use" page).
 
 ## 3. Access to the Service
 
@@ -111,4 +111,4 @@ arbitration]**.
 
 ## 12. Contact
 
-[CONTACT E-MAIL] — [POSTAL ADDRESS].
+info@nhill.online.

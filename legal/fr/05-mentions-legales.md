@@ -17,14 +17,10 @@
 
 | | |
 |---|---|
-| Raison sociale | [RAISON SOCIALE] |
-| Forme juridique et capital | [FORME JURIDIQUE] au capital de [CAPITAL] [DEVISE] |
-| Immatriculation | RCCM [VILLE] n° [RCCM] |
-| Identification nationale | [ID. NAT.] |
-| Numéro d'impôt | [NIF] |
-| Siège | [ADRESSE COMPLÈTE] |
-| Téléphone | [TÉLÉPHONE] |
-| E-mail | [E-MAIL] |
+| Nom commercial | Nhill Solution |
+| Siège | Kinshasa, République démocratique du Congo |
+| E-mail | info@nhill.online |
+| Assistance aux clients | support@nhill.online |
 | Directeur de la publication | [NOM, FONCTION] |
 | Autorisation / déclaration d'activité numérique | [RÉFÉRENCE, si applicable — voir H-07] |
 
@@ -33,7 +29,7 @@
 | | |
 |---|---|
 | Site vitrine | [HÉBERGEUR], [ADRESSE], [PAYS], [CONTACT] |
-| Service Nhill (API et base de données) | [HÉBERGEUR], [PAYS / RÉGION] |
+| Service Nhill (API et base de données) | Hostinger International Ltd, 61 Lordou Vironos str., 6023 Larnaca, Chypre — serveur privé virtuel situé en France (Union européenne) |
 
 ## Propriété intellectuelle
 
@@ -49,4 +45,4 @@ aucun cookie (voir la [politique cookies](04-politique-cookies.md)).
 
 ## Signalement
 
-Contenu illicite ou vulnérabilité de sécurité : [E-MAIL DE SIGNALEMENT].
+Contenu illicite ou vulnérabilité de sécurité : support@nhill.online (objet « Signalement »).

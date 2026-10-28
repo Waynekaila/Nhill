@@ -31,7 +31,7 @@
 | Délai de première réponse — incident gênant | [1] jour ouvré |
 | Délai de première réponse — question | [2] jours ouvrés |
 | Heures ouvrées | [lundi-samedi, 8 h - 18 h, heure de Kinshasa] |
-| Canaux | menu « Aide et assistance », [E-MAIL], [WHATSAPP PROFESSIONNEL] |
+| Canaux | menu « Aide et assistance » des applications, support@nhill.online |
 | Sauvegardes | quotidiennes, chiffrées, conservées [30] jours ; perte maximale de données visée : [24] heures |
 
 ## 3. Crédits de service

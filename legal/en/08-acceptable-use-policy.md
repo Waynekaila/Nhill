@@ -31,7 +31,7 @@ Nhill must not be used to:
 
 ## Vulnerability reporting
 
-Anyone who finds a flaw reports it to [SECURITY E-MAIL] without exploiting or disclosing it
+Anyone who finds a flaw reports it to support@nhill.online (subject "Security") without exploiting or disclosing it
 before it is fixed. The Publisher undertakes to [acknowledge receipt within 72 hours].
 
 ## Measures

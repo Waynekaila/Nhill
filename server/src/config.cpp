@@ -143,6 +143,13 @@ Config Config::load(const std::optional<std::string>& file) {
     }
     if (c.emailTransport == "smtp") validateSmtp(c);
     c.publicBaseUrl = get("NH_PUBLIC_BASE_URL");
+    c.supportEmail = get("NH_SUPPORT_EMAIL");
+    if (!c.supportEmail.empty()) {
+        const auto at = c.supportEmail.find('@');
+        if (at == std::string::npos || at == 0 || at + 1 >= c.supportEmail.size() || c.supportEmail.size() > 254 ||
+            c.supportEmail.find_first_of(" \t\r\n<>,;\"") != std::string::npos)
+            throw std::runtime_error("NH_SUPPORT_EMAIL must be one e-mail address, for example: support@example.com");
+    }
     while (!c.publicBaseUrl.empty() && c.publicBaseUrl.back() == '/') c.publicBaseUrl.pop_back();
     c.argon2.opsLimit = static_cast<unsigned long long>(getInt("NH_ARGON2_OPS", 3));
     c.argon2.memLimitBytes = static_cast<size_t>(getInt("NH_ARGON2_MEM_KIB", 65536)) * 1024;

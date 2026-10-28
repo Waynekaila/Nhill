@@ -11,6 +11,18 @@ invented**. Detailed analysis and sources:
 > Nothing in this repository is legal advice. The templates must be reviewed by a lawyer
 > admitted to a DRC bar and, for tax matters, by a tax adviser.
 
+## 0. Values set by Nhill Solution (28 October 2026)
+
+| Item | Value | Note |
+|---|---|---|
+| Trade name | Nhill Solution | no legal form, registration or certification is stated until it is confirmed |
+| Head office | Kinshasa, Democratic Republic of the Congo | no postal address published |
+| Official domain | `nhill.online` | public address `https://nhill.online`, to check before announcing it: `website/tools/check_live.py` |
+| General e-mail | `info@nhill.online` | contact, data protection, marketing |
+| Support e-mail | `support@nhill.online` | customer support, security or unlawful-content reports |
+| Phone | none published | — |
+| Service hosting (API and database) | Hostinger International Ltd (Larnaca, Cyprus), virtual private server in France (EU) | Hostinger's contracting entity for a customer outside the UK and outside groups 1 and 2 of its terms |
+
 ## 1. Operator identity (field → where it appears)
 
 | Field | Format example | Templates | Website | Application |
@@ -21,10 +33,10 @@ invented**. Detailed analysis and sources:
 | `[NAT. ID]` | national identification | 01, 02, 05 | `legal-notice` | — |
 | `[NIF]` | tax number | 01, 02, 05 | `legal-notice` | subscription invoices |
 | `[ADDRESS]` | full registered office | all | `legal-notice`, `contact` | — |
-| `[PHONE]`, `[E-MAIL]` | business contact | 01, 05 | `contact`, footer (`SITE_CONTACT_EMAIL`) | Help and support |
+| ~~`[PHONE]`~~, `[E-MAIL]` | **set**: `info@nhill.online` (no phone) | 01, 05 | `contact`, footer (`SITE_CONTACT_EMAIL`, `SITE_SUPPORT_EMAIL`) | Help and support (`support@nhill.online`) |
 | `[NAME, TITLE]` | legal representative / publication director | 02, 05, 06, 09–11 | `legal-notice` | — |
-| `[DPO E-MAIL]`, `[DPO NAME]` | data protection contact | 03, 04, 14, 16, 18, 19 | `privacy` | — |
-| `[SECURITY E-MAIL]` | vulnerability reporting (e.g. `security@…`) | 05, 08, 13 | `legal-notice`, future `/.well-known/security.txt` | — |
+| `[DPO E-MAIL]`, `[DPO NAME]` | **e-mail set**: `info@nhill.online`; no officer appointed to date | 03, 04, 14, 16, 18, 19 | `privacy` | — |
+| `[SECURITY E-MAIL]` | **set**: `support@nhill.online` (subject "Security") | 05, 08, 13 | `legal-notice`, future `/.well-known/security.txt` | — |
 
 ## 2. Hosting and transfers
 

@@ -54,4 +54,4 @@ template 14).
 
 ## Reporting a flaw
 
-[SECURITY E-MAIL] — please do not exploit or disclose the flaw before it is fixed.
+support@nhill.online (subject "Security") — please do not exploit or disclose the flaw before it is fixed.

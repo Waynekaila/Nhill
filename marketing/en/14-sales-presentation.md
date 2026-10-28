@@ -73,8 +73,8 @@ export of your data at the end.
 
 ## Slide 10 — Next step
 
-Demo with your products, now or on [DATE] · apply: [WEBSITE]/pilot-programme ·
-[PHONE / WHATSAPP] · [E-MAIL]
+Demo with your products, now or on [DATE] · apply: nhill.online ·
+info@nhill.online
 
 ---
 

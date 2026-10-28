@@ -95,8 +95,8 @@ invoices with a certified device. **[TO VALIDATE: V-12.]**
 
 ## 7. Support
 
-Support through the "Help and support" menu of the application and [E-MAIL / BUSINESS
-WHATSAPP], during [DAYS AND HOURS, Kinshasa time]. Target times: template 07 if taken,
+Support through the "Help and support" menu of the application and by e-mail at
+support@nhill.online, during [DAYS AND HOURS, Kinshasa time]. Target times: template 07 if taken,
 otherwise best efforts.
 
 ## 8. Customer data

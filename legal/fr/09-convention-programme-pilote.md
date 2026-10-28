@@ -40,7 +40,7 @@ pendant [90] jours puis sont supprimées.
 
 3.3 L'Éditeur fournit : une session de mise en route de [2] heures (sur place à Kinshasa ou
 à distance), l'import initial des produits à partir d'un fichier fourni par le Pilote, une
-assistance prioritaire par [WHATSAPP PROFESSIONNEL / E-MAIL] aux heures ouvrées.
+assistance prioritaire par e-mail (support@nhill.online) et par le menu « Aide et assistance » aux heures ouvrées.
 
 3.4 Le Pilote s'engage à : utiliser Nhill pour [la vente au comptoir / la facturation / le
 stock] pendant la durée du pilote ; désigner un référent ; participer à [3] points

@@ -74,8 +74,8 @@ chaque semaine, export de vos données à la fin.
 
 ## Diapositive 10 — Prochaine étape
 
-Démonstration sur vos produits, maintenant ou [DATE] · candidature : [SITE]/programme-pilote ·
-[TÉLÉPHONE / WHATSAPP] · [E-MAIL]
+Démonstration sur vos produits, maintenant ou [DATE] · candidature : nhill.online ·
+info@nhill.online
 
 ---
 

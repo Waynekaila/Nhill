@@ -17,7 +17,7 @@
 ## 1. Qui est responsable
 
 [RAISON SOCIALE], [FORME JURIDIQUE], RCCM [RCCM], siège [ADRESSE] (« Nhill », « nous »).
-Contact protection des données : [E-MAIL DPO]. Délégué à la protection des données :
+Contact protection des données : info@nhill.online. Délégué à la protection des données :
 [NOM ou « non désigné — motif »] **[À VALIDER : V-13]**.
 
 Cette politique concerne : les visiteurs du site, les personnes qui remplissent un
@@ -70,7 +70,7 @@ l'autorité et les personnes concernées dans les délais légaux (modèle 14).
 
 Vous pouvez demander l'accès à vos données, leur rectification, leur effacement, vous
 opposer à un traitement fondé sur l'intérêt légitime, retirer à tout moment votre
-consentement à la prospection (lien de désinscription ou message à [E-MAIL DPO]).
+consentement à la prospection (lien de désinscription ou message à info@nhill.online).
 Formulaire : modèle 19. Réponse sous [30] jours. Une pièce justificative peut être demandée
 en cas de doute sur l'identité.
 

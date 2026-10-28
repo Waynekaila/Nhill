@@ -56,4 +56,4 @@ les mesures prises (procédure : modèle 14).
 
 ## Signaler une faille
 
-[E-MAIL DE SÉCURITÉ] — merci de ne pas exploiter ni divulguer la faille avant correction.
+support@nhill.online (objet « Sécurité ») — merci de ne pas exploiter ni divulguer la faille avant correction.

@@ -9,7 +9,7 @@ principal, précédé d'un en-tête JSON dans un commentaire :
 Le gabarit commun (en-tête, navigation, pied de page, balises SEO, hreflang) est ajouté
 ici, pour que les 24 pages restent cohérentes. Résultat : HTML statique, sans framework.
 
-  python3 website/tools/build_site.py [--base-url https://www.exemple.cd] [--check]
+  python3 website/tools/build_site.py [--base-url https://nhill.online] [--check]
 
 --check : échoue si les pages générées ne correspondent pas aux sources (CI).
 L'adresse publique vient de --base-url, sinon de SITE_PUBLIC_BASE_URL, sinon de
@@ -42,7 +42,8 @@ FOOT = {
            "tagline": "Le logiciel de gestion et de caisse des indépendants, des commerces et des PME, en français et en anglais.",
            "fine": "Nhill, logiciel de gestion commerciale et de caisse. Les captures d'écran montrent l'application "
                    "réelle, avec des données de démonstration.",
-           "skip": "Aller au contenu", "menu": "Menu", "lang": "English", "home": "Accueil"},
+           "skip": "Aller au contenu", "menu": "Menu", "lang": "English", "home": "Accueil",
+           "contact": "Écrire à l'équipe", "support": "Assistance aux clients"},
     "en": {"product": "Product", "start": "Get started", "legal": "Legal information",
            "start_links": [("contact", "#demonstration", "Book a demo"), ("free-trial", "", "Free assisted trial"),
                            ("contact", "?topic=plan#question", "Discuss a plan"), ("contact", "#question", "Contact the team")],
@@ -51,7 +52,8 @@ FOOT = {
            "tagline": "Business management and point of sale for freelancers, shops and SMEs, in English and French.",
            "fine": "Nhill, business management and point-of-sale software. Screenshots show the real application "
                    "with demo data.",
-           "skip": "Skip to content", "menu": "Menu", "lang": "Français", "home": "Home"},
+           "skip": "Skip to content", "menu": "Menu", "lang": "Français", "home": "Home",
+           "contact": "Write to the team", "support": "Customer support"},
 }
 
 
@@ -102,7 +104,8 @@ def href(from_path, to_path):
     return os.path.relpath(to_path, os.path.dirname(from_path) or ".").replace(os.sep, "/")
 
 
-def render(lang, slug, meta, body, base_url):
+def render(lang, slug, meta, body, base_url, contacts=None):
+    contacts = contacts or {}
     path = out_path(lang, slug)
     root = rel_root(path)
     if slug == "404":
@@ -137,6 +140,10 @@ def render(lang, slug, meta, body, base_url):
     foot_start = "".join(f'<li><a href="{L(out_path(lang, pg))}{suffix}">{html.escape(label)}</a></li>'
                          for pg, suffix, label in f["start_links"])
     legal = "".join(f'<li><a href="{L(out_path(lang, f[k][0]))}">{html.escape(f[k][1])}</a></li>' for k in ("privacy", "terms", "notice"))
+    colon = "\u202f: " if lang == "fr" else ": "
+    foot_contact = "".join(
+        f'<p class="foot-contact">{html.escape(f[k])}{colon}<a href="mailto:{html.escape(contacts[k])}">{html.escape(contacts[k])}</a></p>'
+        for k in ("contact", "support") if contacts.get(k))
     title = meta["title"] if slug == "index" else f'{meta["title"]} — Nhill'
     robots = '<meta name="robots" content="noindex">' if meta.get("noindex") else ""
     ld = []
@@ -150,7 +157,17 @@ def render(lang, slug, meta, body, base_url):
         version = product_version()
         if version:
             app["softwareVersion"] = version
+        org = {"@context": "https://schema.org", "@type": "Organization", "name": "Nhill Solution", "url": base_url + "/",
+               "logo": f"{base_url}/assets/images/nhill-mark.svg",
+               "address": {"@type": "PostalAddress", "addressLocality": "Kinshasa", "addressCountry": "CD"}}
+        if contacts.get("contact"):
+            org["email"] = contacts["contact"]
+        if contacts.get("support"):
+            org["contactPoint"] = [{"@type": "ContactPoint", "contactType": "customer support",
+                                    "email": contacts["support"], "availableLanguage": ["fr", "en"]}]
+        app["publisher"] = {"@type": "Organization", "name": "Nhill Solution"}
         ld.append(app)
+        ld.append(org)
     faq = faq_items(body) if meta.get("faq_schema") else []
     if faq:
         ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faq})
@@ -203,7 +220,7 @@ def render(lang, slug, meta, body, base_url):
 <footer class="site-foot">
   <div class="wrap">
     <div class="cols">
-      <div class="foot-brand"><p class="foot-name"><img src="{root}/assets/images/nhill-mark-reverse.svg" alt="" width="26" height="26">Nhill</p><p>{html.escape(meta.get('footer_tagline') or f['tagline'])}</p></div>
+      <div class="foot-brand"><p class="foot-name"><img src="{root}/assets/images/nhill-mark-reverse.svg" alt="" width="26" height="26">Nhill</p><p>{html.escape(meta.get('footer_tagline') or f['tagline'])}</p>{foot_contact}</div>
       <div><h2>{f['product']}</h2><ul>{foot_product}</ul></div>
       <div><h2>{f['start']}</h2><ul>{foot_start}</ul></div>
       <div><h2>{f['legal']}</h2><ul>{legal}</ul></div>
@@ -234,6 +251,11 @@ def main():
     base = (a.base_url or os.environ.get("SITE_PUBLIC_BASE_URL") or cfg.get("publicBaseUrl") or "").rstrip("/")
     if not base:
         raise SystemExit("adresse publique du site inconnue : --base-url, SITE_PUBLIC_BASE_URL ou config/site.json")
+    # Publisher addresses shown in the footer of every page and in the structured data.
+    contacts = {"contact": (cfg.get("contactEmail") or "").strip(), "support": (cfg.get("supportEmail") or "").strip()}
+    for k, v in contacts.items():
+        if v and not re.fullmatch(r"[^@\s<>\"]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", v):
+            raise SystemExit(f"adresse e-mail invalide dans config/site.json ({k}) : {v!r}")
     outputs = {}
     noindex = set()
     for lang in ("fr", "en"):
@@ -242,7 +264,7 @@ def main():
             if fn.endswith(".html"):
                 meta, body = parse(os.path.join(d, fn))
                 slug = fn[:-5]
-                outputs[out_path(lang, slug)] = render(lang, slug, meta, body, base)
+                outputs[out_path(lang, slug)] = render(lang, slug, meta, body, base, contacts)
                 if meta.get("noindex"):
                     noindex.add(out_path(lang, slug))
     # The sitemap lists only indexable pages (never a noindex page nor the 404 page).

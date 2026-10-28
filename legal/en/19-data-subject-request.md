@@ -15,7 +15,7 @@
 
 ---
 
-**Send the request to**: [DPO E-MAIL] or [POSTAL ADDRESS]
+**Send the request to**: info@nhill.online
 
 **1. You**
 

@@ -44,6 +44,7 @@ tests only). Every key can also be given as an environment variable. After a cha
 | `NH_SMTP_FROM` | — | sender, for example `Nhill <no-reply@example.com>` (an address the relay accepts: SPF/DKIM of the domain) |
 | `NH_SMTP_TLS` | `required` | `off` is accepted **only** for a local relay (`127.0.0.1`, `::1`); refused at start-up otherwise |
 | `NH_SMTP_CA_FILE` | — | certificate authorities to use instead of the system ones (internal relay) |
+| `NH_SUPPORT_EMAIL` | — | support address given in the signature of automatic e-mails (Nhill Solution platform: `support@nhill.online`); without it, the signature asks not to reply |
 | `NH_SMTP_TIMEOUT_SECONDS` | `20` | relay connection timeout |
 | `NH_PROFILE_DIR`, `NH_I18N_DIR`, `NH_FONT_DIR`, `NH_MIGRATIONS_DIR` | `/usr/share/nhill/…` | data files installed by the package |
 | `NH_SETUP_DB_PASSWORD` | — | only for command-line `nhill-server setup`; never kept |
@@ -65,18 +66,17 @@ by the REST API.
 
 | Option | Default | Effect |
 |---|---|---|
-| `NHILL_SERVER_URL` | `http://127.0.0.1:8080` | server address compiled into the applications — **HTTPS in production** |
 | `NHILL_BUILD_SERVER` | `ON` on Linux | server (Linux only) |
 | `NHILL_BUILD_CLIENT` / `NHILL_BUILD_TESTS` | `ON` | applications / tests |
 | `NHILL_WARNINGS_AS_ERRORS` | `OFF` | warnings as errors (CI) |
 
-The build scripts accept `--server-url https://api.<domain>`.
+No server address is compiled into the applications (3.0.0): Nhill Business asks for it when a business is created, Nhill Console and Nhill POS at their first sign-in. The address entered is checked (`GET /api/v1/meta`, HTTPS required except on `localhost`), saved on the device and can be changed later.
 
 ### 2.2 Environment variables (desktop)
 
 | Variable | Values | Effect |
 |---|---|---|
-| `NHILL_SERVER` | URL | server to use instead of the compiled address (trials, staging) |
+| `NHILL_SERVER` | URL | server to use instead of the address saved on the device (trials, staging) |
 | `NHILL_LANG` | `fr`, `en` | interface language at start-up |
 | `NHILL_THEME` | `light`, `dark`, `system` | theme at start-up |
 | `QT_SCALE_FACTOR` | e.g. `1.25` | global enlargement (standard Qt variable) |

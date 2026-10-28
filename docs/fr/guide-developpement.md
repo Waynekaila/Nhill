@@ -57,7 +57,7 @@ Invariants à ne jamais rompre :
 scripts/install-deps-linux.sh --with-packaging --with-docs --yes   # Debian 13 / Ubuntu 24.04
 scripts/build-linux.sh                                             # compile + tests
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh start build       # PostgreSQL jetable + API 127.0.0.1:8080
-python3 scripts/dev/seed-demo.py --email demo@example.cd           # données de DÉMONSTRATION
+python3 scripts/dev/seed-demo.py --email demo@example.com           # données de DÉMONSTRATION
 NHILL_SERVER=http://127.0.0.1:8080 build/client/nhill-business
 NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh stop
 ```

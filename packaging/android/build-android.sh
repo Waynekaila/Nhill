@@ -19,7 +19,7 @@
 # Utilisation :
 #   QT_ANDROID=~/Qt/6.5.3/android_arm64_v8a QT_HOST=~/Qt/6.5.3/gcc_64 \
 #   ANDROID_SDK_ROOT=~/Android/Sdk ANDROID_NDK_ROOT=~/Android/Sdk/ndk/25.2.9519653 \
-#   ./build-android.sh /chemin/vers/nhill [https://api.exemple.com]
+#   ./build-android.sh /chemin/vers/nhill
 # Signature de publication (facultative) : KEYSTORE=… KEYSTORE_ALIAS=… KEYSTORE_PASS=…
 # Sans keystore, l'APK est signé avec la clé de débogage : installable (adb install),
 # mais pas publiable sur le Play Store.

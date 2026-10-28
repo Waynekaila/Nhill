@@ -56,6 +56,10 @@ public:
 // Utilities for QML (window capture for the documentation tour, clipboard).
 class Tools : public QObject {
     Q_OBJECT
+    // Publisher contacts (common/include/nhill/version.hpp), shown on help screens.
+    Q_PROPERTY(QString publisherName READ publisherName CONSTANT)
+    Q_PROPERTY(QString contactEmail READ contactEmail CONSTANT)
+    Q_PROPERTY(QString supportEmail READ supportEmail CONSTANT)
 public:
     explicit Tools(QObject* parent = nullptr) : QObject(parent) {}
     Q_INVOKABLE bool grabWindow(QObject* window, const QString& path) const;
@@ -70,6 +74,9 @@ public:
     Q_INVOKABLE QString countryCurrency(const QString& code) const;
     // Country of this device's regional settings (ISO code), empty when unknown.
     Q_INVOKABLE QString systemCountry() const;
+    QString publisherName() const;
+    QString contactEmail() const;
+    QString supportEmail() const;
 };
 
 // Owns the core objects and exposes them to QML as singletons in "Nhill.Core".

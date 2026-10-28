@@ -35,7 +35,7 @@
 >
 > ☐ E-mail: ____________________  ☐ WhatsApp: ____________________  ☐ SMS
 >
-> You can withdraw your agreement at any time: reply "STOP" or write to [DPO E-MAIL]. Your
+> You can withdraw your agreement at any time: reply "STOP" or write to info@nhill.online. Your
 > details are not passed to third parties. Details: privacy policy, [ADDRESS].
 >
 > Name: ____________ Organisation: ____________ Date: ________ Signature: ________

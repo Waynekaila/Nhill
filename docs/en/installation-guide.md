@@ -82,9 +82,11 @@ Nhill POS and Nhill Console are not offered on Android (desktop applications).
 
 ### 3.4 First start
 
-The server address is compiled into the application (`NHILL_SERVER_URL`). To try another
-server, set the `NHILL_SERVER` environment variable (desktop only). Then: user guide,
-Part A § 1.
+No server address is compiled into the application. Nhill Business asks for it when a
+business is created; Nhill Console and Nhill POS ask for it at their first sign-in. Enter the
+address given by your provider (HTTPS): it is checked, then saved on the device, and can be
+changed in the settings. For a one-off trial on another server, the `NHILL_SERVER`
+environment variable replaces it (desktop only). Then: user guide, Part A § 1.
 
 ## 4. Server (production)
 

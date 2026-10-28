@@ -31,7 +31,7 @@
 | First response — inconvenient incident | [1] business day |
 | First response — question | [2] business days |
 | Business hours | [Monday–Saturday, 8 am – 6 pm, Kinshasa time] |
-| Channels | "Help and support" menu, [E-MAIL], [BUSINESS WHATSAPP] |
+| Channels | "Help and support" menu of the applications, support@nhill.online |
 | Backups | daily, encrypted, kept [30] days; targeted maximum data loss: [24] hours |
 
 ## 3. Service credits

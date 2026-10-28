@@ -94,3 +94,30 @@ jobs:
           JOB_STATUS: ${{ job.status }}
           MATRIX_NAME: ''
         run: .github/scripts/publish-results.sh ci-results/site-backend-postgresql pg-report
+  domain-check:
+    # Vérification réelle (lecture seule) du domaine public depuis Internet : DNS, certificat
+    # HTTPS, redirections, site déployé, enregistrements MX/SPF/DMARC. Informatif : un domaine
+    # pas encore configuré ne bloque pas la CI, mais le rapport publié dit exactement ce qui manque.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Contrôle de nhill.online
+        id: live
+        continue-on-error: true
+        run: |
+          mkdir -p domain-report
+          python3 website/tools/check_live.py --domain nhill.online --require-site --require-mail \
+            --json domain-report/nhill.online.json --markdown domain-report/nhill.online.md \
+            2>&1 | tee domain-report/check-live.log
+      - name: Rapport
+        if: always()
+        shell: bash
+        run: echo "${{ steps.live.outcome }}" > domain-report/outcome.txt
+      - name: Publication des résultats (branche ci-results/domain-check)
+        if: ${{ !cancelled() }}
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JOB_STATUS: ${{ steps.live.outcome }}
+          MATRIX_NAME: ''
+        run: .github/scripts/publish-results.sh ci-results/domain-check domain-report

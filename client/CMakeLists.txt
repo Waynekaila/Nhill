@@ -59,8 +59,22 @@ if(NOT ANDROID)
 endif()
 
 # ---------------------------------------------------------------- executables
+# Windows version resource of an application (file properties): generated so that the
+# version and the publisher follow project(VERSION); ignored on other platforms.
+function(nhill_app_rc out id name)
+    string(REPLACE "." "," NHILL_RC_VERSION "${PROJECT_VERSION}.0")
+    set(NHILL_RC_ID "${id}")
+    set(NHILL_RC_NAME "${name}")
+    set(NHILL_RC_ICON "${PROJECT_SOURCE_DIR}/assets/icons/${id}.ico")
+    configure_file(${PROJECT_SOURCE_DIR}/client/resources/nhill-app.rc.in ${CMAKE_CURRENT_BINARY_DIR}/${id}.rc @ONLY)
+    set(${out} ${CMAKE_CURRENT_BINARY_DIR}/${id}.rc PARENT_SCOPE)
+endfunction()
+nhill_app_rc(NHILL_BUSINESS_RC nhill-business "Nhill Business")
+nhill_app_rc(NHILL_CONSOLE_RC nhill-console "Nhill Console")
+nhill_app_rc(NHILL_POS_RC nhill-pos "Nhill POS")
+
 # Nhill Business — establishments and entrepreneurs (Windows, Linux, Android)
-qt_add_executable(nhill-business WIN32 MACOSX_BUNDLE src/business/main.cpp ${PROJECT_SOURCE_DIR}/client/resources/nhill-business.rc)
+qt_add_executable(nhill-business WIN32 MACOSX_BUNDLE src/business/main.cpp ${NHILL_BUSINESS_RC})
 target_link_libraries(nhill-business PRIVATE nhill_client_core nhill_uiplugin nhill_businessplugin Qt6::QuickControls2 Qt6::Svg)
 set_target_properties(nhill-business PROPERTIES
     QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
@@ -71,13 +85,13 @@ set_target_properties(nhill-business PROPERTIES
 
 # Nhill Console — creators only (Windows, Linux; never built for Android)
 if(NOT ANDROID)
-    qt_add_executable(nhill-console WIN32 src/console/main.cpp ${PROJECT_SOURCE_DIR}/client/resources/nhill-console.rc)
+    qt_add_executable(nhill-console WIN32 src/console/main.cpp ${NHILL_CONSOLE_RC})
     target_link_libraries(nhill-console PRIVATE nhill_client_core nhill_uiplugin nhill_consoleplugin Qt6::QuickControls2 Qt6::Svg)
 endif()
 
 # Nhill POS — point of sale of an establishment (Windows, Linux)
 if(NOT ANDROID)
-    qt_add_executable(nhill-pos WIN32 src/pos/main.cpp ${PROJECT_SOURCE_DIR}/client/resources/nhill-pos.rc)
+    qt_add_executable(nhill-pos WIN32 src/pos/main.cpp ${NHILL_POS_RC})
     target_link_libraries(nhill-pos PRIVATE nhill_client_core nhill_uiplugin nhill_posplugin Qt6::QuickControls2 Qt6::Svg)
 endif()
 

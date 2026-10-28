@@ -66,7 +66,8 @@ VIProductVersion "${APP_VERSION}.0"
 VIAddVersionKey /LANG=${LANG_FRENCH} "ProductName" "${APP_NAME}"
 VIAddVersionKey /LANG=${LANG_FRENCH} "FileDescription" "Installateur ${APP_NAME}"
 VIAddVersionKey /LANG=${LANG_FRENCH} "FileVersion" "${APP_VERSION}"
-VIAddVersionKey /LANG=${LANG_FRENCH} "LegalCopyright" "Nhill"
+VIAddVersionKey /LANG=${LANG_FRENCH} "CompanyName" "Nhill Solution"
+VIAddVersionKey /LANG=${LANG_FRENCH} "LegalCopyright" "Nhill Solution"
 
 ; ---------------------------------------------------------------- prérequis
 Function .onInit
@@ -125,7 +126,8 @@ Section "Installation" SecMain
   CreateShortcut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\${APP_ID}.exe"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayName" "${APP_NAME}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayVersion" "${APP_VERSION}"
-  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "Nhill"
+  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "Nhill Solution"
+  WriteRegStr HKLM "${UNINST_KEY}" "Contact" "support@nhill.online"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\${APP_ID}.exe"
   WriteRegStr HKLM "${UNINST_KEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "${UNINST_KEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'

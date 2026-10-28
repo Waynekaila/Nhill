@@ -341,7 +341,9 @@ form.lead { max-width: 660px; display: grid; gap: 18px; }
 .site-foot ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
 .site-foot h2 { font-size: var(--fs-sm); color: #FFFFFF; letter-spacing: 0; margin-bottom: 10px; font-weight: 600; }
 .foot-name { display: flex; align-items: center; gap: 10px; color: #FFFFFF; font-weight: 600; font-size: 1.15rem; margin-bottom: 8px; }
-.foot-brand p:last-child { max-width: 36ch; }
+.foot-brand p { max-width: 36ch; }
+.foot-brand .foot-contact { margin: 4px 0 0; }
+.foot-brand .foot-contact a { padding: 2px 0; min-height: 24px; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
 .site-foot .fine { border-top: 1px solid #1E3A56; margin-top: 36px; padding-top: 18px; font-size: var(--fs-xs); max-width: 100ch; }
 
 table.plain { border-collapse: collapse; width: 100%; max-width: 900px; margin: 0 0 24px; font-size: var(--fs-sm); }

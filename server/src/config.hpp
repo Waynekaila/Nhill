@@ -44,6 +44,7 @@ struct Config {
     std::string providerKey;            // derived: secretbox for payment provider secrets
     std::string resetKey;               // derived: HMAC of password-recovery codes
     std::string publicBaseUrl;          // public HTTPS address of this API (webhook URLs, payment return pages)
+    std::string supportEmail;           // NH_SUPPORT_EMAIL: contact given in automatic e-mails (optional)
     std::map<std::string, std::string> webhookSecrets;  // provider -> secret
 
     // Loads KEY=VALUE pairs from an optional file, then the environment

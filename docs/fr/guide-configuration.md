@@ -44,6 +44,7 @@ d'environnement. Après modification : `sudo systemctl restart nhill-server` pui
 | `NH_SMTP_FROM` | — | expéditeur, par exemple `Nhill <no-reply@exemple.com>` (adresse autorisée par le relais : SPF/DKIM du domaine) |
 | `NH_SMTP_TLS` | `required` | `off` accepté **uniquement** pour un relais local (`127.0.0.1`, `::1`) ; refusé au démarrage sinon |
 | `NH_SMTP_CA_FILE` | — | autorités de certification à utiliser au lieu de celles du système (relais interne) |
+| `NH_SUPPORT_EMAIL` | — | adresse d'assistance indiquée dans la signature des e-mails automatiques (plateforme Nhill Solution : `support@nhill.online`) ; sans elle, la signature demande de ne pas répondre |
 | `NH_SMTP_TIMEOUT_SECONDS` | `20` | délai de connexion au relais |
 | `NH_PROFILE_DIR`, `NH_I18N_DIR`, `NH_FONT_DIR`, `NH_MIGRATIONS_DIR` | `/usr/share/nhill/…` | fichiers de données installés par le paquet |
 | `NH_SETUP_DB_PASSWORD` | — | uniquement pour `nhill-server setup` en ligne de commande ; jamais conservé |
@@ -65,18 +66,17 @@ schéma `nhill` non exposé par l'API REST.
 
 | Option | Défaut | Effet |
 |---|---|---|
-| `NHILL_SERVER_URL` | `http://127.0.0.1:8080` | adresse du serveur compilée dans les applications — **HTTPS en production** |
 | `NHILL_BUILD_SERVER` | `ON` sous Linux | serveur (Linux uniquement) |
 | `NHILL_BUILD_CLIENT` / `NHILL_BUILD_TESTS` | `ON` | applications / tests |
 | `NHILL_WARNINGS_AS_ERRORS` | `OFF` | avertissements bloquants (CI) |
 
-Les scripts de construction acceptent `--server-url https://api.<domaine>`.
+Aucune adresse de serveur n'est compilée dans les applications (3.0.0) : Nhill Business la demande à la création d'un établissement, Nhill Console et Nhill POS à leur première connexion. L'adresse saisie est vérifiée (`GET /api/v1/meta`, HTTPS obligatoire hors `localhost`), enregistrée sur l'appareil et modifiable ensuite.
 
 ### 2.2 Variables d'environnement (bureau)
 
 | Variable | Valeurs | Effet |
 |---|---|---|
-| `NHILL_SERVER` | URL | serveur à utiliser à la place de l'adresse compilée (essais, recette) |
+| `NHILL_SERVER` | URL | serveur à utiliser à la place de l'adresse enregistrée sur l'appareil (essais, recette) |
 | `NHILL_LANG` | `fr`, `en` | langue de l'interface au démarrage |
 | `NHILL_THEME` | `light`, `dark`, `system` | thème au démarrage |
 | `QT_SCALE_FACTOR` | ex. `1.25` | agrandissement global (variable Qt standard) |

@@ -252,7 +252,10 @@ mail::Message renderEmail(const Env& env, const std::string& to, const std::stri
     mail::Message m;
     m.to = to;
     m.subject = fill(env.i18n.t(lang, "email." + tmpl + ".subject"), p);
-    m.body = fill(env.i18n.t(lang, "email." + tmpl + ".body"), p) + env.i18n.t(lang, "email.signature");
+    // The signature gives the support address of the operator when one is configured.
+    m.body = fill(env.i18n.t(lang, "email." + tmpl + ".body"), p) +
+             (env.cfg.supportEmail.empty() ? env.i18n.t(lang, "email.signature")
+                                           : fill(env.i18n.t(lang, "email.signature_support"), {{"support_email", env.cfg.supportEmail}}));
     return m;
 }
 

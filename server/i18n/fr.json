@@ -49,6 +49,7 @@
   "email.subscription_grace.subject": "Paiement non reçu — période de grâce",
   "email.subscription_suspended.subject": "Abonnement suspendu — accès en lecture seule",
   "email.signature": "\n\n— Nhill\nMessage automatique : ne répondez pas à cet e-mail.",
+  "email.signature_support": "\n\n— Nhill\nMessage automatique. Pour toute question, écrivez à {support_email}.",
   "email.code_rotated.body": "Bonjour,\n\nLe code d'établissement de {establishment} a été renouvelé automatiquement. Le nouveau code est visible dans Nhill Business, Paramètres › Code d'établissement. Donnez-le uniquement aux personnes que vous invitez.",
   "email.subscription_reminder.body": "Bonjour,\n\nL'abonnement Nhill de {establishment} arrive à échéance le {period_end}. Pour continuer sans interruption, renouvelez-le depuis Nhill Business, Paramètres › Abonnement.",
   "email.subscription_grace.body": "Bonjour,\n\nLe paiement de l'abonnement Nhill de {establishment} n'a pas encore été reçu. Le service reste disponible jusqu'au {grace_until} (période de grâce) ; ensuite, les données resteront consultables et exportables mais ne pourront plus être modifiées.",

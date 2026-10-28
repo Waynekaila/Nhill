@@ -100,4 +100,4 @@ class Config:
         if self.engine == "postgresql" and self.db_sslmode not in ("disable", "allow", "prefer", "require", "verify-ca", "verify-full"):
             raise SystemExit("SITE_DATABASE_SSLMODE invalide")
         if not self.allowed_origins:
-            raise SystemExit("SITE_ALLOWED_ORIGINS est requis (ex. https://www.exemple.cd)")
+            raise SystemExit("SITE_ALLOWED_ORIGINS est requis (ex. https://nhill.online)")

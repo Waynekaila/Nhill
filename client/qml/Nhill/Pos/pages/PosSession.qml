@@ -26,6 +26,7 @@ Rectangle {
     function tourReturn() { docDialog.qty = ({ 1: "1" }); reason.text = qsTr("Damaged item (demo)"); docDialog.doReturn() }
     function tourClose() { closeDialog.start() }
     function tourCloseSubmit() {
+        if (!s) return
         var cash = PosNav.config.payment_methods.filter(function(m) { return m.kind === "cash" })[0]
         var c = {}; c[cash.code] = Fmt.sum([s.cash_expected, "-500"], cur); closeDialog.counted = c; closeDialog.submit()
     }

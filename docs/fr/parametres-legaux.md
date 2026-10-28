@@ -11,6 +11,18 @@ connue à ce jour ; **aucune ne doit être inventée**. Analyse détaillée et s
 > Rien dans ce dépôt ne constitue un avis juridique. Les modèles doivent être relus par un
 > avocat inscrit à un barreau de la RDC et, pour la fiscalité, par un fiscaliste.
 
+## 0. Valeurs fixées par Nhill Solution (28 octobre 2026)
+
+| Donnée | Valeur | Remarque |
+|---|---|---|
+| Nom commercial | Nhill Solution | aucune forme juridique, immatriculation ni certification n'est mentionnée tant qu'elle n'est pas confirmée |
+| Siège | Kinshasa, République démocratique du Congo | sans adresse postale publiée |
+| Domaine officiel | `nhill.online` | adresse publique `https://nhill.online`, à contrôler avant annonce : `website/tools/check_live.py` |
+| E-mail général | `info@nhill.online` | contact, protection des données, prospection |
+| E-mail d'assistance | `support@nhill.online` | assistance aux clients, signalement de sécurité ou de contenu illicite |
+| Téléphone | aucun publié | — |
+| Hébergement du service (API et base) | Hostinger International Ltd (Larnaca, Chypre), serveur privé virtuel en France (UE) | entité contractante d'Hostinger pour un client hors Royaume-Uni et hors groupes 1 et 2 de ses conditions générales |
+
 ## 1. Identité de l'exploitant (champ → où il apparaît)
 
 | Champ | Exemple de format | Modèles | Site vitrine | Application |
@@ -21,10 +33,10 @@ connue à ce jour ; **aucune ne doit être inventée**. Analyse détaillée et s
 | `[ID. NAT.]` | identification nationale | 01, 02, 05 | `mentions-legales` | — |
 | `[NIF]` | numéro d'impôt | 01, 02, 05 | `mentions-legales` | factures d'abonnement |
 | `[ADRESSE]` | siège social complet | tous | `mentions-legales`, `contact` | — |
-| `[TÉLÉPHONE]`, `[E-MAIL]` | contact professionnel | 01, 05 | `contact`, pied de page (`SITE_CONTACT_EMAIL`) | Aide et assistance |
+| ~~`[TÉLÉPHONE]`~~, `[E-MAIL]` | **fixé** : `info@nhill.online` (aucun téléphone) | 01, 05 | `contact`, pied de page (`SITE_CONTACT_EMAIL`, `SITE_SUPPORT_EMAIL`) | Aide et assistance (`support@nhill.online`) |
 | `[NOM, FONCTION]` | représentant légal / directeur de la publication | 02, 05, 06, 09-11 | `mentions-legales` | — |
-| `[E-MAIL DPO]`, `[NOM DU DPO]` | contact protection des données | 03, 04, 14, 16, 18, 19 | `confidentialite` | — |
-| `[E-MAIL DE SÉCURITÉ]` | signalement de vulnérabilités (ex. `security@…`) | 05, 08, 13 | `mentions-legales`, futur `/.well-known/security.txt` | — |
+| `[E-MAIL DPO]`, `[NOM DU DPO]` | **e-mail fixé** : `info@nhill.online` ; aucun délégué désigné à ce jour | 03, 04, 14, 16, 18, 19 | `confidentialite` | — |
+| `[E-MAIL DE SÉCURITÉ]` | **fixé** : `support@nhill.online` (objet « Sécurité ») | 05, 08, 13 | `mentions-legales`, futur `/.well-known/security.txt` | — |
 
 ## 2. Hébergement et transferts
 

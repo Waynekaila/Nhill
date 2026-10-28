@@ -114,8 +114,8 @@ même script peut viser Supabase avec le compte `nhill_backup`.
 
 ## 9. Applications
 
-Construire avec l'adresse de production `-DNHILL_SERVER_URL=https://api.<domaine>`
-(scripts Linux, Windows, Android) ; signer les exécutables (Authenticode) et l'APK
+Aucune adresse n'est compilée dans les applications (3.0.0) : l'utilisateur saisit
+`https://api.<domaine>` à la première utilisation (vérifiée, puis enregistrée sur l'appareil) ; signer les exécutables (Authenticode) et l'APK
 (apksigner). Linux : distribuer `nhill-business`, `nhill-pos` (établissements) et
 `nhill-console` (créateurs seulement).
 

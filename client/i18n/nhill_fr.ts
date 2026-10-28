@@ -7730,6 +7730,10 @@
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
+    <message>
+        <source>You can also write to the %1 team: %2</source>
+        <translation>Vous pouvez aussi écrire à l'équipe %1 : %2</translation>
+    </message>
 </context>
 <context>
     <name>SupportPage</name>

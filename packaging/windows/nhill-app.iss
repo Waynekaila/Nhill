@@ -34,7 +34,8 @@
 AppId={#AppGuid}
 AppName={#AppName}
 AppVersion={#AppVersion}
-AppPublisher=Nhill
+AppPublisher=Nhill Solution
+AppContact=support@nhill.online
 DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes

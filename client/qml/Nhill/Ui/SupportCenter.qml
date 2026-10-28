@@ -23,6 +23,18 @@ ColumnLayout {
                text: qsTr("Report a problem or ask a question to the Nhill team. Do not include passwords, establishment codes or card numbers.") }
         FbButton { text: qsTr("New request"); iconName: "plus"; onClicked: creator.start() }
     }
+    // Publisher contact, useful when the request cannot be sent from here.
+    Text {
+        Layout.fillWidth: true
+        wrapMode: Text.Wrap
+        textFormat: Text.StyledText
+        color: Theme.textMuted; linkColor: Theme.primary
+        font.family: Theme.font; font.pixelSize: Theme.fs_sm
+        text: qsTr("You can also write to the %1 team: %2").arg(Tools.publisherName)
+                  .arg("<a href=\"mailto:" + Tools.supportEmail + "\">" + Tools.supportEmail + "</a>")
+        onLinkActivated: function(link) { Qt.openUrlExternally(link) }
+        HoverHandler { cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor }
+    }
     DataTable {
         Layout.fillWidth: true
         Layout.fillHeight: true

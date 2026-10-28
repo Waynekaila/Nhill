@@ -17,7 +17,7 @@
 ## 1. Who is responsible
 
 [COMPANY NAME], [LEGAL FORM], RCCM [RCCM], registered office [ADDRESS] ("Nhill", "we").
-Data protection contact: [DPO E-MAIL]. Data protection officer: [NAME or "not appointed —
+Data protection contact: info@nhill.online. Data protection officer: [NAME or "not appointed —
 reason"] **[TO VALIDATE: V-13]**.
 
 This policy covers: website visitors, people who fill in a form, customers and their users
@@ -68,7 +68,7 @@ concerned within the legal deadlines (template 14).
 
 You can ask for access to your data, its rectification or erasure, object to processing
 based on legitimate interest, and withdraw your marketing consent at any time (unsubscribe
-link or message to [DPO E-MAIL]). Form: template 19. Answer within [30] days. Proof of
+link or message to info@nhill.online). Form: template 19. Answer within [30] days. Proof of
 identity may be requested if there is doubt.
 
 You can contact the data-protection authority: [NAME AND CONTACT OF THE COMPETENT AUTHORITY

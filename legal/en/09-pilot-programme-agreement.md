@@ -40,7 +40,7 @@ is deleted.
 
 3.3 The Publisher provides: a [2]-hour onboarding session (on site in Kinshasa or remote),
 the initial import of products from a file provided by the Pilot, priority support through
-[BUSINESS WHATSAPP / E-MAIL] during business hours.
+e-mail (support@nhill.online) and the "Help and support" menu during business hours.
 
 3.4 The Pilot undertakes to: use Nhill for [counter sales / invoicing / stock] during the
 pilot; appoint a contact person; take part in [3] 30-minute check-ins; answer the

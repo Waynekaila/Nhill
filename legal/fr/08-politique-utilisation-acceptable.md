@@ -31,7 +31,7 @@ Il est interdit d'utiliser Nhill pour :
 
 ## Signalement de vulnérabilité
 
-Une personne qui découvre une faille la signale à [E-MAIL DE SÉCURITÉ] sans l'exploiter
+Une personne qui découvre une faille la signale à support@nhill.online (objet « Sécurité ») sans l'exploiter
 ni la divulguer avant correction. L'Éditeur s'engage à [accuser réception sous 72 heures].
 
 ## Mesures
