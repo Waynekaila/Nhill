@@ -59,6 +59,7 @@ legal/fr/16-consentement-prospection.md -> legal/pdf/fr/16-consentement-prospect
 legal/fr/17-information-personnel.md -> legal/pdf/fr/17-information-personnel.pdf
 legal/fr/18-registre-traitements.md -> legal/pdf/fr/18-registre-traitements.pdf
 legal/fr/19-demande-exercice-droits.md -> legal/pdf/fr/19-demande-exercice-droits.pdf
+legal/fr/20-autorisation-temoignage-image.md -> legal/pdf/fr/20-autorisation-temoignage-image.pdf
 
 # legal/en
 legal/en/00-legal-research.md -> legal/pdf/en/00-legal-research.pdf
@@ -81,6 +82,7 @@ legal/en/16-marketing-consent.md -> legal/pdf/en/16-marketing-consent.pdf
 legal/en/17-staff-notice.md -> legal/pdf/en/17-staff-notice.pdf
 legal/en/18-processing-register.md -> legal/pdf/en/18-processing-register.pdf
 legal/en/19-data-subject-request.md -> legal/pdf/en/19-data-subject-request.pdf
+legal/en/20-testimonial-image-consent.md -> legal/pdf/en/20-testimonial-image-consent.pdf
 
 # marketing/fr
 marketing/fr/01-etude-marche.md -> marketing/pdf/fr/01-etude-marche.pdf

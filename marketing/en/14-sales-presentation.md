@@ -11,9 +11,10 @@ generated from this file (`marketing/pdf/en/14-sales-presentation.pdf`).
 
 ## Slide 1 — Title
 
+<img src="../../assets/brand/nhill-logo.svg" alt="Nhill" width="180">
+
 **Nhill — your sales, stock and till, clear.**
-Management software for traders and SMEs · Kinshasa · [DATE]
-[Nhill logo, Night 900 background]
+Management software for traders and SMEs · Kinshasa
 
 ## Slide 2 — What we hear from traders
 
@@ -39,26 +40,29 @@ Three applications, one server:
 - **Nhill Business** — sales, stock, purchases, expenses, reports, team;
 - your phone — the dashboard, wherever you are.
 
-[Real screenshot: Nhill Business dashboard]
+![Nhill Business dashboard — real screenshot, demo business, French interface](../../website/assets/images/capture-tableau-de-bord.webp)
 
 ## Slide 5 — At the till
 
 Sell fast (search `F2`, barcode, payment `F9`), several payments, change, 58/80 mm receipt.
 Discount above the limit → supervisor approval, recorded.
-[Real screenshot: Nhill POS sale]
+
+![Payment and change due in Nhill POS — real screenshot](../../website/assets/images/capture-rendu-monnaie.webp)
 
 ## Slide 6 — Control
 
 - Blind closing: the cashier counts, Nhill computes the difference.
 - Activity log: who did what, impossible to erase.
 - One account per person.
-[Real screenshot: activity log]
+
+![Nhill Business activity log — real screenshot](../../website/assets/images/capture-journal.webp)
 
 ## Slide 7 — Stock and credit
 
 Stock through movements, alert thresholds, purchase receipts; invoices, partial payments,
 who owes you what.
-[Real screenshot: stock]
+
+![Stock in Nhill Business — real screenshot](../../website/assets/images/capture-stock.webp)
 
 ## Slide 8 — Built for Kinshasa
 
@@ -73,10 +77,12 @@ export of your data at the end.
 
 ## Slide 10 — Next step
 
-Demo with your products, now or on [DATE] · apply: nhill.online ·
-info@nhill.online
+Demo with your products, now or on the day that suits you · trial request:
+nhill.online · info@nhill.online
 
 ---
 
 Speaker notes: before each meeting, check that the platforms cited on slide 8 are actually
-delivered (`release/V3.0.0/`); never add a customer or partner logo without written consent.
+delivered (`release/V3.0.0/`) and that the nhill.online website is online
+(`python3 website/tools/check_live.py`) before quoting its address; never add a customer or
+partner logo without written consent (`legal/en/20`).

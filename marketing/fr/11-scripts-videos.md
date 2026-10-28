@@ -7,8 +7,10 @@ Règles de tournage :
 - **Écrans réels uniquement** : filmer ou capturer Nhill 3.0 installé, sur un
   établissement de démonstration (données « (démo) »). Pas d'écran retouché, pas de
   maquette, pas de fonction absente.
-- Personnes filmées : membres de l'équipe, ou pilote **avec accord écrit** (convention de
-  pilote, article 7). Aucun faux client, aucun faux témoignage.
+- Personnes filmées : membres de l'équipe, ou personnes d'un établissement pilote **avec
+  leur autorisation écrite**, une par personne (formulaire
+  [`legal/fr/20`](../../legal/fr/20-autorisation-temoignage-image.md)). Aucun faux client,
+  aucun faux témoignage, aucune personne de moins de 18 ans à l'image.
 - Format : 9:16 (WhatsApp Statut, TikTok, Reels) et 16:9 (site, présentations) ; sous-titres
   incrustés (beaucoup regardent sans le son) ; musique libre de droits avec licence notée.
 - Matériel : smartphone, micro-cravate (scénario B du plan), capture d'écran de
@@ -34,7 +36,7 @@ Règles de tournage :
 | 4 | 26-36 s | demande de remise au-delà du plafond → validation du superviseur | « Les remises sous contrôle » | « Une remise trop forte ? Il faut l'accord d'un responsable, et c'est noté. » | "Too big a discount? A supervisor must approve it, and it's recorded." |
 | 5 | 36-46 s | journal d'activité réel, filtre par employé | « Qui a fait quoi » | « Le journal montre qui a fait quoi. Personne ne peut l'effacer. » | "The log shows who did what. Nobody can erase it." |
 | 6 | 46-54 s | facture d'un client à crédit, paiement partiel, solde | « Les ventes à crédit, suivies » | « Ventes à crédit : vous savez qui vous doit combien. » | "Credit sales: you know who owes you what." |
-| 7 | 54-60 s | logo, site, mention | « Essai gratuit accompagné, 30 jours — nhill.online » | « Nhill. Essayez-le gratuitement pendant 30 jours, accompagné. » | "Nhill. Try it free for eight weeks." |
+| 7 | 54-60 s | logo, site, mention | « Essai gratuit accompagné, 30 jours — nhill.online » | « Nhill. Essayez-le gratuitement pendant 30 jours, accompagné. » | "Nhill. Try it free for 30 days, with support." |
 
 Mention écrite en fin de vidéo (petit texte, 2 s) : « Nhill est un logiciel de gestion ;
 il ne remplace pas la facture normalisée de la DGI. » / "Nhill is management software; it
@@ -47,7 +49,7 @@ l'équipe avec un établissement de démonstration.
 
 | Plan | Durée | Image | Voix off FR | Voix off EN |
 |---|---|---|---|---|
-| 1 | 0-8 s | rue commerçante de Kinshasa, devanture (avec autorisation) | « À Kinshasa, des commerçants essaient Nhill pendant 30 jours, accompagnés. » | "In Kinshasa, shop owners are testing Nhill for eight weeks." |
+| 1 | 0-8 s | rue commerçante de Kinshasa, devanture (avec autorisation) | « À Kinshasa, des commerçants essaient Nhill pendant 30 jours, accompagnés. » | "In Kinshasa, shop owners are trying Nhill for 30 days, with support." |
 | 2 | 8-20 s | installation : ordinateur, tablette, import d'une liste d'articles | « On commence par installer Nhill sur vos appareils et importer vos produits. Comptez une demi-journée. » | "We start by installing Nhill on your devices and importing your products. Allow half a day." |
 | 3 | 20-32 s | formation d'un caissier, gros plan sur son compte personnel | « Chaque personne a son propre compte. Un mot de passe de huit caractères au moins, rien de compliqué. » | "Each person gets their own account. A password of at least eight characters, nothing complicated." |
 | 4 | 32-50 s | séquence vente → clôture → rapport Z (écrans réels) | « Pendant la journée, on vend. Le soir, le caissier compte son tiroir, Nhill calcule l'écart et prépare le rapport. » | "During the day, you sell. In the evening, the cashier counts the drawer; Nhill works out the difference and prepares the report." |
@@ -65,4 +67,4 @@ pilote **anonymisées et telles que mesurées**, ou supprimer le plan (vidéo de
 |---|---|
 | Sous-titres FR/EN (format SRT) | `marketing/visuals/videos/nhill-30s-fr.srt`, `-en.srt` (à créer au montage, à partir des colonnes « Voix off ») |
 | Rushes, projets de montage | stockage de l'équipe (hors dépôt git : fichiers lourds) |
-| Autorisations de droit à l'image | dossier administratif, avec la convention de pilote |
+| Autorisations de droit à l'image | dossier administratif : formulaires signés et registre du document `legal/fr/20` |

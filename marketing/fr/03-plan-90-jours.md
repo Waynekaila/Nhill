@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Période | 13 semaines à partir de la date de démarrage (S1 = semaine du [DATE]) |
+| Période | 13 semaines à partir de la date de démarrage choisie par l'équipe (S1 = première semaine ; la date du lundi de S1 se saisit dans le classeur de suivi, onglet « Tableau de bord ») |
 | Objectif | 10 pilotes actifs, 3 partenaires signés, premiers abonnements payants après le bilan des pilotes |
 | Conversion | **1 USD = 2 264,0000 CDF**, taux officiel de la [Banque centrale du Congo](https://www.bcc.cd/marche-des-changes/cours-de-change) du **26/10/2026** ; montants CDF arrondis à l'unité. Recalculer au taux du jour avant toute dépense |
 | Préalables | mentions légales, conditions et politique de confidentialité publiées (site 3.0, dossier `legal/`), livrables vérifiés (`release/V3.0.0/`) |
@@ -20,7 +20,7 @@
 | Poste | USD | CDF |
 |---|---|---|
 | Forfaits de données mobiles pour les démonstrations (3 mois) | 45 | 101 880 |
-| Impression : 200 fiches pilote A5 + 10 affiches A3 | 60 | 135 840 |
+| Impression : 200 fiches d'essai A5 + 10 affiches A3 | 60 | 135 840 |
 | Transport (démonstrations, installations, points sur place) | 120 | 271 680 |
 | Nom de domaine et hébergement du site (quote-part 3 mois) | 30 | 67 920 |
 | Séance de démonstration groupée (salle prêtée, rafraîchissements) | 40 | 90 560 |
@@ -34,7 +34,7 @@ des pilotes, partenaires apporteurs rémunérés à la commission (aucun coût f
 | Poste | USD | CDF |
 |---|---|---|
 | Forfaits de données mobiles pour les démonstrations (3 mois) | 60 | 135 840 |
-| Impression : 200 fiches pilote A5 + 10 affiches A3 | 60 | 135 840 |
+| Impression : 200 fiches d'essai A5 + 10 affiches A3 | 60 | 135 840 |
 | Impression complémentaire : kakémono, cartes de visite, fiches partenaires | 150 | 339 600 |
 | Transport (démonstrations, installations, points sur place) | 250 | 566 000 |
 | Nom de domaine et hébergement du site (quote-part 3 mois) | 30 | 67 920 |
@@ -53,14 +53,14 @@ d'hébergement de production du service.
 
 | Sem. | Thème | Actions (A = scénario A, B = en plus pour le scénario B) | Indicateur de la semaine |
 |---|---|---|---|
-| 1 | Préparation | compte WhatsApp Business (catalogue, message d'accueil, horaires) ; fiches pilote imprimées ; liste de 60 établissements cibles sur 3 communes (Gombe, Limete, Ngaliema) dans le suivi des prospects ; démonstration rodée (script `07`) — B : kakémono et cartes | 60 prospects listés |
+| 1 | Préparation | compte WhatsApp Business (catalogue, message d'accueil, horaires) ; fiches d'essai imprimées ; liste de 60 établissements cibles sur 3 communes (Gombe, Limete, Ngaliema) dans le suivi des prospects ; démonstration rodée (script `07`) — B : kakémono et cartes | 60 prospects listés |
 | 2 | Premiers contacts | 30 visites en porte-à-porte (script `05`) ; 10 demandes de démonstration visées ; 5 organisations d'accompagnement contactées (modèle de message `06`) | 30 contacts, 8 démos fixées |
 | 3 | Démonstrations | 8 démonstrations sur les produits du prospect ; compte rendu après chaque démo ; sélection des pilotes (grille `04`) — B : lancement de la publicité (renvoi vers le formulaire « Essai gratuit ») | 8 démos, 4 pilotes retenus |
 | 4 | Vague 1 de pilotes | acceptation des conditions de l'essai ; mise en route de 4 à 6 pilotes (une demi-journée chacun) ; mesures de départ | 5 pilotes installés |
 | 5 | Suivi rapproché | 2 appels courts par pilote ; correction des problèmes ; 20 nouvelles visites | 0 incident bloquant ouvert > 48 h |
 | 6 | Partenaires | 2 rencontres partenaires (intégrateur, formateur, association) ; contrat de partenariat (modèle `legal/10`) — B : 1re session de formation des partenaires | 2 partenaires en discussion |
 | 7 | Vague 2 de pilotes | 4 à 6 nouveaux pilotes (dont apportés par les partenaires) ; questionnaire de mi-parcours vague 1 | 10 pilotes au total |
-| 8 | Contenus | vidéo 30 s tournée chez un pilote **avec son accord écrit** (script `11`) ; publication sur WhatsApp Statut et réseaux — B : événement d'entrepreneurs (démo en direct) | vidéo publiée |
+| 8 | Contenus | vidéo 30 s tournée chez un établissement **avec son autorisation écrite** (script `11`, formulaire `legal/fr/20`) ; publication sur WhatsApp Statut et réseaux — B : événement d'entrepreneurs (démo en direct) | vidéo publiée |
 | 9 | Recommandation | demande de recommandation aux pilotes satisfaits (modèle `06` § 7) ; démonstration groupée (A : salle prêtée) | 5 recommandations |
 | 10 | Mi-parcours vague 2 | questionnaire ; mesures intermédiaires ; préparation de la proposition de prix | taux d'activité des pilotes |
 | 11 | Bilan vague 1 | bilans de fin de pilote ; proposition écrite de suite (prix fixés selon `01` § 6) | 1res décisions des pilotes |
@@ -81,6 +81,6 @@ d'hébergement de production du service.
 - Toute promesse faite à un prospect existe déjà dans le logiciel (pas de fonction « à
   venir » vendue comme disponible).
 - Aucun envoi commercial sans consentement (modèle `legal/16`).
-- Aucun nom, logo ou témoignage de pilote sans accord écrit séparé (convention de pilote,
-  article 7).
+- Aucun nom, logo ou témoignage d'un établissement sans autorisation écrite séparée
+  (conditions de l'essai, article 10 ; formulaire `legal/fr/20`).
 - Chaque dépense est notée avec son reçu ; écart > 20 % sur un poste → décision explicite.

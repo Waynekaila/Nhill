@@ -12,9 +12,10 @@ Nhill 3.0 (dossier `website/assets/images/`, captures automatiques de la CI sur 
 
 ## Diapositive 1 — Titre
 
+<img src="../../assets/brand/nhill-logo.svg" alt="Nhill" width="180">
+
 **Nhill — vos ventes, votre stock et votre caisse, au clair.**
-Logiciel de gestion pour commerçants et PME · Kinshasa · [DATE]
-[Logo Nhill, fond Nuit 900]
+Logiciel de gestion pour commerçants et PME · Kinshasa
 
 ## Diapositive 2 — Ce que nous entendons des commerçants
 
@@ -40,26 +41,29 @@ Trois applications, un seul serveur :
 - **Nhill Business** — ventes, stock, achats, dépenses, rapports, équipe ;
 - votre téléphone — le tableau de bord, où que vous soyez.
 
-[Capture réelle : tableau de bord Nhill Business]
+![Tableau de bord de Nhill Business — capture réelle, établissement de démonstration](../../website/assets/images/capture-tableau-de-bord.webp)
 
 ## Diapositive 5 — À la caisse
 
 Vendre vite (recherche `F2`, code-barres, encaissement `F9`), plusieurs paiements, monnaie
 rendue, ticket 58/80 mm. Remise au-delà du plafond → accord d'un responsable, noté.
-[Capture réelle : vente Nhill POS]
+
+![Encaissement et monnaie rendue dans Nhill POS — capture réelle](../../website/assets/images/capture-rendu-monnaie.webp)
 
 ## Diapositive 6 — Le contrôle
 
 - Clôture à l'aveugle : le caissier compte, Nhill calcule l'écart.
 - Journal d'activité : qui a fait quoi, impossible à effacer.
 - Un compte par personne.
-[Capture réelle : journal d'activité]
+
+![Journal d'activité de Nhill Business — capture réelle](../../website/assets/images/capture-journal.webp)
 
 ## Diapositive 7 — Le stock et le crédit
 
 Stock par mouvements, seuils d'alerte, réceptions d'achats ; factures, paiements partiels,
 qui vous doit combien.
-[Capture réelle : stock]
+
+![Stock dans Nhill Business — capture réelle](../../website/assets/images/capture-stock.webp)
 
 ## Diapositive 8 — Adapté à Kinshasa
 
@@ -74,11 +78,12 @@ chaque semaine, export de vos données à la fin.
 
 ## Diapositive 10 — Prochaine étape
 
-Démonstration sur vos produits, maintenant ou [DATE] · candidature : nhill.online ·
-info@nhill.online
+Démonstration sur vos produits, maintenant ou au jour qui vous convient · demande d'essai :
+nhill.online · info@nhill.online
 
 ---
 
 Notes pour l'orateur : vérifier avant chaque rendez-vous que les plates-formes citées en
-diapositive 8 sont bien livrées (`release/V3.0.0/`) ; ne jamais ajouter de logo de client
-ou de partenaire sans accord écrit.
+diapositive 8 sont bien livrées (`release/V3.0.0/`) et que le site nhill.online est en ligne
+(`python3 website/tools/check_live.py`) avant d'en citer l'adresse ; ne jamais ajouter de
+logo de client ou de partenaire sans autorisation écrite (`legal/fr/20`).

@@ -7,7 +7,7 @@
 | Éditeur | Nhill Solution, Kinshasa (République démocratique du Congo) |
 | Version | 3.0.0 — 28 octobre 2026 |
 | Statut | rédigé sans relecture par un avocat ; points de relecture recommandés : V-05, V-07, V-08, V-13 ([00](00-recherche-juridique.md) § 5) |
-| Hypothèses | H-01, H-03, H-04, H-05, H-08, H-13, H-14, H-19 ([00](00-recherche-juridique.md) § 2) |
+| Hypothèses | H-01, H-03, H-04, H-05, H-08, H-13, H-14, H-19, H-21 ([00](00-recherche-juridique.md) § 2) |
 | Référence | droit de la RDC (Code du numérique, Livre III) ; normes européennes (RGPD) prises comme référence de bonnes pratiques, sans affirmation de conformité |
 | Publication | page « Politique de confidentialité » du site (`website/src/pages/fr/confidentialite.html`), alignée sur ce texte |
 
@@ -32,6 +32,8 @@ document 06).
 |---|---|---|---|---|
 | Formulaires du site (démonstration, essai gratuit accompagné, partenariat, question) | nom, organisation, e-mail, téléphone, ville, secteur, nombre d'utilisateurs, message, choix de consentement | répondre à la demande | démarches demandées avant un éventuel contrat | suppression automatique 12 mois après l'envoi |
 | Protection du site contre les abus | empreinte non réversible de l'adresse IP (HMAC), calculée à l'envoi d'un formulaire | limiter les envois répétés | intérêt légitime (sécurité) | 30 jours |
+| Rencontres et recommandations (visite, salon, recommandation d'un partenaire) | nom, fonction, établissement, commune, coordonnées que vous nous donnez, accord pour être recontacté et canal choisi, notes de l'échange | donner suite à l'intérêt exprimé : démonstration, essai | intérêt légitime ; consentement pour les envois commerciaux | 12 mois après le dernier échange ; données reprises dans le compte si un abonnement suit |
+| Témoignages, photos et vidéos (si vous l'avez accepté) | nom, fonction, établissement, texte, image, voix, résultat chiffré approuvé | présenter Nhill | consentement écrit, donné pour chaque usage et retirable (document 20) | tant que le contenu est utilisé ; l'accord signé est ensuite gardé comme preuve jusqu'à la fin du délai de réclamation |
 | Nouvelles de Nhill (si vous l'avez accepté) | e-mail, nom, date et texte de l'accord | vous envoyer des nouvelles, au plus une fois par mois | consentement, retirable à tout moment | jusqu'au retrait, et au plus tard jusqu'à la suppression de la demande |
 | Comptes utilisateurs | nom, e-mail, téléphone, langue, rôle, empreinte du mot de passe (Argon2id), sessions | fournir le Service, sécurité des comptes | contrat avec l'établissement | durée du compte |
 | Journal d'activité et de sécurité | actions, date, adresse IP, appareil | sécurité, preuve des opérations | intérêt légitime | durée du contrat de l'établissement, puis 90 jours |

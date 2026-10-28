@@ -6,7 +6,7 @@
 
 Sources : marketing/visuals/src/*.html (+ visuals.css) — modifiables dans un éditeur de
 texte ou un navigateur. Exports : marketing/visuals/export/ (Playwright/Chromium).
-Captures d'écran : écrans réels de Nhill 2.0 (docs/assets/v2/, CI, données de démonstration).
+Captures d'écran : écrans réels de Nhill 3.0 (docs/assets/v3/, CI, établissement de démonstration).
 Coordonnées : nhill.online et info@nhill.online (aucun numéro de téléphone n'est publié).
 Signature e-mail nominative : --sig-name "Prénom Nom" --sig-role "Fonction" (sinon signature d'équipe).
 """
@@ -16,9 +16,9 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 SRC = os.path.join(ROOT, "marketing", "visuals", "src")
 EXP = os.path.join(ROOT, "marketing", "visuals", "export")
 R = "../../.."   # depuis src/ vers la racine du dépôt
-DASH_PHONE = f"{R}/docs/assets/v2/business-telephone-05-tableau-de-bord.png"
-DASH_DESK = f"{R}/docs/assets/v2/business-1366x768-05-tableau-de-bord.png"
-JOURNAL = f"{R}/docs/assets/v2/business-1366x768-15b-journal-activite.png"
+DASH_PHONE = f"{R}/docs/assets/v3/business-telephone-05-tableau-de-bord.png"
+DASH_DESK = f"{R}/docs/assets/v3/business-1366x768-05-tableau-de-bord.png"
+JOURNAL = f"{R}/docs/assets/v3/business-1366x768-15b-journal-activite.png"
 LOGO_REV = f"{R}/assets/brand/nhill-logo-reverse.svg"
 LOGO = f"{R}/assets/brand/nhill-logo.svg"
 
@@ -29,26 +29,26 @@ T = {
   b1="Chaque vente enregistrée au nom du caissier, le stock suit.",
   b2="Clôture de caisse : le caissier compte, Nhill calcule l'écart.",
   b3="Depuis votre téléphone, vous voyez tout, même absent.",
-  cta="Programme pilote gratuit — 8 semaines",
+  cta="Essai gratuit accompagné — 30 jours",
   cta2="Installation, formation et suivi inclus. Sans engagement.",
   contact="nhill.online · info@nhill.online",
   legal="Nhill est un logiciel de gestion ; il ne remplace pas la facture normalisée de la DGI.",
-  shot="Capture réelle de Nhill 2.0 — établissement de démonstration, données fictives.",
+  shot="Capture réelle de Nhill 3.0 — établissement de démonstration.",
   sq_head="La caisse du soir, <span class='gold'>juste</span>.",
   sq_sub="Ventes, stock et caisse au clair — même quand vous n'êtes pas au magasin.",
-  pilot_title="Programme pilote Nhill",
-  pilot_sub="Huit semaines pour tester Nhill dans votre commerce. Gratuit, accompagné, sans engagement d'achat.",
+  pilot_title="Essai gratuit accompagné",
+  pilot_sub="30 jours pour essayer Nhill dans votre commerce, avec vos produits. Gratuit, accompagné, sans engagement d'achat.",
   give="Ce que nous apportons", ask="Ce que nous vous demandons",
   give_l=["Nhill Business, et Nhill POS si vous avez une caisse","Installation sur vos appareils et import de vos produits","Formation de chaque utilisateur","Un point par semaine et une assistance aux heures de travail","À la fin, l'export de vos données (CSV, PDF)"],
   ask_l=["Utiliser Nhill pour une partie réelle de votre activité","Une personne référente, 20 à 30 minutes par semaine","Signaler les problèmes, répondre à deux courts questionnaires","Un ordinateur Windows ou Linux, ou une tablette Android 7+, et internet"],
-  steps="Comment ça se passe", steps_l=["Candidature","Démonstration sur vos produits et convention de pilote","Mise en route : une demi-journée","Huit semaines d'utilisation, un point par semaine","Bilan, et conditions écrites pour continuer si vous le souhaitez"],
-  apply="Candidater", 
+  steps="Comment ça se passe", steps_l=["Demande d'essai (site ou e-mail)","Démonstration sur vos produits et acceptation des conditions de l'essai","Mise en route : une demi-journée","30 jours d'utilisation, un point par semaine","Bilan, et proposition écrite pour continuer si vous le souhaitez"],
+  apply="Demander l'essai",
   part_title="Devenir partenaire de Nhill",
   part_sub="Vous connaissez les commerçants et les PME ? Aidez-les à mieux suivre leurs ventes, leur stock et leur caisse.",
   part_rows=[("Recommandation","Vous présentez Nhill à votre réseau.","Commission convenue par écrit sur les abonnements des clients apportés."),
              ("Installation et assistance","Vous installez, importez les données, assurez le premier niveau.","Vos prestations, facturées à vos clients ; commission éventuelle."),
              ("Formation","Vous formez les utilisateurs avec nos supports.","Votre formation ; supports Nhill gratuits."),
-             ("Accompagnement d'entrepreneurs","Vous proposez Nhill aux entreprises que vous suivez.","Places au programme pilote, atelier gratuit pour vos membres.")],
+             ("Accompagnement d'entrepreneurs","Vous proposez Nhill aux entreprises que vous suivez.","Places réservées à l'essai gratuit accompagné, atelier gratuit pour vos membres.")],
   part_cols=("Forme","Votre rôle","Ce que vous y gagnez"),
   part_rules="Nos règles communes", part_rules_l=["Présenter Nhill tel qu'il est : un logiciel de gestion, non homologué pour la facture normalisée DGI","Ne transmettre un contact qu'avec l'accord de la personne","Ne jamais demander de mot de passe à un commerçant","Aucun partenariat annoncé sans contrat signé"],
   sig_role="", sig_name="L'équipe Nhill Solution",
@@ -59,26 +59,26 @@ T = {
   b1="Every sale recorded under the cashier's name; stock follows.",
   b2="Till closing: the cashier counts, Nhill works out the difference.",
   b3="From your phone, you see everything, even when away.",
-  cta="Free pilot programme — 8 weeks",
+  cta="Assisted free trial — 30 days",
   cta2="Installation, training and follow-up included. No commitment.",
   contact="nhill.online · info@nhill.online",
   legal="Nhill is management software; it does not replace the DGI standardised invoice.",
-  shot="Real Nhill 2.0 screenshot (French interface) — demo business, fictitious data.",
+  shot="Real Nhill 3.0 screenshot (French interface) — demo business.",
   sq_head="The evening till, <span class='gold'>right</span>.",
   sq_sub="Sales, stock and till, clear — even when you're not in the shop.",
-  pilot_title="Nhill pilot programme",
-  pilot_sub="Eight weeks to test Nhill in your business. Free, supported, no purchase commitment.",
+  pilot_title="Assisted free trial",
+  pilot_sub="30 days to try Nhill in your business, with your products. Free, supported, no purchase commitment.",
   give="What we provide", ask="What we ask",
   give_l=["Nhill Business, and Nhill POS if you have a till","Installation on your devices and import of your products","Training for each user","A weekly check-in and support during working hours","At the end, the export of your data (CSV, PDF)"],
   ask_l=["Use Nhill for a real part of your business","A contact person, 20 to 30 minutes a week","Report problems, answer two short questionnaires","A Windows or Linux computer, or an Android 7+ tablet, and Internet"],
-  steps="How it works", steps_l=["Application","Demo with your products and pilot agreement","Onboarding: half a day","Eight weeks of use, a weekly check-in","Review, and written terms to continue if you wish"],
-  apply="Apply",
+  steps="How it works", steps_l=["Trial request (website or e-mail)","Demo with your products and acceptance of the trial terms","Onboarding: half a day","30 days of use, a weekly check-in","Review, and a written proposal to continue if you wish"],
+  apply="Request the trial",
   part_title="Become a Nhill partner",
   part_sub="You know traders and SMEs? Help them keep better track of their sales, stock and till.",
   part_rows=[("Referral","You introduce Nhill to your network.","Commission agreed in writing on referred customers' subscriptions."),
              ("Installation and support","You install, import data, provide first-level support.","Your services, invoiced to your customers; possible commission."),
              ("Training","You train users with our materials.","Your training; Nhill materials free."),
-             ("Entrepreneur support","You offer Nhill to the businesses you support.","Pilot places, free workshop for your members.")],
+             ("Entrepreneur support","You offer Nhill to the businesses you support.","Reserved places in the assisted free trial, free workshop for your members.")],
   part_cols=("Type","Your role","What you get"),
   part_rules="Our shared rules", part_rules_l=["Present Nhill as it is: management software, not certified for the DGI standardised invoice","Only pass on a contact with the person's consent","Never ask a trader for a password","No partnership announced without a signed contract"],
   sig_role="", sig_name="The Nhill Solution team",
@@ -110,7 +110,7 @@ def poster(t, lang):  # A3 portrait 297 x 420 mm
   <div class="phone" style="width:92mm;flex:none"><img src="{DASH_PHONE}" alt=""></div>
 </div>
 <div style="position:absolute;left:20mm;right:20mm;bottom:20mm">
-  <p style="font-size:11mm;font-weight:600" class="gold">{t['cta']}</p>
+  <p style="font-size:11mm;font-weight:600;max-width:160mm" class="gold">{t['cta']}</p>
   <p style="font-size:6mm;margin-top:3mm">{t['cta2']}</p>
   <p class="mono" style="font-size:6mm;margin-top:6mm">{t['contact']}</p>
   <hr class="rule" style="margin:7mm 0 4mm">
@@ -158,8 +158,8 @@ def pilot(t, lang):  # A5 portrait 148 x 210 mm
 <ol style="list-style:none;font-size:3.2mm;line-height:1.3">{steps}</ol>
 <div style="position:absolute;left:11mm;right:11mm;bottom:9mm">
 <p style="font-size:3.8mm;font-weight:600;color:var(--night-700)">{t['apply']} : <span class="mono" style="font-weight:400">{t['contact']}</span></p>
-<p class="note muted" style="font-size:2.5mm;margin-top:2mm">{t['legal']} {t['shot']}</p></div></div>"""
-    return page("Nhill — fiche pilote A5" if lang == "fr" else "Nhill — A5 pilot sheet", "148mm 210mm", b, lang)
+<p class="note muted" style="font-size:2.5mm;margin-top:2mm">{t['legal']}</p></div></div>"""
+    return page("Nhill — fiche essai gratuit A5" if lang == "fr" else "Nhill — A5 free trial sheet", "148mm 210mm", b, lang)
 
 def partner(t, lang):  # A4 portrait
     rows = "".join(f"<tr><th style='text-align:left;padding:3mm;color:var(--night-700);width:44mm'>{a}</th><td style='padding:3mm'>{b}</td><td style='padding:3mm'>{c}</td></tr>" for a, b, c in t['part_rows'])
@@ -208,7 +208,7 @@ def signature(t, lang, name=None, role=None):
 VISUALS = [("affiche-a3", "a3-poster", poster, ("297mm", "420mm")),
            ("visuel-lancement-1080", "launch-visual-1080", square, (1080, 1080)),
            ("statut-whatsapp-1080x1920", "whatsapp-status-1080x1920", story, (1080, 1920)),
-           ("fiche-pilote-a5", "pilot-sheet-a5", pilot, ("148mm", "210mm")),
+           ("fiche-essai-a5", "trial-sheet-a5", pilot, ("148mm", "210mm")),
            ("fiche-partenaire-a4", "partner-sheet-a4", partner, ("210mm", "297mm"))]
 
 def main():

@@ -1,0 +1,10 @@
+workflow : ci
+job      : build-test 
+état     : success
+commit   : 4a5a7cff88bdf663e47656368e25705300bab1df (refs/heads/release/3.0.0)
+exécution: https://github.com/Waynekaila/Nhill/actions/runs/40754837906
+date UTC : 2026-10-28T19:44:43Z
+
+Captures réelles de Nhill 3.0, produites automatiquement par la CI (scripts/qa/ui-screenshots.sh)
+sur un établissement de DÉMONSTRATION (données « (démo) »), sous Xvfb, interface en français.
+Real Nhill 3.0 screenshots, produced automatically by CI on a demo business, French interface.

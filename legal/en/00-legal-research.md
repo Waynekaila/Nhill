@@ -60,6 +60,7 @@ reviewing the templates listed.
 | H-19 | International positioning: the texts take European standards (in particular the GDPR) as a reference for good practice, without claiming compliance or certification | 03, 06, 13, 15, 19 | management decision | **decided** on 28/10/2026 |
 | H-20 | No numeric service level (availability rate, response time) is guaranteed; the publisher's liability is capped at the amounts paid over the 12 months before the event | 02, 07, 09, 12 | management decision; lawyer (validity of the cap, V-01) | **decided** on 28/10/2026 |
 | H-18 | Partners (referrers, integrators, trainers) are independent, paid by commission, with no power to sign on the operator's behalf | 10 | lawyer; tax adviser (withholding) | to validate |
+| H-21 | A business's name or logo, a testimonial, and a person's image and voice are used only with prior written consent, given for each use and withdrawable at any time; no images of minors | 09, 20 | lawyer (V-14) | to validate |
 
 ## 3. Findings by area
 
@@ -170,13 +171,14 @@ reviewing the templates listed.
 | 17 | [Information du personnel](../fr/17-information-personnel.md) | [Staff information notice](17-staff-notice.md) | given to businesses (activity log) |
 | 18 | [Registre des traitements](../fr/18-registre-traitements.md) | [Record of processing activities](18-processing-register.md) | internal |
 | 19 | [Demande d'exercice des droits](../fr/19-demande-exercice-droits.md) | [Data subject request form](19-data-subject-request.md) | access, rectification, erasure |
+| 20 | [Autorisation d'utiliser un nom, un témoignage ou une image](../fr/20-autorisation-temoignage-image.md) | [Consent to use a name, testimonial or image](20-testimonial-image-consent.md) | testimonials, photos and videos, figures |
 
 Every document starts with a header: version, status, assumptions, recommended review
 points. Since version 3.0.0, the body of the documents contains no field in square brackets
 and no "to validate" mark: the points to have reviewed by a lawyer are grouped in § 5.
 Items specific to each contract (identity of the other party, dates, price, commission)
 appear in the accepted written proposal or letter of agreement, not in the general terms;
-only the forms (16, 17, 19) and the agreements to sign (10, 11) have areas to be filled in
+only the forms (16, 17, 19, 20) and the agreements to sign (10, 11) have areas to be filled in
 by the signatory.
 
 ## 5. Clauses requiring legal validation
@@ -189,13 +191,14 @@ by the signatory.
 | V-04 | Read-only mode after the grace period (automatic reminders before the due date) | 02 | need for a prior formal notice |
 | V-05 | Transfer of data outside the DRC (server in France) and safeguards | 03, 06, 18 | prior authorisation, competent authority (H-04, H-05) |
 | V-06 | Breach notification deadline (72 h) | 06, 14 | exact Digital Code deadline |
-| V-07 | Retention periods | 03, 15 | limitation periods, accounting obligations |
+| V-07 | Retention periods | 03, 15, 20 | limitation periods, accounting obligations |
 | V-08 | Marketing consent (opt-in) and proof | 16 | art. 68–72 |
 | V-09 | Staff information about the activity log | 17 | Labour Code, staff representation |
 | V-10 | Withdrawal for sole traders | 01, 02 | applicability of art. 61 |
 | V-11 | Partner commission, non-compete, non-solicitation | 10 | validity, tax (withholding) |
 | V-12 | Tax disclaimer (management documents) | 01, 02 | sufficiency under the standardised-invoice reform |
 | V-13 | Appointment of a data protection officer | 03, 18 | obligation (art. 222) and thresholds |
+| V-14 | Use of a name, testimonial, image and voice | 09, 20 | legal basis (personality rights, Digital Code), form of consent, effects of withdrawal |
 
 ## 6. Validation checklist before commercial launch
 
@@ -207,7 +210,7 @@ by the signatory.
 | 4 | File the processing declarations / authorisations (prospects, customers, processing on behalf of customers) | management / lawyer | data collection |
 | 5 | Classify the activity under orders No. 004 and 005/2026; check eligibility for a start-up exemption | lawyer | billing subscriptions |
 | 6 | Appoint a data protection officer or document why not | management | filings |
-| 7 | Have documents 01 to 19 and points V-01 to V-13 reviewed by a lawyer admitted to a DRC bar | lawyer | publication |
+| 7 | Have documents 01 to 20 and points V-01 to V-14 reviewed by a lawyer admitted to a DRC bar | lawyer | publication |
 | 8 | Validate the tax position: Nhill = management documents; invoicing of subscriptions by Nhill Solution (VAT, standardised invoice) | tax adviser | first payment |
 | 9 | Publish the legal notice, terms of use and privacy policy (pages ready in the 3.0.0 website); add the marketing website's host to the legal notice once chosen | management | opening the forms |
 | 10 | Keep the record of processing (document 18) and the breach procedure (document 14) | management | production |

@@ -3,27 +3,53 @@
 *English: [../en/06-message-templates.md](../en/06-message-templates.md)*
 
 Règles communes : envoyer seulement à une personne qui a donné son accord pour ce canal, ou
-qui vous a écrit la première ; signer avec un prénom ; un seul message de relance à la
-fois ; mention de désinscription dans les envois commerciaux. Les `[CROCHETS]` sont à
-remplacer.
+qui vous a écrit la première ; signer avec un prénom ; au plus deux relances (J+3, puis
+J+10), puis arrêt ; mention de désinscription dans les envois commerciaux ; ne jamais
+annoncer un prix, une date de disponibilité ou une fonction qui ne figure pas dans la
+proposition écrite ou dans le logiciel.
+
+## Champs à fusionner
+
+Chaque message est un modèle : les champs entre accolades sont remplacés, au moment de
+l'envoi, par les informations du destinataire. Ce ne sont pas des informations manquantes
+du document ; leur source est indiquée ci-dessous.
+
+| Champ | Contenu | Source |
+|---|---|---|
+| `{contact}` | prénom de la personne, ou « Madame » / « Monsieur » suivi du nom | suivi des prospects, colonne `contact_nom` |
+| `{expediteur}` | prénom et nom de la personne de l'équipe qui écrit | — |
+| `{etablissement}` | nom du magasin, de l'entreprise ou de l'organisation | colonne `etablissement` |
+| `{rendez_vous}` | jour, heure et lieu convenus | colonnes `prochaine_action`, `date_prochaine_action` |
+| `{creneaux}` | deux créneaux libres de l'équipe | agenda de l'équipe |
+| `{date_echange}` | date de la rencontre précédente | colonne `derniere_action` |
+| `{date_atelier}` | date proposée pour l'atelier | agenda de l'équipe |
+| `{places}` | nombre de places réservées à l'essai pour cette organisation | décision de l'équipe, notée dans le suivi des partenaires |
+| `{debut_essai}`, `{fin_essai}` | premier et dernier jour des 30 jours d'essai | conditions de l'essai acceptées |
+| `{interets}`, `{inquietudes}`, `{reponses}` | points notés pendant la démonstration | fiche de démonstration ([`07`](07-script-demonstration.md)) |
+| `{benefice}` | bénéfice cité par l'établissement, avec ses mots | questionnaire de fin ([`08`](08-suivi-et-processus.md) § 5) |
+| `{bilan}` | mesures avant et après, telles que mesurées | rapport d'essai ([`02`](02-programme-pilote.md) § 4) |
+| `{corrections}` | corrections faites grâce aux retours de l'établissement | journal des problèmes de l'essai |
+| `{fin_acces}` | date de fin de l'accès complet | Nhill Console, fiche de l'établissement |
 
 ## 1. WhatsApp — après une visite (accord donné)
 
-> Bonjour [PRÉNOM], c'est [VOTRE PRÉNOM] de Nhill, nous nous sommes vus aujourd'hui à
-> [NOM DU MAGASIN]. Merci pour votre accueil.
-> Voici la courte vidéo promise : [LIEN]. Pour la démonstration gratuite sur vos produits
-> (15 min), dites-moi simplement le jour qui vous convient.
+> Bonjour {contact}, c'est {expediteur} de Nhill, nous nous sommes vus aujourd'hui à
+> {etablissement}. Merci pour votre accueil.
+> Voici la fiche de présentation promise (en pièce jointe). Pour la démonstration gratuite
+> sur vos produits (15 min), dites-moi simplement le jour qui vous convient.
 > Pour ne plus recevoir de messages de Nhill, répondez STOP.
+
+Pièce jointe : `marketing/visuals/export/fiche-essai-a5-fr.pdf` (essai gratuit accompagné).
 
 ## 2. WhatsApp — confirmation de démonstration
 
-> Bonjour [PRÉNOM], je confirme notre démonstration [JOUR] à [HEURE] à [LIEU]. Si vous
-> pouvez, préparez la liste de 10 à 20 articles que vous vendez le plus : je vous montrerai
-> Nhill avec eux. À [JOUR] !
+> Bonjour {contact}, je confirme notre démonstration : {rendez_vous}. Si vous pouvez,
+> préparez la liste de 10 à 20 articles que vous vendez le plus : je vous montrerai Nhill
+> avec eux. À bientôt !
 
-## 3. WhatsApp — relance (J+3, une seule fois)
+## 3. WhatsApp — relance (J+3, puis J+10 sans réponse)
 
-> Bonjour [PRÉNOM], je reviens vers vous au sujet de Nhill. Souhaitez-vous toujours voir la
+> Bonjour {contact}, je reviens vers vous au sujet de Nhill. Souhaitez-vous toujours voir la
 > démonstration ? Si ce n'est pas le moment, aucun souci, dites-le-moi et je ne vous
 > relancerai pas.
 
@@ -31,20 +57,19 @@ remplacer.
 
 **Objet** : Votre demande de démonstration Nhill
 
-> Bonjour [PRÉNOM],
+> Bonjour {contact},
 >
-> Merci pour votre demande de démonstration de Nhill pour [ORGANISATION].
+> Merci pour votre demande de démonstration de Nhill pour {etablissement}.
 >
 > Je vous propose 30 minutes, à votre magasin ou en visioconférence, sur vos propres
-> produits. Voici deux créneaux : [CRÉNEAU 1] ou [CRÉNEAU 2]. Si aucun ne convient,
-> proposez-m'en un autre.
+> produits. Voici deux créneaux : {creneaux}. Si aucun ne convient, proposez-m'en un autre.
 >
 > Pour préparer, pouvez-vous m'indiquer : le nombre de personnes qui vendent, les appareils
 > disponibles (ordinateur, tablette Android), et ce que vous aimeriez améliorer en priorité
 > (caisse, stock, ventes à crédit) ?
 >
 > Bien cordialement,
-> [PRÉNOM NOM] — Nhill
+> {expediteur} — Nhill
 > info@nhill.online · nhill.online
 
 ## 5. E-mail — demande de rendez-vous à une organisation (association, incubateur)
@@ -53,78 +78,86 @@ remplacer.
 
 > Madame, Monsieur,
 >
-> Je suis [PRÉNOM NOM], de Nhill, un logiciel de gestion des ventes, du stock et de la
+> Je suis {expediteur}, de Nhill, un logiciel de gestion des ventes, du stock et de la
 > caisse conçu pour les commerçants et PME de la RDC (français et anglais, CDF et USD).
 >
 > Nous proposons à Kinshasa un essai gratuit accompagné de 30 jours, avec installation et
-> formation. Il pourrait intéresser les membres de [ORGANISATION] qui veulent mieux suivre
+> formation. Il pourrait intéresser les membres de {etablissement} qui veulent mieux suivre
 > leur caisse et leur stock.
 >
-> Accepteriez-vous un échange de 30 minutes [cette semaine / la semaine prochaine] pour voir
-> si une collaboration a du sens ? Je peux venir à vos bureaux.
+> Accepteriez-vous un échange de 30 minutes pour voir si une collaboration a du sens ? Je
+> peux venir à vos bureaux, au moment qui vous arrange.
 >
 > Précision importante : Nhill est un logiciel de gestion ; il n'est pas homologué par la
 > DGI pour la facture normalisée.
 >
 > Bien cordialement,
-> [PRÉNOM NOM] — Nhill Solution — info@nhill.online
+> {expediteur} — Nhill Solution — info@nhill.online
 
 ## 6. Proposition de collaboration (après la rencontre)
 
-**Objet** : Nhill × [ORGANISATION] — proposition
+**Objet** : Nhill × {etablissement} — proposition
 
-> Bonjour [PRÉNOM],
+> Bonjour {contact},
 >
-> Merci pour notre échange du [DATE]. Comme convenu, voici notre proposition :
+> Merci pour notre échange du {date_echange}. Comme convenu, voici notre proposition :
 >
 > 1. **Atelier** de 1 h 30 pour vos membres : bien suivre sa caisse et son stock, avec
->    démonstration de Nhill. Date proposée : [DATE].
-> 2. **Places réservées** à l'essai gratuit accompagné pour [N] de vos membres.
-> 3. **[Si accord de partenariat]** une commission de [N] % sur les abonnements de vos
->    membres pendant 12 mois, ou une remise de [N] % pour eux — à fixer par contrat écrit.
+>    démonstration de Nhill. Date proposée : {date_atelier}.
+> 2. **Places réservées** à l'essai gratuit accompagné pour {places} de vos membres.
+> 3. **Partenariat**, si vous le souhaitez : ses conditions (commission sur les abonnements
+>    de vos membres, ou remise pour eux) sont fixées par écrit, dans une lettre d'accord,
+>    avant tout démarrage.
 >
 > Ce que nous vous demandons : diffuser l'invitation à l'atelier à vos membres (sans nous
 > transmettre leurs coordonnées sans leur accord).
 >
 > Je reste disponible pour en parler.
-> [PRÉNOM NOM] — Nhill
+> {expediteur} — Nhill
 
-## 7. Demande de recommandation (pilote satisfait, en S9)
+Le point 3 renvoie aux conditions générales de partenariat
+([`legal/fr/10-contrat-partenariat.md`](../../legal/fr/10-contrat-partenariat.md)).
 
-> Bonjour [PRÉNOM], merci encore pour votre participation au pilote. Vous m'avez dit que
-> [BÉNÉFICE CITÉ PAR LE PILOTE]. Connaissez-vous un ou deux commerçants à qui Nhill pourrait
-> rendre le même service ? Si oui, demandez-leur d'abord s'ils sont d'accord, puis
-> envoyez-moi leur nom et leur numéro, ou donnez-leur notre adresse : info@nhill.online.
+## 7. Demande de recommandation (établissement satisfait, en S9)
+
+> Bonjour {contact}, merci encore pour votre participation à l'essai. Vous m'avez dit que
+> {benefice}. Connaissez-vous un ou deux commerçants à qui Nhill pourrait rendre le même
+> service ? Si oui, demandez-leur d'abord s'ils sont d'accord, puis envoyez-moi leur nom et
+> leur numéro, ou donnez-leur notre adresse : info@nhill.online.
 
 ## 8. Suivi après démonstration
 
 **Objet** : Suite à notre démonstration — prochaines étapes
 
-> Bonjour [PRÉNOM],
+> Bonjour {contact},
 >
 > Merci pour votre temps aujourd'hui. Pour résumer :
-> - ce qui vous intéresse : [POINTS NOTÉS] ;
-> - ce qui vous inquiète : [POINTS NOTÉS] — [RÉPONSE OU ENGAGEMENT] ;
-> - proposition : essai gratuit accompagné de 30 jours, du [DATE] au [DATE].
+> - ce qui vous intéresse : {interets} ;
+> - ce qui vous inquiète : {inquietudes} — {reponses} ;
+> - proposition : essai gratuit accompagné de 30 jours, du {debut_essai} au {fin_essai}.
 >
-> Je vous joins la convention de pilote à lire tranquillement. Si elle vous convient, nous
-> fixons la mise en route (une demi-journée).
+> Je vous joins les conditions de l'essai gratuit accompagné, à lire tranquillement. Si
+> elles vous conviennent, nous fixons la mise en route (une demi-journée).
 >
-> [PRÉNOM NOM] — Nhill
+> {expediteur} — Nhill
 
-## 9. Fin de pilote — proposition de suite
+Pièce jointe : [`legal/pdf/fr/09-conditions-essai-accompagne.pdf`](../../legal/pdf/fr/09-conditions-essai-accompagne.pdf).
 
-**Objet** : Bilan de votre pilote Nhill et proposition
+## 9. Fin d'essai — proposition de suite
 
-> Bonjour [PRÉNOM],
+**Objet** : Bilan de votre essai Nhill et proposition
+
+> Bonjour {contact},
 >
-> Voici le bilan de vos 30 jours d'essai : [MESURES AVANT / APRÈS, telles que mesurées].
-> Pour continuer, nous vous proposons l'offre [NOM] à [PRIX] [CDF/USD] par [mois], à partir
-> du [DATE]. Sans réponse de votre part, l'accès s'arrête le [DATE] et vous gardez l'export
-> de vos données.
+> Voici le bilan de vos 30 jours d'essai : {bilan}.
 >
-> Merci pour vos retours, qui ont permis de corriger [AMÉLIORATIONS].
-> [PRÉNOM NOM] — Nhill
+> Pour continuer, vous trouverez ci-jointe notre proposition écrite : formule, durée, prix,
+> devise et moyens de paiement. Rien n'est facturé sans votre accord. Sans réponse de votre
+> part, l'accès complet s'arrête le {fin_acces} ; Nhill passe alors en lecture seule et vous
+> gardez 90 jours pour exporter vos données.
+>
+> Merci pour vos retours, qui ont permis de corriger {corrections}.
+> {expediteur} — Nhill
 
 ## 10. Signature d'e-mail
 

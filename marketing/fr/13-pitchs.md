@@ -42,9 +42,12 @@
 > gratuit accompagné de 30 jours à un petit nombre d'entreprises, pour fixer les prix à
 > partir de résultats mesurés.
 >
-> **Ce que nous vous demandons.** [Pour un commerçant :] quinze minutes pour une
-> démonstration sur vos produits. [Pour un partenaire :] nous présenter à des commerçants de
-> votre réseau, ou accueillir un atelier pour vos membres.
+> **Ce que nous vous demandons.** Quinze minutes pour une démonstration sur vos produits.
+
+Fin à utiliser devant un partenaire, à la place de la dernière phrase :
+
+> **Ce que nous vous demandons.** Nous présenter à des commerçants de votre réseau, ou
+> accueillir un atelier pour vos membres.
 
 Source du chiffre cité : Malabar, Innogence Consulting, Fondation Roi Baudouin,
 « Transformation digitale en RDC : état des lieux des MPME », avril 2025 (échantillon non

@@ -6,8 +6,10 @@ Filming rules:
 
 - **Real screens only**: film or capture Nhill 3.0 installed, on a demo business ("(démo)"
   data). No retouched screen, no mock-up, no missing feature.
-- People filmed: team members, or a pilot **with written consent** (pilot agreement,
-  article 7). No fake customer, no fake testimonial.
+- People filmed: team members, or people from a pilot business **with their written
+  consent**, one per person (form
+  [`legal/en/20`](../../legal/en/20-testimonial-image-consent.md)). No fake customer, no
+  fake testimonial, nobody under 18 on screen.
 - Format: 9:16 (WhatsApp Status, TikTok, Reels) and 16:9 (website, presentations); burnt-in
   subtitles (many watch without sound); royalty-free music with its licence recorded.
 - Equipment: smartphone, lavalier microphone (plan scenario B), computer screen capture (OBS
@@ -64,4 +66,4 @@ Without a pilot's consent, replace shot 6 with the team presenting the pilot's m
 |---|---|
 | FR/EN subtitles (SRT) | `marketing/visuals/videos/nhill-30s-fr.srt`, `-en.srt` (to create at editing time from the voice-over columns) |
 | Rushes, editing projects | team storage (outside the git repository: heavy files) |
-| Image-rights releases | administrative file, with the pilot agreement |
+| Image-rights releases | administrative file: signed forms and register of document `legal/en/20` |

@@ -21,9 +21,11 @@
 | T7 | Données des établissements | **sous-traitant** | fournir le Service | clients, fournisseurs, employés des établissements | voir document 06 | celle de l'établissement | — | France (Hostinger) : **transfert hors de RDC** | durée du contrat + 90 jours | sécurité au niveau des lignes imposée par la base, HTTPS, sauvegardes chiffrées |
 | T8 | Statistiques d'exploitation | responsable | exploiter le Service | établissements (chiffres globaux) | nombres, volumes par devise | intérêt légitime | direction, assistance | France (Hostinger) | calculées à la demande, non conservées | aucune donnée nominative ; consultation inscrite au journal de l'établissement |
 | T9 | Journaux techniques du serveur | responsable | sécurité, diagnostic | utilisateurs, visiteurs | adresse IP, date, requête | intérêt légitime | exploitation | France (Hostinger) | 90 jours au plus | accès administrateur du serveur seulement |
+| T10 | Suivi des prospects et des partenaires | responsable | donner suite aux rencontres et recommandations, suivre les partenaires | prospects, partenaires | nom, fonction, établissement, commune, coordonnées données, accord et canal, notes, sommes encaissées et commissions des partenaires | intérêt légitime ; consentement pour les envois ; contrat (partenaires) | équipe commerciale | fichiers de suivi de l'équipe | prospects : 12 mois après le dernier échange ; partenaires : durée du contrat puis pièces comptables 10 ans | accès limité à l'équipe commerciale, jamais publié (`marketing/fr/08-suivi-et-processus.md`) |
+| T11 | Témoignages, photos et vidéos | responsable | présenter Nhill | personnes qui témoignent ou apparaissent, établissements | nom, fonction, texte, image, voix, résultat chiffré approuvé | consentement écrit (document 20) | public des supports choisis | site, réseaux, documents | tant que le contenu est utilisé, puis jusqu'à la fin du délai de réclamation | registre du document 20, retrait sur demande |
 
 Historique des modifications et des formalités :
 
 | Date | Modification ou formalité (référence) | Auteur |
 |---|---|---|
-| 28 octobre 2026 | version 3.0.0 : hébergement Hostinger en France, durées alignées sur la politique de confidentialité | Nhill Solution |
+| 28 octobre 2026 | version 3.0.0 : hébergement Hostinger en France, durées alignées sur la politique de confidentialité ; ajout du suivi des prospects et partenaires (T10) et des témoignages (T11) | Nhill Solution |

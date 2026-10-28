@@ -7,13 +7,13 @@ Public page: `website/src/pages/en/partners.html`.
 
 ## 1. Partner types
 
-| Type | Who | What they do | Proposed remuneration **[to validate]** | What Nhill provides |
+| Type | Who | What they do | Remuneration | What Nhill provides |
 |---|---|---|---|---|
-| Referrer | influential trader, independent accountant, field agent | presents Nhill, records the prospect before any contact by Nhill | [N] % commission on amounts collected for 12 months | partner sheet, video, form link, monthly statement |
+| Referrer | influential trader, independent accountant, field agent | presents Nhill, records the prospect before any contact by Nhill | commission on amounts actually collected; rate and duration set in the letter of agreement | partner sheet, form link, statement for each commission payment |
 | Integrator | IT service provider, hardware reseller (receipt printers, tablets) | installs, imports the catalogue, first-level support | invoices its services to the customer; possible commission | 2-hour technical training, documentation, demo access |
 | Trainer | business school, training centre, independent trainer | trains users | invoices its training; Nhill materials free | training materials, demo business |
-| Support organisation | traders' association, incubator, SME support body, federation | makes Nhill known, hosts workshops | no commission by default; pilot places, free workshop for members | turnkey workshop, reserved places |
-| Reference user | satisfied pilot | welcomes other traders, **only if they wish** | [discount on their subscription] | — |
+| Support organisation | traders' association, incubator, SME support body, federation | makes Nhill known, hosts workshops | no commission unless stated in the letter of agreement; reserved places in the assisted free trial, free workshop for members | turnkey workshop, reserved places |
+| Reference user | satisfied customer business | welcomes other traders, **only if they wish** | none, unless a consideration is written in the letter of agreement and mentioned next to any published testimonial ([`legal/en/20`](../../legal/en/20-testimonial-image-consent.md)) | — |
 
 ## 2. Rules
 

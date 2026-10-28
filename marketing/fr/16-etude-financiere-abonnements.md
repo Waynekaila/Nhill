@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| Version | 1.1 — 28 octobre 2026 (hébergement Hostinger en France ; 1.0 du 27 octobre 2026) |
+| Version | 1.2 — 28 octobre 2026 (§ 2.1 mis à jour pour Nhill 3.0 ; 1.1 : hébergement Hostinger en France ; 1.0 du 27 octobre 2026) |
 | Statut | **recommandations soumises à la validation du propriétaire du produit** : aucun prix n'est publié sur le site ni chargé dans la base |
-| Méthode | prix publics relevés en ligne le 26 et le 27 octobre 2026 (§ 15), inspection du code de Nhill 2.1, modèle financier reproductible (`marketing/tools/subscription_model.py`) |
+| Méthode | prix publics relevés en ligne le 26 et le 27 octobre 2026 (§ 15), inspection du code de Nhill 3.0, modèle financier reproductible (`marketing/tools/subscription_model.py`) |
 | Légende | **V** donnée vérifiée, avec sa source et sa date ; **H** hypothèse à valider ; les calculs sont faits par le script, jamais à la main |
 | Monnaie de calcul | dollar américain (USD) ; 1 EUR = 1,149 USD (0,87 EUR pour 1 USD, relevé d'août 2026) |
 
@@ -41,16 +41,16 @@
 
 ## 2. Le produit et ses segments cibles
 
-### 2.1 Ce qui existe dans Nhill 2.1 (code inspecté)
+### 2.1 Ce qui existe dans Nhill 3.0 (code inspecté)
 
 | Domaine | Fonctions disponibles |
 |---|---|
-| Ventes | devis, commandes, factures, avoirs en PDF, paiements partiels, créances par devise |
-| Caisse (Nhill POS, Windows et Linux) | sessions, plusieurs moyens de paiement par ticket, remises et annulations validées par un responsable, comptage à l'aveugle, écart, rapports X et Z |
+| Ventes | devis, commandes, factures, avoirs en PDF, paiements partiels, créances par devise ; mêmes numérotation et mentions pour une facture émise depuis la caisse |
+| Caisse (Nhill POS, Windows et Linux) | sessions, plusieurs moyens de paiement par ticket, monnaie rendue, ticket 58/80 mm ou facture A4 au nom du client, retours, remises et annulations validées par un responsable, comptage à l'aveugle, écart, rapports X et Z |
 | Stock et achats | stock par dépôt, mouvements, alertes de seuil, transferts, achats fournisseurs, dépenses |
-| Pilotage | tableau de bord, rapports PDF et CSV, journal d'activité non modifiable, rôles par employé |
-| Plateforme | Nhill Business sur Windows, Linux et Android ; français et anglais ; dix devises (USD, EUR, GBP, CHF, XAF, XOF, CDF, KES, RWF, ZAR) ; établissements isolés en base |
-| Abonnements (Nhill Console) | offres avec plafonds `max_users`, `max_registers`, `max_warehouses`, option `multi_warehouse`, public visé (individuel, entreprise), prix **par durée (1, 3, 6, 12, 24, 36 mois) et par devise**, codes promotionnels, crédit au prorata lors d'un changement d'offre, essai de 30 jours (paramètre), grâce de 7 jours, lecture seule après suspension |
+| Pilotage | tableau de bord, rapports PDF et CSV, journal d'activité non modifiable, rôles par employé, archive complète des données téléchargeable par le titulaire |
+| Plateforme | Nhill Business sur Windows, Linux et Android ; français et anglais ; 36 devises (dont USD, EUR, CDF, XAF, XOF, NGN, KES, ZAR) ; établissements isolés en base |
+| Abonnements (Nhill Console) | formules configurables : **9 fonctions activables** (factures, devis, caisse, achats, dépenses, plusieurs dépôts, plusieurs devises, import du catalogue, rapports avancés) et **6 plafonds** (utilisateurs, caisses, dépôts, produits, documents par mois, stockage), contrôlés par le serveur ; une fonction hors formule est invisible pour l'établissement ; public visé (individuel, entreprise) ; prix **par durée (1, 3, 6, 12, 24, 36 mois) et par devise** ; codes promotionnels ; crédit au prorata lors d'un changement d'offre ; essai (30 jours par défaut), grâce (7 jours par défaut) et rappels avant échéance réglables ; lecture seule après suspension ; suppression définitive possible 90 jours après la fin de l'accès |
 | Encaissement des abonnements | instructions de paiement manuel ; adaptateurs Stripe (cartes) et PayPal **testés uniquement contre un faux service local** ; Payoneer configuré sans adaptateur |
 
 Hors périmètre aujourd'hui (à garder en tête pour le prix et la concurrence) :

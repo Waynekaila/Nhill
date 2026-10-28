@@ -331,13 +331,13 @@
    "title": "Site vitrine Nhill — mise en service et base de données"
   },
   "legal/pdf/en/00-legal-research.pdf": {
-   "bytes": 110712,
+   "bytes": 111153,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:24+00:00",
+   "generated": "2026-10-28T19:49:44+00:00",
    "lang": "en",
-   "pdf_sha256": "d7d78c2d74145c223acba94b041a4e6655a792f3ca56a5013edeb4efd0aa5285",
+   "pdf_sha256": "465e33c14d3b7b83bbaa3da963f5b36ce7f40fe57348539d2829fa7c0965f5a9",
    "source": "legal/en/00-legal-research.md",
-   "source_sha256": "54a47795a6704e37eeaee54eccaa27702e7eb8790d9f5bb277f48abcdd5507c3",
+   "source_sha256": "b90d9d0569ddabfcc934bdebe45447a50815144a859dc3edc30944da933a76d8",
    "title": "Legal research — Nhill in the Democratic Republic of the Congo"
   },
   "legal/pdf/en/01-terms-of-use.pdf": {
@@ -361,13 +361,13 @@
    "title": "02 — Terms of service (a business's subscription)"
   },
   "legal/pdf/en/03-privacy-policy.pdf": {
-   "bytes": 45373,
+   "bytes": 46364,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:26+00:00",
+   "generated": "2026-10-28T19:49:46+00:00",
    "lang": "en",
-   "pdf_sha256": "7f3fab40736d9ea17c9c08cc2d5d52ba6f6e9fb45b8abcab524cf5787665137e",
+   "pdf_sha256": "cc33c758abfbe20ad04b2e87a0c7c68555a1d9c6de839c4c2aa61c7ad42e93d3",
    "source": "legal/en/03-privacy-policy.md",
-   "source_sha256": "35d523c7c8c72f783fc9bed8a2ec277d25b6ac1db5d95f1008affea61d85f334",
+   "source_sha256": "7e12c55eb0db862934604235c19f2fd50cf046f77904b3884a4a3f94c5517867",
    "title": "03 — Privacy policy"
   },
   "legal/pdf/en/04-cookie-policy.pdf": {
@@ -501,13 +501,13 @@
    "title": "14 — Data breach procedure"
   },
   "legal/pdf/en/15-retention-policy.pdf": {
-   "bytes": 40809,
+   "bytes": 41987,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:36+00:00",
+   "generated": "2026-10-28T19:49:47+00:00",
    "lang": "en",
-   "pdf_sha256": "e3df3263b246179105bae8edbd7e1cf043ba1379351462eb2adc288132681503",
+   "pdf_sha256": "e2b18db04d0ec9f554341bebf7ffca869521e44fa0d5c881971a49ba9f9e9bf5",
    "source": "legal/en/15-retention-policy.md",
-   "source_sha256": "3f80278903cf7d71c66421a161fa9a0cc52e6fd820c82d8409a73a34499d246e",
+   "source_sha256": "b0a2f118abf5376fe1a671cf26e8444c05635b32532f96044514f177fe4889c7",
    "title": "15 — Data retention and deletion policy"
   },
   "legal/pdf/en/16-marketing-consent.pdf": {
@@ -531,13 +531,13 @@
    "title": "17 — Staff information notice (Nhill activity log)"
   },
   "legal/pdf/en/18-processing-register.pdf": {
-   "bytes": 31851,
+   "bytes": 39639,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:38+00:00",
+   "generated": "2026-10-28T19:49:49+00:00",
    "lang": "en",
-   "pdf_sha256": "c27b0c4498483479837c1cabb606ef647cd15ce7a91e2e01068cd3a7c74c5d4a",
+   "pdf_sha256": "eafe606619dca7a00fe48f0df92c2b04f0ae6daeffa2688d4fb1d5a5d4e2a192",
    "source": "legal/en/18-processing-register.md",
-   "source_sha256": "282aa3860653cc9046db74d1bc4ab05118071be114434b53db1e1507b06d577b",
+   "source_sha256": "de2ce9f9728771b4b148746ae9d9da78f3addcd53886c532c4c69f662b7e8123",
    "title": "18 — Record of processing activities (Nhill Solution)"
   },
   "legal/pdf/en/19-data-subject-request.pdf": {
@@ -550,14 +550,24 @@
    "source_sha256": "88011f129d4145f0396e6d40bfeb988bf4d6b78c3e6030d58375f27d91b179c3",
    "title": "19 — Personal data rights request form"
   },
-  "legal/pdf/fr/00-recherche-juridique.pdf": {
-   "bytes": 116528,
+  "legal/pdf/en/20-testimonial-image-consent.pdf": {
+   "bytes": 47819,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:08+00:00",
+   "generated": "2026-10-28T19:49:50+00:00",
+   "lang": "en",
+   "pdf_sha256": "70f2c76bd3d8eb49c0eaff5575e38b483161eeed39d1fc794ea3b4a76fe45555",
+   "source": "legal/en/20-testimonial-image-consent.md",
+   "source_sha256": "6c46535c3a78242a87f80af14308e306452d2aa2fca0deb09a772fd654281a2f",
+   "title": "20 — Consent to use a name, testimonial or image"
+  },
+  "legal/pdf/fr/00-recherche-juridique.pdf": {
+   "bytes": 118323,
+   "engine": "playwright",
+   "generated": "2026-10-28T19:49:52+00:00",
    "lang": "fr",
-   "pdf_sha256": "d31ad20cad45cf8761fe6be8542fa9cf65cc2a96c851f668f4a1dd47e735ccd1",
+   "pdf_sha256": "d7f63789cc816d5e881896cdec13577d62fd14f16d9b780797d8f7175052efbf",
    "source": "legal/fr/00-recherche-juridique.md",
-   "source_sha256": "c5d42b710c23f018085516c17ea72e2b62e91b460a64378baa6cc7264d773271",
+   "source_sha256": "90e2d2a887737b15fa29184a2df943da23a5a995b8017ac2ed0dde0da09312ab",
    "title": "Recherche juridique — Nhill en République démocratique du Congo"
   },
   "legal/pdf/fr/01-conditions-generales-utilisation.pdf": {
@@ -581,13 +591,13 @@
    "title": "02 — Conditions de service (abonnement d'un établissement)"
   },
   "legal/pdf/fr/03-politique-confidentialite.pdf": {
-   "bytes": 46678,
+   "bytes": 47699,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:10+00:00",
+   "generated": "2026-10-28T19:49:54+00:00",
    "lang": "fr",
-   "pdf_sha256": "1fa2925c2b52fa3ef823a7bf0272755a4b0efc6fd5438b7272cf2e42baea7b5a",
+   "pdf_sha256": "9054eb6cfd7011ea5d0590bf81e140eb5265efca552cd94f98fa2386b4c5838e",
    "source": "legal/fr/03-politique-confidentialite.md",
-   "source_sha256": "8d264048381ca36546e237fee169006039d60e41dbe99091ea75e6dc5fa02fc5",
+   "source_sha256": "4c287f9960bda724ed45ce66084b92f7dc7198ddf263f39499b29079a6214894",
    "title": "03 — Politique de confidentialité"
   },
   "legal/pdf/fr/04-politique-cookies.pdf": {
@@ -721,13 +731,13 @@
    "title": "14 — Procédure de gestion des violations de données"
   },
   "legal/pdf/fr/15-politique-conservation.pdf": {
-   "bytes": 42593,
+   "bytes": 43719,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:19+00:00",
+   "generated": "2026-10-28T19:49:55+00:00",
    "lang": "fr",
-   "pdf_sha256": "44846d1d1f04b2fc3ffbce42b18488344c7016e207341b067887a92e2e832392",
+   "pdf_sha256": "ff49e4868ab54964c98549650f2843bdf3097e91f25de9eaa935ce5b44cf8981",
    "source": "legal/fr/15-politique-conservation.md",
-   "source_sha256": "2fb3bc2dec37cb9d17cbb758db51151fe8167e8f86dbaac5bb788770669db558",
+   "source_sha256": "49e4f26cfc7877c839e32ed3342c6cc345b4099292f807884482fa2c953078d9",
    "title": "15 — Politique de conservation et de suppression des données"
   },
   "legal/pdf/fr/16-consentement-prospection.pdf": {
@@ -751,13 +761,13 @@
    "title": "17 — Note d'information du personnel (journal d'activité Nhill)"
   },
   "legal/pdf/fr/18-registre-traitements.pdf": {
-   "bytes": 31041,
+   "bytes": 39973,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:22+00:00",
+   "generated": "2026-10-28T19:49:57+00:00",
    "lang": "fr",
-   "pdf_sha256": "4be01ce83e866a23ca09df997cb6cf88029ca0aaaaa13db764d6e285546427ee",
+   "pdf_sha256": "06450385bbd570efce196eb7580153cead4df0d1be0c8a6ffe37980ac53a8f7f",
    "source": "legal/fr/18-registre-traitements.md",
-   "source_sha256": "dcac37d0f364fc6e3254bd74d6ab55f28cf29d4d4f3740bfda5972a2c6bf4862",
+   "source_sha256": "64c82e47d612058c6f3776eed97e9bd62f4e19994694158168ecdbed5cf7427b",
    "title": "18 — Registre des activités de traitement (Nhill Solution)"
   },
   "legal/pdf/fr/19-demande-exercice-droits.pdf": {
@@ -769,6 +779,16 @@
    "source": "legal/fr/19-demande-exercice-droits.md",
    "source_sha256": "b97143ac3fdc697165d2eb24539f244e66923247067d2d73977594c86a1d5a1e",
    "title": "19 — Formulaire d'exercice des droits sur les données personnelles"
+  },
+  "legal/pdf/fr/20-autorisation-temoignage-image.pdf": {
+   "bytes": 49236,
+   "engine": "playwright",
+   "generated": "2026-10-28T19:49:58+00:00",
+   "lang": "fr",
+   "pdf_sha256": "ba3603291f440fc1f4a382642c541f8db7c628a6fe54cfdb1e70be9bdbc30144",
+   "source": "legal/fr/20-autorisation-temoignage-image.md",
+   "source_sha256": "d1f31f2692291e0fa30180353797794cb6a1e235dcfe0a67607e252b776d9c51",
+   "title": "20 — Autorisation d'utiliser un nom, un témoignage ou une image"
   },
   "marketing/pdf/en/01-market-study.pdf": {
    "bytes": 55520,
@@ -791,13 +811,13 @@
    "title": "Nhill pilot programme — Kinshasa"
   },
   "marketing/pdf/en/03-90-day-plan.pdf": {
-   "bytes": 51598,
+   "bytes": 52641,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:38+00:00",
+   "generated": "2026-10-28T19:50:00+00:00",
    "lang": "en",
-   "pdf_sha256": "30c63f6748d43298da42827bf2b5b70f9970ac25dac16e386ba6faba26cf54b3",
+   "pdf_sha256": "c4e443847ce3be813d1b445fe4be6e336c774b5925144f073224f16fd452675a",
    "source": "marketing/en/03-90-day-plan.md",
-   "source_sha256": "c0b0c77f46a241be7920fc71e2eec17d54aef80a45c2fd00f7740739340a49e0",
+   "source_sha256": "4279f28c0fccd98c7a727205a5699da8f55817aa70b4cdfc9461c7a913a0ffc6",
    "title": "90-day launch plan — Kinshasa"
   },
   "marketing/pdf/en/04-icp-qualification.pdf": {
@@ -811,53 +831,53 @@
    "title": "Ideal customer profile (ICP) and qualification grid"
   },
   "marketing/pdf/en/05-prospecting-scripts.pdf": {
-   "bytes": 38485,
+   "bytes": 42399,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:39+00:00",
+   "generated": "2026-10-28T19:50:01+00:00",
    "lang": "en",
-   "pdf_sha256": "9ccde4e61e496ea3e8bc063885e5fb7567edca8e085dedcc1df0a10c5252115f",
+   "pdf_sha256": "1965f63aea281c50cc7ed9a8d2cf77993b812b311def775581ab65e0c8a9bbd5",
    "source": "marketing/en/05-prospecting-scripts.md",
-   "source_sha256": "1e432b62b698701d17ed20f3c0035dd8d32fc8eb136a61c504e7d973edacf936",
+   "source_sha256": "33d4911a9a9463673c1492a06fde95353180cca9fd7da4b717daa119ab7ef846",
    "title": "Prospecting scripts (shop visit, call, WhatsApp voice note)"
   },
   "marketing/pdf/en/06-message-templates.pdf": {
-   "bytes": 45503,
+   "bytes": 59946,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:41+00:00",
+   "generated": "2026-10-28T19:50:03+00:00",
    "lang": "en",
-   "pdf_sha256": "93583ac37e1b68346809783df410d2e68248a7e263168f1a9336b5180795282c",
+   "pdf_sha256": "bff1f6c06757be51a6b610fde5a567b0492e9faab11f132a8065ae8dc9c1b512",
    "source": "marketing/en/06-message-templates.md",
-   "source_sha256": "3d6bd931d6ac28c0e9a713b22032e54aeca0ecbe7229b63c16b07e4057c499da",
+   "source_sha256": "622dc4cedd8378f1b14d3c6e3f614ce63cfdc524ce6f05e30ea012572a17a227",
    "title": "Message templates (WhatsApp, e-mail)"
   },
   "marketing/pdf/en/07-demo-script.pdf": {
-   "bytes": 41196,
+   "bytes": 41991,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:42+00:00",
+   "generated": "2026-10-28T19:50:05+00:00",
    "lang": "en",
-   "pdf_sha256": "04166e8972914b0212427256d847c5c33bcec1f89c68762a479f452c2e0f060a",
+   "pdf_sha256": "264af4f7219710f5c0ca898b7e3950caa8c39e9278ead9a1bb9453d9f0f2219b",
    "source": "marketing/en/07-demo-script.md",
-   "source_sha256": "91aca91e567804ee7583dc07c9bec6d3ce455b76c22e62360a6fd9f58d36191a",
+   "source_sha256": "1ac04f3098334ed2d31de38e3458a76bc441692c3f6e10a3514503fe7c48a125",
    "title": "Demo script (15 to 30 minutes)"
   },
   "marketing/pdf/en/08-sales-process-and-tracking.pdf": {
-   "bytes": 57177,
+   "bytes": 59038,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:44+00:00",
+   "generated": "2026-10-28T19:50:06+00:00",
    "lang": "en",
-   "pdf_sha256": "1698894c08a095eb08fa9f3690ef59a1c64f0fc0e10a03b8b8cec52d7d08858b",
+   "pdf_sha256": "2e6da8513230866cdca3eeb6c8704e85ceb36ac746539cb08200986627277f2d",
    "source": "marketing/en/08-sales-process-and-tracking.md",
-   "source_sha256": "3c5a4423e5164f5f6606f92f6f1235d2da6d268470b300b3bc1b483dc1d39866",
+   "source_sha256": "039d8836964dbd214d49b5737cd21194c6c148b792ab6a728fe6156c0eb4ecd7",
    "title": "Sales process, prospect tracking and questionnaires"
   },
   "marketing/pdf/en/09-partner-model.pdf": {
-   "bytes": 40925,
+   "bytes": 41490,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:58+00:00",
+   "generated": "2026-10-28T19:50:08+00:00",
    "lang": "en",
-   "pdf_sha256": "f28ad3c4dc8b6fa8809735ddae0727fd60c7655781a950223afccfa02bfdbe24",
+   "pdf_sha256": "f3b3a279680273b757bb1620cc42a19b8e2bb5f12db88444b693fd9f4fcd33f5",
    "source": "marketing/en/09-partner-model.md",
-   "source_sha256": "fbfa16fb1cf3160dd9e759758a94f7b47bbad819f1f082fd068273eb5ffc573c",
+   "source_sha256": "149dc3bc9862f3c7074897cfceca934bbb501038e81c336311360535e84b5eba",
    "title": "Partner model"
   },
   "marketing/pdf/en/10-kpis.pdf": {
@@ -871,43 +891,43 @@
    "title": "Key performance indicators (KPIs) and dashboard"
   },
   "marketing/pdf/en/11-video-scripts.pdf": {
-   "bytes": 48233,
+   "bytes": 49547,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:45+00:00",
+   "generated": "2026-10-28T19:50:10+00:00",
    "lang": "en",
-   "pdf_sha256": "691b8aa13858e737a84717b9d740509f813ee516b1af0b97c88cf8bc6ee60e3e",
+   "pdf_sha256": "4c394a0a4aa4ca94917a5e766cb4bb5252fa92bee85d32cbfab4a18df792ee51",
    "source": "marketing/en/11-video-scripts.md",
-   "source_sha256": "35d9ee91f5d3953b52bbfbb9658a168127861c10859a94450e55fdbf28c08e23",
+   "source_sha256": "e25edb009e71e8f94e2c91e7c72885670a2a3b6ff0e9fe4524a843f18af68d88",
    "title": "Video scripts (30, 60 and 90 seconds) — storyboards and FR/EN voice-over"
   },
   "marketing/pdf/en/12-brand-voice.pdf": {
-   "bytes": 35888,
+   "bytes": 35882,
    "engine": "playwright",
-   "generated": "2026-10-28T14:17:00+00:00",
+   "generated": "2026-10-28T19:50:11+00:00",
    "lang": "en",
-   "pdf_sha256": "45b9a12657b0c9bdc848e3207097cfe54735da5a48e782095c0bc3a83702d248",
+   "pdf_sha256": "48fac0e831e3d354659793bafed1cc71c288920a436d371c222f001458bad463",
    "source": "marketing/en/12-brand-voice.md",
-   "source_sha256": "0510341f8ad01ab4d22cba544b20bcfd0439a401abe99e4557d4032113e436ce",
+   "source_sha256": "a871e2c86b881495c4905e3a2f6b37e98d0b284e53f4ba0c238e1cf6f08a452b",
    "title": "Nhill brand voice"
   },
   "marketing/pdf/en/13-pitches.pdf": {
-   "bytes": 30994,
+   "bytes": 30899,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:47+00:00",
+   "generated": "2026-10-28T19:50:13+00:00",
    "lang": "en",
-   "pdf_sha256": "a19ac6584016567723c16299161cd5ac178229651d618919ca25d53e2db81c8a",
+   "pdf_sha256": "e26a6a05873f4a24f52a788aafbd5404c0cc79106c0431576a4609db3ca2677b",
    "source": "marketing/en/13-pitches.md",
-   "source_sha256": "98a23105e0801739a9ec88bd536cedf25ed83bb9192879e216e21d1297813de2",
+   "source_sha256": "bb92028c777797cc5245dbc1b20d4580598477400e9e6533f98bb2b93783ac51",
    "title": "30-second and 2-minute pitches"
   },
   "marketing/pdf/en/14-sales-presentation.pdf": {
-   "bytes": 42287,
+   "bytes": 1278790,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:48+00:00",
+   "generated": "2026-10-28T19:50:15+00:00",
    "lang": "en",
-   "pdf_sha256": "111efefc72ea69f27264a015e4257b1edd0d1d3d127068ebcd3fbc5dca54f938",
+   "pdf_sha256": "8e574a03a177eb80becd8c1e638c199497b233300eee1242eb48fa3ff40ff89d",
    "source": "marketing/en/14-sales-presentation.md",
-   "source_sha256": "c9ecc7d6adb7552128bef46b05202afe267b6484ae42000857bc51af0f089ec6",
+   "source_sha256": "6879dabff0642e089d62c540a323be7cf6ba7c2c01d3c667c4a138a4240e2785",
    "title": "Sales presentation (10 slides)"
   },
   "marketing/pdf/en/15-sales-faq.pdf": {
@@ -921,13 +941,13 @@
    "title": "Sales FAQ (answers for the team and partners)"
   },
   "marketing/pdf/en/16-subscription-financial-study.pdf": {
-   "bytes": 171798,
+   "bytes": 172832,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:52+00:00",
+   "generated": "2026-10-28T19:50:16+00:00",
    "lang": "en",
-   "pdf_sha256": "dbbdba99b765565b36614fa506ac2f95ee23b54350c85c7d4b5a8625f20c3953",
+   "pdf_sha256": "2d1fe4f64bf2f0cb942a692178a987b441ca78d0910a47eca050b9f0503ae611",
    "source": "marketing/en/16-subscription-financial-study.md",
-   "source_sha256": "581068def057d92e903748a543971a1ce065f1b49b11d922cf34b6cbd688bb5b",
+   "source_sha256": "611b21f76a514655f0bb8e29292229aa17abd43b15d4df23304cccec4b1df5bd",
    "title": "Nhill subscriptions: financial and marketing study"
   },
   "marketing/pdf/fr/01-etude-marche.pdf": {
@@ -951,13 +971,13 @@
    "title": "Programme pilote Nhill — Kinshasa"
   },
   "marketing/pdf/fr/03-plan-90-jours.pdf": {
-   "bytes": 52914,
+   "bytes": 53868,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:55+00:00",
+   "generated": "2026-10-28T19:50:18+00:00",
    "lang": "fr",
-   "pdf_sha256": "8c76787ae9081a81c4af8ada034bcd634e2d595dd4c8536c94d2c0ba7f63d54d",
+   "pdf_sha256": "19a4ea640d2fac531ac7106d399b8c3ceaa48acc5c4f81f5e7c3b2a162361e1a",
    "source": "marketing/fr/03-plan-90-jours.md",
-   "source_sha256": "1d28fa06344b317d1713dba016412086b9c6c35dd4ae8678d7703be8dd939e60",
+   "source_sha256": "b4593542cbf60d259a6cd6e39130303a3b9e848a66251e84e0ce387a96edad41",
    "title": "Plan de lancement sur 90 jours — Kinshasa"
   },
   "marketing/pdf/fr/04-icp-qualification.pdf": {
@@ -971,53 +991,53 @@
    "title": "Client idéal (ICP) et grille de qualification"
   },
   "marketing/pdf/fr/05-scripts-prospection.pdf": {
-   "bytes": 39599,
+   "bytes": 43773,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:56+00:00",
+   "generated": "2026-10-28T19:50:20+00:00",
    "lang": "fr",
-   "pdf_sha256": "943ec122499e94817e777c6b58792097f778637285c95452013d3a10914c6562",
+   "pdf_sha256": "6e1c87c340c55064ab00084231995b863bb041d93742d6cc2b6d6d78b8cfcb79",
    "source": "marketing/fr/05-scripts-prospection.md",
-   "source_sha256": "0d93682c22237830a4602b4b8b6097309915591becdee71c60210ebcd2f857ad",
+   "source_sha256": "282c4cde02a7cc5754d29ba2b3930fcd644406f26265e62b12add44099a2e9fb",
    "title": "Scripts de prospection (visite, appel, WhatsApp vocal)"
   },
   "marketing/pdf/fr/06-modeles-messages.pdf": {
-   "bytes": 45827,
+   "bytes": 60915,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:58+00:00",
+   "generated": "2026-10-28T19:50:21+00:00",
    "lang": "fr",
-   "pdf_sha256": "539b565f6fa9adf041fee646907f58cfaacaa3fcba2e02cc40ae2ce62936ab0e",
+   "pdf_sha256": "1021d1640e654dfa3ada6444b2ac143b255598015c2dc66db5588d878366eaa9",
    "source": "marketing/fr/06-modeles-messages.md",
-   "source_sha256": "1c777925765965c9b2af42cf3e5fbafa5ff046ae7eb0c4a473f2313eb9ec7bdf",
+   "source_sha256": "d623fd9cfbcc64ba2171c1a3f4f46bd01fa44300efd49c11937b4210bb144e63",
    "title": "Modèles de messages (WhatsApp, e-mail)"
   },
   "marketing/pdf/fr/07-script-demonstration.pdf": {
-   "bytes": 42886,
+   "bytes": 43642,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:59+00:00",
+   "generated": "2026-10-28T19:50:23+00:00",
    "lang": "fr",
-   "pdf_sha256": "95e6b22db1cfcd4344f7d98a0a9a7d1146d760d1bbc9d333133a80df3beb801c",
+   "pdf_sha256": "f3cba3a9f87120ce5cd457f07ffd033e02df5fc99370a1af2f76b260d416cc69",
    "source": "marketing/fr/07-script-demonstration.md",
-   "source_sha256": "98992c0d1d653aba71a45d5f6f7523a1a09373908dcdd9785ed0be091f9b8ba2",
+   "source_sha256": "4c8271eee0171d8f9116a553d165dc8201077caee10635449e3317c4f379b54b",
    "title": "Script de démonstration (15 à 30 minutes)"
   },
   "marketing/pdf/fr/08-suivi-et-processus.pdf": {
-   "bytes": 56662,
+   "bytes": 58570,
    "engine": "playwright",
-   "generated": "2026-10-28T19:29:01+00:00",
+   "generated": "2026-10-28T19:50:24+00:00",
    "lang": "fr",
-   "pdf_sha256": "9c202621df1b469b7c7ffafdad361f0053dddaf00125c37d887c6f0988aa808a",
+   "pdf_sha256": "2dee788abc2a0e0ad7e7cd6750ba59a3d292d1af27b1a2bf0f5ca71e5996a13f",
    "source": "marketing/fr/08-suivi-et-processus.md",
-   "source_sha256": "d564885f809a7a4e59eb95685ba7742c3c33c7e21d977ec72eda9f3370bd2651",
+   "source_sha256": "2018d53a3230191253208a45c0e0c8697082fc5e72c2a11db25d9c930c271c9d",
    "title": "Processus commercial, suivi des prospects et questionnaires"
   },
   "marketing/pdf/fr/09-modele-partenaires.pdf": {
-   "bytes": 42312,
+   "bytes": 42605,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:46+00:00",
+   "generated": "2026-10-28T19:50:26+00:00",
    "lang": "fr",
-   "pdf_sha256": "24fc600a660bdf66a6fb75e4529a4d66aa4f6a344f1104e818246bb90b068107",
+   "pdf_sha256": "1d67aac7c51d987d91a292fcf27bbfc58e7746a8ef7d01487121a76dd9424a6d",
    "source": "marketing/fr/09-modele-partenaires.md",
-   "source_sha256": "14cb822589842769f90352fca04cf0832c602fb5e6cb064fe4110b752419bee6",
+   "source_sha256": "b54f19a220e7c142a48af880de5409e5f1fbd5835631ca1e17a63eee02de725c",
    "title": "Modèle de partenariat"
   },
   "marketing/pdf/fr/10-indicateurs.pdf": {
@@ -1031,13 +1051,13 @@
    "title": "Indicateurs clés (KPI) et tableau de bord"
   },
   "marketing/pdf/fr/11-scripts-videos.pdf": {
-   "bytes": 49018,
+   "bytes": 50390,
    "engine": "playwright",
-   "generated": "2026-10-28T19:29:02+00:00",
+   "generated": "2026-10-28T19:50:28+00:00",
    "lang": "fr",
-   "pdf_sha256": "e253885469a344bf6170060f952cdf6b05a9307a6c936dbd257a3f8602008cde",
+   "pdf_sha256": "068edc55a2e8c8a53186f24caf8fdff1baa2ad5820869b4a045b6b0359c44563",
    "source": "marketing/fr/11-scripts-videos.md",
-   "source_sha256": "3d62941bdc82d1f02bdf10c92bb3caff0567e630bc2cfac675911d2c93a09f5e",
+   "source_sha256": "74aefbdad964d40928c86a185e04ce6469d573a524787ca7884df03e4636a979",
    "title": "Scripts vidéo (30, 60 et 90 secondes) — storyboards et voix off FR/EN"
   },
   "marketing/pdf/fr/12-voix-de-marque.pdf": {
@@ -1051,23 +1071,23 @@
    "title": "Voix de la marque Nhill"
   },
   "marketing/pdf/fr/13-pitchs.pdf": {
-   "bytes": 31854,
+   "bytes": 31921,
    "engine": "playwright",
-   "generated": "2026-10-28T19:29:05+00:00",
+   "generated": "2026-10-28T19:50:29+00:00",
    "lang": "fr",
-   "pdf_sha256": "1e77637b8aeaf82cee754ab1a8d01d3f5078652ac600e7934617cf2c05499af6",
+   "pdf_sha256": "8271ffa2955d3712fa9aeeb57210decab89e5fe8bafa995e8f56b274aead5aac",
    "source": "marketing/fr/13-pitchs.md",
-   "source_sha256": "1a49bf5edafaac2b8fa5cee2f8ac7f6b3a4e5559a07650064422bf575a98660a",
+   "source_sha256": "d701122e5da213318861813cf638ef11a17fd4744ad51a21bb667c11b57fbfdc",
    "title": "Pitchs de 30 secondes et de 2 minutes"
   },
   "marketing/pdf/fr/14-presentation-commerciale.pdf": {
-   "bytes": 44340,
+   "bytes": 1280895,
    "engine": "playwright",
-   "generated": "2026-10-28T19:29:07+00:00",
+   "generated": "2026-10-28T19:50:31+00:00",
    "lang": "fr",
-   "pdf_sha256": "361ee3f30f4d7091f87d692ccb264e64e579cabcb3de01eae54d953501984636",
+   "pdf_sha256": "9d7eeaba517b8d610f2774299ad6a6e84b6b98f3e74d5e170b7db7d6e552cf63",
    "source": "marketing/fr/14-presentation-commerciale.md",
-   "source_sha256": "9954493c11cae84ca279ab2e575c776bf19063eeef334a7c19c628a204304b08",
+   "source_sha256": "8b832bee1cf4c5aa35dee217722d78779459bbabbaa3d93670f861b25eb0b0f9",
    "title": "Présentation commerciale (10 diapositives)"
   },
   "marketing/pdf/fr/15-faq-commerciale.pdf": {
@@ -1081,13 +1101,13 @@
    "title": "FAQ commerciale (réponses pour l'équipe et les partenaires)"
   },
   "marketing/pdf/fr/16-etude-financiere-abonnements.pdf": {
-   "bytes": 176679,
+   "bytes": 176244,
    "engine": "playwright",
-   "generated": "2026-10-28T19:29:10+00:00",
+   "generated": "2026-10-28T19:50:33+00:00",
    "lang": "fr",
-   "pdf_sha256": "4340e82c10a9977f9928dc9097cd0e3a717577245ac14d407dca43f4a88b58e0",
+   "pdf_sha256": "f9671436afff40cf4ec10b603a2eda89fc9eaaa1acfc55e2dad6447af1eee7d2",
    "source": "marketing/fr/16-etude-financiere-abonnements.md",
-   "source_sha256": "d806e48cbc51da600aa996a8fb50e669b9549f98f6792c8386b2fb7a2c7c15e5",
+   "source_sha256": "5136b1533b711dc397faa4a3918ce951e95891a5e38c07d1229c0102831b849a",
    "title": "Étude financière et marketing des abonnements Nhill"
   }
  }

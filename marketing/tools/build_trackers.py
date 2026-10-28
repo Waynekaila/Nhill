@@ -4,8 +4,9 @@
   python3 marketing/tools/build_trackers.py
   python3 <skill xlsx>/scripts/recalc.py marketing/trackers/kpi-tableau-de-bord.xlsx
 
-Une ligne d'exemple (marquée EXEMPLE, données fictives) montre le format attendu ;
-la supprimer avant usage réel.
+Les fichiers sont livrés vides (en-têtes seulement) : aucune donnée de prospect ou de
+partenaire, réelle ou fictive. Le format de chaque colonne est décrit dans
+marketing/fr/08-suivi-et-processus.md (en anglais : marketing/en/08-sales-process-and-tracking.md).
 """
 import csv, os
 from openpyxl import Workbook
@@ -24,27 +25,21 @@ PROSPECT_FR = ["id", "date_entree", "etablissement", "secteur", "commune", "cont
 PROSPECT_EN = ["id", "entry_date", "business", "sector", "commune", "contact_name", "contact_role", "phone", "email",
                "consent_channel", "consent_date", "source", "score", "status", "last_action", "next_action",
                "next_action_date", "loss_reason", "notes"]
-PROSPECT_EX = ["P-0001", "2026-11-03", "EXEMPLE — Boutique fictive (démo)", "détail", "Limete", "Exemple Nom", "propriétaire",
-               "", "", "WhatsApp", "2026-11-03", "terrain", "15", "démo fixée", "visite", "démonstration", "2026-11-06",
-               "", "ligne d'exemple à supprimer"]
 PARTNER_FR = ["id", "nom", "type", "commune", "date_contrat", "prospects_enregistres", "demos", "pilotes", "clients",
               "encaisse_usd", "commission_due_usd", "commission_payee_usd", "derniere_rencontre", "notes"]
 PARTNER_EN = ["id", "name", "type", "commune", "contract_date", "prospects_recorded", "demos", "pilots", "customers",
               "collected_usd", "commission_due_usd", "commission_paid_usd", "last_meeting", "notes"]
-PARTNER_EX = ["PA-01", "EXEMPLE — Partenaire fictif", "intégrateur", "Gombe", "2026-11-10", "4", "2", "1", "0", "0", "0", "0",
-              "2026-11-24", "ligne d'exemple à supprimer"]
 STATUSES = ["identifié", "contacté", "démo fixée", "démo faite", "pilote proposé", "pilote en cours", "proposition",
             "client", "perdu", "plus tard"]
 
-def write_csv(name, header, example):
+def write_csv(name, header):
     with open(os.path.join(OUT, name), "w", newline="", encoding="utf-8-sig") as f:
-        w = csv.writer(f, delimiter=";")
-        w.writerow(header); w.writerow(example)
+        csv.writer(f, delimiter=";").writerow(header)
 
-write_csv("suivi-prospects.csv", PROSPECT_FR, PROSPECT_EX)
-write_csv("prospect-tracker.csv", PROSPECT_EN, PROSPECT_EX)
-write_csv("suivi-partenaires.csv", PARTNER_FR, PARTNER_EX)
-write_csv("partner-tracker.csv", PARTNER_EN, PARTNER_EX)
+write_csv("suivi-prospects.csv", PROSPECT_FR)
+write_csv("prospect-tracker.csv", PROSPECT_EN)
+write_csv("suivi-partenaires.csv", PARTNER_FR)
+write_csv("partner-tracker.csv", PARTNER_EN)
 
 # ------------------------------------------------------------------ workbook
 F = "Arial"
@@ -119,7 +114,7 @@ BUDGET_TOTAL = f"Budget!$D${t}"; SPENT_TOTAL = f"Budget!$F${t}"
 # --- Hebdo (weekly)
 hb = wb.create_sheet("Hebdo")
 cols = ["Semaine / Week", "Lundi / Monday", "Prospects ajoutés / added", "Contacts", "Démos faites / done",
-        "Pilotes signés / signed", "Pilotes actifs / active", "Pilotes terminés / completed", "Clients",
+        "Essais acceptés / trials accepted", "Pilotes actifs / active", "Pilotes terminés / completed", "Clients",
         "Partenaires signés / signed", "Note recommandation moy. / avg score", "Incidents bloquants > 48 h"]
 header(hb, 1, cols, [10, 13, 13, 11, 12, 12, 12, 13, 10, 13, 16, 14])
 for w in range(1, 14):
@@ -135,8 +130,6 @@ hb["A16"].font = Font(name=F, italic=True)
 # --- Prospects
 pr = wb.create_sheet("Prospects")
 header(pr, 1, [f"{a} / {b}" if a != b else a for a, b in zip(PROSPECT_FR, PROSPECT_EN)], [9, 12, 30, 12, 12, 16, 14, 15, 20, 14, 13, 13, 7, 15, 16, 16, 13, 14, 30])
-for i, v in enumerate(PROSPECT_EX, 1):
-    c = pr.cell(row=2, column=i, value=int(v) if PROSPECT_FR[i-1] == "score" else v); c.font = Font(name=F, italic=True, color="808080")
 dvs = DataValidation(type="list", formula1='"' + ",".join(STATUSES) + '"', allow_blank=True)
 pr.add_data_validation(dvs); dvs.add("N2:N2000")
 pr.freeze_panes = "A2"
@@ -144,8 +137,6 @@ pr.freeze_panes = "A2"
 # --- Partenaires
 pa = wb.create_sheet("Partenaires")
 header(pa, 1, [f"{a} / {b}" if a != b else a for a, b in zip(PARTNER_FR, PARTNER_EN)], [8, 28, 14, 12, 13, 12, 8, 8, 8, 12, 14, 14, 14, 28])
-for i, v in enumerate(PARTNER_EX, 1):
-    c = pa.cell(row=2, column=i, value=int(v) if 6 <= i <= 12 else v); c.font = Font(name=F, italic=True, color="808080")
 pa.freeze_panes = "A2"
 
 # --- Tableau de bord (dashboard), first sheet
@@ -161,8 +152,8 @@ kpis = [
     ("Contacts réalisés", f"=SUM({H_}D2:D14)", 90, "statut ≥ contacté"),
     ("Démos faites", f"=SUM({H_}E2:E14)", 25, "statut ≥ démo faite"),
     ("Taux contact → démo", f"=IFERROR(B8/B7,0)", 0.25, "démos / contacts"),
-    ("Pilotes signés", f"=SUM({H_}F2:F14)", 10, "conventions signées"),
-    ("Taux démo → pilote", f"=IFERROR(B10/B8,0)", 0.40, "pilotes signés / démos"),
+    ("Essais acceptés (pilotes)", f"=SUM({H_}F2:F14)", 10, "conditions de l'essai acceptées par écrit"),
+    ("Taux démo → pilote", f"=IFERROR(B10/B8,0)", 0.40, "essais acceptés / démos"),
     ("Pilotes actifs (dernière semaine saisie)", f"=IFERROR(LOOKUP(2,1/({H_}G2:G14<>\"\"),{H_}G2:G14),0)", 10, "≥ 4 jours d'usage la semaine passée"),
     ("Clients", f"=SUM({H_}I2:I14)", 4, "premier paiement confirmé"),
     ("Taux pilote → client", f"=IFERROR(B13/SUM({H_}H2:H14),0)", 0.40, "clients / pilotes terminés"),

@@ -22,7 +22,7 @@ data during the demo.
 | 14–15 | Outage | explain (without faking an outage): an interrupted operation is retried without duplicates; backup notebook for a long outage | "Nhill needs the Internet to record; it never counts twice." |
 | 15–20 | Questions | answer; note objections | see standard answers in `05` § 1 |
 | 20–25 | Option: invoices and credit | invoice to a customer, partial payment, balance due | "You know who owes you what." |
-| 25–30 | Close | propose the pilot, dates, agreement | "We can install on [day]. It takes half a day and the list of your items." |
+| 25–30 | Close | offer the assisted free trial, agree on the onboarding date, hand over the trial terms | "Which day can we install? It takes half a day and the list of your items." |
 
 ## Watch-outs
 
@@ -51,7 +51,7 @@ data during the demo.
 | Unanswered questions → to whom, by when | |
 | Equipment observed (devices, Internet, power) | |
 | Qualification score (`04` § 3) | /20 |
-| Decision | pilot / follow up on [DATE] / not interested |
+| Decision | trial accepted / follow-up (date recorded in `next_action_date`) / not interested |
 | Consent to messages (channel, date) | |
 | Next action and date | |
 

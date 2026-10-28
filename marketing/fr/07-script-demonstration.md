@@ -22,7 +22,7 @@ personnelle d'un tiers pendant la démo.
 | 14-15 | Coupure | expliquer (sans simuler de fausse coupure) : une opération interrompue se relance sans doublon ; carnet de secours si longue coupure | « Nhill a besoin d'internet pour enregistrer ; il ne compte jamais deux fois. » |
 | 15-20 | Questions | répondre ; noter les objections | voir réponses types dans `05` § 1 |
 | 20-25 | Option : factures et crédit | facture à un client, paiement partiel, solde dû | « Vous savez qui vous doit combien. » |
-| 25-30 | Conclusion | proposer le pilote, dates, convention | « On peut installer [jour]. Il faut une demi-journée et la liste de vos articles. » |
+| 25-30 | Conclusion | proposer l'essai gratuit accompagné, convenir de la date de mise en route, remettre les conditions de l'essai | « Quel jour pouvons-nous installer ? Il faut une demi-journée et la liste de vos articles. » |
 
 ## Points de vigilance
 
@@ -51,7 +51,7 @@ personnelle d'un tiers pendant la démo.
 | Questions sans réponse → à qui, pour quand | |
 | Équipement constaté (appareils, internet, électricité) | |
 | Score de qualification (`04` § 3) | /20 |
-| Décision | pilote / relance le [DATE] / pas d'intérêt |
+| Décision | essai accepté / relance (date à noter dans `date_prochaine_action`) / pas d'intérêt |
 | Consentement aux messages (canal, date) | |
 | Prochaine action et date | |
 

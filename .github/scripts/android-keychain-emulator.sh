@@ -87,15 +87,34 @@ for i in $(seq 1 120); do
   sleep 5
 done
 [[ "$("$ADB" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" == 1 ]] || { echo "émulateur non démarré"; exit 1; }
+# sys.boot_completed peut valoir 1 avant que le gestionnaire d'activités soit joignable
+# (« cmd: Can't find service: activity », vu en CI le 28/10/2026) : attendre le service, et
+# réessayer les commandes « am » s'il redémarre.
+for i in $(seq 1 60); do
+  "$ADB" shell service check activity 2>/dev/null | grep -q ': found' && break
+  sleep 2
+done
+adb_am() {
+  local out=""
+  for i in $(seq 1 20); do
+    if out="$("$ADB" shell "am $1" 2>&1)" && ! grep -q "Can't find service" <<<"$out"; then
+      [[ -n "$out" ]] && printf '%s\n' "$out"
+      return 0
+    fi
+    sleep 3
+  done
+  printf 'am %s : %s\n' "$1" "$out" >&2
+  return 1
+}
 "$ADB" shell getprop ro.build.version.release
 "$ADB" install -r "$APK"
 "$ADB" logcat -c
 
 status=0
 for phase in write read logout forget; do
-  "$ADB" shell am force-stop "$PKG"          # l'application est réellement fermée
+  adb_am "force-stop $PKG"                   # l'application est réellement fermée
   sleep 2
-  "$ADB" shell "am start -W -n $PKG/$ACT -e applicationArguments '--phase $phase'" >/dev/null
+  adb_am "start -W -n $PKG/$ACT -e applicationArguments '--phase $phase'" >/dev/null
   verdict=""
   for i in $(seq 1 60); do
     verdict="$("$ADB" logcat -d 2>/dev/null | grep -o "NHILL_KEYCHAIN_PHASE $phase .*" | tail -n1 | tr -d '\r' || true)"

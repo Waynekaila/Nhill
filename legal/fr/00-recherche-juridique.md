@@ -59,6 +59,7 @@ revoir les modèles cités.
 | H-20 | Aucun niveau de service chiffré (taux de disponibilité, délai de réponse) n'est garanti ; la responsabilité de l'éditeur est plafonnée aux sommes payées sur les 12 mois précédant le fait générateur | 02, 07, 09, 12 | décision de la direction ; avocat (validité du plafond, V-01) | **décidé** le 28/10/2026 |
 | H-17 | Les applications sont fournies sous licence d'utilisation non exclusive, liée à l'abonnement ; le code reste propriété de l'éditeur | 01, 12 | statuts / cession des droits des développeurs | à valider |
 | H-18 | Les partenaires (apporteurs, intégrateurs, formateurs) sont des indépendants, rémunérés à la commission, sans pouvoir de signer au nom de l'exploitant | 10 | avocat ; fiscaliste (retenues) | à valider |
+| H-21 | Le nom ou le logo d'un établissement, le témoignage, l'image et la voix d'une personne ne sont utilisés qu'avec un accord écrit préalable, donné pour chaque usage et retirable à tout moment ; aucune image de mineur | 09, 20 | avocat (V-14) | à valider |
 
 ## 3. Constats par domaine
 
@@ -174,13 +175,14 @@ revoir les modèles cités.
 | 17 | [Note d'information du personnel](17-information-personnel.md) | [Staff information notice](../en/17-staff-notice.md) | fournie aux établissements (journal d'activité) |
 | 18 | [Registre des activités de traitement](18-registre-traitements.md) | [Record of processing activities](../en/18-processing-register.md) | interne |
 | 19 | [Formulaire d'exercice des droits](19-demande-exercice-droits.md) | [Data subject request form](../en/19-data-subject-request.md) | accès, rectification, effacement |
+| 20 | [Autorisation d'utiliser un nom, un témoignage ou une image](20-autorisation-temoignage-image.md) | [Consent to use a name, testimonial or image](../en/20-testimonial-image-consent.md) | témoignages, photos et vidéos, résultats chiffrés |
 
 Chaque document commence par un cartouche : version, statut, hypothèses, points de
 relecture recommandés. Depuis la version 3.0.0, le corps des documents ne contient plus de
 champ entre crochets ni de mention « à valider » : les points à faire relire par un avocat
 sont regroupés au § 5. Les éléments propres à chaque contrat (identité du cocontractant,
 dates, prix, commission) figurent dans la proposition écrite ou la lettre d'accord
-acceptée, et non dans les conditions générales ; seuls les formulaires (16, 17, 19) et les
+acceptée, et non dans les conditions générales ; seuls les formulaires (16, 17, 19, 20) et les
 accords à signer (10, 11) comportent des zones à remplir par le signataire.
 
 ## 5. Clauses nécessitant une validation juridique
@@ -193,13 +195,14 @@ accords à signer (10, 11) comportent des zones à remplir par le signataire.
 | V-04 | Passage en lecture seule après la période de grâce (rappels automatiques avant l'échéance) | 02 | nécessité d'une mise en demeure préalable |
 | V-05 | Transfert des données hors RDC (serveur en France) et garanties | 03, 06, 18 | autorisation préalable, autorité compétente (H-04, H-05) |
 | V-06 | Délai de notification d'une violation (72 h) | 06, 14 | délai exact du Code du numérique |
-| V-07 | Durées de conservation | 03, 15 | prescription, obligations comptables |
+| V-07 | Durées de conservation | 03, 15, 20 | prescription, obligations comptables |
 | V-08 | Consentement à la prospection (opt-in) et preuve | 16 | art. 68 à 72 |
 | V-09 | Information du personnel sur le journal d'activité | 17 | Code du travail, représentation du personnel |
 | V-10 | Rétractation pour les entrepreneurs individuels | 01, 02 | applicabilité de l'art. 61 |
 | V-11 | Commission des partenaires, non-concurrence, non-sollicitation | 10 | validité, fiscalité (retenue à la source) |
 | V-12 | Clause de non-responsabilité fiscale (documents de gestion) | 01, 02 | suffisance au regard de la réforme de la facture normalisée |
 | V-13 | Désignation d'un délégué à la protection des données | 03, 18 | obligation (art. 222) et seuils |
+| V-14 | Utilisation du nom, d'un témoignage, de l'image et de la voix | 09, 20 | fondement (droits de la personnalité, Code du numérique), forme de l'accord, effets du retrait |
 
 ## 6. Liste de validation avant le lancement commercial
 
@@ -211,7 +214,7 @@ accords à signer (10, 11) comportent des zones à remplir par le signataire.
 | 4 | Déposer les déclarations / autorisations de traitement (prospects, clients, sous-traitance) | direction / avocat | collecte de données |
 | 5 | Qualifier l'activité au regard des arrêtés n° 004 et 005/2026 ; vérifier l'éligibilité à une exonération startup | avocat | facturation des abonnements |
 | 6 | Désigner un délégué à la protection des données ou justifier son absence | direction | dépôts |
-| 7 | Faire relire les documents 01 à 19 et les points V-01 à V-13 par un avocat inscrit à un barreau de la RDC | avocat | publication |
+| 7 | Faire relire les documents 01 à 20 et les points V-01 à V-14 par un avocat inscrit à un barreau de la RDC | avocat | publication |
 | 8 | Valider la position fiscale : Nhill = documents de gestion ; facturation des abonnements par Nhill Solution (TVA, facture normalisée) | fiscaliste | premier encaissement |
 | 9 | Publier mentions légales, conditions d'utilisation et politique de confidentialité (pages prêtes dans le site 3.0.0) ; compléter les mentions légales avec l'hébergeur du site vitrine dès qu'il est choisi | direction | ouverture des formulaires |
 | 10 | Tenir le registre des traitements (document 18) et la procédure de violation (document 14) | direction | mise en production |

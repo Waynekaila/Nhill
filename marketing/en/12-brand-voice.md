@@ -25,7 +25,7 @@ higher) and evokes the hill you climb: progress step by step.
 |---|---|
 | management software, application | solution, disruptive platform |
 | sales, stock, till, invoices, customer credit | flows, process, KPIs (with customers) |
-| free pilot programme | revolutionary trial |
+| assisted free trial | revolutionary trial |
 | management document; does not replace the DGI standardised invoice | DGI-compliant, certified, approved |
 | needs the Internet to record; no double entry after a cut | works offline |
 | your data belongs to you; export at any time | 100 % secure data, unbreakable |

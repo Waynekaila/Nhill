@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| Version | 1.1 — 28 October 2026 (Hostinger hosting in France; 1.0 of 27 October 2026) |
+| Version | 1.2 — 28 October 2026 (§ 2.1 updated for Nhill 3.0; 1.1: Hostinger hosting in France; 1.0 of 27 October 2026) |
 | Status | **recommendations subject to the product owner's approval**: no price is published on the website or loaded into the database |
-| Method | public prices collected online on 26 and 27 October 2026 (§ 15), inspection of the Nhill 2.1 code, reproducible financial model (`marketing/tools/subscription_model.py`) |
+| Method | public prices collected online on 26 and 27 October 2026 (§ 15), inspection of the Nhill 3.0 code, reproducible financial model (`marketing/tools/subscription_model.py`) |
 | Legend | **V** verified data, with its source and date; **H** assumption to validate; calculations are made by the script, never by hand |
 | Calculation currency | US dollar (USD); 1 EUR = 1.149 USD (0.87 EUR per USD, August 2026 reading) |
 
@@ -40,16 +40,16 @@
 
 ## 2. The product and its target segments
 
-### 2.1 What exists in Nhill 2.1 (code inspected)
+### 2.1 What exists in Nhill 3.0 (code inspected)
 
 | Area | Available functions |
 |---|---|
-| Sales | quotes, orders, invoices, credit notes as PDF, partial payments, receivables per currency |
-| Till (Nhill POS, Windows and Linux) | sessions, several payment methods per ticket, discounts and voids approved by a supervisor, blind cash count, variance, X and Z reports |
+| Sales | quotes, orders, invoices, credit notes as PDF, partial payments, receivables per currency; same numbering and notices for an invoice issued from the till |
+| Till (Nhill POS, Windows and Linux) | sessions, several payment methods per ticket, change due, 58/80 mm receipt or A4 invoice in the customer's name, returns, discounts and voids approved by a supervisor, blind cash count, variance, X and Z reports |
 | Stock and purchasing | stock per warehouse, movements, threshold alerts, transfers, supplier purchases, expenses |
-| Management | dashboard, PDF and CSV reports, tamper-proof activity log, roles per employee |
-| Platform | Nhill Business on Windows, Linux and Android; English and French; ten currencies (USD, EUR, GBP, CHF, XAF, XOF, CDF, KES, RWF, ZAR); establishments isolated in the database |
-| Subscriptions (Nhill Console) | plans with `max_users`, `max_registers`, `max_warehouses` limits, `multi_warehouse` option, audience (individual, company), prices **per duration (1, 3, 6, 12, 24, 36 months) and per currency**, promo codes, prorated credit when changing plan, 30-day trial (setting), 7-day grace period, read-only after suspension |
+| Management | dashboard, PDF and CSV reports, tamper-proof activity log, roles per employee, full data archive downloadable by the account holder |
+| Platform | Nhill Business on Windows, Linux and Android; English and French; 36 currencies (including USD, EUR, CDF, XAF, XOF, NGN, KES, ZAR); establishments isolated in the database |
+| Subscriptions (Nhill Console) | configurable plans: **9 features that can be switched on** (invoices, quotes, till, purchases, expenses, several warehouses, several currencies, catalogue import, advanced reports) and **6 limits** (users, tills, warehouses, products, documents per month, storage), enforced by the server; a feature outside the plan is invisible to the business; audience (individual, company); prices **per duration (1, 3, 6, 12, 24, 36 months) and per currency**; promo codes; prorated credit when changing plan; trial (30 days by default), grace period (7 days by default) and reminders before the due date, all adjustable; read-only after suspension; permanent erasure possible 90 days after access ends |
 | Collecting subscriptions | manual payment instructions; Stripe (cards) and PayPal adapters **tested only against a local fake service**; Payoneer configured without an adapter |
 
 Out of scope today (to keep in mind for price and competition): general ledger, till on

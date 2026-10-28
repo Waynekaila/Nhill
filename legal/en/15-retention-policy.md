@@ -21,7 +21,9 @@ backups, from which data disappears as they rotate.
 | Requests received through the website | 12 months after sending | `SITE_RETENTION_DAYS=365`, daily purge (`nhill-site-purge.timer`) |
 | IP address fingerprint of the forms | 30 days | `SITE_IP_RETENTION_DAYS=30`, same purge |
 | Website anti-abuse counters | 2 days | same purge |
+| Contacts collected at meetings and through referrals (prospect tracker) | 12 months after the last exchange; data carried into the account if a subscription follows | rows deleted from `marketing/trackers/prospect-tracker.csv` and the tracking workbook at the monthly review |
 | Agreement to receive news | until withdrawal, at the latest until the request is deleted | `python3 -m nhill_site.cli unsubscribe --email …`; register (document 16) for agreements collected outside the website |
+| Consents to use a name, testimonial or image (document 20) | while the content is used, then until the end of the claim period (V-07) | administrative records; register of document 20 (withdrawal date, date the content was removed) |
 | A business's data (accounts, customers, products, documents, stock, payments, activity log, support requests) | term of the contract, then 90 days of read-only export | permanent deletion from the administration console, possible only after these 90 days (article 3) |
 | The business's accounting records | 10 years, **the business's responsibility** | CSV and PDF export, full data archive |
 | Subscription invoices issued by Nhill Solution | 10 years | Nhill Solution's accounts |

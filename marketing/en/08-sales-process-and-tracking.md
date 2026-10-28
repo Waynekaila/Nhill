@@ -35,7 +35,7 @@ English-header copy is `prospect-tracker.csv`) and the "Prospects" sheet of
 | `contact_nom`, `contact_role` | contact name and role |
 | `telephone`, `email` | only if given by the person |
 | `consentement_canal`, `consentement_date` | e.g. `WhatsApp`, `2026-11-03` (empty = no commercial message) |
-| `source` | field / referral / website / partner:[ID] / event |
+| `source` | field / referral / website / event / `partenaire:` followed by the partner's identifier (`id` column of the partner tracker, e.g. `partenaire:PA-01`) |
 | `score` | grid `04` § 3 (/20) |
 | `statut` | see § 1 |
 | `derniere_action`, `prochaine_action`, `date_prochaine_action` | last action, next action, date |
@@ -52,7 +52,7 @@ The file holds personal data: access limited to the sales team, retention accord
 3. Compute the KPIs (`10`), compare with the plan's goal (`03`).
 4. One decision: what to stop, what to reinforce.
 
-## 4. Satisfaction questionnaire — mid-pilot (W4, 5 minutes)
+## 4. Satisfaction questionnaire — mid-trial (week 2, 5 minutes)
 
 1. How many days a week do you use Nhill? (0–1 / 2–3 / 4–6)
 2. What helps you most? (till, stock, invoices, reports, activity log, other)
@@ -64,18 +64,20 @@ The file holds personal data: access limited to the sales team, retention accord
 
 ## 5. End-of-trial questionnaire (D30, 10 minutes)
 
-1. Questions 1, 2, 3 and 6 of the mid-pilot questionnaire again.
-2. Compared with the start, closing the till takes: more / the same / less time. (Complete
+1. Questions 1, 2, 3 and 6 of the mid-trial questionnaire again.
+2. Compared with the start, closing the till takes: more / the same / less time. (Compare
    with the timed measurement.)
 3. Till or stock differences have: increased / stayed stable / decreased / I don't know.
 4. What do you spend today to manage your sales (notebooks, spreadsheet, software, a
    dedicated person)? (free answer, amount optional)
 5. At what monthly price would Nhill seem: too expensive to consider / expensive but
    possible / a good deal / so low you'd doubt the quality? (free amounts, in CDF or USD)
-6. Do you want to continue after the pilot? (yes / yes, if: … / no: why)
-7. Do you agree that we quote your feedback? (no / yes, anonymously / yes, with name —
-   separate consent form to sign, agreement article 7)
+6. Do you want to continue after the trial? (yes / yes, if: … / no: why)
+7. Do you agree that we quote your feedback? (no / yes, anonymously / yes, with name).
+   If yes: separate consent to sign, on the exact text
+   ([`legal/en/20-testimonial-image-consent.md`](../../legal/en/20-testimonial-image-consent.md)).
+   A "yes" in the questionnaire is not enough to publish.
 
 ## 6. Follow-up and referral templates
 
-See `06-message-templates.md` § 3 (follow-up), § 7 (referral), § 9 (end of pilot).
+See `06-message-templates.md` § 3 (follow-up), § 7 (referral), § 9 (end of trial).

@@ -7,13 +7,13 @@ Page publique : `website/src/pages/fr/partenaires.html`.
 
 ## 1. Types de partenaires
 
-| Type | Qui | Ce qu'il fait | Rémunération proposée **[à valider]** | Ce que Nhill fournit |
+| Type | Qui | Ce qu'il fait | Rémunération | Ce que Nhill fournit |
 |---|---|---|---|---|
-| Apporteur | commerçant influent, comptable indépendant, agent de terrain | présente Nhill, enregistre le prospect avant tout contact de Nhill | commission de [N] % des sommes encaissées pendant 12 mois | fiche partenaire, vidéo, lien de formulaire, relevé mensuel |
+| Apporteur | commerçant influent, comptable indépendant, agent de terrain | présente Nhill, enregistre le prospect avant tout contact de Nhill | commission sur les sommes effectivement encaissées ; taux et durée fixés dans la lettre d'accord | fiche partenaire, lien du formulaire, relevé de chaque paiement de commission |
 | Intégrateur | prestataire informatique, revendeur de matériel (imprimantes de tickets, tablettes) | installe, importe le catalogue, assistance de premier niveau | facture ses prestations au client ; commission éventuelle | formation technique de 2 h, documentation, accès de démonstration |
 | Formateur | école de gestion, centre de formation, formateur indépendant | forme les utilisateurs | facture sa formation ; supports Nhill gratuits | supports de formation, établissement de démonstration |
-| Organisation d'accompagnement | association de commerçants, incubateur, structure d'appui aux PME, fédération | fait connaître Nhill, accueille des ateliers | pas de commission par défaut ; places au pilote, atelier gratuit pour les membres | atelier clé en main, places réservées |
-| Utilisateur de référence | pilote satisfait | reçoit d'autres commerçants, **seulement s'il le souhaite** | [remise sur son abonnement] | — |
+| Organisation d'accompagnement | association de commerçants, incubateur, structure d'appui aux PME, fédération | fait connaître Nhill, accueille des ateliers | pas de commission sauf mention dans la lettre d'accord ; places réservées à l'essai gratuit accompagné, atelier gratuit pour les membres | atelier clé en main, places réservées |
+| Utilisateur de référence | établissement client satisfait | reçoit d'autres commerçants, **seulement s'il le souhaite** | aucune, sauf contrepartie écrite dans la lettre d'accord, mentionnée à côté de tout témoignage publié ([`legal/fr/20`](../../legal/fr/20-autorisation-temoignage-image.md)) | — |
 
 ## 2. Règles
 

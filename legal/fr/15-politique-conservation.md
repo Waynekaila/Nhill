@@ -21,7 +21,9 @@ suppression couvre aussi les sauvegardes, qui disparaissent à leur rotation.
 | Demandes reçues par le site | 12 mois après l'envoi | `SITE_RETENTION_DAYS=365`, purge quotidienne (`nhill-site-purge.timer`) |
 | Empreinte de l'adresse IP des formulaires | 30 jours | `SITE_IP_RETENTION_DAYS=30`, même purge |
 | Compteurs anti-abus du site | 2 jours | même purge |
+| Contacts recueillis lors de rencontres et de recommandations (suivi des prospects) | 12 mois après le dernier échange ; données reprises dans le compte si un abonnement suit | suppression des lignes dans `marketing/trackers/suivi-prospects.csv` et le classeur de suivi lors de la revue mensuelle |
 | Accord pour recevoir des nouvelles | jusqu'au retrait, au plus tard jusqu'à la suppression de la demande | `python3 -m nhill_site.cli unsubscribe --email …` ; registre (document 16) pour les accords recueillis hors du site |
+| Autorisations d'utiliser un nom, un témoignage ou une image (document 20) | tant que le contenu est utilisé, puis jusqu'à la fin du délai de réclamation (V-07) | dossier administratif ; registre du document 20 (date du retrait, date de retrait du contenu) |
 | Données d'un établissement (comptes, clients, produits, documents, stock, paiements, journal d'activité, demandes d'assistance) | durée du contrat, puis 90 jours d'export en lecture seule | suppression définitive par la console d'administration, possible seulement après ces 90 jours (article 3) |
 | Pièces comptables de l'établissement | 10 ans, **à la charge de l'établissement** | export CSV et PDF, archive complète des données |
 | Factures d'abonnement émises par Nhill Solution | 10 ans | comptabilité de Nhill Solution |

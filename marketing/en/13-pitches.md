@@ -38,8 +38,12 @@
 > **Where we are.** Version 3.0 is built and tested; we offer a 30-day assisted free trial to
 > a small number of businesses, to set prices from measured results.
 >
-> **What we ask.** [For a trader:] fifteen minutes for a demo with your products. [For a
-> partner:] introduce us to traders in your network, or host a workshop for your members.
+> **What we ask.** Fifteen minutes for a demo with your products.
+
+Ending to use with a partner, instead of the last sentence:
+
+> **What we ask.** Introduce us to traders in your network, or host a workshop for your
+> members.
 
 Source of the figure quoted: Malabar, Innogence Consulting, King Baudouin Foundation,
 "Transformation digitale en RDC : état des lieux des MPME", April 2025 (non-representative

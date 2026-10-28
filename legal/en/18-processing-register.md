@@ -21,9 +21,11 @@
 | T7 | Businesses' data | **processor** | provide the Service | customers, suppliers, employees of businesses | see document 06 | the business's | — | France (Hostinger): **transfer outside the DRC** | term of the contract + 90 days | row-level security enforced by the database, HTTPS, encrypted backups |
 | T8 | Operating statistics | controller | operate the Service | businesses (overall figures) | counts, volumes per currency | legitimate interest | management, support | France (Hostinger) | calculated on request, not stored | no personal data; consultation recorded in the business's log |
 | T9 | Technical server logs | controller | security, diagnosis | users, visitors | IP address, date, request | legitimate interest | operations | France (Hostinger) | 90 days at most | server administrator access only |
+| T10 | Prospect and partner tracking | controller | follow up on meetings and referrals, track partners | prospects, partners | name, position, business, commune, contact details given, consent and channel, notes, partners' collected amounts and commissions | legitimate interest; consent for messages; contract (partners) | sales team | team tracking files | prospects: 12 months after the last exchange; partners: term of the contract, then accounting records 10 years | access limited to the sales team, never published (`marketing/en/08-sales-process-and-tracking.md`) |
+| T11 | Testimonials, photos and videos | controller | present Nhill | people who give a testimonial or appear, businesses | name, position, text, image, voice, approved figure | written consent (document 20) | audience of the chosen media | website, social networks, documents | while the content is used, then until the end of the claim period | register of document 20, removal on request |
 
 History of changes and formalities:
 
 | Date | Change or formality (reference) | Author |
 |---|---|---|
-| 28 October 2026 | version 3.0.0: Hostinger hosting in France, periods aligned with the privacy policy | Nhill Solution |
+| 28 October 2026 | version 3.0.0: Hostinger hosting in France, periods aligned with the privacy policy; prospect and partner tracking (T10) and testimonials (T11) added | Nhill Solution |
