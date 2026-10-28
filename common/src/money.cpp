@@ -17,11 +17,14 @@ struct CurrencyInfo {
 
 // Subset of ISO 4217 relevant to the target markets. Extend through the
 // server `currencies` table; this list only serves validation/formatting.
-constexpr std::array<CurrencyInfo, 22> kCurrencies{{
+// ISO 4217 minor units of the currencies the platform offers (migrations 0004 and 0013).
+constexpr std::array<CurrencyInfo, 36> kCurrencies{{
     {"CDF", 2}, {"USD", 2}, {"EUR", 2}, {"XAF", 0}, {"XOF", 0}, {"RWF", 0},
     {"BIF", 0}, {"UGX", 0}, {"KES", 2}, {"TZS", 2}, {"ZAR", 2}, {"ZMW", 2},
     {"AOA", 2}, {"GBP", 2}, {"CHF", 2}, {"CAD", 2}, {"CNY", 2}, {"JPY", 0},
-    {"AED", 2}, {"NGN", 2}, {"GHS", 2}, {"MAD", 2},
+    {"AED", 2}, {"NGN", 2}, {"GHS", 2}, {"MAD", 2}, {"AUD", 2}, {"BRL", 2},
+    {"DKK", 2}, {"DZD", 2}, {"EGP", 2}, {"ETB", 2}, {"GNF", 0}, {"INR", 2},
+    {"MZN", 2}, {"NOK", 2}, {"PLN", 2}, {"SAR", 2}, {"SEK", 2}, {"TND", 3},
 }};
 
 constexpr i128 kI64Max = std::numeric_limits<int64_t>::max();

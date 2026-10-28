@@ -8,6 +8,7 @@
 
 #include "db.hpp"
 #include "harness.hpp"
+#include "nhill/money.hpp"
 #include "services/documents.hpp"
 
 using namespace nht;
@@ -239,4 +240,13 @@ TEST(Documents, TillInvoiceNeedsTheInvoiceFeature) {
                   t.token);
     EXPECT_EQ(r.status, 403);
     EXPECT_EQ(r.body["error"]["code"], "feature_not_included");
+}
+
+// Amounts are formatted by the shared library (server and applications): every currency
+// offered by the database must be known there with the same number of decimals.
+TEST(Documents, EveryCurrencyHasTheSameMinorUnitsEverywhere) {
+    auto rows = Harness::get().su("SELECT code, minor_units FROM currencies WHERE active ORDER BY code");
+    EXPECT_GE(rows.size(), 30u);
+    for (const auto& r : rows)
+        EXPECT_EQ(nhill::currencyMinorUnits(r[0].c_str()), r[1].as<int>()) << r[0].c_str();
 }
