@@ -160,6 +160,16 @@
    "source_sha256": "5f9d8e28f65827703751ede8f047d3743385201da49b9e12cdeab2a6519269c9",
    "title": "Deploying Nhill Server on a Hostinger VPS (France)"
   },
+  "docs/pdf/en/website-compliance-matrix.pdf": {
+   "bytes": 86196,
+   "engine": "playwright",
+   "generated": "2026-10-28T14:38:12+00:00",
+   "lang": "en",
+   "pdf_sha256": "3d4b194dbff44769cbf0d2fed21d07e50b21ea18487958c3d88760664f1dec29",
+   "source": "docs/en/website-compliance-matrix.md",
+   "source_sha256": "cda502e7ddf774a01717cc641f61ca35ef89864f9f5813ac45fb2a39b445318a",
+   "title": "Compliance matrix: marketing website and application (3.0.0)"
+  },
   "docs/pdf/en/website.pdf": {
    "bytes": 180372,
    "engine": "playwright",
@@ -269,6 +279,16 @@
    "source": "docs/fr/guide-utilisateur.md",
    "source_sha256": "7416fe29d96cc2b88fa498bdeff7c12d793bb47451f04327355fed6aa2ff3218",
    "title": "Nhill 2.1 — Guide utilisateur"
+  },
+  "docs/pdf/fr/matrice-conformite-site.pdf": {
+   "bytes": 88332,
+   "engine": "playwright",
+   "generated": "2026-10-28T14:38:10+00:00",
+   "lang": "fr",
+   "pdf_sha256": "3db13b800355a8abfe1c423681c9f2fa80ba1d0c06826b42d5a5157f428accec",
+   "source": "docs/fr/matrice-conformite-site.md",
+   "source_sha256": "20409bcbbb111caabc0981553739ed3675fe09af0f909dd186fc97ca90465bfe",
+   "title": "Matrice de conformité : site vitrine et application (3.0.0)"
   },
   "docs/pdf/fr/parametres-legaux.pdf": {
    "bytes": 73484,

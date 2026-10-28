@@ -14,6 +14,7 @@ docs/fr/guide-configuration.md -> docs/pdf/fr/guide-configuration.pdf
 docs/fr/guide-developpement.md -> docs/pdf/fr/guide-developpement.pdf
 docs/fr/guide-installation.md -> docs/pdf/fr/guide-installation.pdf
 docs/fr/deploiement-vps-hostinger.md -> docs/pdf/fr/deploiement-vps-hostinger.pdf
+docs/fr/matrice-conformite-site.md -> docs/pdf/fr/matrice-conformite-site.pdf
 docs/fr/guide-utilisateur.md -> docs/pdf/fr/guide-utilisateur.pdf
 docs/fr/parametres-legaux.md -> docs/pdf/fr/parametres-legaux.pdf
 docs/fr/rapport-validation.md -> docs/pdf/fr/rapport-validation.pdf
@@ -30,6 +31,7 @@ docs/en/configuration-guide.md -> docs/pdf/en/configuration-guide.pdf
 docs/en/developer-guide.md -> docs/pdf/en/developer-guide.pdf
 docs/en/installation-guide.md -> docs/pdf/en/installation-guide.pdf
 docs/en/vps-deployment-hostinger.md -> docs/pdf/en/vps-deployment-hostinger.pdf
+docs/en/website-compliance-matrix.md -> docs/pdf/en/website-compliance-matrix.pdf
 docs/en/legal-parameters.md -> docs/pdf/en/legal-parameters.pdf
 docs/en/security.md -> docs/pdf/en/security.pdf
 docs/en/user-guide.md -> docs/pdf/en/user-guide.pdf
