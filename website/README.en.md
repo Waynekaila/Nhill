@@ -3,7 +3,7 @@
 *Version française : [README.md](README.md)*
 
 This folder holds the public Nhill website and the small service that receives its forms
-(demo, pilot programme, partnership, contact). It is **separate** from the Nhill
+(demo, assisted free trial, partnership, contact). It is **separate** from the Nhill
 application: different database, different roles, different secrets. A breach of the
 website gives no access to the shops' data.
 
@@ -15,7 +15,8 @@ website gives no access to the shops' data.
 | Public configuration | `config/site.json` | three public values only (see § 3) |
 | Form backend | `backend/` | standard Python 3 (+ psycopg 3 for PostgreSQL) |
 | Deployment | `backend/deploy/` | systemd unit, daily purge, Caddyfile snippet |
-| Tools | `tools/` | generation, checks, public configuration |
+| Tools | `tools/` | generation, checks, public configuration, live domain check (`check_live.py`) |
+| Screenshots | `assets/images/capture-*.webp`, `assets/images/og-nhill.jpg` | real screenshots of the applications (automatic tour `scripts/qa/ui-screenshots.sh`, demo data), imported with `tools/import_screenshots.py DIRECTORY`, which also updates the sizes declared in the pages |
 
 ## 1. Security model
 

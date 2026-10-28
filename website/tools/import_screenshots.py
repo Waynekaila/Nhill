@@ -37,7 +37,6 @@ MAP: dict[str, list[str]] = {
     "capture-equipe": ["business-1366x768-19-equipe.png"],
     "capture-telephone-tableau-de-bord": ["business-telephone-05-tableau-de-bord.png"],
     "capture-rendu-monnaie": ["pos-1366x768-p05-rendu-monnaie.png"],
-    "capture-caisse-ticket": ["pos-1366x768-p07-ticket.png"],
     "capture-session-caisse": ["pos-1366x768-p10-session-cloturee.png"],
 }
 

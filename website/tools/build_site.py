@@ -152,7 +152,7 @@ def render(lang, slug, meta, body, base_url, contacts=None):
                "applicationCategory": "BusinessApplication", "applicationSubCategory": "Point of sale, invoicing, inventory",
                "operatingSystem": "Windows 10, Windows 11, Linux, Android", "inLanguage": ["fr", "en"],
                "description": meta["description"], "url": canonical,
-               "screenshot": f"{base_url}/assets/images/capture-caisse-ticket.webp",
+               "screenshot": f"{base_url}/assets/images/capture-rendu-monnaie.webp",
                "featureList": meta.get("features", [])}
         version = product_version()
         if version:
@@ -172,7 +172,7 @@ def render(lang, slug, meta, body, base_url, contacts=None):
     if faq:
         ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": faq})
     ld_html = "".join('<script type="application/ld+json">' + json.dumps(x, ensure_ascii=False) + "</script>" for x in ld)
-    og_image = meta.get("og_image", "capture-caisse-ticket.webp")
+    og_image = meta.get("og_image", "og-nhill.jpg")
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -191,6 +191,9 @@ def render(lang, slug, meta, body, base_url, contacts=None):
 <meta property="og:description" content="{html.escape(meta['description'])}">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{base_url}/assets/images/{og_image}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{'Nhill POS : vente enregistrée et monnaie à rendre (capture réelle, données de démonstration)' if lang == 'fr' else 'Nhill POS: sale recorded and change due (real screenshot, demo data)'}">
 <meta property="og:locale" content="{'fr_FR' if lang == 'fr' else 'en_US'}">
 <meta property="og:locale:alternate" content="{'en_US' if lang == 'fr' else 'fr_FR'}">
 <meta name="twitter:card" content="summary_large_image">

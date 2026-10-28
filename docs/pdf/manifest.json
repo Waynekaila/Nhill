@@ -171,13 +171,13 @@
    "title": "Compliance matrix: marketing website and application (3.0.0)"
   },
   "docs/pdf/en/website.pdf": {
-   "bytes": 180372,
+   "bytes": 182514,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:07+00:00",
+   "generated": "2026-10-28T19:15:55+00:00",
    "lang": "en",
-   "pdf_sha256": "16fb6a7a132c4b6afbc1510755bca1191a5ba2994a24d81ff1f6ed86f82c24db",
+   "pdf_sha256": "fe10b028fad90f3b95b020ed9e7308a1cf89b692bfa636f701be66317435fc53",
    "source": "website/README.en.md",
-   "source_sha256": "dd795932ed52a6e8adca68703b756476b1215481e3039069cfbff736589979bc",
+   "source_sha256": "f22ef2722394bc48bf845f35beefd7d90f660fc4e8c889084a739cc23969490a",
    "title": "Nhill website — deployment and database"
   },
   "docs/pdf/fr/01-audit-technique.pdf": {
@@ -321,13 +321,13 @@
    "title": "Nhill 2.1 — Sécurité"
   },
   "docs/pdf/fr/site-vitrine.pdf": {
-   "bytes": 183618,
+   "bytes": 185729,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:55+00:00",
+   "generated": "2026-10-28T19:15:54+00:00",
    "lang": "fr",
-   "pdf_sha256": "4d98683a21682c2117e48a31240edb17ff2f4cec038008d25becff6ccf38b132",
+   "pdf_sha256": "32f993ffc65f8bc7559b0ec0c7a1ea2e93efe6d7c774ea5ba5b4cc87938d4b93",
    "source": "website/README.md",
-   "source_sha256": "c80a313d9058bff586cf70d385647a38cee59b3854d40e11adcc683ef4a56be1",
+   "source_sha256": "55b4e3dc3e0c332b6a3cdb6df8304af276760bff6dc89b34684cdd6334d1621c",
    "title": "Site vitrine Nhill — mise en service et base de données"
   },
   "legal/pdf/en/00-legal-research.pdf": {

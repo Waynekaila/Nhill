@@ -3,7 +3,7 @@
 *English version: [README.en.md](README.en.md)*
 
 Ce dossier contient le site public de Nhill et le petit service qui reçoit ses formulaires
-(démonstration, programme pilote, partenariat, contact). Il est **indépendant** de
+(démonstration, essai gratuit accompagné, partenariat, contact). Il est **indépendant** de
 l'application Nhill : autre base de données, autres rôles, autres secrets. Une fuite du
 site ne donne aucun accès aux données des commerces.
 
@@ -15,7 +15,8 @@ site ne donne aucun accès aux données des commerces.
 | Configuration publique | `config/site.json` | trois valeurs publiques seulement (voir § 3) |
 | Backend des formulaires | `backend/` | Python 3 standard (+ psycopg 3 pour PostgreSQL) |
 | Déploiement | `backend/deploy/` | unité systemd, purge quotidienne, extrait Caddyfile |
-| Outils | `tools/` | génération, contrôle, configuration publique |
+| Outils | `tools/` | génération, contrôle, configuration publique, contrôle du domaine en ligne (`check_live.py`) |
+| Captures d'écran | `assets/images/capture-*.webp`, `assets/images/og-nhill.jpg` | captures réelles des applications (visite automatique `scripts/qa/ui-screenshots.sh`, données de démonstration), importées avec `tools/import_screenshots.py DOSSIER`, qui met aussi à jour les dimensions déclarées dans les pages |
 
 ## 1. Principe de sécurité
 
