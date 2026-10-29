@@ -1,4 +1,4 @@
-# Nhill 2.1 — Guide de configuration
+# Nhill 3.0 — Guide de configuration
 
 *English: [../en/configuration-guide.md](../en/configuration-guide.md)*
 
@@ -99,7 +99,8 @@ calculées à chaque ouverture en fonction de l'écran disponible.
 | Écran | Réglages |
 |---|---|
 | Paramètres de la plateforme | durée d'essai (30 j par défaut), période de grâce, rappel, rotation des codes d'établissement (30 j), limites, instructions de paiement ; 2.1 : `password_reset_minutes` (validité du code envoyé par e-mail, 20 min, 5 à 60), `password_reset_max_attempts` (codes erronés avant annulation, 5, 1 à 10), `temporary_password_hours` (validité d'un mot de passe temporaire, 72 h, 1 à 168) |
-| Offres et tarifs | offres, plafonds (utilisateurs, caisses POS, dépôts), fonctionnalités, **prix par durée et par devise** |
+| Offres et tarifs | formules : 9 fonctions activables et 6 limites (utilisateurs, caisses, dépôts, produits, documents par mois, stockage), conditions (essai, grâce, rappels, libre-service, renouvellement automatique, formule de repli), **prix par durée et par devise** — [nhill-console.md](nhill-console.md) § 5 |
+| Règles d'attribution | formule donnée automatiquement à un nouvel établissement (type, pays, essai ou période accordée) — [nhill-console.md](nhill-console.md) § 6 |
 | Codes promo | remises de lancement ou de partenariat |
 | Prestataires de paiement | identifiants (chiffrés, jamais réaffichés), mode test/production, adresse de webhook |
 
@@ -107,7 +108,7 @@ calculées à chaque ouverture en fonction de l'écran disponible.
 
 | Onglet | Réglages principaux |
 |---|---|
-| Établissement | identité, identifiants légaux, logo, langue des documents, délai de paiement, arrondi des taxes, pied de page, stock négatif |
+| Établissement | identité, fuseau horaire, identifiants légaux, logo, langue des documents, délai de paiement, arrondi des taxes, instructions de paiement, mentions imprimées sur chaque document, pied de page, stock négatif, export complet des données |
 | Taxes et comptes | taux de taxe (TVA 16 % en RDC selon le profil ; un taux ne se modifie pas), caisses et comptes bancaires, taux de change datés |
 | Point de vente | caisses, caissiers autorisés, moyens de paiement, remise maximale sans validation, ticket 58/80 mm |
 | Équipe | rôles, invitations, réinitialisation du mot de passe d'un membre |
@@ -116,7 +117,7 @@ calculées à chaque ouverture en fonction de l'écran disponible.
 
 `server/profiles/*.json` : profils fiscaux (taux, mentions, numérotation) synchronisés en
 base au démarrage. Un document émis garde la version du profil appliqué. Détails :
-`docs/modeles-et-profils.md`. Les valeurs fiscales des profils doivent être vérifiées par
+`docs/archive/modeles-et-profils.md`. Les valeurs fiscales des profils doivent être vérifiées par
 un professionnel avant usage (voir [parametres-legaux.md](parametres-legaux.md)).
 
 ## 4. Règle des mots de passe (2.0, inchangée en 2.1)

@@ -119,7 +119,7 @@ deploy/            systemd, Caddy (TLS), sauvegarde/restauration chiffrées
 * RLS forcée sur 30 tables métier (`establishment_id = nh_current_establishment()`),
   clés étrangères composites empêchant les références inter-établissements.
 * 18 tables de plate-forme sans RLS par conception (sessions, abonnements, journal…),
-  protégées par les requêtes du serveur (revue documentée dans `docs/securite.md`).
+  protégées par les requêtes du serveur (revue documentée dans `docs/archive/securite.md`).
 * Migrations immuables : une migration modifiée après application est refusée.
 
 ### 2.7 Configuration
@@ -172,7 +172,7 @@ deploy/            systemd, Caddy (TLS), sauvegarde/restauration chiffrées
 | Contrôle statique QML (`scripts/qa/qml-check.py` : équilibre des délimiteurs, analyse JavaScript de 4 201 liaisons/fonctions par Node.js, modules, traductions) | 0.1.0 : 0 erreur ; 2.0.0 : 0 erreur, 0 chaîne non traduite | Réalisé et testé |
 | Démarrage des binaires 0.1.0 livrés (Xvfb 1366×768) | Nhill POS, Business, Console démarrent, écran de connexion affiché | Réalisé et testé |
 | Compilation complète (serveur + clients) et `ctest` | **Non exécutable ici** (dépendances indisponibles) | Bloqué — exécuté par la CI fournie (`.github/workflows/ci.yml`) |
-| Rapport de tests 0.1.0 du projet | 18 + 82 (1 ignoré) + 6 + 13 réussis | Repris de `docs/rapport-tests.md` |
+| Rapport de tests 0.1.0 du projet | 18 + 82 (1 ignoré) + 6 + 13 réussis | Repris de `docs/archive/rapport-tests.md` |
 
 ## 4. Défauts et dettes techniques identifiés
 

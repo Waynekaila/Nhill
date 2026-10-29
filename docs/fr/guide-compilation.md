@@ -1,8 +1,8 @@
-# Nhill 2.1 — Guide de compilation et de livraison
+# Nhill 3.0 — Guide de compilation et de livraison
 
 *English: [../en/build-guide.md](../en/build-guide.md)*
 
-Comment produire, vérifier et assembler les livrables de la version 2.1.0 sur une machine
+Comment produire, vérifier et assembler les livrables de la version 3.0.0 sur une machine
 **neuve**. Tous les scripts sont dans `scripts/`, écrits en Bash strict
 (`set -Eeuo pipefail`), et partagent `scripts/lib/common.sh`.
 
@@ -17,7 +17,7 @@ Comment produire, vérifier et assembler les livrables de la version 2.1.0 sur u
 | PDF de la documentation | toute machine avec pandoc + moteur PDF | `build-docs-pdf.sh` | `docs/pdf/`, `legal/pdf/`, `marketing/pdf/`, `README*.pdf` |
 | Site vitrine (archive) | toute machine avec Python 3 | `build-website.sh` | `dist/website/` |
 | Contrôle des livrables | — | `verify-build.sh` | `build/logs/verify-build-*.log` |
-| Dossier de livraison | — | `package-release.sh` | `release/V2.1.0/` |
+| Dossier de livraison | — | `package-release.sh` | `release/V3.0.0/` |
 | Tout ce qui est possible ici | — | `build-all.sh` | résumé réussi / ignoré / échoué |
 
 Un paquet `.deb` dépend des versions de bibliothèques de sa distribution : ne copiez pas un
@@ -97,8 +97,8 @@ powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
 ```
 
 `-ExecutionPolicy Bypass` ne s'applique qu'à cette commande ; ne modifiez pas la stratégie
-d'exécution de la machine. Résultat, dans `build-windows\dist\` : `nhill-business-2.1.0-setup.exe`,
-`nhill-pos-2.1.0-setup.exe`, `nhill-console-2.1.0-setup.exe` et `SHA256SUMS`.
+d'exécution de la machine. Résultat, dans `build-windows\dist\` : `nhill-business-3.0.0-setup.exe`,
+`nhill-pos-3.0.0-setup.exe`, `nhill-console-3.0.0-setup.exe` et `SHA256SUMS`.
 
 QtKeychain sous Windows :
 
@@ -189,7 +189,7 @@ source et de chaque PDF. Ne modifiez jamais un PDF à la main.
 Les plateformes impossibles à construire sur votre machine se construisent dans la CI :
 
 1. Poussez le dépôt sur un dépôt GitHub **privé**.
-2. Déclenchez les workflows : étiquette `git tag v2.1.0 && git push origin v2.1.0`, ou
+2. Déclenchez les workflows : étiquette `git tag v3.0.0 && git push origin v3.0.0`, ou
    « Run workflow » (onglet Actions) pour `linux-packages`, `windows`, `android`,
    `docs-website`.
 3. Téléchargez les artefacts : `nhill-deb-ubuntu-24.04`, `nhill-deb-debian-13`,
@@ -203,13 +203,13 @@ Avec l'outil `gh` : `gh run download <id> -n nhill-windows-installers -D dist/wi
 
 ```bash
 scripts/verify-build.sh --require linux,docs        # contrôle de ce qui existe
-scripts/package-release.sh --force                  # assemble release/V2.1.0/
+scripts/package-release.sh --force                  # assemble release/V3.0.0/
 ```
 
 `verify-build.sh` vérifie, pour chaque plateforme présente : le format réel des fichiers
 (paquet Debian, exécutable PE, APK), la version 2.x, les sommes `SHA256SUMS`, la présence
 et la fraîcheur des PDF. `package-release.sh` copie uniquement ce qui existe dans
-`release/V2.1.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
+`release/V3.0.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
 et liste ce qui manque dans `checksums/MISSING.txt` — jamais de fichier factice.
 
 ## 9. Construction reproductible : points d'attention

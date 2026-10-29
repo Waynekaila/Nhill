@@ -5,7 +5,7 @@
 Ce document résume le modèle de sécurité de Nhill 3.0, ce qui a changé depuis la 0.1.0 et
 ce que l'exploitant doit faire. L'analyse détaillée, avec preuves et sources, est dans
 l'[audit de sécurité](03-audit-securite.md) ; l'audit interne 0.1.0 (preuves par tests) est
-conservé dans `docs/securite.md`.
+conservé dans `docs/archive/securite.md`.
 
 > Nhill n'a fait l'objet **d'aucun audit externe ni test d'intrusion**. Les mesures
 > décrites réduisent les risques ; elles ne garantissent pas l'absence de vulnérabilité.
@@ -96,7 +96,7 @@ l'administrateur).
 
 | Dépendance | Avis | Situation | Action |
 |---|---|---|---|
-| cpp-httplib 0.14.3 (paquet Ubuntu 24.04) | CVE-2025-46728, CVE-2025-53629 (épuisement mémoire, CVSS 7,5) ; correctifs 24.04 seulement par Ubuntu Pro | atténué : serveur en local, Caddy refuse les corps de plus de 6 Mo | **décision à prendre** : construire contre cpp-httplib ≥ 0.23 ou utiliser Ubuntu Pro (audit, R1) |
+| cpp-httplib 0.14.3 (paquet Ubuntu 24.04) | CVE-2025-46728, CVE-2025-53629 (épuisement mémoire, CVSS 7,5) ; correctifs 24.04 seulement par Ubuntu Pro | atténué : serveur en local, Caddy refuse les corps de plus de 6 Mo | **décision à prendre** : construire contre cpp-httplib ≥ 0.23, utiliser Ubuntu Pro ou un serveur Debian 13 (paquet 0.18.7-1+deb13u1 corrigé par Debian) (audit, R1) |
 | Qt 6.5.3 (installateurs Windows, APK Android) | CVE-2023-51714, CVE-2024-39936 (HTTP/2) et avis postérieurs | atténué : HTTP/2 désactivé dans le client | **décision à prendre** : version de Qt maintenue (audit, R2) |
 | Qt 6.4.2 embarqué (variante « debian-13-embedded ») | CVE-2024-39936 et avis postérieurs | variante déconseillée, non livrée par défaut | utiliser les paquets natifs |
 

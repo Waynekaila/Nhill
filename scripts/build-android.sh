@@ -74,4 +74,7 @@ unzip -p "$APK" 'classes*.dex' | grep -ac 'Landroidx/core/content/FileProvider;'
 # up by its name in the resource table, not by its path in the archive.
 unzip -p "$APK" resources.arsc | tr -d '\000' | grep -ac 'qtprovider_paths' >/dev/null \
   || die "$APK : ressource xml/qtprovider_paths absente de resources.arsc"
+# Notices of the third-party components (QtKeychain linked statically: BSD notice required).
+unzip -l "$APK" | grep -c 'assets/THIRD-PARTY-NOTICES.txt' >/dev/null \
+  || die "$APK : assets/THIRD-PARTY-NOTICES.txt absent (notices des composants tiers)"
 write_checksums "$OUT"

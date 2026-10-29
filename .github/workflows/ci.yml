@@ -24,8 +24,12 @@ jobs:
         run: scripts/test-common-standalone.sh
       - name: Contrôle statique QML + traductions
         run: python3 scripts/qa/qml-check.py
+      - name: La référence de l'API correspond-elle au code du serveur ?
+        run: python3 scripts/docs/gen_api_reference.py --check
       - name: Compilation + ctest (common, serveur, installation, client)
         run: scripts/build-linux.sh build
+      - name: La référence de la base correspond-elle aux migrations ?
+        run: python3 scripts/docs/gen_db_reference.py --server build/server/nhill-server --check
       - name: Session mémorisée — Secret Service réel (gnome-keyring, 2 processus)
         run: |
           sudo apt-get install -y -q --no-install-recommends gnome-keyring dbus >/dev/null

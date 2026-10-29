@@ -25,7 +25,7 @@ une décision à prendre (§ 4, R1 et R2).
 
 | # | Risque | Gravité | Statut 3.0.0 |
 |---|---|---|---|
-| R1 | **cpp-httplib 0.14.3** (paquet Ubuntu 24.04) : CVE-2025-46728 et CVE-2025-53629, mémoire non bornée avec des corps de requête « chunked » ; correctifs publiés seulement par Ubuntu Pro (ESM) | Haute | **Ouvert, atténué** : le serveur écoute sur 127.0.0.1 ; Caddy refuse les corps de plus de 6 Mo avant le serveur. Correction proposée : construire contre cpp-httplib ≥ 0.23 (en-tête unique). **Décision requise** (§ 4) |
+| R1 | **cpp-httplib 0.14.3** (paquet Ubuntu 24.04) : CVE-2025-46728 et CVE-2025-53629, mémoire non bornée avec des corps de requête « chunked » ; correctifs publiés seulement par Ubuntu Pro (ESM). Le paquet serveur Debian 13 est construit contre `0.18.7-1+deb13u1`, indiqué corrigé pour ces deux CVE par le Debian Security Tracker (consulté le 29/10/2026) | Haute | **Ouvert, atténué** (paquet Ubuntu 24.04, celui du VPS) : le serveur écoute sur 127.0.0.1 ; Caddy refuse les corps de plus de 6 Mo avant le serveur. Correction proposée : construire contre cpp-httplib ≥ 0.23 (en-tête unique). **Décision requise** (§ 4) |
 | R2 | **Qt 6.5.3** embarqué dans les installateurs Windows et l'APK Android (avis publiés après 6.5.3, notamment HTTP/2 : CVE-2023-51714, CVE-2024-39936) | Haute | **Atténué en 3.0.0** : HTTP/2 désactivé dans le client (HTTP/1.1 seulement). Correction complète : version de Qt maintenue ; impact sur la version minimale d'Android à évaluer. **Décision requise** |
 | R3 | Longueur minimale des mots de passe : 8 caractères (exigence du propriétaire) | Moyenne | Risque accepté, compensé (§ 5) |
 | R4 | Sauvegarde quotidienne seulement : jusqu'à 24 heures de données perdues en cas de perte du serveur | Moyenne | Ouvert — archivage continu des journaux de transactions (WAL) recommandé |
@@ -83,7 +83,7 @@ une décision à prendre (§ 4, R1 et R2).
 
 | Risque | Option recommandée | Effet |
 |---|---|---|
-| R1 cpp-httplib | Livrer avec le serveur une copie vérifiée de cpp-httplib ≥ 0.23 (en-tête unique, licence MIT), version et empreinte consignées, ou utiliser les paquets corrigés d'Ubuntu Pro | supprime la vulnérabilité au lieu de l'atténuer ; à refaire à chaque avis |
+| R1 cpp-httplib | Livrer avec le serveur une copie vérifiée de cpp-httplib ≥ 0.23 (en-tête unique, licence MIT), version et empreinte consignées ; ou utiliser les paquets corrigés d'Ubuntu Pro ; ou installer le serveur de production sur Debian 13 (paquet corrigé par Debian), ce qui demande d'adapter et de recetter `deploy/vps` pour Debian 13 | supprime la vulnérabilité au lieu de l'atténuer ; à refaire à chaque avis |
 | R2 Qt | Construire Windows et Android avec une version de Qt maintenue | supprime les avis publiés après 6.5.3 ; la version minimale d'Android peut monter (à vérifier avant de changer le site) |
 
 ## 5. Politique de mots de passe (rappel de la décision 2.0)
@@ -114,6 +114,7 @@ de passe utilisé seul, NIST SP 800-63B-4 recommande 15 caractères : risque acc
 * NVD — CVE-2025-53629 : https://nvd.nist.gov/vuln/detail/CVE-2025-53629
 * OSV — UBUNTU-CVE-2025-53629 (paquets cpp-httplib d'Ubuntu 24.04) : https://osv.dev/vulnerability/UBUNTU-CVE-2025-53629
 * Ubuntu — USN-7962-1, cpp-httplib (correctifs 24.04 par ESM) : https://ubuntu.com/security/notices/USN-7962-1
+* Debian Security Tracker — CVE-2025-46728 et CVE-2025-53629 (cpp-httplib, trixie : 0.18.7-1+deb13u1 corrigé) : https://security-tracker.debian.org/tracker/CVE-2025-46728 , https://security-tracker.debian.org/tracker/CVE-2025-53629
 * Debian Security Tracker — CVE-2024-39936 (Qt, HTTP/2) : https://security-tracker.debian.org/tracker/CVE-2024-39936
 * NVD — CVE-2023-51714 (Qt, HTTP/2 HPACK) : https://nvd.nist.gov/vuln/detail/CVE-2023-51714
 * NIST SP 800-63B-4 : https://pages.nist.gov/800-63-4/sp800-63b.html

@@ -1,77 +1,67 @@
-# Nhill 2.1.0 — notes de version / release notes
+# Nhill 3.0.0 — notes de version / release notes
 
-API `v1` (quatre points d'accès ajoutés, aucun modifié) · schéma de base : migrations
-0001-0011 (une migration ajoutée) · clients 2.0 acceptés
+API `v1` (points d'accès ajoutés, contrôles de formule sur les existants) · schéma de base :
+migrations 0001-0015 (quatre migrations ajoutées : 0012 à 0015) · applications 2.x invitées
+à se mettre à jour
 
 ## Français
 
 **Nouveautés** :
-- **« Se souvenir de moi »** : la session est retrouvée après la fermeture de
-  l'application, sous Windows (Gestionnaire d'identification), Android (Keystore) et Linux
-  (Secret Service/KWallet). Seul le jeton de session est gardé, jamais le mot de passe ;
-  sans stockage sécurisé, rien n'est mémorisé.
-- **Mot de passe oublié** : l'administrateur d'un établissement donne un mot de passe
-  temporaire à un employé, qui le remplace à la connexion suivante ; propriétaires et
-  administrateurs reçoivent un code à usage unique par e-mail.
-- **Envoi réel des e-mails** par un relais SMTP avec TLS.
+- **Formules configurables** : l'exploitant règle dans Nhill Console les fonctions
+  (factures, devis, caisse, achats, dépenses, plusieurs dépôts, plusieurs devises, import du
+  catalogue, rapports avancés) et les limites (utilisateurs, caisses, dépôts, produits,
+  documents par mois, stockage) de chaque formule, ses conditions (essai, grâce, rappels,
+  renouvellement avec accord exprès, formule de repli) et des règles d'attribution. Une
+  fonction hors formule est **invisible** dans les applications et **refusée** par le
+  serveur.
+- **Documents** : un seul modèle (A4 ou ticket 58/80 mm) pour Nhill Business et Nhill POS ;
+  facture au nom d'un client depuis la caisse ; mentions rédigées par l'établissement.
+- **Données** : export complet par le propriétaire (archive ZIP) ; suppression définitive
+  d'un établissement 90 jours après la fin de son accès, depuis la console ; nettoyages de
+  conservation automatiques.
+- **Mise en service** : kit `deploy/vps` pour un VPS Hostinger en France (TLS, pare-feu,
+  sauvegardes chiffrées, restauration d'essai, surveillance, mise à jour avec retour
+  arrière) ; aucune adresse de serveur intégrée aux applications.
+- **Documentation par composant** (FR/EN + PDF) et références de l'API et de la base
+  générées depuis le code.
 
 Détail : `docs/fr/changelog.md`.
 
-**Avant la mise à jour** : sauvegarder la base ; configurer le relais SMTP
-(`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`) ; mettre à jour les applications avant
-d'utiliser la réinitialisation par l'administrateur (un client 2.0 ne sait pas afficher le
-changement obligatoire). Guide : `docs/fr/guide-installation.md` § 5.
+**Avant la mise à jour** : sauvegarder la base et `NH_SECRET_KEY` ; suivre
+`docs/fr/guide-installation.md` § 5. Un serveur 2.x refuse une base migrée en 3.0 : le
+retour arrière passe par la restauration de la copie prise avant la mise à jour.
 
-**Livrables** : seuls des fichiers réellement construits et vérifiés figurent dans le
-dossier de livraison ; une plateforme absente est listée dans `checksums/MISSING.txt`.
-Vérifier les empreintes (`checksums/SHA256SUMS`) avant installation.
-
-**À savoir avant de distribuer** :
-- les installateurs Windows et l'APK ne sont **pas signés** par un certificat d'éditeur ;
-  l'APK est signé avec une clé de **débogage** (essais uniquement) ;
-- la mémorisation de session a été testée sur un poste Windows Server 2022 de CI et sur un
-  émulateur Android 11 x86_64, pas encore sur un poste d'utilisateur ni sur un téléphone
-  arm64 réel ;
-- le Gestionnaire d'identification Windows conserve la session après une désinstallation
-  tant que l'utilisateur ne s'est pas déconnecté ;
-- l'envoi SMTP a été testé avec un relais local de test, pas avec un fournisseur réel ;
-- Nhill n'est pas un logiciel de facturation homologué par la DGI ;
-- cpp-httplib 0.14 : CVE-2025-46728 et CVE-2025-53629, atténuées par le proxy Caddy.
-
-Rapport complet : `documentation/fr/rapport-validation.md`.
+**Limites connues** : APK signé avec une clé de débogage ; installateurs Windows non
+signés ; risques R1 (cpp-httplib du paquet Ubuntu 24.04) et R2 (Qt 6.5.3 sous Windows et
+Android) atténués, décision attendue (`docs/fr/03-audit-securite.md`) ; aucun déploiement
+réel sur le VPS de production ; site `nhill.online` pas encore publié ; aucun audit externe.
 
 ## English
 
-**What's new**:
-- **"Remember me"**: the session comes back after the application is closed, on Windows
-  (Credential Manager), Android (Keystore) and Linux (Secret Service/KWallet). Only the
-  session token is kept, never the password; without secure storage, nothing is
-  remembered.
-- **Forgotten password**: an establishment administrator gives an employee a temporary
-  password, replaced at the next sign-in; owners and administrators receive a one-time
-  code by e-mail.
-- **Real e-mail delivery** through an SMTP relay with TLS.
+**What is new**:
+- **Configurable plans**: in Nhill Console the operator sets each plan's features
+  (invoices, quotes, till, purchases, expenses, several warehouses, several currencies,
+  catalogue import, advanced reports) and limits (users, tills, warehouses, products,
+  documents per month, storage), its terms (trial, grace, reminders, renewal with express
+  consent, fallback plan) and assignment rules. A feature outside the plan is **invisible**
+  in the applications and **refused** by the server.
+- **Documents**: a single template (A4 or 58/80 mm receipt) for Nhill Business and Nhill
+  POS; invoice in a customer's name from the till; notices written by the business.
+- **Data**: full export by the owner (ZIP archive); permanent erasure of a business 90 days
+  after its access ends, from the console; automatic retention clean-ups.
+- **Deployment**: `deploy/vps` kit for a Hostinger VPS in France (TLS, firewall, encrypted
+  backups, test restore, monitoring, update with rollback); no server address built into the
+  applications.
+- **Documentation per component** (FR/EN + PDF) and API and database references generated
+  from the code.
 
 Details: `docs/en/changelog.md`.
 
-**Before upgrading**: back up the database; configure the SMTP relay
-(`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`); update the applications before using the reset
-by an administrator (a 2.0 client cannot show the required change). Guide:
-`docs/en/installation-guide.md` § 5.
+**Before upgrading**: back up the database and `NH_SECRET_KEY`; follow
+`docs/en/installation-guide.md` § 5. A 2.x server refuses a database migrated to 3.0:
+rollback means restoring the copy taken before the update.
 
-**Deliverables**: only files actually built and checked are included in the release
-folder; a missing platform is listed in `checksums/MISSING.txt`. Check the digests
-(`checksums/SHA256SUMS`) before installing.
-
-**Before distributing**:
-- the Windows installers and the APK are **not signed** with a publisher certificate; the
-  APK is signed with a **debug** key (trials only);
-- the remembered session was tested on a Windows Server 2022 CI machine and on an
-  Android 11 x86_64 emulator, not yet on a user's computer or a real arm64 phone;
-- Windows Credential Manager keeps the session after uninstalling as long as the user has
-  not signed out;
-- SMTP delivery was tested with a local test relay, not with a real provider;
-- Nhill is not invoicing software certified by the DGI;
-- cpp-httplib 0.14: CVE-2025-46728 and CVE-2025-53629, mitigated by the Caddy proxy.
-
-Full report: `documentation/en/validation-report.md`.
+**Known limits**: APK signed with a debug key; Windows installers not signed; risks R1
+(cpp-httplib of the Ubuntu 24.04 package) and R2 (Qt 6.5.3 on Windows and Android)
+mitigated, decision pending (`docs/en/03-security-audit.md`); no real deployment on the
+production VPS; `nhill.online` website not published yet; no external audit.

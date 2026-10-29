@@ -1,43 +1,43 @@
 {
  "files": {
   "README.en.pdf": {
-   "bytes": 81961,
+   "bytes": 92979,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:40+00:00",
+   "generated": "2026-10-29T05:58:03+00:00",
    "lang": "en",
-   "pdf_sha256": "a5b38f61939334d7ca4d613858eab13743adc721c4b090e85ff1982a7e0ba35f",
+   "pdf_sha256": "756112bb7c46b38d8ad92adefc60c4c64e99ae4501dc08b3d3cd2d9c6ea7a3b2",
    "source": "README.en.md",
-   "source_sha256": "2f186b73cdb0e029003714587677b161d8bc084c0e08fa364b342678e9895df8",
-   "title": "Nhill 2.1"
+   "source_sha256": "6f514b887d73c3d8d58aadaef0ce9d144ae49682e52709b646f441b957445a1f",
+   "title": "Nhill 3.0"
   },
   "README.pdf": {
-   "bytes": 82612,
+   "bytes": 93768,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:39+00:00",
+   "generated": "2026-10-29T05:58:02+00:00",
    "lang": "fr",
-   "pdf_sha256": "f57f787d1db660eed75cf1d37d8f47069e48ab519426ac54f1d9b52856ed6951",
+   "pdf_sha256": "18834045ccf8b78b442fca574d670d082b61a0d415642efaf39204bfd3631ba5",
    "source": "README.md",
-   "source_sha256": "07bc4e87f5e4f873df87ca0e7fbca1147b3f92fa7c5b7102bc63eb272cfbca13",
-   "title": "Nhill 2.1"
+   "source_sha256": "6c2f178b4235e637d23768932b1d44c69d426ccb5f83c91c2159d500769cb2b2",
+   "title": "Nhill 3.0"
   },
   "docs/pdf/RELEASE-NOTES.pdf": {
-   "bytes": 48740,
+   "bytes": 44974,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:41+00:00",
+   "generated": "2026-10-29T05:58:04+00:00",
    "lang": "fr",
-   "pdf_sha256": "8a3b3db78bd8463adfcc850ab6a56cfa00f5deff19a345e07059dad8452bd316",
+   "pdf_sha256": "3ac7c2f7066a764442a7d359a39252e881006d35209fddc0831cf83a03f26753",
    "source": "RELEASE-NOTES.md",
-   "source_sha256": "32dd67da289bbe8d132e1b8a2893a58246029dab12869ffecaea93e110e2705c",
-   "title": "Nhill 2.1.0 — notes de version / release notes"
+   "source_sha256": "3fe8dfdda218ea938dc8fba0d8b917f2efc78f49dd7d5c535e1ef24dac4ec80b",
+   "title": "Nhill 3.0.0 — notes de version / release notes"
   },
   "docs/pdf/en/01-technical-audit.pdf": {
-   "bytes": 111774,
+   "bytes": 111930,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:56+00:00",
+   "generated": "2026-10-29T05:58:39+00:00",
    "lang": "en",
-   "pdf_sha256": "7968b2c9c693851bdfdbdde14012ce037fefc14515fa9410c2ccfb37bcb5a5d7",
+   "pdf_sha256": "c71fe2e4fe32dbc9447308415c6af7789843c3284be18fb804f40bcab5a5890f",
    "source": "docs/en/01-technical-audit.md",
-   "source_sha256": "487707c29b819605286be766c1a3bf7a974588abbfe648dfc1c321b2c064ee2c",
+   "source_sha256": "6cd946a1ecf95978e4d2db0d95a9b14800e2791bf5a6c3328ff0d2e5a0fcf121",
    "title": "Technical audit — Nhill (baseline 0.1.0, target version 2.0.0)"
   },
   "docs/pdf/en/02-ui-ux-audit.pdf": {
@@ -51,64 +51,104 @@
    "title": "UI/UX audit — Nhill Business, Nhill POS, Nhill Console"
   },
   "docs/pdf/en/03-security-audit.pdf": {
-   "bytes": 82110,
+   "bytes": 85287,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:20+00:00",
+   "generated": "2026-10-29T05:58:40+00:00",
    "lang": "en",
-   "pdf_sha256": "cd232d10fd5db3f75121f2b6a10b3ed390c6803ef711fea7fe3f0143793a6d41",
+   "pdf_sha256": "24adef00af668fb2c91057c776aa50758b6c423f57b21f43b685db9fc42229f6",
    "source": "docs/en/03-security-audit.md",
-   "source_sha256": "01cd5e0cd3b98b87b012572025ef73f3659d9b83251b73317541b5cf23a45757",
+   "source_sha256": "1fa638ee6a7d9a2c4d8fa10b61b0ab7245990b4680cf758d90e334f54ba7dca3",
    "title": "Security audit — Nhill 3.0.0"
   },
-  "docs/pdf/en/build-guide.pdf": {
-   "bytes": 104268,
+  "docs/pdf/en/api-reference.pdf": {
+   "bytes": 276291,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:59+00:00",
+   "generated": "2026-10-29T05:58:32+00:00",
    "lang": "en",
-   "pdf_sha256": "c590d07d8ecca2c55762e251685f2b4b5bf686989fb8d0728f26c8d2d988cb6a",
+   "pdf_sha256": "2c5d25c2cce5f0741ded527926d35681c7eddc9a55bef626f6ecd809b5149d1f",
+   "source": "docs/en/api-reference.md",
+   "source_sha256": "051406ae0bac9758d7f2182343e00c4192347fbaa77d5efeebf260d7a5ef62dc",
+   "title": "Nhill — API v1 reference"
+  },
+  "docs/pdf/en/build-guide.pdf": {
+   "bytes": 104341,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:59+00:00",
+   "lang": "en",
+   "pdf_sha256": "ed25ee4ea0c25881f88c9995a3049b1282c148fdb4063182cd4c2b9d5877ff9f",
    "source": "docs/en/build-guide.md",
-   "source_sha256": "a53af64ee09c395642b126594326a94bbc92910df311151e257dd30f3c89b5a9",
-   "title": "Nhill 2.1 — Build and release guide"
+   "source_sha256": "a7f2706f409d46978bc9a4fb02f2d7e78bbfc5c82e57232bced384de7434036f",
+   "title": "Nhill 3.0 — Build and release guide"
   },
   "docs/pdf/en/changelog.pdf": {
-   "bytes": 108640,
+   "bytes": 112039,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:22+00:00",
+   "generated": "2026-10-29T05:58:43+00:00",
    "lang": "en",
-   "pdf_sha256": "1bfcb2957b5944fb0e2059c54ac95bc477add5290d1db9b5ee4e7c213a29c4fd",
+   "pdf_sha256": "75ced1d22d91dd23253db70df99b4792491c43cdba4495b0affe22b9eec547dd",
    "source": "docs/en/changelog.md",
-   "source_sha256": "8240f3b67f2c87f5245437f68c029c5558fe26da9bd0f29f8af638ba7e1c009f",
+   "source_sha256": "90631897ccfef4dc3b222be73ba522b2a0704a68ffa451adbeed9b5a4e126c4d",
    "title": "Changelog"
   },
   "docs/pdf/en/configuration-guide.pdf": {
-   "bytes": 114641,
+   "bytes": 116073,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:00+00:00",
+   "generated": "2026-10-29T05:58:44+00:00",
    "lang": "en",
-   "pdf_sha256": "ae3312a49613e72f8e0d0e7fff5a9903db4044c4c619c2e19aac15433c7b43ce",
+   "pdf_sha256": "d8f3aac000e0c9f282ab85b6d42dc55e7d7679263445553ac0d648531be959e8",
    "source": "docs/en/configuration-guide.md",
-   "source_sha256": "1b200e55c4541510a031c0c0d971ce76fffb331f9b0315b0c7dc2682fe01409e",
-   "title": "Nhill 2.1 — Configuration guide"
+   "source_sha256": "f2e07b623855a5a4d253148739df6cab6c78131ccfa6c600f854c77c20d9f153",
+   "title": "Nhill 3.0 — Configuration guide"
+  },
+  "docs/pdf/en/database-reference.pdf": {
+   "bytes": 991022,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:34+00:00",
+   "lang": "en",
+   "pdf_sha256": "4d90d66e4502985894d0b47a0c45d84faee9c76dd246f1bd31da79c2846045f8",
+   "source": "docs/en/database-reference.md",
+   "source_sha256": "54c98192f28c4ffbb4e0eb82ef31d39abc5a7aa101297c1b857d0ea972292b4b",
+   "title": "Nhill — Database reference"
+  },
+  "docs/pdf/en/database.pdf": {
+   "bytes": 63933,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:31+00:00",
+   "lang": "en",
+   "pdf_sha256": "2702daae4ce4565ca26b91f69a4366d5c40102ad011a9549a75e9cc63a70c4d6",
+   "source": "docs/en/database.md",
+   "source_sha256": "2695c7918b4692c5900350237a693177cf358dc61506dc8c35dc34bb96043ae1",
+   "title": "Nhill 3.0 — Database component"
   },
   "docs/pdf/en/developer-guide.pdf": {
-   "bytes": 115198,
+   "bytes": 126258,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:01+00:00",
+   "generated": "2026-10-29T05:58:45+00:00",
    "lang": "en",
-   "pdf_sha256": "9d492e44fb17873124a280a436f001c185dd5f853154708f3eabbac6fd19e908",
+   "pdf_sha256": "670eeeb8e33325c5b8d2f34ad166c2a9f361871d91531bbc7ecce93f2481fb34",
    "source": "docs/en/developer-guide.md",
-   "source_sha256": "926b0f631b5567e98a05e3604e8a2337be65f67e53941033f641c79fe0de4659",
-   "title": "Nhill 2.1 — Developer guide"
+   "source_sha256": "4cf8c3eb1b9d5757acf856f5cb4feabd83e302cf0a2f467f7460f8e74ab7fde4",
+   "title": "Nhill 3.0 — Developer guide"
+  },
+  "docs/pdf/en/index.pdf": {
+   "bytes": 40655,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:28+00:00",
+   "lang": "en",
+   "pdf_sha256": "c9af3a074db35ec7177be25560d654d3297fd6b3b3920ccb61f2b0413d98241f",
+   "source": "docs/en/index.md",
+   "source_sha256": "a8333299da0d7cba6ca687f5a8fc6d22e036483c9217f8dac8f05513beade519",
+   "title": "Nhill 3.0 documentation"
   },
   "docs/pdf/en/installation-guide.pdf": {
-   "bytes": 90726,
+   "bytes": 91267,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:02+00:00",
+   "generated": "2026-10-29T05:58:46+00:00",
    "lang": "en",
-   "pdf_sha256": "e495c411eb35c98ed781f97b065b4edd93b2dd1e20ef27091f89c5f7b755afb7",
+   "pdf_sha256": "5af9fe2c234f82bdb714a73ff33c59b53dda2bbfe2ef96a2cccca7614746f9f7",
    "source": "docs/en/installation-guide.md",
-   "source_sha256": "584d11f3d9d4a90053e0072f011f27e380910c4143e0ea62e2674a8d3c51ad6a",
-   "title": "Nhill 2.1 — Installation guide"
+   "source_sha256": "a6203318b82ffd99f785b717fc9a9b7c0588f70147aed6e87fbc13f9b206d2a9",
+   "title": "Nhill 3.0 — Installation guide"
   },
   "docs/pdf/en/legal-parameters.pdf": {
    "bytes": 51275,
@@ -120,25 +160,65 @@
    "source_sha256": "d366b221eb30237c442033f56660f62424dad63f11208c9145560cd281620950",
    "title": "Nhill 3.0 legal parameters"
   },
-  "docs/pdf/en/security.pdf": {
-   "bytes": 74423,
+  "docs/pdf/en/nhill-business.pdf": {
+   "bytes": 74447,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:25+00:00",
+   "generated": "2026-10-29T05:58:35+00:00",
    "lang": "en",
-   "pdf_sha256": "ce92b10103a6a764c7baeb8f1ebd064fd6c16f2f4beba8bf021f7e10f0020cc4",
+   "pdf_sha256": "dcf6516cd0f313ad6f008e6090cff7a3391c450e795b0c83db0fdb7eb14f92a8",
+   "source": "docs/en/nhill-business.md",
+   "source_sha256": "44ec7984bfc538856763409fdee44269b3112bbe2525a0470d26e674fce5b18e",
+   "title": "Nhill Business 3.0 — Application guide"
+  },
+  "docs/pdf/en/nhill-console.pdf": {
+   "bytes": 54829,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:38+00:00",
+   "lang": "en",
+   "pdf_sha256": "59ace897c8fb7b6f8b6fa2e094a2bb7383f719467e89d35c7762e0a8af760764",
+   "source": "docs/en/nhill-console.md",
+   "source_sha256": "d6dca8a573b5cdb6490fcf0f8de68907d0afc485dc29f015d762262400635985",
+   "title": "Nhill Console 3.0 — Operator guide"
+  },
+  "docs/pdf/en/nhill-pos.pdf": {
+   "bytes": 43009,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:37+00:00",
+   "lang": "en",
+   "pdf_sha256": "2acafc5da1b0b565ac648aaafc05e67759ae2b78a183ef47bcd71a1be2161c31",
+   "source": "docs/en/nhill-pos.md",
+   "source_sha256": "fd4032ec0b79e0add43e7c8825258770d337a9050a9fda3c3c623f64f61e1b89",
+   "title": "Nhill POS 3.0 — Till guide"
+  },
+  "docs/pdf/en/security.pdf": {
+   "bytes": 74614,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:48+00:00",
+   "lang": "en",
+   "pdf_sha256": "ad3308d5258c88bc4a1c45b1300121f8cc069485c19ed4ff937cc3f5c4a2c879",
    "source": "docs/en/security.md",
-   "source_sha256": "0822fef1e6d19836a81ecb158d9a621c8cde132f7c40efb12f28a3e9e72901b8",
+   "source_sha256": "2e28f49326aa247d53bcecbba4e2ab9affeccb1452f2ca5a3866ced6ecc39bc9",
    "title": "Nhill 3.0 — Security"
   },
-  "docs/pdf/en/user-guide.pdf": {
-   "bytes": 109157,
+  "docs/pdf/en/server.pdf": {
+   "bytes": 70975,
    "engine": "playwright",
-   "generated": "2026-10-28T14:34:42+00:00",
+   "generated": "2026-10-29T05:58:29+00:00",
    "lang": "en",
-   "pdf_sha256": "bab4d9451ac2da4b76d538515c43ed66c84e3c3fd92807283b640091861bf1ed",
+   "pdf_sha256": "d52e134881175fc7d59bae0ac2b75ff30f5ffd27420783d5bd85c52894d8898c",
+   "source": "docs/en/server.md",
+   "source_sha256": "27fa4b0cec2c3e23328d747b8c262a212ed907a824f164779a16dd5a72335907",
+   "title": "Nhill Server 3.0 — Server component"
+  },
+  "docs/pdf/en/user-guide.pdf": {
+   "bytes": 41829,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:49+00:00",
+   "lang": "en",
+   "pdf_sha256": "eb64f432da39fb7d1ee5ba2368c1001d08a6bedf6e47f8296c3ab7923c0c54db",
    "source": "docs/en/user-guide.md",
-   "source_sha256": "ffba56e4f11cb29de7a21d24b720ae66daab07b8bdfe6567a1b6b5e605160712",
-   "title": "Nhill 2.1 — User guide"
+   "source_sha256": "6a6e926340439dd3714303831cb08cc4820803cafbbd61f720731eabebde109a",
+   "title": "Nhill 3.0 — User guide"
   },
   "docs/pdf/en/validation-report.pdf": {
    "bytes": 113324,
@@ -181,13 +261,13 @@
    "title": "Nhill website — deployment and database"
   },
   "docs/pdf/fr/01-audit-technique.pdf": {
-   "bytes": 115528,
+   "bytes": 115704,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:43+00:00",
+   "generated": "2026-10-29T05:58:18+00:00",
    "lang": "fr",
-   "pdf_sha256": "c4f9afa4e71087c3be31cb9a0cdcbaa45a8cae960239c93c3464ae3718479fa3",
+   "pdf_sha256": "a85cf1f387ab7c00ea8964dabef9f5ea96ebd2b723a365fa2b73432b198b0ec5",
    "source": "docs/fr/01-audit-technique.md",
-   "source_sha256": "292355a96b01d4b3d85666b8c4ac6d266c441597e5520f8e7a92866ef961ed7d",
+   "source_sha256": "eac4578ea833ea4f8872702ba7da0a35100ec8de8cb553e28fb57b7b94234ddf",
    "title": "Audit technique — Nhill (base 0.1.0, version cible 2.0.0)"
   },
   "docs/pdf/fr/02-audit-ui-ux.pdf": {
@@ -201,23 +281,33 @@
    "title": "Audit UI/UX — Nhill Business, Nhill POS, Nhill Console"
   },
   "docs/pdf/fr/03-audit-securite.pdf": {
-   "bytes": 84107,
+   "bytes": 87142,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:28+00:00",
+   "generated": "2026-10-29T05:58:19+00:00",
    "lang": "fr",
-   "pdf_sha256": "29c935886636e16feaa3a22c4f7bcbf6671bc07a54335d43da4a107670a8b72f",
+   "pdf_sha256": "951d0b92627c3b9e578b23be018118417bc0bc99082aadda51de2a3d9e22f78d",
    "source": "docs/fr/03-audit-securite.md",
-   "source_sha256": "e1406e7b53f534541f7f2dc20bee99bddf84d5dc2ef80203a6fce1a901d7a722",
+   "source_sha256": "0e77f8fbb2498be881623fde38637483ae4161af62adcaac938ea84869ff487b",
    "title": "Audit de sécurité — Nhill 3.0.0"
   },
-  "docs/pdf/fr/changelog.pdf": {
-   "bytes": 111066,
+  "docs/pdf/fr/base-de-donnees.pdf": {
+   "bytes": 66455,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:30+00:00",
+   "generated": "2026-10-29T05:58:08+00:00",
    "lang": "fr",
-   "pdf_sha256": "2c5b28efbfb103cfdced7f01d97efe68ce3dfff995e06503be7e9bdbaf76d925",
+   "pdf_sha256": "767f5d131fdf1fd3c6eb70756d73a636f8f3f36c582f713897c9cd3104af4fcd",
+   "source": "docs/fr/base-de-donnees.md",
+   "source_sha256": "e7fc81998cc474f5c6730cc94631a002ef1919aa5fccf8500370ef8175be1a37",
+   "title": "Nhill 3.0 — Composant base de données"
+  },
+  "docs/pdf/fr/changelog.pdf": {
+   "bytes": 114710,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:20+00:00",
+   "lang": "fr",
+   "pdf_sha256": "d139a3560c482cc2b96e987de53b824eda54f64dbafecb6bbfd6ef4efe859694",
    "source": "docs/fr/changelog.md",
-   "source_sha256": "28a88a67e472dd5a5da064c8c6e61809b28e4289fa033c5f49f3d90d9ae83ecc",
+   "source_sha256": "16e08c73818a58344983493bd7adf5106945232293b5e8471382f01ab988dbbc",
    "title": "Journal des modifications"
   },
   "docs/pdf/fr/deploiement-vps-hostinger.pdf": {
@@ -231,54 +321,74 @@
    "title": "Déploiement de Nhill Server sur un VPS Hostinger (France)"
   },
   "docs/pdf/fr/guide-compilation.pdf": {
-   "bytes": 107754,
+   "bytes": 107827,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:47+00:00",
+   "generated": "2026-10-29T05:58:58+00:00",
    "lang": "fr",
-   "pdf_sha256": "bbf4e89d302f8d04d6e5a08768ba818742287e518f2d7aea236416aa443a89be",
+   "pdf_sha256": "71ea30d6374499f8a11387ecee3208b88ad33d4631b956c4a3233a7697cfcb7d",
    "source": "docs/fr/guide-compilation.md",
-   "source_sha256": "7f33c3c3352b3a5a9f07a470f91ec166a6f5fed2e04845c26b340b27c637fd2d",
-   "title": "Nhill 2.1 — Guide de compilation et de livraison"
+   "source_sha256": "e4ad4d6754a89532ad7959f34a6d397ab9d44ea42d57cee75e4bdcaa6278acdf",
+   "title": "Nhill 3.0 — Guide de compilation et de livraison"
   },
   "docs/pdf/fr/guide-configuration.pdf": {
-   "bytes": 116997,
+   "bytes": 118226,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:47+00:00",
+   "generated": "2026-10-29T05:58:22+00:00",
    "lang": "fr",
-   "pdf_sha256": "c163fec170e825c6fd7033cdecbf703e16fa2d5b921a966c84e27a84c68f519e",
+   "pdf_sha256": "9d027051127fd18718f8d8e9e9c82c1de38232fc4db1c73382ae7c404371b3b7",
    "source": "docs/fr/guide-configuration.md",
-   "source_sha256": "219441e17267d38d60f30cf217827e0ed3765f4752054bd01402e2d7c4c45645",
-   "title": "Nhill 2.1 — Guide de configuration"
+   "source_sha256": "b82699ff3e3aec63d18790041e93c6f6b275a92b5a03bb9718e6581dc8c65c25",
+   "title": "Nhill 3.0 — Guide de configuration"
   },
   "docs/pdf/fr/guide-developpement.pdf": {
-   "bytes": 117532,
+   "bytes": 128982,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:48+00:00",
+   "generated": "2026-10-29T05:58:24+00:00",
    "lang": "fr",
-   "pdf_sha256": "0eaf55dc4ad63f4b0da2384c3967f50f2fa3e3e6a7a6177348af7c8205399a0c",
+   "pdf_sha256": "c8baa16eefcdbccc2b634d5923a2b2f6c35816a20626537ef09986d474222877",
    "source": "docs/fr/guide-developpement.md",
-   "source_sha256": "aa019eab5cfa183a3623835afedebfcf105236cadccd56227a29b0107cb01290",
-   "title": "Nhill 2.1 — Guide du développeur"
+   "source_sha256": "5767a5d2c24a95ec4eda34c3caab393b8a59ab9ccb0249380f6aed8b29a1e156",
+   "title": "Nhill 3.0 — Guide du développeur"
   },
   "docs/pdf/fr/guide-installation.pdf": {
-   "bytes": 94720,
+   "bytes": 93817,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:49+00:00",
+   "generated": "2026-10-29T05:58:25+00:00",
    "lang": "fr",
-   "pdf_sha256": "f32866f02bd640bb2f6655a9f77ef5ea18124b84aface236173c19d99f3ad4fa",
+   "pdf_sha256": "8b9758cb35e17c3d7f7422e5bb9496e2935a79a3a7e7e6e27310c5da283a620f",
    "source": "docs/fr/guide-installation.md",
-   "source_sha256": "dcf1592fd8ee5d05291c99dd3e2b84c6104b4dc778e89a22a8e8c92e4f2b03a2",
-   "title": "Nhill 2.1 — Guide d'installation"
+   "source_sha256": "526c0d362d2cb618dd23dd2b8f3adfc837e237957250f2be283c8387c47c8d6f",
+   "title": "Nhill 3.0 — Guide d'installation"
   },
   "docs/pdf/fr/guide-utilisateur.pdf": {
-   "bytes": 114914,
+   "bytes": 43691,
    "engine": "playwright",
-   "generated": "2026-10-28T14:34:40+00:00",
+   "generated": "2026-10-29T05:58:26+00:00",
    "lang": "fr",
-   "pdf_sha256": "3b0f077d5a66601a2579d15ed215d55a72714f3ce4a0bb50b5de2d75a841a561",
+   "pdf_sha256": "9e112a9677925071fe529b68eb916c424f44daf33bc9e3fee6fe28f53867af62",
    "source": "docs/fr/guide-utilisateur.md",
-   "source_sha256": "7416fe29d96cc2b88fa498bdeff7c12d793bb47451f04327355fed6aa2ff3218",
-   "title": "Nhill 2.1 — Guide utilisateur"
+   "source_sha256": "51a052b39a9b834c5427c482e71f4bf100dec8b9512c70b895d260edb393c2a7",
+   "title": "Nhill 3.0 — Guide utilisateur"
+  },
+  "docs/pdf/fr/index.pdf": {
+   "bytes": 41573,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:05+00:00",
+   "lang": "fr",
+   "pdf_sha256": "384702d125d466f381c3039a6671b16afc2ba4ced951f3dc3eae11c64fb7d77b",
+   "source": "docs/fr/index.md",
+   "source_sha256": "7fb4e6b1104fabc6dccc2cb4dcd6f78fb2e25a05e26964c30c86ffeb75af110e",
+   "title": "Documentation de Nhill 3.0"
+  },
+  "docs/pdf/fr/licences-dependances.pdf": {
+   "bytes": 39464,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:16+00:00",
+   "lang": "fr",
+   "pdf_sha256": "02e6e2a4a1e062af31acd2484a2ed5af29af821a4b1175b98ab7e5353015c381",
+   "source": "docs/licences-dependances.md",
+   "source_sha256": "9a46b705adb367c86c06cd5c66d1ecf9c6951ec9a0e040bfa2956709ef7970d5",
+   "title": "Dépendances et licences (Nhill 3.0)"
   },
   "docs/pdf/fr/matrice-conformite-site.pdf": {
    "bytes": 88332,
@@ -289,6 +399,36 @@
    "source": "docs/fr/matrice-conformite-site.md",
    "source_sha256": "20409bcbbb111caabc0981553739ed3675fe09af0f909dd186fc97ca90465bfe",
    "title": "Matrice de conformité : site vitrine et application (3.0.0)"
+  },
+  "docs/pdf/fr/nhill-business.pdf": {
+   "bytes": 76990,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:12+00:00",
+   "lang": "fr",
+   "pdf_sha256": "666367fa894231897c5845acb4f12abe8b2dc5fd07794644bae8a05a478bcb49",
+   "source": "docs/fr/nhill-business.md",
+   "source_sha256": "4a4b4c80dc59f617c94bc71787c4fa7cbb9352752175cd50d79c729f962befb0",
+   "title": "Nhill Business 3.0 — Guide de l'application"
+  },
+  "docs/pdf/fr/nhill-console.pdf": {
+   "bytes": 56322,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:15+00:00",
+   "lang": "fr",
+   "pdf_sha256": "f987213f68fb990d67a1751eea7c8c714e1dfde1001e3520059ca33d822a8294",
+   "source": "docs/fr/nhill-console.md",
+   "source_sha256": "82735af4e3208ca455cddae811198263b15bec0205468cba48dbe361f940033e",
+   "title": "Nhill Console 3.0 — Guide de l'exploitant"
+  },
+  "docs/pdf/fr/nhill-pos.pdf": {
+   "bytes": 44266,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:14+00:00",
+   "lang": "fr",
+   "pdf_sha256": "a94748e411d9411c6e1b476ae4a623a605f4e871d42aacee377d86be98b151ab",
+   "source": "docs/fr/nhill-pos.md",
+   "source_sha256": "b5fdb9cdf165fcd26c797fe99d70fc8e2ccd4e33da1b695afac5a2407d3fe9d9",
+   "title": "Nhill POS 3.0 — Guide de la caisse"
   },
   "docs/pdf/fr/parametres-legaux.pdf": {
    "bytes": 53249,
@@ -310,15 +450,45 @@
    "source_sha256": "37378c14f7755eee117ed972ea2e8c4915baf9ac66454215ab0f11032d91faaf",
    "title": "Rapport de validation — Nhill 2.1.0"
   },
-  "docs/pdf/fr/securite.pdf": {
-   "bytes": 78924,
+  "docs/pdf/fr/reference-api.pdf": {
+   "bytes": 279871,
    "engine": "playwright",
-   "generated": "2026-10-28T19:28:35+00:00",
+   "generated": "2026-10-29T05:58:09+00:00",
    "lang": "fr",
-   "pdf_sha256": "6acc7f88a6cbb71d3341fc5fab84c0f85fbb23c8a11921bc1e6950aad315c153",
+   "pdf_sha256": "c7fe6e4ad39bcea6c4e8b30028460415e33b38bf9f560a3189256a3274cd718c",
+   "source": "docs/fr/reference-api.md",
+   "source_sha256": "6b665e263d88726bbe399fa3ab78ad319a871b4255b89332985491e39bf82558",
+   "title": "Nhill — Référence de l'API v1"
+  },
+  "docs/pdf/fr/reference-base-de-donnees.pdf": {
+   "bytes": 994818,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:11+00:00",
+   "lang": "fr",
+   "pdf_sha256": "1c874d819be618ff287753ac5ba4506e0cfeddc658e41135a1b362732f010381",
+   "source": "docs/fr/reference-base-de-donnees.md",
+   "source_sha256": "e997f222817a9ccecd6382b70c1b1c4d9c29cdd52ab706ea94971ccf670b00b8",
+   "title": "Nhill — Référence de la base de données"
+  },
+  "docs/pdf/fr/securite.pdf": {
+   "bytes": 79576,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:27+00:00",
+   "lang": "fr",
+   "pdf_sha256": "caa986a268c23c2c2c51d8454804e71887eedb3b2303ad443bc9e5bbd9f518cd",
    "source": "docs/fr/securite.md",
-   "source_sha256": "e9f19947a4debf791de429f1a7a0b76551a368738dc4786b7bf4b1eef8d68dea",
+   "source_sha256": "9cfeeb161e11ad407204032b94d023604a3998a63e3203a9088884c8e95959e6",
    "title": "Nhill 3.0 — Sécurité"
+  },
+  "docs/pdf/fr/serveur.pdf": {
+   "bytes": 72754,
+   "engine": "playwright",
+   "generated": "2026-10-29T05:58:07+00:00",
+   "lang": "fr",
+   "pdf_sha256": "575fb9dd0fb077489168f54b1a5ff3cb5ae3938d889c1d8cc198ce88f16afec6",
+   "source": "docs/fr/serveur.md",
+   "source_sha256": "e5686212f7e895e32948cca1db2c37ee9a6b30588232c2cd1c7e4fffdfe37ec5",
+   "title": "Nhill Server 3.0 — Composant serveur"
   },
   "docs/pdf/fr/site-vitrine.pdf": {
    "bytes": 185729,

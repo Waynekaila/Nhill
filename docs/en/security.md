@@ -5,7 +5,7 @@
 This document summarises the Nhill 3.0 security model, what changed since 0.1.0 and what
 the operator must do. The detailed analysis, with evidence and sources, is in the
 [security audit](03-security-audit.md); the 0.1.0 internal audit (evidence through tests) is
-kept in `docs/securite.md` (French).
+kept in `docs/archive/securite.md` (French).
 
 > Nhill has had **no external audit and no penetration test**. The measures described
 > reduce risk; they do not guarantee the absence of vulnerabilities.
@@ -93,7 +93,7 @@ the reset by an administrator).
 
 | Dependency | Advisory | Status | Action |
 |---|---|---|---|
-| cpp-httplib 0.14.3 (Ubuntu 24.04 package) | CVE-2025-46728, CVE-2025-53629 (memory exhaustion, CVSS 7.5); 24.04 fixes only through Ubuntu Pro | mitigated: server local only, Caddy refuses bodies over 6 MB | **decision to take**: build against cpp-httplib ≥ 0.23 or use Ubuntu Pro (audit, R1) |
+| cpp-httplib 0.14.3 (Ubuntu 24.04 package) | CVE-2025-46728, CVE-2025-53629 (memory exhaustion, CVSS 7.5); 24.04 fixes only through Ubuntu Pro | mitigated: server local only, Caddy refuses bodies over 6 MB | **decision to take**: build against cpp-httplib ≥ 0.23, use Ubuntu Pro or a Debian 13 server (package 0.18.7-1+deb13u1 fixed by Debian) (audit, R1) |
 | Qt 6.5.3 (Windows installers, Android APK) | CVE-2023-51714, CVE-2024-39936 (HTTP/2) and later advisories | mitigated: HTTP/2 disabled in the client | **decision to take**: maintained Qt version (audit, R2) |
 | Bundled Qt 6.4.2 ("debian-13-embedded" variant) | CVE-2024-39936 and later advisories | variant discouraged, not shipped by default | use the native packages |
 

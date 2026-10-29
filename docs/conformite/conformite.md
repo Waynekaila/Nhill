@@ -39,7 +39,7 @@ assujettis.
 | # | Exigence | Source | Statut | Traitement |
 |---|---|---|---|---|
 | EU-1 | Facturation électronique structurée : France (réception par toutes les entreprises et émission par les grandes et moyennes depuis septembre 2026), Belgique (B2B obligatoire depuis le 1er janvier 2026), directive ViDA 2025/516 (intra-UE en 2030) | Calendrier ViDA (eConnect, source secondaire) | Obligatoire dans les pays concernés | **Non couvert** : pas d'export EN 16931 (UBL/CII), pas de plateforme agréée. Profil `INTL` générique sans revendication de conformité |
-| EU-2 | Règlement général sur la protection des données (UE 2016/679) pour des clients établis dans l'UE | Texte du règlement | Obligatoire si applicable | Mesures techniques décrites dans `docs/securite.md` ; contrat de sous-traitance, registre, lieu d'hébergement, droits des personnes : **à établir par l'exploitant** |
+| EU-2 | Règlement général sur la protection des données (UE 2016/679) pour des clients établis dans l'UE | Texte du règlement | Obligatoire si applicable | Mesures techniques décrites dans `docs/archive/securite.md` ; contrat de sous-traitance, registre, lieu d'hébergement, droits des personnes : **à établir par l'exploitant** |
 
 Conclusion : **ne pas commercialiser Nhill comme solution de facturation conforme
 dans un pays de l'UE** avant implémentation et validation d'EU-1.
@@ -47,7 +47,7 @@ dans un pays de l'UE** avant implémentation et validation d'EU-1.
 ## 4. International
 
 Profil `INTL` : facture commerciale générique. Avant chaque nouveau pays, appliquer la
-méthode du §1 et créer un profil (`docs/modeles-et-profils.md`).
+méthode du §1 et créer un profil (`docs/archive/modeles-et-profils.md`).
 
 ## 5. Traçabilité des employés et statistiques de la plateforme
 

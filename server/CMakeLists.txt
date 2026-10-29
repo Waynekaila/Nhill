@@ -14,7 +14,7 @@ find_path(HPDF_INCLUDE_DIR hpdf.h REQUIRED)
 find_library(HPDF_LIBRARY NAMES hpdf REQUIRED)
 
 # libpqxx and cpp-httplib from the distribution are compiled libraries built in
-# C++17 mode: the whole project uses C++17 to keep their ABI (see docs/technique.md).
+# C++17 mode: the whole project uses C++17 to keep their ABI (see docs/archive/technique.md).
 
 # Everything except main.cpp goes in a library so that tests link the real code.
 add_library(nhill_server_core STATIC

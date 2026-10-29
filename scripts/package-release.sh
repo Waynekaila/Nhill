@@ -55,7 +55,7 @@ for f in "$ROOT"/README.md "$ROOT"/README.en.md "$ROOT"/README.pdf "$ROOT"/READM
 [[ -d "$ROOT/marketing/visuals" ]] && run cp -a "$ROOT/marketing/visuals" "$REL/marketing/"
 [[ -d "$ROOT/marketing/trackers" ]] && run cp -a "$ROOT/marketing/trackers" "$REL/marketing/"
 [[ -f "$ROOT/marketing/README.md" ]] && run cp "$ROOT/marketing/README.md" "$REL/marketing/"
-[[ -d "$ROOT/docs/assets/v2" ]] && { run mkdir -p "$REL/documentation/captures-2.0"; run cp -a "$ROOT/docs/assets/v2/." "$REL/documentation/captures-2.0/"; }
+[[ -d "$ROOT/docs/assets/v3" ]] && { run mkdir -p "$REL/documentation/captures-3.0"; run cp -a "$ROOT/docs/assets/v3/." "$REL/documentation/captures-3.0/"; }
 # Preuves de construction (fichiers RUN-INFO des jobs de CI qui ont produit les livrables)
 [[ -d "$DIST/ci-evidence" ]] && { run mkdir -p "$REL/checksums/ci-evidence"; run cp -a "$DIST/ci-evidence/." "$REL/checksums/ci-evidence/"; }
 step "Code source"

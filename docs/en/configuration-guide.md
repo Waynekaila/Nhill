@@ -1,4 +1,4 @@
-# Nhill 2.1 — Configuration guide
+# Nhill 3.0 — Configuration guide
 
 *Français : [../fr/guide-configuration.md](../fr/guide-configuration.md)*
 
@@ -99,7 +99,8 @@ start from the available screen.
 | Screen | Settings |
 |---|---|
 | Platform settings | trial length (30 days by default), grace period, reminder, establishment code rotation (30 days), limits, payment instructions; 2.1: `password_reset_minutes` (validity of the e-mailed code, 20 min, 5 to 60), `password_reset_max_attempts` (wrong codes before the code is cancelled, 5, 1 to 10), `temporary_password_hours` (validity of a temporary password, 72 h, 1 to 168) |
-| Plans and prices | plans, limits (users, POS tills, warehouses), features, **prices per duration and currency** |
+| Plans & prices | plans: 9 features that can be switched on and 6 limits (users, tills, warehouses, products, documents per month, storage), terms (trial, grace, reminders, self-service, automatic renewal, fallback plan), **prices per duration and currency** — [nhill-console.md](nhill-console.md) § 5 |
+| Assignment rules | plan given automatically to a new business (type, country, trial or granted period) — [nhill-console.md](nhill-console.md) § 6 |
 | Promo codes | launch or partnership discounts |
 | Payment providers | credentials (encrypted, never shown again), test/production mode, webhook address |
 
@@ -107,7 +108,7 @@ start from the available screen.
 
 | Tab | Main settings |
 |---|---|
-| Business | identity, legal identifiers, logo, document language, payment terms, tax rounding, footer, negative stock |
+| Business | identity, time zone, legal identifiers, logo, document language, payment terms, tax rounding, payment instructions, notices printed on every document, footer, negative stock, full data export |
 | Taxes and accounts | tax rates (16 % VAT in the DRC profile; a rate cannot be edited), cash and bank accounts, dated exchange rates |
 | Point of sale | tills, authorised cashiers, payment methods, maximum discount without approval, 58/80 mm receipt |
 | Team | roles, invitations, resetting a member's password |
@@ -116,7 +117,7 @@ start from the available screen.
 
 `server/profiles/*.json`: tax profiles (rates, mentions, numbering) synchronised into the
 database at start-up. An issued document keeps the version of the profile applied.
-Details: `docs/modeles-et-profils.md` (French). The tax values of the profiles must be
+Details: `docs/archive/modeles-et-profils.md` (French). The tax values of the profiles must be
 checked by a professional before use (see [legal-parameters.md](legal-parameters.md)).
 
 ## 4. Password rule (2.0, unchanged in 2.1)

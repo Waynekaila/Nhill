@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: pandoc + WeasyPrint
         run: scripts/install-deps-linux.sh --with-docs --yes || (sudo apt-get update -q && sudo apt-get install -y -q pandoc weasyprint)
+      - name: La référence de l'API correspond-elle au code du serveur ?
+        run: python3 scripts/docs/gen_api_reference.py --check
       - name: Les PDF versionnés correspondent-ils aux Markdown ?
         run: scripts/build-docs-pdf.sh --check
       - name: Régénération des PDF

@@ -1,8 +1,8 @@
-# Nhill 2.1 — Build and release guide
+# Nhill 3.0 — Build and release guide
 
 *Français : [../fr/guide-compilation.md](../fr/guide-compilation.md)*
 
-How to produce, verify and assemble the 2.1.0 deliverables on a **fresh** machine. All
+How to produce, verify and assemble the 3.0.0 deliverables on a **fresh** machine. All
 scripts live in `scripts/`, are written in strict Bash (`set -Eeuo pipefail`) and share
 `scripts/lib/common.sh`.
 
@@ -17,7 +17,7 @@ scripts live in `scripts/`, are written in strict Bash (`set -Eeuo pipefail`) an
 | Documentation PDFs | any machine with pandoc + a PDF engine | `build-docs-pdf.sh` | `docs/pdf/`, `legal/pdf/`, `marketing/pdf/`, `README*.pdf` |
 | Website (archive) | any machine with Python 3 | `build-website.sh` | `dist/website/` |
 | Deliverable check | — | `verify-build.sh` | `build/logs/verify-build-*.log` |
-| Release folder | — | `package-release.sh` | `release/V2.1.0/` |
+| Release folder | — | `package-release.sh` | `release/V3.0.0/` |
 | Everything possible here | — | `build-all.sh` | summary succeeded / skipped / failed |
 
 A `.deb` package depends on its distribution's library versions: do not copy an Ubuntu
@@ -97,8 +97,8 @@ powershell -ExecutionPolicy Bypass -File packaging\windows\build-windows.ps1 `
 ```
 
 `-ExecutionPolicy Bypass` applies to this command only; do not change the machine's
-execution policy. Result, in `build-windows\dist\`: `nhill-business-2.1.0-setup.exe`,
-`nhill-pos-2.1.0-setup.exe`, `nhill-console-2.1.0-setup.exe` and `SHA256SUMS`.
+execution policy. Result, in `build-windows\dist\`: `nhill-business-3.0.0-setup.exe`,
+`nhill-pos-3.0.0-setup.exe`, `nhill-console-3.0.0-setup.exe` and `SHA256SUMS`.
 
 QtKeychain on Windows:
 
@@ -186,7 +186,7 @@ and each PDF. Never edit a PDF by hand.
 Platforms that cannot be built on your machine are built in CI:
 
 1. Push the repository to a **private** GitHub repository.
-2. Trigger the workflows: tag `git tag v2.1.0 && git push origin v2.1.0`, or "Run
+2. Trigger the workflows: tag `git tag v3.0.0 && git push origin v3.0.0`, or "Run
    workflow" (Actions tab) for `linux-packages`, `windows`, `android`, `docs-website`.
 3. Download the artefacts: `nhill-deb-ubuntu-24.04`, `nhill-deb-debian-13`,
    `nhill-windows-installers`, `nhill-android-apk`, `nhill-docs-and-website`.
@@ -199,13 +199,13 @@ With the `gh` tool: `gh run download <id> -n nhill-windows-installers -D dist/wi
 
 ```bash
 scripts/verify-build.sh --require linux,docs        # check what exists
-scripts/package-release.sh --force                  # assembles release/V2.1.0/
+scripts/package-release.sh --force                  # assembles release/V3.0.0/
 ```
 
 For every platform present, `verify-build.sh` checks the real file format (Debian package,
 PE executable, APK), the 2.x version, the `SHA256SUMS` sums, and the presence and
 freshness of the PDFs. `package-release.sh` copies only what exists into
-`release/V2.1.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
+`release/V3.0.0/{linux,windows,android,website,documentation,legal,marketing,source,checksums}`
 and lists what is missing in `checksums/MISSING.txt` — never a dummy file.
 
 ## 9. Reproducible builds: points of attention

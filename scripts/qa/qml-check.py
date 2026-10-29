@@ -330,6 +330,11 @@ def main():
                 if not fr.get(ctx, {}).get(s):
                     ln = src.count("\n", 0, m.start()) + 1
                     missing.append(f"{os.path.relpath(f, root)}:{ln}: no French translation for \"{s}\" (context {ctx})")
+    # The APK carries a copy of the third-party notices (Android assets): it must stay identical.
+    notices = os.path.join(root, "packaging", "notices", "THIRD-PARTY-NOTICES.txt")
+    apk_copy = os.path.join(root, "client", "android", "assets", "THIRD-PARTY-NOTICES.txt")
+    if os.path.exists(notices) and (not os.path.exists(apk_copy) or open(notices, "rb").read() != open(apk_copy, "rb").read()):
+        problems.append("client/android/assets/THIRD-PARTY-NOTICES.txt: copy differs from packaging/notices/THIRD-PARTY-NOTICES.txt")
     print(f"QML files: {len(files)} · JS snippets parsed: {len(snippets)} · problems: {len(problems)} · untranslated: {len(missing)}")
     for p in problems + missing:
         print("  " + p)

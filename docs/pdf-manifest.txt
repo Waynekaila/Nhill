@@ -5,6 +5,15 @@ README.en.md -> README.en.pdf
 RELEASE-NOTES.md -> docs/pdf/RELEASE-NOTES.pdf
 
 # docs/fr
+docs/fr/index.md -> docs/pdf/fr/index.pdf
+docs/fr/serveur.md -> docs/pdf/fr/serveur.pdf
+docs/fr/base-de-donnees.md -> docs/pdf/fr/base-de-donnees.pdf
+docs/fr/reference-api.md -> docs/pdf/fr/reference-api.pdf
+docs/fr/reference-base-de-donnees.md -> docs/pdf/fr/reference-base-de-donnees.pdf
+docs/fr/nhill-business.md -> docs/pdf/fr/nhill-business.pdf
+docs/fr/nhill-pos.md -> docs/pdf/fr/nhill-pos.pdf
+docs/fr/nhill-console.md -> docs/pdf/fr/nhill-console.pdf
+docs/licences-dependances.md -> docs/pdf/fr/licences-dependances.pdf
 docs/fr/01-audit-technique.md -> docs/pdf/fr/01-audit-technique.pdf
 docs/fr/02-audit-ui-ux.md -> docs/pdf/fr/02-audit-ui-ux.pdf
 docs/fr/03-audit-securite.md -> docs/pdf/fr/03-audit-securite.pdf
@@ -22,6 +31,14 @@ docs/fr/securite.md -> docs/pdf/fr/securite.pdf
 website/README.md -> docs/pdf/fr/site-vitrine.pdf
 
 # docs/en
+docs/en/index.md -> docs/pdf/en/index.pdf
+docs/en/server.md -> docs/pdf/en/server.pdf
+docs/en/database.md -> docs/pdf/en/database.pdf
+docs/en/api-reference.md -> docs/pdf/en/api-reference.pdf
+docs/en/database-reference.md -> docs/pdf/en/database-reference.pdf
+docs/en/nhill-business.md -> docs/pdf/en/nhill-business.pdf
+docs/en/nhill-pos.md -> docs/pdf/en/nhill-pos.pdf
+docs/en/nhill-console.md -> docs/pdf/en/nhill-console.pdf
 docs/en/01-technical-audit.md -> docs/pdf/en/01-technical-audit.pdf
 docs/en/02-ui-ux-audit.md -> docs/pdf/en/02-ui-ux-audit.pdf
 docs/en/03-security-audit.md -> docs/pdf/en/03-security-audit.pdf

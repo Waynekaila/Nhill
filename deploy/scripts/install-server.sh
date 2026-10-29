@@ -27,7 +27,7 @@ install -m 0755 "$ROOT/deploy/backup/nhill-backup.sh" "$ROOT/deploy/backup/nhill
 [ -f /etc/nhill/backup.env ] || install -m 0600 -o nhill-backup -g nhill-backup "$ROOT/deploy/backup/backup.env.example" /etc/nhill/backup.env
 systemctl daemon-reload
 cat <<MSG
-Recommended (docs/deploiement-production.md § 4): leave the database settings empty,
+Recommended (docs/archive/deploiement-production.md § 4): leave the database settings empty,
   systemctl enable --now nhill-server, read the setup token (journalctl -u nhill-server)
   and install the database from Nhill Console ("Install a new server").
 Manual alternative:

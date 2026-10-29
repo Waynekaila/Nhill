@@ -116,7 +116,7 @@ deploy/            systemd, Caddy (TLS), encrypted backup/restore
 * RLS forced on 30 business tables (`establishment_id = nh_current_establishment()`), composite
   foreign keys preventing cross-establishment references.
 * 18 platform tables without RLS by design (sessions, subscriptions, logs…), protected by the
-  server's queries (review documented in `docs/securite.md`).
+  server's queries (review documented in `docs/archive/securite.md`).
 * Immutable migrations: a migration changed after being applied is refused.
 
 ### 2.7 Configuration
@@ -169,7 +169,7 @@ deploy/            systemd, Caddy (TLS), encrypted backup/restore
 | QML static check (`scripts/qa/qml-check.py`: delimiter balance, JavaScript parsing of 4,201 bindings/functions by Node.js, modules, translations) | 0.1.0: 0 errors; 2.0.0: 0 errors, 0 untranslated strings | Done and tested |
 | Start of the delivered 0.1.0 binaries (Xvfb 1366×768) | Nhill POS, Business, Console start and show the sign-in screen | Done and tested |
 | Full build (server + clients) and `ctest` | **Not executable here** (dependencies unavailable) | Blocked — run by the provided CI (`.github/workflows/ci.yml`) |
-| Project test report 0.1.0 | 18 + 82 (1 skipped) + 6 + 13 passed | Taken from `docs/rapport-tests.md` |
+| Project test report 0.1.0 | 18 + 82 (1 skipped) + 6 + 13 passed | Taken from `docs/archive/rapport-tests.md` |
 
 ## 4. Defects and technical debt found
 

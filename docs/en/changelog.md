@@ -67,6 +67,16 @@ virtual private server, new website and 3.0 legal documents. **Four migrations (
   check (`check_live.py`).
 - 3.0.0 legal documents (FR/EN) without fields to fill; compliance matrix between the
   website and the application; 3.0.0 security audit.
+- Legal document 20: consent to use a name, testimonial or image; privacy policy, register
+  and retention completed (field prospecting, testimonials).
+- Documentation per component (Nhill Business, Nhill POS, Nhill Console, server, database)
+  in French and English; API (203 endpoints) and database (71 tables) references generated
+  from the code and checked by CI; 0.1–2.x documents archived in `docs/archive/`.
+- Sales file: message templates with declared fields, trackers delivered empty (no
+  fictitious row), visuals rebuilt with 3.0 screenshots for the 30-day trial.
+- APK: third-party notices included (`assets/THIRD-PARTY-NOTICES.txt`).
+- CI: waits for the Xvfb socket for screenshots; Android Keystore test robust to the
+  emulator's activity manager restarting.
 
 ## [2.1.0] — unreleased (branch `release/2.1.0`)
 
@@ -195,4 +205,4 @@ accepted.
 
 First release: C++17 / PostgreSQL server (forced RLS), Nhill Business, Nhill POS, Nhill
 Console (Qt 6), Ubuntu 24.04 `.deb` packages, Supabase database initialised. Details:
-`docs/rapport-tests.md`, `docs/limites.md` (French).
+`docs/archive/rapport-tests.md`, `docs/archive/limites.md` (French).

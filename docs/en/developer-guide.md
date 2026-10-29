@@ -1,16 +1,18 @@
-# Nhill 2.1 — Developer guide
+# Nhill 3.0 — Developer guide
 
 *Français : [../fr/guide-developpement.md](../fr/guide-developpement.md)*
 
 How to understand the code, change it without breaking its guarantees, and have the CI
-check it. Detailed architecture and business rules: `docs/technique.md`; API:
-`docs/api.md` (both reference documents are in French).
+check it. Documentation per component: [index.md](index.md); server: [server.md](server.md);
+database: [database.md](database.md). References generated from the code (never edit them
+by hand): [api-reference.md](api-reference.md) and [database-reference.md](database-reference.md).
+The former technical documentation (0.1 to 2.x, French) is in `docs/archive/`.
 
 ## 1. Architecture at a glance
 
 ```
  Nhill Business          Nhill POS               Nhill Console
- (Windows/Linux/Android) (Windows/Linux)         (Windows/Linux, creators)
+ (Windows/Linux/Android) (Windows/Linux)         (Windows/Linux, operator)
    │ HTTPS, short tokens   │ HTTPS, short tokens    │ HTTPS, admin token (password + TOTP)
    ▼                       ▼                        ▼
  ┌──────────────── TLS proxy (Caddy) ────────────────────────────────────┐
@@ -27,12 +29,16 @@ Invariants never to break:
 
 - the client holds **no database credentials** and only talks to the API;
 - each request is a transaction; `Tx::setTenant` sets `app.establishment_id` and the
-  database itself filters business tables (`FORCE ROW LEVEL SECURITY` on 30 tables);
+  database itself filters the businesses' tables (`FORCE ROW LEVEL SECURITY` on 31 tables);
 - amounts are integers in minor units (`common/`: `Money`), never floating point;
   currencies are never added together;
 - an issued document is immutable; corrections go through a credit note;
 - the activity log is append-only (no route changes it);
-- sensitive write operations are idempotent (`Idempotency-Key`).
+- sensitive write operations are idempotent (`Idempotency-Key`);
+- effective rights are the role's **reduced to the plan's features**: each route declares
+  its permission and feature (`RouteOpts`), lists and indicators filter out the data of
+  missing features; the applications hide what the server would refuse (`Session.has()`,
+  `Session.can()`).
 
 ## 2. Repository layout
 
@@ -41,13 +47,14 @@ Invariants never to break:
 | `common/` | C++ library shared by server and clients: amounts, establishment codes, validation (including the password rule), version |
 | `server/src/` | `http/` (application, routing), `services/` (domains), `setup.*`, `jobs/`, `pdf/`, `migrate.*`, `db.*`, `config.*` |
 | `server/profiles/`, `server/i18n/` | country tax profiles, server FR/EN labels (PDF, activity log) |
-| `db/migrations/` | `0001` … `0011`, digests checked at start-up; a published migration is never modified |
+| `db/migrations/` | `0001` … `0015`, digests checked at start-up; a published migration is never modified |
 | `client/src/` | `core/` (ApiClient, Session, Validator, AppContext), `business/`, `console/`, `pos/` |
 | `client/qml/Nhill/` | `Ui/` (design system), `Business/`, `Console/`, `Pos/` |
 | `client/i18n/` | `nhill_fr.ts`, `nhill_en.ts` |
 | `tests/` | `common/`, `server/` (throwaway PostgreSQL), `client/`, `support/minigtest/` |
-| `packaging/` | Debian (`linux/`), Windows (NSIS, MinGW), Android |
-| `scripts/` | build, verification, release, QA, i18n, development |
+| `packaging/` | Debian (`linux/`, `debian/`), Windows (NSIS; MSVC in CI, MinGW cross-build possible), Android, third-party notices |
+| `deploy/` | server: systemd, Caddy, backups, VPS kit (`deploy/vps`) |
+| `scripts/` | build, verification, release, QA, i18n, development, reference generation (`scripts/docs/`) |
 | `website/` | marketing website and form backend (independent from the application) |
 | `docs/`, `legal/`, `marketing/` | FR/EN documentation (Markdown = source, generated PDFs) |
 
@@ -73,15 +80,15 @@ NH_DEV_STATE=/tmp/nhdev scripts/dev/dev-stack.sh stop
 
 ## 4. Tests
 
-| Suite | Command | Count (2.1.0) | Dependencies |
+| Suite | Command | Count (3.0.0, CI of 28/10/2026) | Dependencies |
 |---|---|---|---|
 | `common` | `ctest -R common` or `scripts/test-common-standalone.sh` | 22 | none (the standalone script uses `tests/support/minigtest`) |
-| `server` | `ctest -R server` | 100 (16 of them for the forgotten password, with a fake local SMTP relay) | local PostgreSQL 15+ (`initdb`, `pg_ctl`) |
+| `server` | `ctest -R server` | 122 (121 passed, 1 skipped: document sample generation) — plans and rights, documents, till, erasure of a business, forgotten password with a fake local SMTP relay… | local PostgreSQL 15+ (`initdb`, `pg_ctl`) |
 | `setup` | `ctest -R setup` | 6 | PostgreSQL |
-| `client` | `ctest -R client` | 13 | Qt 6 |
+| `client` | `ctest -R client` | 15 | Qt 6 |
 | `keychain` | `ctest -R keychain` (real storage: `dbus-run-session` + `gnome-keyring-daemon` on Linux; `NHILL_KEYCHAIN_REQUIRED=1` to fail instead of skipping) | 3 (write and read back in two processes, sign-out, without "Remember me") | Qt 6, QtKeychain, a system keychain |
 | Website backend | `cd website/backend && python3 -m unittest discover -s tests` | 13 | Python 3 (SQLite); PostgreSQL in CI |
-| QML (static) | `python3 scripts/qa/qml-check.py` | 98 files | Node.js |
+| QML (static) | `python3 scripts/qa/qml-check.py` | 100 files (and the APK copy of the third-party notices) | Node.js |
 | Website (static) | `python3 website/tools/check_site.py website` | 24 pages | Python 3 |
 
 Server tests start a throwaway PostgreSQL; as root they use the `postgres` user. A test
@@ -134,11 +141,20 @@ key must exist in both.
   isolation test.
 - Setup mode checks isolation with 10 controls: add one if the new table holds sensitive
   data.
+- A new plan feature or limit: constant in `server/src/services/entitlements.hpp`, row in
+  `plan_capabilities` (migration), `feature` on the routes concerned, filtering of lists and
+  indicators, hiding in the applications, server-side refusal test.
+- After a migration, regenerate the database reference:
+  `python3 scripts/docs/gen_db_reference.py --server build/server/nhill-server` (CI checks it
+  is up to date) and describe any new table in `scripts/docs/db_descriptions.py`.
 
 ## 8. API
 
 - Prefix `/api/v1`; an incompatible change requires `/api/v2` (with `v1` served during
   the transition). `GET /api/v1/meta` publishes `min_client_version`.
+- Any added or changed route: describe it in `scripts/docs/api_descriptions.py`, then
+  `python3 scripts/docs/gen_api_reference.py`; CI refuses an outdated reference or a route
+  without a description.
 - Errors: `{"error": {"code": …, "message": …, "request_id": …}}` (plus `field` for
   rejected input); codes are translated on the client (`AppContext`). Add the FR/EN
   message of any new code.
@@ -158,11 +174,11 @@ key must exist in both.
 
 | Workflow | Content |
 |---|---|
-| `ci.yml` | build, tests (common, server, setup, client), QML check, screenshots |
-| `linux-packages.yml` | `.deb` for Ubuntu 24.04 and Debian 13 in clean containers + test installation |
+| `ci.yml` | build, tests (common, server, setup, client, keychain with a real keyring), QML check, API and database references up to date, screenshots |
+| `linux-packages.yml` | `.deb` for Ubuntu 24.04 and Debian 13 in clean containers + test installation; VPS kit acceptance on a fresh Ubuntu 24.04 machine (12 checks) |
 | `windows.yml` | Qt 6.5.3 MSVC, NSIS installers, silent test installation |
-| `android.yml` | SDK/NDK, Qt for Android, APK |
-| `docs-website.yml` | up-to-date PDFs, marketing website, backend tests (SQLite and PostgreSQL) |
+| `android.yml` | SDK/NDK, Qt for Android, APK; "Remember me" checked in the Keystore of an Android 11 emulator |
+| `docs-website.yml` | API reference and PDFs up to date, marketing website, backend tests (SQLite and PostgreSQL), online domain check |
 
 CI artefacts are the ones to publish; never publish a binary built on an untracked
 personal machine.

@@ -23,7 +23,7 @@ two risks remain open with a decision to take (§ 4, R1 and R2).
 
 | # | Risk | Severity | 3.0.0 status |
 |---|---|---|---|
-| R1 | **cpp-httplib 0.14.3** (Ubuntu 24.04 package): CVE-2025-46728 and CVE-2025-53629, unbounded memory with chunked request bodies; fixes published only through Ubuntu Pro (ESM) | High | **Open, mitigated**: the server listens on 127.0.0.1; Caddy refuses bodies over 6 MB before the server. Proposed fix: build against cpp-httplib ≥ 0.23 (single header). **Decision required** (§ 4) |
+| R1 | **cpp-httplib 0.14.3** (Ubuntu 24.04 package): CVE-2025-46728 and CVE-2025-53629, unbounded memory with chunked request bodies; fixes published only through Ubuntu Pro (ESM). The Debian 13 server package is built against `0.18.7-1+deb13u1`, listed as fixed for both CVEs by the Debian Security Tracker (consulted on 29/10/2026) | High | **Open, mitigated** (Ubuntu 24.04 package, the VPS one): the server listens on 127.0.0.1; Caddy refuses bodies over 6 MB before the server. Proposed fix: build against cpp-httplib ≥ 0.23 (single header). **Decision required** (§ 4) |
 | R2 | **Qt 6.5.3** bundled in the Windows installers and the Android APK (advisories published after 6.5.3, in particular HTTP/2: CVE-2023-51714, CVE-2024-39936) | High | **Mitigated in 3.0.0**: HTTP/2 disabled in the client (HTTP/1.1 only). Full fix: a maintained Qt version; impact on the minimum Android version to assess. **Decision required** |
 | R3 | Minimum password length: 8 characters (owner's requirement) | Medium | Accepted risk, compensated (§ 5) |
 | R4 | Daily backup only: up to 24 hours of data lost if the server is lost | Medium | Open — continuous archiving of transaction logs (WAL) recommended |
@@ -79,7 +79,7 @@ two risks remain open with a decision to take (§ 4, R1 and R2).
 
 | Risk | Recommended option | Effect |
 |---|---|---|
-| R1 cpp-httplib | Ship with the server a verified copy of cpp-httplib ≥ 0.23 (single header, MIT licence), version and fingerprint recorded, or use Ubuntu Pro's fixed packages | removes the vulnerability instead of mitigating it; to redo with each advisory |
+| R1 cpp-httplib | Ship with the server a verified copy of cpp-httplib ≥ 0.23 (single header, MIT licence), version and fingerprint recorded; or use Ubuntu Pro's fixed packages; or install the production server on Debian 13 (package fixed by Debian), which requires adapting and re-testing `deploy/vps` for Debian 13 | removes the vulnerability instead of mitigating it; to redo with each advisory |
 | R2 Qt | Build Windows and Android with a maintained Qt version | removes the advisories published after 6.5.3; the minimum Android version may rise (check before changing the website) |
 
 ## 5. Password policy (reminder of the 2.0 decision)
@@ -110,6 +110,7 @@ risk (R3).
 * NVD — CVE-2025-53629: https://nvd.nist.gov/vuln/detail/CVE-2025-53629
 * OSV — UBUNTU-CVE-2025-53629 (Ubuntu 24.04 cpp-httplib packages): https://osv.dev/vulnerability/UBUNTU-CVE-2025-53629
 * Ubuntu — USN-7962-1, cpp-httplib (24.04 fixes through ESM): https://ubuntu.com/security/notices/USN-7962-1
+* Debian Security Tracker — CVE-2025-46728 and CVE-2025-53629 (cpp-httplib, trixie: 0.18.7-1+deb13u1 fixed): https://security-tracker.debian.org/tracker/CVE-2025-46728 , https://security-tracker.debian.org/tracker/CVE-2025-53629
 * Debian Security Tracker — CVE-2024-39936 (Qt, HTTP/2): https://security-tracker.debian.org/tracker/CVE-2024-39936
 * NVD — CVE-2023-51714 (Qt, HTTP/2 HPACK): https://nvd.nist.gov/vuln/detail/CVE-2023-51714
 * NIST SP 800-63B-4: https://pages.nist.gov/800-63-4/sp800-63b.html

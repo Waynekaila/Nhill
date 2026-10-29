@@ -1,48 +1,49 @@
-# Dépendances et licences
+# Dépendances et licences (Nhill 3.0)
 
-Versions effectivement utilisées pour la construction et les tests (Ubuntu 24.04,
-25 octobre 2026). Les licences sont celles publiées par chaque projet ; à faire
-confirmer par un juriste avant distribution commerciale, en particulier pour Qt.
+*Composants tiers et versions réellement utilisées par les constructions de la version
+3.0.0 (intégration continue du 28 octobre 2026, manifestes `logs/deps-manifest-*.txt` des
+branches `ci-results/*`). Les licences sont celles publiées par chaque projet ; à faire
+confirmer par un juriste avant une distribution commerciale, en particulier pour Qt.*
 
-## Serveur
+## Serveur (paquets Linux)
 
-| Composant | Version testée | Licence | Usage |
+| Composant | Ubuntu 24.04 | Debian 13 | Licence | Usage |
+|---|---|---|---|---|
+| PostgreSQL (serveur de la base) | 16 | 17 | PostgreSQL License | base de données (15 ou plus récent requis) |
+| libpqxx | 7.8.1 | 7.10.0 | BSD-3-Clause | client PostgreSQL C++ |
+| cpp-httplib | 0.14.3 (voir audit de sécurité, R1) | 0.18.7-1+deb13u1 | MIT | serveur HTTP |
+| libsodium | 1.0.18 | 1.0.18 | ISC | Argon2id, chiffrement, HMAC, aléa |
+| OpenSSL (libcrypto) | 3.0.13 | 3.5.7 | Apache-2.0 | HMAC-SHA1 pour TOTP (RFC 6238) |
+| libharu | 2.3.0 | 2.3.0 | zlib/libpng | génération des PDF |
+| libpng | 1.6.43 | 1.6.48 | libpng License | décodage PNG avant PDF |
+| libcurl | 8.5.0 | 8.14.1 | curl License | envoi des e-mails (SMTP avec TLS) |
+| nlohmann/json | 3.11.3 | 3.11.3 | MIT | JSON |
+| GoogleTest | 1.14.0 | 1.16.0 | BSD-3-Clause | tests (non distribué) |
+
+## Applications
+
+| Composant | Version | Licence | Remarque |
 |---|---|---|---|
-| PostgreSQL | 16.15 | PostgreSQL License (permissive) | Base de données |
-| libpqxx | 7.8.1 | BSD-3-Clause | Client PostgreSQL C++ |
-| cpp-httplib | 0.14.3 | MIT | Serveur HTTP |
-| libsodium | 1.0.18 | ISC | Argon2id, chiffrement, HMAC, KDF, aléa |
-| OpenSSL (libcrypto) | 3.0.13 | Apache-2.0 | HMAC-SHA1 pour TOTP (RFC 6238) |
-| libharu | 2.3.0 | zlib/libpng | Génération PDF |
-| libpng | 1.6.43 | libpng License | Décodage PNG sécurisé avant PDF |
-| nlohmann/json | 3.11.3 | MIT | JSON |
-| libcurl | 8.5.0 (Ubuntu 24.04) | curl License (MIT/X) | 2.1 : envoi des e-mails par SMTP avec TLS |
-| GoogleTest | 1.14.0 | BSD-3-Clause | Tests (non distribué) |
-
-## Client
-
-| Composant | Version testée | Licence | Remarque |
-|---|---|---|---|
-| Qt (Core, Gui, Network, Qml, Quick, QuickControls2, Svg, Linguist) | 6.4.2 | LGPL-3.0 (ou commerciale) | Lier **dynamiquement**, fournir la notice LGPL et permettre le remplacement des bibliothèques Qt ; sur Android, vérifier les obligations LGPL avec l'APK (ou licence commerciale Qt) |
-| QtKeychain | 0.14.2 (paquets Linux de la distribution) ; 0.17.0 compilée depuis la source vérifiée pour Windows et Android (2.1) | BSD-3-Clause | Trousseau du système (Windows Credential Manager, Secret Service/KWallet, Android Keystore). **Liée statiquement** sous Windows et Android : la notice BSD doit accompagner le binaire — `packaging/notices/THIRD-PARTY-NOTICES.txt`, installé à côté de chaque application Windows ; **reste à faire pour l'APK** (écran « À propos » ou fichier dans l'application) |
+| Qt 6 (Core, Gui, Network, Qml, Quick, QuickControls2, Svg) | Linux : celle de la distribution (6.4.2 sur Ubuntu 24.04, 6.8.2 sur Debian 13) ; Windows et Android : 6.5.3 | LGPL-3.0 (ou commerciale) | liaison **dynamique** ; notice LGPL fournie ; Qt 6.5.3 : voir l'audit de sécurité, R2 |
+| QtKeychain | Linux : paquet de la distribution (0.14.2 sur Ubuntu 24.04, 0.15.0 sur Debian 13) ; Windows et Android : 0.17.0 compilée depuis la source vérifiée, liée statiquement | BSD-3-Clause | notice BSD dans `packaging/notices/THIRD-PARTY-NOTICES.txt`, installée à côté de chaque application Windows et incluse dans l'APK (`assets/THIRD-PARTY-NOTICES.txt`, présence vérifiée par `scripts/build-android.sh`) |
 
 ## Ressources
 
 | Ressource | Licence | Remarque |
 |---|---|---|
-| Polices IBM Plex Sans / Mono | SIL Open Font License 1.1 | `assets/fonts/OFL.txt` ; intégrées dans les PDF et l'application, nom réservé « Plex » |
-| Logo, icônes Nhill | Création du projet | Générés par `scripts/brand/build_brand.py` |
-| Jeu d'icônes d'interface (`Icon.qml`) | Création du projet | Tracés originaux sur grille 24×24 |
+| Polices IBM Plex Sans et Mono | SIL Open Font License 1.1 | `assets/fonts/OFL.txt` ; intégrées dans les PDF et les applications ; nom réservé « Plex » |
+| Logo, icônes Nhill | création du projet | `scripts/brand/build_brand.py` |
+| Icônes d'interface (`Icon.qml`) | création du projet | tracés originaux |
 
 ## Outils de construction (non distribués)
 
-CMake 3.28, Ninja 1.11, GCC 13.2, Python 3 (fontTools, Pillow) et rsvg-convert pour la
-génération des ressources de marque, age 1.1.1 pour le chiffrement des sauvegardes
+CMake, Ninja, GCC (Linux), MSVC 2022 et NSIS (Windows), Android SDK, NDK r25c et JDK 17
+(Android), Python 3, pandoc et Chromium (PDF), `age` pour le chiffrement des sauvegardes
 (BSD-3-Clause).
 
-## Obligations à respecter lors de la distribution
+## Obligations lors de la distribution
 
 1. Joindre les textes de licence (Qt LGPL-3.0, OFL-1.1, BSD/MIT/ISC des bibliothèques).
-2. Qt : ne pas lier statiquement l'application sans licence commerciale ; documenter
-   comment obtenir le code source de Qt utilisé.
+2. Qt : ne pas lier statiquement les applications sans licence commerciale ; indiquer
+   comment obtenir le code source de la version de Qt utilisée.
 3. Ne pas modifier les polices IBM Plex sous le nom « Plex ».

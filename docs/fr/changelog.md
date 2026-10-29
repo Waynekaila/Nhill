@@ -69,6 +69,18 @@ se mettre à jour.
   contrôle du domaine en ligne (`check_live.py`).
 - Documents juridiques 3.0.0 (FR/EN) sans champ à compléter ; matrice de conformité entre
   le site et l'application ; audit de sécurité 3.0.0.
+- Document juridique 20 : autorisation d'utiliser un nom, un témoignage ou une image ;
+  politique de confidentialité, registre et conservation complétés (prospection sur le
+  terrain, témoignages).
+- Documentation par composant (Nhill Business, Nhill POS, Nhill Console, serveur, base de
+  données) en français et en anglais ; références de l'API (203 points d'accès) et de la
+  base (71 tables) générées depuis le code et vérifiées par la CI ; documents 0.1–2.x
+  archivés dans `docs/archive/`.
+- Dossier commercial : modèles de messages à champs déclarés, fichiers de suivi livrés vides
+  (sans ligne fictive), visuels refaits avec les captures 3.0 pour l'essai de 30 jours.
+- APK : notices des composants tiers incluses (`assets/THIRD-PARTY-NOTICES.txt`).
+- CI : attente du socket Xvfb pour les captures ; test du Keystore Android robuste au
+  redémarrage du gestionnaire d'activités de l'émulateur.
 
 ## [2.1.0] — non publiée (branche `release/2.1.0`)
 
@@ -203,4 +215,4 @@ dossiers juridique et commercial bilingues. **L'API `v1` et le schéma de base
 
 Première version : serveur C++17 / PostgreSQL (RLS forcée), Nhill Business, Nhill POS,
 Nhill Console (Qt 6), paquets `.deb` Ubuntu 24.04, base Supabase initialisée. Détails :
-`docs/rapport-tests.md`, `docs/limites.md`.
+`docs/archive/rapport-tests.md`, `docs/archive/limites.md`.

@@ -25,7 +25,7 @@
 # temporaire, empreinte du source vérifiée avant/après. Les dépendances sont déduites des
 # fichiers CMake du projet (find_package, pkg_check_modules, find_library), de ses imports
 # QML et de ses scripts de maintenance, avec les noms de paquets documentés dans
-# scripts/build-linux.sh et docs/installation.md ; les dépendances d'exécution des
+# scripts/build-linux.sh et docs/archive/installation.md ; les dépendances d'exécution des
 # binaires sont calculées par dpkg-shlibdeps et dpkg -S.
 #
 # État de vérification : script exécuté de bout en bout sur Ubuntu 24.04 (option
@@ -208,7 +208,7 @@ while IFS= read -r -d '' f; do CMAKE_FILES+=("$f"); done < <(find "$SRC" \( -pat
 cmake_grep() { grep -hoE "$1" "${CMAKE_FILES[@]}" 2>/dev/null || true; }
 
 # Noms de paquets Debian des modules utilisés par le projet, tels que listés dans
-# scripts/build-linux.sh et docs/installation.md (vérifiés ensuite dans apt).
+# scripts/build-linux.sh et docs/archive/installation.md (vérifiés ensuite dans apt).
 declare -A PKGCONFIG_MAP=(
     [libpqxx]=libpqxx-dev [libsodium]=libsodium-dev [libpng]=libpng-dev [cpp-httplib]=libcpp-httplib-dev
     [libcurl]=libcurl4-openssl-dev
@@ -578,7 +578,7 @@ for comp in "${WANTED[@]}"; do
     DEPENDS="$(join_deps "$D_SHLIBS" "$D_QML" "$D_SCRIPTS" "$D_PROJECT")"
     RECOMMENDS="$(cpack_var "CPACK_DEBIAN_${UP}_PACKAGE_RECOMMENDS")"
     SUGGESTS="$(cpack_var "CPACK_DEBIAN_${UP}_PACKAGE_SUGGESTS")"
-    # Le trousseau (QtKeychain/Secret Service) est documenté dans docs/installation.md
+    # Le trousseau (QtKeychain/Secret Service) est documenté dans docs/archive/installation.md
     if [[ -n "$D_QML" ]] && grep -q 'libqt6keychain' <<<"$DEPENDS"; then
         SUGGESTS="$(join_deps "$SUGGESTS" "gnome-keyring | kwalletmanager")"
     fi

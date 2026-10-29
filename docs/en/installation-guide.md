@@ -1,9 +1,9 @@
-# Nhill 2.1 — Installation guide
+# Nhill 3.0 — Installation guide
 
 *Français : [../fr/guide-installation.md](../fr/guide-installation.md)*
 
 This guide covers installing the **applications** (Linux, Windows, Android), the
-**server** (Linux) and upgrading from 2.0 or 0.1.0. Building the packages:
+**server** (Linux) and upgrading from 2.x. Building the packages:
 [build-guide.md](build-guide.md). Settings: [configuration-guide.md](configuration-guide.md).
 Marketing website: [`website/README.en.md`](../../website/README.en.md).
 
@@ -22,7 +22,7 @@ Before installing, compare the file's SHA-256 digest with the one in
 sha256sum -c SHA256SUMS --ignore-missing          # Linux
 ```
 ```powershell
-Get-FileHash .\nhill-business-2.1.0-setup.exe -Algorithm SHA256   # Windows: compare by eye
+Get-FileHash .\nhill-business-3.0.0-setup.exe -Algorithm SHA256   # Windows: compare by eye
 ```
 
 If the digest differs, do not install the file.
@@ -46,8 +46,8 @@ Packages are built **for one specific distribution**: take those from your syste
 folder (`linux/debian-13/` or `linux/ubuntu-24.04/`).
 
 ```bash
-sudo apt install ./nhill-business_2.1.0-1_amd64.deb ./nhill-pos_2.1.0-1_amd64.deb
-sudo apt install ./nhill-console_2.1.0-1_amd64.deb     # for the creators of Nhill only
+sudo apt install ./nhill-business_3.0.0-1_amd64.deb ./nhill-pos_3.0.0-1_amd64.deb
+sudo apt install ./nhill-console_3.0.0-1_amd64.deb     # for the creators of Nhill only
 ```
 
 `apt` installs the required libraries from the official repositories. The applications
@@ -58,7 +58,7 @@ Removal: `sudo apt remove nhill-business nhill-pos nhill-console`.
 
 ### 3.2 Windows 10/11
 
-1. Check the digest (§ 1), then run `nhill-business-2.1.0-setup.exe` (or `nhill-pos-…`,
+1. Check the digest (§ 1), then run `nhill-business-3.0.0-setup.exe` (or `nhill-pos-…`,
    `nhill-console-…`). Installation asks for administrator rights (it installs into
    `Program Files`).
 2. As long as the installer is unsigned, Windows SmartScreen may show "Windows protected
@@ -66,11 +66,11 @@ Removal: `sudo apt remove nhill-business nhill-pos nhill-console`.
    matches**: "More info" → "Run anyway". Never turn off SmartScreen or the antivirus.
 3. Start-menu shortcuts are created; remove through Settings → Apps.
 
-Silent installation (fleet of computers): `nhill-pos-2.1.0-setup.exe /S`.
+Silent installation (fleet of computers): `nhill-pos-3.0.0-setup.exe /S`.
 
 ### 3.3 Android
 
-1. Check the digest of `nhill-business-2.1.0-arm64-v8a.apk`.
+1. Check the digest of `nhill-business-3.0.0-arm64-v8a.apk`.
 2. Open the file on the phone; Android asks you to allow **this app** (file manager or
    browser) to install apps. Allow it for this installation, then withdraw the permission
    (Settings → Apps → Special access → Install unknown apps).
@@ -86,7 +86,7 @@ No server address is compiled into the application. Nhill Business asks for it w
 business is created; Nhill Console and Nhill POS ask for it at their first sign-in. Enter the
 address given by your provider (HTTPS): it is checked, then saved on the device, and can be
 changed in the settings. For a one-off trial on another server, the `NHILL_SERVER`
-environment variable replaces it (desktop only). Then: user guide, Part A § 1.
+environment variable replaces it (desktop only). Then: [nhill-business.md](nhill-business.md) § 1, [nhill-pos.md](nhill-pos.md) § 2, [nhill-console.md](nhill-console.md) § 2.
 
 ## 4. Server (production)
 
@@ -107,7 +107,7 @@ run on a public production server with TLS: run it on a staging server first.
 ### 4.2 Package
 
 ```bash
-sudo apt install ./nhill-server_2.1.0-1_amd64.deb
+sudo apt install ./nhill-server_3.0.0-1_amd64.deb
 curl -s http://127.0.0.1:8080/health     # {"database":false,"status":"setup"}
 ```
 
@@ -155,42 +155,36 @@ In `/etc/nhill/server.env`: `NH_PUBLIC_BASE_URL=https://api.<domain>`,
 
 ### 4.6 Backups, first access, plans
 
-- Encrypted backups (age): `docs/sauvegarde-restauration.md` (French);
+- Encrypted backups (age): [database.md](database.md) § 5;
   `sudo systemctl enable --now nhill-backup.timer`, then **a restore test**.
 - Nhill Console → **First access** (30-minute token, password of at least 8 characters,
   mandatory TOTP).
 - **Plans and prices**: no price is preconfigured.
-- **Mail** (2.1): SMTP relay with TLS (`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`); without it,
+- **Mail**: SMTP relay with TLS (`NH_EMAIL_TRANSPORT=smtp`, `NH_SMTP_*`); without it,
   owners and administrators cannot recover a forgotten password.
 - **Payment providers**: stay in test mode until a successful test payment with the
   provider's account.
 
-## 5. Upgrading to 2.1.0
+## 5. Upgrading to 3.0.0
 
-From 2.0.x:
+From 2.1.x (or 2.0.x):
 
-1. **Back up** the database: `sudo systemctl start nhill-backup.service`.
-2. Server: `sudo apt install ./nhill-server_2.1.0-1_amd64.deb`; at start-up the service
-   applies migration **0011** (forgotten password: two columns in `users`, the
-   `password_resets` table, three platform settings). Schema: 0001–0011.
-3. Mail: set `NH_EMAIL_TRANSPORT=smtp` and the `NH_SMTP_*` variables
-   ([configuration-guide.md](configuration-guide.md) § 1 and § 5), then
-   `sudo -u nhill nhill-server --config /etc/nhill/server.env check` and try
-   "Forgot your password?" with a test account.
-4. Applications: install the new versions **before** using the reset by an administrator.
-   A 2.0 client is still accepted by the 2.1 server (API `v1`), but it cannot show the
-   required change of a temporary password: the member could not sign in from that device.
-5. Remembered session: a user whose session was already kept by 2.0 (Linux) keeps it;
-   elsewhere, "Remember me" takes effect at the next sign-in.
+1. **Back up** the database (on the VPS, `nhill-update` does it itself; elsewhere:
+   `sudo systemctl start nhill-backup.service`) and keep a copy of `NH_SECRET_KEY`.
+2. Server: `sudo apt install ./nhill-server_3.0.0-1_amd64.deb` (on the VPS:
+   `sudo nhill-update nhill-server_3.0.0-1_amd64.deb --sha256sums SHA256SUMS`). The server
+   applies migrations **0012 to 0015** (configurable plans and rights, document notices and
+   till invoices, erasure of a business, searches). Existing plans keep their limits
+   (users, tills, warehouses); check each plan's features and limits in Nhill Console ›
+   Plans & prices.
+3. `sudo -u nhill nhill-server --config /etc/nhill/server.env check`, then `/health`.
+4. Applications: install the 3.0.0 versions. They ask for the server address at first
+   launch (no address is built in any more): give it to the users.
+5. Optional: `NH_SUPPORT_EMAIL` (support address in the signature of automatic e-mails).
 
-From 0.1.0: same steps; 2.0 added no migration (the 8-character rule applies to new
-passwords, with no forced change for existing ones). Upgrade server and clients together
-(0.1.x clients reject passwords shorter than 10 characters locally).
-
-Rollback to 2.0: restoring the backup from step 1 is the safe method. Reinstalling only the
-2.0 package leaves migration 0011 in place (the 2.0 server ignores the added columns and
-table); this case has not been tested, and a temporary password already given would work
-there as an ordinary password.
+Rollback: a 2.x server refuses a database migrated by 3.0; the only method is to reinstall
+the previous package **and** restore the database copy taken in step 1 (`nhill-rollback`
+does it on the VPS).
 
 ## 6. Troubleshooting
 
