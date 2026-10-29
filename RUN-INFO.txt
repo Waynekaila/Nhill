@@ -1,0 +1,6 @@
+workflow : docs-website
+job      : domain-check 
+état     : failure
+commit   : c2e961396dfb033631a24f2d3677add9bc285e48 (refs/heads/release/3.0.0)
+exécution: https://github.com/Waynekaila/Nhill/actions/runs/40828182297
+date UTC : 2026-10-29T06:16:16Z

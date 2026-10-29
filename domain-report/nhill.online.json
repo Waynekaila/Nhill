@@ -1,0 +1,119 @@
+{
+  "domain": "nhill.online",
+  "checked_at": "2026-10-29 06:16 UTC",
+  "checks": [
+    {
+      "group": "dns",
+      "id": "addresses nhill.online",
+      "ok": true,
+      "evidence": "2.57.91.91",
+      "required": true
+    },
+    {
+      "group": "dns",
+      "id": "network holder of 2.57.91.91",
+      "ok": true,
+      "evidence": "HOSTINGER-CDN / LT / Hostinger NOC, MNT-HOSTINGER",
+      "required": false
+    },
+    {
+      "group": "dns",
+      "id": "addresses www.nhill.online",
+      "ok": true,
+      "evidence": "2.57.91.91",
+      "required": false
+    },
+    {
+      "group": "https",
+      "id": "certificate nhill.online",
+      "ok": true,
+      "evidence": "Let's Encrypt, YE1 \u00b7 valid for nhill.online, www.nhill.online \u00b7 until 2027-01-25T12:09:12+00:00 (88 days) \u00b7 TLSv1.3",
+      "required": true
+    },
+    {
+      "group": "https",
+      "id": "certificate valid for more than 14 days",
+      "ok": true,
+      "evidence": "88 days left",
+      "required": true
+    },
+    {
+      "group": "https",
+      "id": "certificate www.nhill.online",
+      "ok": true,
+      "evidence": "valid for nhill.online, www.nhill.online",
+      "required": false
+    },
+    {
+      "group": "https",
+      "id": "https://nhill.online/ answers",
+      "ok": true,
+      "evidence": "HTTP 200 at https://nhill.online/",
+      "required": true
+    },
+    {
+      "group": "https",
+      "id": "HTTP Strict-Transport-Security",
+      "ok": false,
+      "evidence": "header absent",
+      "required": false
+    },
+    {
+      "group": "https",
+      "id": "http:// redirected to https://",
+      "ok": false,
+      "evidence": "HTTP 200 \u2192 (no redirect)",
+      "required": false
+    },
+    {
+      "group": "https",
+      "id": "www.nhill.online leads to the site",
+      "ok": true,
+      "evidence": "HTTP 200 at https://www.nhill.online/",
+      "required": false
+    },
+    {
+      "group": "site",
+      "id": "home page is the Nhill site (canonical link)",
+      "ok": false,
+      "evidence": "canonical link of the Nhill home page absent; page served: \"Parked Domain name on Hostinger DNS system\" (32079 bytes)",
+      "required": true
+    },
+    {
+      "group": "site",
+      "id": "/robots.txt of the Nhill site",
+      "ok": false,
+      "evidence": "HTTP 200",
+      "required": true
+    },
+    {
+      "group": "site",
+      "id": "/sitemap.xml of the Nhill site",
+      "ok": false,
+      "evidence": "HTTP 200",
+      "required": true
+    },
+    {
+      "group": "mail",
+      "id": "MX records (mail reception)",
+      "ok": false,
+      "evidence": "none (DNS status 0, no answer)",
+      "required": true
+    },
+    {
+      "group": "mail",
+      "id": "SPF record (authorised senders)",
+      "ok": false,
+      "evidence": "none",
+      "required": true
+    },
+    {
+      "group": "mail",
+      "id": "DMARC record",
+      "ok": false,
+      "evidence": "none",
+      "required": true
+    }
+  ],
+  "required_failed": 6
+}
