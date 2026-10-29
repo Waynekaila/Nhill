@@ -1,0 +1,24 @@
+== test_keychain (Gestionnaire d'identification Windows)
+********* Start testing of KeychainTest *********
+Config: Using QtTest library 6.5.3, Qt 6.5.3 (x86_64-little_endian-llp64 shared (dynamic) release build; by MSVC 2019), windows server2022
+INFO   : KeychainTest::initTestCase() entering
+PASS   : KeychainTest::initTestCase()
+INFO   : KeychainTest::sessionSurvivesARestartWhenRemembered() entering
+INFO   : KeychainTest::sessionSurvivesARestartWhenRemembered() QVERIFY(v_ == QLatin1String("OK"))
+D:\a\Nhill\Nhill\tests\keychain\test_keychain.cpp(262) : message location
+INFO   : KeychainTest::sessionSurvivesARestartWhenRemembered() QVERIFY(v_ == QLatin1String("OK"))
+D:\a\Nhill\Nhill\tests\keychain\test_keychain.cpp(263) : message location
+PASS   : KeychainTest::sessionSurvivesARestartWhenRemembered()
+INFO   : KeychainTest::logoutErasesTheStoredSession() entering
+INFO   : KeychainTest::logoutErasesTheStoredSession() QVERIFY(v_ == QLatin1String("OK"))
+D:\a\Nhill\Nhill\tests\keychain\test_keychain.cpp(271) : message location
+PASS   : KeychainTest::logoutErasesTheStoredSession()
+INFO   : KeychainTest::nothingIsStoredWithoutRememberMe() entering
+INFO   : KeychainTest::nothingIsStoredWithoutRememberMe() QVERIFY(v_ == QLatin1String("OK"))
+D:\a\Nhill\Nhill\tests\keychain\test_keychain.cpp(273) : message location
+PASS   : KeychainTest::nothingIsStoredWithoutRememberMe()
+INFO   : KeychainTest::cleanupTestCase() entering
+PASS   : KeychainTest::cleanupTestCase()
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 936ms
+********* Finished testing of KeychainTest *********
+== code de sortie : 0
