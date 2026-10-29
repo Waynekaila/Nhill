@@ -1,0 +1,66 @@
+{
+  "checked_at": "2026-10-29T06:26:59Z",
+  "ok": true,
+  "checks": [
+    {
+      "id": "service nhill-server",
+      "ok": true,
+      "detail": "active"
+    },
+    {
+      "id": "service caddy",
+      "ok": true,
+      "detail": "active"
+    },
+    {
+      "id": "postgresql",
+      "ok": true,
+      "detail": "127.0.0.1:5432 - accepting connections"
+    },
+    {
+      "id": "api local",
+      "ok": true,
+      "detail": "{\"database\":true,\"status\":\"ok\"}"
+    },
+    {
+      "id": "api https (Caddy)",
+      "ok": true,
+      "detail": "HTTP 200 via https://api.nhill-ci.test/health"
+    },
+    {
+      "id": "certificate",
+      "ok": true,
+      "detail": "0 days left (Oct 29 18:26:41 2026 GMT)"
+    },
+    {
+      "id": "local-only ports",
+      "ok": true,
+      "detail": "PostgreSQL 5432 and API 8080 on loopback only"
+    },
+    {
+      "id": "firewall",
+      "ok": true,
+      "detail": "Status: active"
+    },
+    {
+      "id": "disk /",
+      "ok": true,
+      "detail": "42% used (alert at 85%)"
+    },
+    {
+      "id": "disk /var/backups",
+      "ok": true,
+      "detail": "42% used (alert at 85%)"
+    },
+    {
+      "id": "last backup",
+      "ok": true,
+      "detail": "nhill-20261029T062645Z.dump.age, 0 h old"
+    },
+    {
+      "id": "backup service",
+      "ok": true,
+      "detail": "last run: success"
+    }
+  ]
+}

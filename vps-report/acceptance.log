@@ -1,0 +1,16 @@
+PASS 01  ports: PostgreSQL 5432 and API 8080 on loopback only, Caddy on 443
+PASS 02  firewall active: 6 allow rules, no database or API port
+PASS 03  secrets: files mode 600, no temporary superuser left, no backup private key on the server
+PASS 04  API through Caddy: TLS verified, HSTS, http redirected, version 3.0.0
+PASS 05  public address configured: https://api.nhill-ci.test
+PASS 06  health check: 12 checks passed; timers enabled (health, backup)
+PASS 07  backup encrypted with age; restored outside the server: 9 checks passed
+PASS 08  update: backup + database copy nhill_pre_3_0_0_1_20261029062645, package reinstalled, API back
+PASS 09  way back: database copy restored (row written after the update set aside in nhill_failed_20261029062658), API back
+PASS 10  health check after the way back
+Job for nhill-server.service failed because the control process exited with error code.
+See "systemctl status nhill-server.service" and "journalctl -xeu nhill-server.service" for details.
+PASS 11  older server refuses a newer database (explained in the journal), starts again once fixed
+PASS 12  first administrator: new token for the pending address only
+
+VPS ACCEPTANCE PASSED: 12 checks

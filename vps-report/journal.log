@@ -1,0 +1,132 @@
+Oct 29 06:26:19 runnervm48cm3 systemd[1]: Starting caddy.service - Caddy...
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: caddy.HomeDir=/var/lib/caddy
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: caddy.AppDataDir=/var/lib/caddy/.local/share/caddy
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: caddy.AppConfigDir=/var/lib/caddy/.config/caddy
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: caddy.ConfigAutosavePath=/var/lib/caddy/.config/caddy/autosave.json
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: caddy.Version=2.6.2
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: runtime.GOOS=linux
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: runtime.GOARCH=amd64
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: runtime.Compiler=gc
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: runtime.NumCPU=4
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: runtime.GOMAXPROCS=4
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: runtime.Version=go1.22.2
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: os.Getwd=/
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: LANG=C.UTF-8
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/snap/bin
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: SGX_AESM_ADDR=1
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: NOTIFY_SOCKET=/run/systemd/notify
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: USER=caddy
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: LOGNAME=caddy
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: HOME=/var/lib/caddy
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: INVOCATION_ID=518d76efab054147843fc31d33ad599c
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: JOURNAL_STREAM=10:22850
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: SYSTEMD_EXEC_PID=3399
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/system.slice/caddy.service/memory.pressure
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8670332,"msg":"using provided configuration","config_file":"/etc/caddy/Caddyfile","config_adapter":""}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8685415,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"warn","ts":1793255179.8686326,"logger":"http","msg":"server is listening only on the HTTP port, so no automatic HTTPS will be applied to this server","server_name":"srv0","http_port":80}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8687735,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000219c70"}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8688276,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8688672,"logger":"tls","msg":"cleaning storage unit","description":"FileStorage:/var/lib/caddy/.local/share/caddy"}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.868907,"logger":"tls","msg":"finished cleaning storage units"}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8689573,"msg":"autosaved config (load with --resume flag)","file":"/var/lib/caddy/.config/caddy/autosave.json"}
+Oct 29 06:26:19 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255179.8689992,"msg":"serving initial configuration"}
+Oct 29 06:26:19 runnervm48cm3 systemd[1]: Started caddy.service - Caddy.
+Oct 29 06:26:36 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:26:36 runnervm48cm3 nhill-server[4713]: no database configured: nothing to migrate (the server starts in setup mode)
+Oct 29 06:26:36 runnervm48cm3 systemd[1]: Started nhill-server.service - Nhill API server.
+Oct 29 06:26:36 runnervm48cm3 nhill-server[4715]:   Nhill server is in SETUP MODE (no database configured).
+Oct 29 06:26:36 runnervm48cm3 nhill-server[4715]:   Open Nhill Console, choose the server address and enter this setup token
+Oct 29 06:26:36 runnervm48cm3 nhill-server[4715]:   (valid 60 minutes, new token at each restart):
+Oct 29 06:26:36 runnervm48cm3 nhill-server[4715]:       NgIeg9_uP6O_canfEMzYp7Ky
+Oct 29 06:26:36 runnervm48cm3 nhill-server[4715]: {"ts":"2026-10-29T06:26:36Z","level":"info","msg":"setup mode listening on 127.0.0.1:8080"}
+Oct 29 06:26:38 runnervm48cm3 systemd[1]: Stopping nhill-server.service - Nhill API server...
+Oct 29 06:26:38 runnervm48cm3 systemd[1]: nhill-server.service: Deactivated successfully.
+Oct 29 06:26:38 runnervm48cm3 systemd[1]: Stopped nhill-server.service - Nhill API server.
+Oct 29 06:26:39 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:26:39 runnervm48cm3 nhill-server[4897]: applied: 0, already applied: 15
+Oct 29 06:26:39 runnervm48cm3 systemd[1]: Started nhill-server.service - Nhill API server.
+Oct 29 06:26:39 runnervm48cm3 nhill-server[4900]: {"ts":"2026-10-29T06:26:39Z","level":"info","msg":"compliance profile registered: CD v2"}
+Oct 29 06:26:39 runnervm48cm3 nhill-server[4900]: {"ts":"2026-10-29T06:26:39Z","level":"info","msg":"compliance profile registered: INTL v2"}
+Oct 29 06:26:39 runnervm48cm3 nhill-server[4900]: {"ts":"2026-10-29T06:26:39Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Oct 29 06:26:39 runnervm48cm3 nhill-server[4900]: {"ts":"2026-10-29T06:26:39Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}
+Oct 29 06:26:40 runnervm48cm3 systemd[1]: Starting nhill-backup.service - Nhill encrypted database backup...
+Oct 29 06:26:41 runnervm48cm3 nhill-backup.sh[5103]: backup written: /var/backups/nhill/archives/nhill-20261029T062640Z.dump.age (324K)
+Oct 29 06:26:41 runnervm48cm3 systemd[1]: nhill-backup.service: Deactivated successfully.
+Oct 29 06:26:41 runnervm48cm3 systemd[1]: Finished nhill-backup.service - Nhill encrypted database backup.
+Oct 29 06:26:41 runnervm48cm3 systemd[1]: Reloading caddy.service - Caddy...
+Oct 29 06:26:41 runnervm48cm3 caddy[5209]: {"level":"info","ts":1793255201.3896616,"msg":"using provided configuration","config_file":"/etc/caddy/Caddyfile","config_adapter":""}
+Oct 29 06:26:41 runnervm48cm3 caddy[5209]: {"level":"warn","ts":1793255201.3902597,"logger":"caddyfile","msg":"Unnecessary header_up X-Forwarded-For: the reverse proxy's default behavior is to pass headers to the upstream"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.3921092,"logger":"admin.api","msg":"received request","method":"POST","host":"localhost:2019","uri":"/load","remote_ip":"127.0.0.1","remote_port":"48416","headers":{"Accept-Encoding":["gzip"],"Cache-Control":["must-revalidate"],"Content-Length":["1216"],"Content-Type":["application/json"],"Origin":["http://localhost:2019"],"User-Agent":["Go-http-client/1.1"]}}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.392948,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.3933396,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000210f50"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.3941896,"logger":"http","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.3942025,"logger":"http","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"warn","ts":1793255201.4049463,"logger":"pki.ca.local","msg":"installing root certificate (you might be prompted for password)","path":"storage:pki/authorities/local/root.crt"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4051058,"msg":"not NSS security databases found"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4051216,"msg":"define JAVA_HOME environment variable to use the Java trust"}
+Oct 29 06:26:41 runnervm48cm3 sudo[5217]: pam_unix(sudo:auth): conversation failed
+Oct 29 06:26:41 runnervm48cm3 sudo[5217]: pam_unix(sudo:auth): auth could not identify password for [caddy]
+Oct 29 06:26:41 runnervm48cm3 sudo[5217]:    caddy : user NOT in sudoers ; PWD=/ ; USER=root ; COMMAND=/usr/bin/tee /usr/local/share/ca-certificates/Caddy_Local_Authority_-_2026_ECC_Root_251540698609977953116716534630162599518.crt
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"error","ts":1793255201.4117646,"logger":"pki.ca.local","msg":"failed to install root certificate","error":"failed to execute sudo: exit status 1","certificate_file":"storage:pki/authorities/local/root.crt"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4118617,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.411934,"msg":"connection doesn't allow setting of send buffer size. Not a *net.UDPConn?. See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes for details."}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4120693,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4121127,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4121208,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["api.nhill-ci.test"]}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4122932,"logger":"tls.cache.maintenance","msg":"stopped background certificate maintenance","cache":"0xc000219c70"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4124472,"msg":"autosaved config (load with --resume flag)","file":"/var/lib/caddy/.config/caddy/autosave.json"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4125006,"logger":"admin.api","msg":"load complete"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.412581,"logger":"tls.obtain","msg":"acquiring lock","identifier":"api.nhill-ci.test"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4139051,"logger":"tls.obtain","msg":"lock acquired","identifier":"api.nhill-ci.test"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.413974,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"api.nhill-ci.test"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4152088,"logger":"tls.obtain","msg":"certificate obtained successfully","identifier":"api.nhill-ci.test"}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4152377,"logger":"tls.obtain","msg":"releasing lock","identifier":"api.nhill-ci.test"}
+Oct 29 06:26:41 runnervm48cm3 systemd[1]: Reloaded caddy.service - Caddy.
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"warn","ts":1793255201.4156702,"logger":"tls","msg":"stapling OCSP","error":"no OCSP stapling for [api.nhill-ci.test]: no OCSP server specified in certificate","identifiers":["api.nhill-ci.test"]}
+Oct 29 06:26:41 runnervm48cm3 caddy[3399]: {"level":"info","ts":1793255201.4281313,"logger":"admin","msg":"stopped previous server","address":"localhost:2019"}
+Oct 29 06:26:42 runnervm48cm3 systemd[1]: Starting nhill-backup.service - Nhill encrypted database backup...
+Oct 29 06:26:43 runnervm48cm3 nhill-backup.sh[5648]: backup written: /var/backups/nhill/archives/nhill-20261029T062643Z.dump.age (324K)
+Oct 29 06:26:43 runnervm48cm3 systemd[1]: nhill-backup.service: Deactivated successfully.
+Oct 29 06:26:43 runnervm48cm3 systemd[1]: Finished nhill-backup.service - Nhill encrypted database backup.
+Oct 29 06:26:45 runnervm48cm3 systemd[1]: Starting nhill-backup.service - Nhill encrypted database backup...
+Oct 29 06:26:45 runnervm48cm3 nhill-backup.sh[5792]: backup written: /var/backups/nhill/archives/nhill-20261029T062645Z.dump.age (324K)
+Oct 29 06:26:45 runnervm48cm3 systemd[1]: nhill-backup.service: Deactivated successfully.
+Oct 29 06:26:45 runnervm48cm3 systemd[1]: Finished nhill-backup.service - Nhill encrypted database backup.
+Oct 29 06:26:45 runnervm48cm3 systemd[1]: Stopping nhill-server.service - Nhill API server...
+Oct 29 06:26:47 runnervm48cm3 systemd[1]: nhill-server.service: Deactivated successfully.
+Oct 29 06:26:47 runnervm48cm3 systemd[1]: Stopped nhill-server.service - Nhill API server.
+Oct 29 06:26:51 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:26:51 runnervm48cm3 nhill-server[6132]: applied: 0, already applied: 15
+Oct 29 06:26:51 runnervm48cm3 systemd[1]: Started nhill-server.service - Nhill API server.
+Oct 29 06:26:51 runnervm48cm3 nhill-server[6135]: {"ts":"2026-10-29T06:26:51Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Oct 29 06:26:51 runnervm48cm3 nhill-server[6135]: {"ts":"2026-10-29T06:26:51Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}
+Oct 29 06:26:53 runnervm48cm3 systemd[1]: Stopping nhill-server.service - Nhill API server...
+Oct 29 06:26:57 runnervm48cm3 systemd[1]: nhill-server.service: Deactivated successfully.
+Oct 29 06:26:57 runnervm48cm3 systemd[1]: Stopped nhill-server.service - Nhill API server.
+Oct 29 06:26:58 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:26:58 runnervm48cm3 nhill-server[6295]: applied: 0, already applied: 15
+Oct 29 06:26:58 runnervm48cm3 systemd[1]: Started nhill-server.service - Nhill API server.
+Oct 29 06:26:58 runnervm48cm3 nhill-server[6298]: {"ts":"2026-10-29T06:26:58Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Oct 29 06:26:58 runnervm48cm3 nhill-server[6298]: {"ts":"2026-10-29T06:26:58Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}
+Oct 29 06:26:59 runnervm48cm3 systemd[1]: Stopping nhill-server.service - Nhill API server...
+Oct 29 06:27:04 runnervm48cm3 systemd[1]: nhill-server.service: Deactivated successfully.
+Oct 29 06:27:04 runnervm48cm3 systemd[1]: Stopped nhill-server.service - Nhill API server.
+Oct 29 06:27:04 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:27:04 runnervm48cm3 nhill-server[6444]: {"ts":"2026-10-29T06:27:04Z","level":"error","msg":"the database was migrated by a newer version of Nhill (migration 9999_newer_version unknown to this server): install that version, or restore the copy of the database taken before the update"}
+Oct 29 06:27:04 runnervm48cm3 systemd[1]: nhill-server.service: Control process exited, code=exited, status=1/FAILURE
+Oct 29 06:27:04 runnervm48cm3 systemd[1]: nhill-server.service: Failed with result 'exit-code'.
+Oct 29 06:27:04 runnervm48cm3 systemd[1]: Failed to start nhill-server.service - Nhill API server.
+Oct 29 06:27:10 runnervm48cm3 systemd[1]: nhill-server.service: Scheduled restart job, restart counter is at 1.
+Oct 29 06:27:10 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:27:10 runnervm48cm3 nhill-server[6452]: {"ts":"2026-10-29T06:27:10Z","level":"error","msg":"the database was migrated by a newer version of Nhill (migration 9999_newer_version unknown to this server): install that version, or restore the copy of the database taken before the update"}
+Oct 29 06:27:10 runnervm48cm3 systemd[1]: nhill-server.service: Control process exited, code=exited, status=1/FAILURE
+Oct 29 06:27:10 runnervm48cm3 systemd[1]: nhill-server.service: Failed with result 'exit-code'.
+Oct 29 06:27:10 runnervm48cm3 systemd[1]: Failed to start nhill-server.service - Nhill API server.
+Oct 29 06:27:12 runnervm48cm3 systemd[1]: Stopped nhill-server.service - Nhill API server.
+Oct 29 06:27:12 runnervm48cm3 systemd[1]: Starting nhill-server.service - Nhill API server...
+Oct 29 06:27:12 runnervm48cm3 nhill-server[6466]: applied: 0, already applied: 15
+Oct 29 06:27:12 runnervm48cm3 systemd[1]: Started nhill-server.service - Nhill API server.
+Oct 29 06:27:13 runnervm48cm3 nhill-server[6469]: {"ts":"2026-10-29T06:27:13Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Oct 29 06:27:13 runnervm48cm3 nhill-server[6469]: {"ts":"2026-10-29T06:27:13Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}

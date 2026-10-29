@@ -1,0 +1,152 @@
+
+==> 1/9 System and package checks
+  ok  Ubuntu 24.04, 15983 MB RAM, 85 GB free
+  ok  package nhill-server 3.0.0-1, checksum verified
+
+==> 2/9 System packages (Ubuntu archive) and automatic security updates
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [605 kB]
+Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [669 kB]
+Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1406 kB]
+Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [310 kB]
+Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1707 kB]
+Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]
+Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1809 kB]
+Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB]
+Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1146 kB]
+Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1223 kB]
+Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+Fetched 10.5 MB in 1s (9610 kB/s)
+Reading package lists...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+  ok  postgresql 16.15, caddy 2.6.2, age, ufw, fail2ban
+
+==> 3/9 Firewall (ufw) and SSH
+  ok  incoming: SSH 22/tcp, 80/tcp, 443/tcp+udp; everything else refused
+  ok  fail2ban: SSH jail active
+  !!  SSH passwords still accepted: add an SSH key, then re-run with --harden-ssh
+
+==> 4/9 PostgreSQL (loopback only)
+  ok  PostgreSQL 16 on 127.0.0.1/::1 only, database nhill present
+
+==> 5/9 Nhill Server 3.0.0-1 and its database
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+{
+  "ok": true,
+  "migrations": 15,
+  "checks": [
+    {
+      "id": "migrations",
+      "ok": true
+    },
+    {
+      "id": "app_role",
+      "ok": true
+    },
+    {
+      "id": "app_owns_nothing",
+      "ok": true
+    },
+    {
+      "id": "row_level_security",
+      "ok": true
+    },
+    {
+      "id": "not_in_public_schema",
+      "ok": true
+    },
+    {
+      "id": "closed_to_api_roles",
+      "ok": true
+    },
+    {
+      "id": "functions_search_path",
+      "ok": true
+    },
+    {
+      "id": "isolation_without_tenant",
+      "ok": true
+    },
+    {
+      "id": "isolation_write",
+      "ok": true
+    },
+    {
+      "id": "app_no_ddl",
+      "ok": true
+    }
+  ]
+}
+  ok  database installed (roles nhill_owner, nhill_app, nhill_backup; isolation checks passed)
+configuration OK, database reachable, no pending migration
+  ok  Nhill Server 3.0.0-1 running on 127.0.0.1:8080 (local only)
+
+==> 6/9 Encrypted backups
+  !!  no off-site copy (--offsite-cmd): the backups stay on this VPS only; add a copy outside Hostinger
+Created symlink /etc/systemd/system/timers.target.wants/nhill-backup.timer → /usr/lib/systemd/system/nhill-backup.timer.
+  ok  first backup: /var/backups/nhill/archives/nhill-20261029T062640Z.dump.age (324K), encrypted; daily at 02:30 (+0-15 min)
+
+==> 7/9 Caddy (HTTPS)
+  ok  https://api.nhill-ci.test/health answers through Caddy (certificate verified)
+
+==> 8/9 Health checks and logs
+Created symlink /etc/systemd/system/timers.target.wants/nhill-healthcheck.timer → /etc/systemd/system/nhill-healthcheck.timer.
+ok    service nhill-server   active
+ok    service caddy          active
+ok    postgresql             127.0.0.1:5432 - accepting connections
+ok    api local              {"database":true,"status":"ok"}
+ok    api https (Caddy)      HTTP 200 via https://api.nhill-ci.test/health
+ok    certificate            0 days left (Oct 29 18:26:41 2026 GMT)
+ok    local-only ports       PostgreSQL 5432 and API 8080 on loopback only
+ok    firewall               Status: active
+ok    disk /                 42% used (alert at 85%)
+ok    disk /var/backups      42% used (alert at 85%)
+ok    last backup            nhill-20261029T062640Z.dump.age, 0 h old
+ok    backup service         last run: success
+  ok  health check passed (every 5 min: nhill-healthcheck.timer)
+
+==> 9/9 First administrator of Nhill Console
+First administrator pending.
+One-time setup token (valid until 2026-10-29T06:56:42Z):
+LI9EGT4bDn5cJDfzjW48PdBsspzPVzem
+Open the admin console, choose 'First access', and enter this token.
+
+Nhill Server 3.0.0-1 is installed for https://api.nhill-ci.test.
+
+To do now (not automated):
+  1. Hostinger panel → VPS → Security → Firewall: accept 22/tcp, 80/tcp, 443/tcp, 443/udp only.
+  2. Copy NH_SECRET_KEY from /etc/nhill/server.env into your password safe, apart from the backups
+     (without it, establishment codes and administrator second factors are lost):
+       sudo grep '^NH_SECRET_KEY=' /etc/nhill/server.env
+  3. Keep the age PRIVATE key (backups) offline; test a restore from another machine:
+       deploy/vps/nhill-restore-test.sh BACKUP.dump.age age-identity.txt
+  4. Nhill Console → server address https://api.nhill-ci.test → "First access" with the token above
+     (30 minutes; a new token: sudo -u nhill nhill-server --config /etc/nhill/server.env admin-bootstrap EMAIL NAME).
+  5. E-mails: configure the SMTP relay in /etc/nhill/server.env (NH_EMAIL_TRANSPORT=smtp ...), then
+     systemctl restart nhill-server.
+Updates: sudo nhill-update NEW.deb --sha256sums SHA256SUMS   ·   back: sudo nhill-rollback
