@@ -1,0 +1,585 @@
+[06:17:54] ==> Journal : /home/runner/work/Nhill/Nhill/build/logs/build-linux-20261029-061754.log
+[06:17:54] ==> Contrôle de l'environnement
+[06:17:54]   ok espace disque : 84 Go libres dans .
+[06:17:54]   ok Nhill 3.0.0 — ubuntu 24.04, g++ 13, 4 tâche(s)
+[06:17:54] ==> Configuration (CMake, Release)
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+-- Checking for module 'libpqxx'
+--   Found libpqxx, version 7.8.1
+-- Checking for module 'libsodium'
+--   Found libsodium, version 1.0.18
+-- Checking for module 'libpng'
+--   Found libpng, version 1.6.43
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")
+-- Found nlohmann_json: /usr/share/cmake/nlohmann_json/nlohmann_jsonConfig.cmake (found suitable version "3.11.3", minimum required is "3.10")
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.3")
+-- Checking for module 'cpp-httplib'
+--   Found cpp-httplib, version 0.14.3
+-- Checking for module 'libcurl'
+--   Found libcurl, version 8.5.0
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /usr/lib/x86_64-linux-gnu/libOpenGL.so
+-- Found WrapOpenGL: TRUE
+-- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")
+-- Found WrapVulkanHeaders: /usr/include
+-- Nhill client: QtKeychain found, refresh tokens stored in the OS keychain
+-- Found GTest: /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestConfig.cmake (found version "1.14.0")
+-- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")
+-- Checking for module 'cpp-httplib'
+--   Found cpp-httplib, version 0.14.3
+-- Could NOT find XKB (missing: XKB_LIBRARY XKB_INCLUDE_DIR) (Required is at least version "0.5.0")
+-- Configuring done (4.8s)
+-- Generating done (0.3s)
+-- Build files have been written to: /home/runner/work/Nhill/Nhill/build
+[06:17:59] ==> Compilation
+[0/2] Re-checking globbed directories...
+[1/507] Generating Theme.qml
+[2/507] Generating Labels.qml
+[3/507] Generating Icon.qml
+[4/507] Generating LogoMark.qml
+[5/507] Generating FbButton.qml
+[6/507] Generating FbTextField.qml
+[7/507] Generating FbIconButton.qml
+[8/507] Generating FbTextArea.qml
+[9/507] Generating FbComboBox.qml
+[10/507] Generating Field.qml
+[11/507] Generating FbSwitch.qml
+[12/507] Generating FbCard.qml
+[13/507] Generating FbChip.qml
+[14/507] Generating FbDialog.qml
+[15/507] Generating FbConfirm.qml
+[16/507] Generating Notifier.qml
+[17/507] Generating EmptyState.qml
+[18/507] Generating Banner.qml
+[19/507] Generating SectionTitle.qml
+[20/507] Generating SearchField.qml
+[21/507] Generating MoneyField.qml
+[22/507] Generating KpiTile.qml
+[23/507] Generating DateField.qml
+[24/507] Generating DataTable.qml
+[25/507] Generating FbPage.qml
+[26/507] Generating TabStrip.qml
+[27/507] Generating ConnectionBadge.qml
+[28/507] Generating SupportCenter.qml
+[29/507] Generating PasswordRecoveryDialog.qml
+[30/507] Generating PasswordChangeRequiredDialog.qml
+[31/507] Generating RememberMeSwitch.qml
+[32/507] Generating Main.qml
+[33/507] Generating ServerAddressForm.qml
+[34/507] Generating Nav.qml
+[35/507] Generating Shell.qml
+[36/507] Generating NotificationsButton.qml
+[37/507] Generating GlobalSearch.qml
+[38/507] Generating Tour.qml
+[39/507] Generating dialogs/PartyDialog.qml
+[40/507] Generating dialogs/PaymentDialog.qml
+[41/507] Generating dialogs/ProductDialog.qml
+[42/507] Generating onboarding/CreatePage.qml
+[43/507] Generating onboarding/JoinPage.qml
+[44/507] Generating onboarding/LoginPage.qml
+[45/507] Generating onboarding/OnboardingFrame.qml
+[46/507] Generating onboarding/WelcomePage.qml
+[47/507] Generating pages/ActivityPage.qml
+[48/507] Generating pages/DashboardPage.qml
+[49/507] Generating pages/DocumentEditorPage.qml
+[50/507] Generating pages/DocumentPage.qml
+[51/507] Generating pages/ExpensesPage.qml
+[52/507] Generating pages/PartiesPage.qml
+[53/507] Generating pages/PartyPage.qml
+[54/507] Generating pages/PaymentsPage.qml
+[55/507] Generating pages/ProductsPage.qml
+[56/507] Generating pages/PurchaseEditorPage.qml
+[57/507] Generating pages/PurchasesPage.qml
+[58/507] Generating pages/ReportsPage.qml
+[59/507] Generating pages/SalesPage.qml
+[60/507] Generating pages/SettingsAccount.qml
+[61/507] Generating pages/SettingsEstablishment.qml
+[62/507] Generating pages/SettingsFinance.qml
+[63/507] Generating pages/SettingsCode.qml
+[64/507] Generating pages/SettingsPage.qml
+[65/507] Generating pages/SettingsPos.qml
+[66/507] Generating pages/SettingsSubscription.qml
+[67/507] Generating pages/SettingsTeam.qml
+[68/507] Generating pages/StockPage.qml
+[69/507] Generating ConsoleMain.qml
+[70/507] Generating pages/SupportPage.qml
+[71/507] Generating ConsoleNav.qml
+[72/507] Generating ConsoleLogin.qml
+[73/507] Generating ConsoleShell.qml
+[74/507] Generating ConsoleSetup.qml
+[75/507] Generating pages/AnnouncementsPage.qml
+[76/507] Generating pages/AuditPage.qml
+[77/507] Generating pages/ErrorsPage.qml
+[78/507] Generating pages/EstablishmentPage.qml
+[79/507] Generating pages/EstablishmentsPage.qml
+[80/507] Generating pages/NotificationsPage.qml
+[81/507] Generating pages/PlanRulesPage.qml
+[82/507] Generating pages/OrdersPage.qml
+[83/507] Generating pages/PlansPage.qml
+[84/507] Generating pages/PlatformReportsPage.qml
+[85/507] Generating pages/PlatformSettingsPage.qml
+[86/507] Generating pages/PromoCodesPage.qml
+[87/507] Generating pages/ProvidersPage.qml
+[88/507] Generating pages/RequestsPage.qml
+[89/507] Generating pages/StatsPage.qml
+[90/507] Generating pages/TicketPage.qml
+[91/507] Generating pages/TicketsPage.qml
+[92/507] Generating pages/WebhooksPage.qml
+[93/507] Generating PosMain.qml
+[94/507] Generating PosNav.qml
+[95/507] Generating pages/PosApprovalDialog.qml
+[96/507] Generating pages/PosHome.qml
+[97/507] Generating pages/PosPayDialog.qml
+[98/507] Generating pages/PosLogin.qml
+[99/507] Generating pages/PosSale.qml
+[100/507] Generating pages/PosSession.qml
+[101/507] Automatic MOC and UIC for target nhill_business
+[102/507] Automatic MOC and UIC for target nhill_ui
+[103/507] Automatic MOC and UIC for target nhill_console
+[104/507] Automatic MOC and UIC for target nhill_pos
+[105/507] Running AUTOMOC file extraction for target nhill_business
+[106/507] Running AUTOMOC file extraction for target nhill_ui
+[107/507] Running AUTOMOC file extraction for target nhill_pos
+[108/507] Running AUTOMOC file extraction for target nhill_console
+[109/507] Running moc --collect-json for target nhill_business
+[110/507] Running moc --collect-json for target nhill_ui
+[111/507] Running moc --collect-json for target nhill_pos
+[112/507] Running moc --collect-json for target nhill_console
+[113/507] Automatic QML type registration for target nhill_ui
+[114/507] Automatic QML type registration for target nhill_business
+[115/507] Automatic QML type registration for target nhill_console
+[116/507] Automatic QML type registration for target nhill_pos
+[117/507] Generating nhill_fr.qm
+Updating '/home/runner/work/Nhill/Nhill/build/client/nhill_fr.qm'...
+    Generated 2152 translation(s) (2152 finished and 0 unfinished)
+[118/507] Generating nhill_en.qm
+Updating '/home/runner/work/Nhill/Nhill/build/client/nhill_en.qm'...
+    Generated 8 translation(s) (8 finished and 0 unfinished)
+    Ignored 1946 untranslated source text(s)
+[119/507] Automatic MOC and UIC for target nhill_ui_resources_1
+[120/507] Generating .rcc/qmlcache/nhill_ui_qmlcache_loader.cpp
+[121/507] Automatic MOC and UIC for target nhill_ui_resources_2
+[122/507] Generating .rcc/qmlcache/nhill_ui_Theme_qml.cpp
+[123/507] Generating .rcc/qmlcache/nhill_ui_Labels_qml.cpp
+[124/507] Generating .rcc/qmlcache/nhill_ui_Icon_qml.cpp
+[125/507] Generating .rcc/qmlcache/nhill_ui_LogoMark_qml.cpp
+[126/507] Building CXX object common/CMakeFiles/nhill_common.dir/src/establishment_code.cpp.o
+[127/507] Generating .rcc/qmlcache/nhill_ui_FbButton_qml.cpp
+[128/507] Generating .rcc/qmlcache/nhill_ui_FbIconButton_qml.cpp
+[129/507] Generating .rcc/qmlcache/nhill_ui_FbTextField_qml.cpp
+[130/507] Generating .rcc/qmlcache/nhill_ui_FbTextArea_qml.cpp
+[131/507] Building CXX object common/CMakeFiles/nhill_common.dir/src/validation.cpp.o
+[132/507] Generating .rcc/qmlcache/nhill_ui_FbSwitch_qml.cpp
+[133/507] Generating .rcc/qmlcache/nhill_ui_FbComboBox_qml.cpp
+[134/507] Generating .rcc/qmlcache/nhill_ui_Field_qml.cpp
+[135/507] Generating .rcc/qmlcache/nhill_ui_FbCard_qml.cpp
+[136/507] Generating .rcc/qmlcache/nhill_ui_FbChip_qml.cpp
+[137/507] Generating .rcc/qmlcache/nhill_ui_FbDialog_qml.cpp
+[138/507] Generating .rcc/qmlcache/nhill_ui_Notifier_qml.cpp
+[139/507] Generating .rcc/qmlcache/nhill_ui_FbConfirm_qml.cpp
+[140/507] Generating .rcc/qmlcache/nhill_ui_EmptyState_qml.cpp
+[141/507] Generating .rcc/qmlcache/nhill_ui_SectionTitle_qml.cpp
+[142/507] Generating .rcc/qmlcache/nhill_ui_Banner_qml.cpp
+[143/507] Generating .rcc/qmlcache/nhill_ui_KpiTile_qml.cpp
+[144/507] Generating .rcc/qmlcache/nhill_ui_SearchField_qml.cpp
+[145/507] Generating .rcc/qmlcache/nhill_ui_MoneyField_qml.cpp
+[146/507] Generating .rcc/qmlcache/nhill_ui_DateField_qml.cpp
+[147/507] Generating .rcc/qmlcache/nhill_ui_FbPage_qml.cpp
+[148/507] Generating .rcc/qmlcache/nhill_ui_DataTable_qml.cpp
+[149/507] Generating .rcc/qmlcache/nhill_ui_ConnectionBadge_qml.cpp
+[150/507] Building CXX object common/CMakeFiles/nhill_common.dir/src/money.cpp.o
+[151/507] Generating .rcc/qmlcache/nhill_ui_TabStrip_qml.cpp
+[152/507] Generating .rcc/qmlcache/nhill_ui_SupportCenter_qml.cpp
+[153/507] Generating .rcc/qmlcache/nhill_ui_PasswordRecoveryDialog_qml.cpp
+[154/507] Generating .rcc/qmlcache/nhill_ui_PasswordChangeRequiredDialog_qml.cpp
+[155/507] Generating .rcc/qmlcache/nhill_ui_RememberMeSwitch_qml.cpp
+[156/507] Automatic MOC and UIC for target nhill_business_resources_1
+[157/507] Generating .rcc/qmlcache/nhill_business_qmlcache_loader.cpp
+[158/507] Automatic MOC and UIC for target nhill_business_resources_2
+[159/507] Generating .rcc/qmlcache/nhill_ui_ServerAddressForm_qml.cpp
+[160/507] Generating .rcc/qmlcache/nhill_business_Nav_qml.cpp
+[161/507] Generating .rcc/qmlcache/nhill_business_NotificationsButton_qml.cpp
+[162/507] Generating .rcc/qmlcache/nhill_business_GlobalSearch_qml.cpp
+[163/507] Generating .rcc/qmlcache/nhill_business_Shell_qml.cpp
+[164/507] Generating .rcc/qmlcache/nhill_business_Tour_qml.cpp
+[165/507] Generating .rcc/qmlcache/nhill_business_Main_qml.cpp
+[166/507] Generating .rcc/qmlcache/nhill_business_dialogs/PartyDialog_qml.cpp
+[167/507] Generating .rcc/qmlcache/nhill_business_dialogs/PaymentDialog_qml.cpp
+[168/507] Generating .rcc/qmlcache/nhill_business_dialogs/ProductDialog_qml.cpp
+[169/507] Generating .rcc/qmlcache/nhill_business_onboarding/JoinPage_qml.cpp
+[170/507] Generating .rcc/qmlcache/nhill_business_onboarding/OnboardingFrame_qml.cpp
+[171/507] Generating .rcc/qmlcache/nhill_business_onboarding/LoginPage_qml.cpp
+[172/507] Generating .rcc/qmlcache/nhill_business_onboarding/CreatePage_qml.cpp
+[173/507] Generating .rcc/qmlcache/nhill_business_onboarding/WelcomePage_qml.cpp
+[174/507] Generating .rcc/qmlcache/nhill_business_pages/ActivityPage_qml.cpp
+[175/507] Generating .rcc/qmlcache/nhill_business_pages/DashboardPage_qml.cpp
+[176/507] Generating .rcc/qmlcache/nhill_business_pages/DocumentEditorPage_qml.cpp
+[177/507] Generating .rcc/qmlcache/nhill_business_pages/ExpensesPage_qml.cpp
+[178/507] Generating .rcc/qmlcache/nhill_business_pages/DocumentPage_qml.cpp
+[179/507] Generating .rcc/qmlcache/nhill_business_pages/PartiesPage_qml.cpp
+[180/507] Generating .rcc/qmlcache/nhill_business_pages/PaymentsPage_qml.cpp
+[181/507] Generating .rcc/qmlcache/nhill_business_pages/PartyPage_qml.cpp
+[182/507] Generating .rcc/qmlcache/nhill_business_pages/PurchasesPage_qml.cpp
+[183/507] Generating .rcc/qmlcache/nhill_business_pages/ProductsPage_qml.cpp
+[184/507] Generating .rcc/qmlcache/nhill_business_pages/PurchaseEditorPage_qml.cpp
+[185/507] Generating .rcc/qmlcache/nhill_business_pages/ReportsPage_qml.cpp
+[186/507] Generating .rcc/qmlcache/nhill_business_pages/SalesPage_qml.cpp
+[187/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsAccount_qml.cpp
+[188/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsCode_qml.cpp
+[189/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsEstablishment_qml.cpp
+[190/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsFinance_qml.cpp
+[191/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsPage_qml.cpp
+[192/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsPos_qml.cpp
+[193/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsTeam_qml.cpp
+[194/507] Generating .rcc/qmlcache/nhill_business_pages/SettingsSubscription_qml.cpp
+[195/507] Generating .rcc/qmlcache/nhill_business_pages/StockPage_qml.cpp
+[196/507] Automatic MOC and UIC for target nhill_console_resources_1
+[197/507] Generating .rcc/qmlcache/nhill_console_qmlcache_loader.cpp
+[198/507] Automatic MOC and UIC for target nhill_console_resources_2
+[199/507] Generating .rcc/qmlcache/nhill_business_pages/SupportPage_qml.cpp
+[200/507] Generating .rcc/qmlcache/nhill_console_ConsoleNav_qml.cpp
+[201/507] Generating .rcc/qmlcache/nhill_console_ConsoleShell_qml.cpp
+[202/507] Generating .rcc/qmlcache/nhill_console_ConsoleLogin_qml.cpp
+[203/507] Generating .rcc/qmlcache/nhill_console_ConsoleMain_qml.cpp
+[204/507] Generating .rcc/qmlcache/nhill_console_pages/AuditPage_qml.cpp
+[205/507] Generating .rcc/qmlcache/nhill_console_pages/AnnouncementsPage_qml.cpp
+[206/507] Generating .rcc/qmlcache/nhill_console_ConsoleSetup_qml.cpp
+[207/507] Generating .rcc/qmlcache/nhill_console_pages/ErrorsPage_qml.cpp
+[208/507] Generating .rcc/qmlcache/nhill_console_pages/EstablishmentsPage_qml.cpp
+[209/507] Generating .rcc/qmlcache/nhill_console_pages/NotificationsPage_qml.cpp
+[210/507] Generating .rcc/qmlcache/nhill_console_pages/EstablishmentPage_qml.cpp
+[211/507] Generating .rcc/qmlcache/nhill_console_pages/PlanRulesPage_qml.cpp
+[212/507] Generating .rcc/qmlcache/nhill_console_pages/OrdersPage_qml.cpp
+[213/507] Generating .rcc/qmlcache/nhill_console_pages/PlatformReportsPage_qml.cpp
+[214/507] Generating .rcc/qmlcache/nhill_console_pages/PlansPage_qml.cpp
+[215/507] Generating .rcc/qmlcache/nhill_console_pages/PlatformSettingsPage_qml.cpp
+[216/507] Generating .rcc/qmlcache/nhill_console_pages/ProvidersPage_qml.cpp
+[217/507] Generating .rcc/qmlcache/nhill_console_pages/PromoCodesPage_qml.cpp
+[218/507] Generating .rcc/qmlcache/nhill_console_pages/RequestsPage_qml.cpp
+[219/507] Generating .rcc/qmlcache/nhill_console_pages/StatsPage_qml.cpp
+[220/507] Generating .rcc/qmlcache/nhill_console_pages/TicketPage_qml.cpp
+[221/507] Automatic MOC and UIC for target nhill_pos_resources_1
+[222/507] Generating .rcc/qmlcache/nhill_console_pages/TicketsPage_qml.cpp
+[223/507] Generating .rcc/qmlcache/nhill_pos_qmlcache_loader.cpp
+[224/507] Automatic MOC and UIC for target nhill_pos_resources_2
+[225/507] Generating .rcc/qmlcache/nhill_console_pages/WebhooksPage_qml.cpp
+[226/507] Generating .rcc/qmlcache/nhill_pos_PosNav_qml.cpp
+[227/507] Generating .rcc/qmlcache/nhill_pos_pages/PosApprovalDialog_qml.cpp
+[228/507] Generating .rcc/qmlcache/nhill_pos_pages/PosHome_qml.cpp
+[229/507] Generating .rcc/qmlcache/nhill_pos_pages/PosLogin_qml.cpp
+[230/507] Generating .rcc/qmlcache/nhill_pos_pages/PosPayDialog_qml.cpp
+[231/507] Generating .rcc/qmlcache/nhill_pos_PosMain_qml.cpp
+[232/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/nhill_ui_autogen/mocs_compilation.cpp.o
+[233/507] Generating .rcc/qmlcache/nhill_pos_pages/PosSale_qml.cpp
+[234/507] Generating .rcc/qmlcache/nhill_pos_pages/PosSession_qml.cpp
+[235/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/nhill_ui_qmltyperegistrations.cpp.o
+[236/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_Labels_qml.cpp.o
+[237/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_Theme_qml.cpp.o
+[238/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_Icon_qml.cpp.o
+[239/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_LogoMark_qml.cpp.o
+[240/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbIconButton_qml.cpp.o
+[241/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbButton_qml.cpp.o
+[242/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbTextField_qml.cpp.o
+[243/507] Linking CXX static library common/libnhill_common.a
+[244/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbTextArea_qml.cpp.o
+[245/507] Automatic MOC and UIC for target nhill_client_core
+[246/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbComboBox_qml.cpp.o
+[247/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbSwitch_qml.cpp.o
+[248/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_Field_qml.cpp.o
+[249/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbCard_qml.cpp.o
+[250/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbChip_qml.cpp.o
+[251/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbDialog_qml.cpp.o
+[252/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbConfirm_qml.cpp.o
+[253/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_Notifier_qml.cpp.o
+[254/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_EmptyState_qml.cpp.o
+[255/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_Banner_qml.cpp.o
+[256/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_SectionTitle_qml.cpp.o
+[257/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_SearchField_qml.cpp.o
+[258/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_KpiTile_qml.cpp.o
+[259/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_MoneyField_qml.cpp.o
+[260/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_DateField_qml.cpp.o
+[261/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_ConnectionBadge_qml.cpp.o
+[262/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_FbPage_qml.cpp.o
+[263/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_TabStrip_qml.cpp.o
+[264/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_DataTable_qml.cpp.o
+[265/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_PasswordRecoveryDialog_qml.cpp.o
+[266/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_PasswordChangeRequiredDialog_qml.cpp.o
+[267/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_SupportCenter_qml.cpp.o
+[268/507] Running rcc for resource qmake_Nhill_Ui
+[269/507] Automatic MOC and UIC for target nhill_ui_qmlcache
+[270/507] Running rcc for resource nhill_ui_raw_qml_0
+[271/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/nhill_business_autogen/mocs_compilation.cpp.o
+[272/507] Automatic MOC and UIC for target nhill_uiplugin
+[273/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_RememberMeSwitch_qml.cpp.o
+[274/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/nhill_business_qmltyperegistrations.cpp.o
+[275/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui.dir/.rcc/qmlcache/nhill_ui_ServerAddressForm_qml.cpp.o
+[276/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_Main_qml.cpp.o
+[277/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_Nav_qml.cpp.o
+[278/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_NotificationsButton_qml.cpp.o
+[279/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_Shell_qml.cpp.o
+[280/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_GlobalSearch_qml.cpp.o
+[281/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_Tour_qml.cpp.o
+[282/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_dialogs/PartyDialog_qml.cpp.o
+[283/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_dialogs/PaymentDialog_qml.cpp.o
+[284/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_dialogs/ProductDialog_qml.cpp.o
+[285/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_onboarding/CreatePage_qml.cpp.o
+[286/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_onboarding/JoinPage_qml.cpp.o
+[287/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_onboarding/LoginPage_qml.cpp.o
+[288/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_onboarding/OnboardingFrame_qml.cpp.o
+[289/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_onboarding/WelcomePage_qml.cpp.o
+[290/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/ActivityPage_qml.cpp.o
+[291/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/DashboardPage_qml.cpp.o
+[292/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/DocumentEditorPage_qml.cpp.o
+[293/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/DocumentPage_qml.cpp.o
+[294/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/ExpensesPage_qml.cpp.o
+[295/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/PartiesPage_qml.cpp.o
+[296/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/PartyPage_qml.cpp.o
+[297/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/PaymentsPage_qml.cpp.o
+[298/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/ProductsPage_qml.cpp.o
+[299/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/PurchaseEditorPage_qml.cpp.o
+[300/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/PurchasesPage_qml.cpp.o
+[301/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/ReportsPage_qml.cpp.o
+[302/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SalesPage_qml.cpp.o
+[303/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsAccount_qml.cpp.o
+[304/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsCode_qml.cpp.o
+[305/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsFinance_qml.cpp.o
+[306/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsEstablishment_qml.cpp.o
+[307/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsPage_qml.cpp.o
+[308/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsPos_qml.cpp.o
+[309/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/StockPage_qml.cpp.o
+[310/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsTeam_qml.cpp.o
+[311/507] Running rcc for resource qmake_Nhill_Business
+[312/507] Automatic MOC and UIC for target nhill_business_qmlcache
+[313/507] Automatic MOC and UIC for target nhill_businessplugin
+[314/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/nhill_console_autogen/mocs_compilation.cpp.o
+[315/507] Running rcc for resource nhill_business_raw_qml_0
+[316/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SettingsSubscription_qml.cpp.o
+[317/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business.dir/.rcc/qmlcache/nhill_business_pages/SupportPage_qml.cpp.o
+[318/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/nhill_console_qmltyperegistrations.cpp.o
+[319/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_ConsoleNav_qml.cpp.o
+[320/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_ConsoleMain_qml.cpp.o
+[321/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_ConsoleLogin_qml.cpp.o
+[322/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_ConsoleShell_qml.cpp.o
+[323/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/AnnouncementsPage_qml.cpp.o
+[324/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_ConsoleSetup_qml.cpp.o
+[325/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/AuditPage_qml.cpp.o
+[326/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/ErrorsPage_qml.cpp.o
+[327/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/EstablishmentPage_qml.cpp.o
+[328/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/EstablishmentsPage_qml.cpp.o
+[329/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/NotificationsPage_qml.cpp.o
+[330/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/OrdersPage_qml.cpp.o
+[331/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/PlanRulesPage_qml.cpp.o
+[332/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/PlatformReportsPage_qml.cpp.o
+[333/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/PlansPage_qml.cpp.o
+[334/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/PlatformSettingsPage_qml.cpp.o
+[335/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/PromoCodesPage_qml.cpp.o
+[336/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/RequestsPage_qml.cpp.o
+[337/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/ProvidersPage_qml.cpp.o
+[338/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/StatsPage_qml.cpp.o
+[339/507] Automatic MOC and UIC for target nhill_consoleplugin
+[340/507] Running rcc for resource qmake_Nhill_Console
+[341/507] Automatic MOC and UIC for target nhill_console_qmlcache
+[342/507] Running rcc for resource nhill_console_raw_qml_0
+[343/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/nhill_pos_autogen/mocs_compilation.cpp.o
+[344/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/TicketPage_qml.cpp.o
+[345/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/WebhooksPage_qml.cpp.o
+[346/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console.dir/.rcc/qmlcache/nhill_console_pages/TicketsPage_qml.cpp.o
+[347/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/nhill_pos_qmltyperegistrations.cpp.o
+[348/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_PosNav_qml.cpp.o
+[349/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_pages/PosApprovalDialog_qml.cpp.o
+[350/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_PosMain_qml.cpp.o
+[351/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_pages/PosHome_qml.cpp.o
+[352/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_pages/PosPayDialog_qml.cpp.o
+[353/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_pages/PosLogin_qml.cpp.o
+[354/507] Running rcc for resource qmake_Nhill_Pos
+[355/507] Automatic MOC and UIC for target nhill_posplugin
+[356/507] Automatic MOC and UIC for target nhill_pos_qmlcache
+[357/507] Running rcc for resource nhill_pos_raw_qml_0
+[358/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_pages/PosSale_qml.cpp.o
+[359/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos.dir/.rcc/qmlcache/nhill_pos_pages/PosSession_qml.cpp.o
+[360/507] Building CXX object client/CMakeFiles/nhill_client_core.dir/nhill_client_core_autogen/mocs_compilation.cpp.o
+[361/507] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/formatter.cpp.o
+[362/507] Linking CXX static library client/qml/Nhill/Ui/libnhill_ui.a
+[363/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui_resources_1.dir/nhill_ui_resources_1_autogen/mocs_compilation.cpp.o
+[364/507] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/session.cpp.o
+[365/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui_resources_1.dir/.rcc/qrc_qmake_Nhill_Ui.cpp.o
+[366/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui_resources_2.dir/nhill_ui_resources_2_autogen/mocs_compilation.cpp.o
+[367/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_uiplugin.dir/nhill_uiplugin_autogen/mocs_compilation.cpp.o
+[368/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui_resources_2.dir/.rcc/qrc_nhill_ui_raw_qml_0.cpp.o
+[369/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui_qmlcache.dir/nhill_ui_qmlcache_autogen/mocs_compilation.cpp.o
+[370/507] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/apiclient.cpp.o
+/home/runner/work/Nhill/Nhill/client/src/core/apiclient.cpp:371:9: warning: ‘QString nhc::{anonymous}::mimeOf(const QString&)’ defined but not used [-Wunused-function]
+  371 | QString mimeOf(const QString& file) {
+      |         ^~~~~~
+[371/507] Linking CXX static library client/qml/Nhill/Business/libnhill_business.a
+[372/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business_resources_1.dir/nhill_business_resources_1_autogen/mocs_compilation.cpp.o
+[373/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business_resources_1.dir/.rcc/qrc_qmake_Nhill_Business.cpp.o
+[374/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business_resources_2.dir/nhill_business_resources_2_autogen/mocs_compilation.cpp.o
+[375/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business_resources_2.dir/.rcc/qrc_nhill_business_raw_qml_0.cpp.o
+[376/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_businessplugin.dir/nhill_businessplugin_autogen/mocs_compilation.cpp.o
+[377/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_uiplugin.dir/nhill_uiplugin_Nhill_UiPlugin.cpp.o
+[378/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business_qmlcache.dir/nhill_business_qmlcache_autogen/mocs_compilation.cpp.o
+[379/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_ui_qmlcache.dir/.rcc/qmlcache/nhill_ui_qmlcache_loader.cpp.o
+[380/507] Linking CXX static library client/qml/Nhill/Console/libnhill_console.a
+[381/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console_resources_1.dir/nhill_console_resources_1_autogen/mocs_compilation.cpp.o
+[382/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console_resources_1.dir/.rcc/qrc_qmake_Nhill_Console.cpp.o
+[383/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console_resources_2.dir/nhill_console_resources_2_autogen/mocs_compilation.cpp.o
+[384/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console_resources_2.dir/.rcc/qrc_nhill_console_raw_qml_0.cpp.o
+[385/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_consoleplugin.dir/nhill_consoleplugin_autogen/mocs_compilation.cpp.o
+[386/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_businessplugin.dir/nhill_businessplugin_Nhill_BusinessPlugin.cpp.o
+[387/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console_qmlcache.dir/nhill_console_qmlcache_autogen/mocs_compilation.cpp.o
+[388/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_business_qmlcache.dir/.rcc/qmlcache/nhill_business_qmlcache_loader.cpp.o
+[389/507] Linking CXX static library client/qml/Nhill/Pos/libnhill_pos.a
+[390/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos_resources_1.dir/nhill_pos_resources_1_autogen/mocs_compilation.cpp.o
+[391/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos_resources_1.dir/.rcc/qrc_qmake_Nhill_Pos.cpp.o
+[392/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos_resources_2.dir/nhill_pos_resources_2_autogen/mocs_compilation.cpp.o
+[393/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos_resources_2.dir/.rcc/qrc_nhill_pos_raw_qml_0.cpp.o
+[394/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_posplugin.dir/nhill_posplugin_autogen/mocs_compilation.cpp.o
+[395/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_consoleplugin.dir/nhill_consoleplugin_Nhill_ConsolePlugin.cpp.o
+[396/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos_qmlcache.dir/nhill_pos_qmlcache_autogen/mocs_compilation.cpp.o
+[397/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_console_qmlcache.dir/.rcc/qmlcache/nhill_console_qmlcache_loader.cpp.o
+[398/507] Automatic MOC and UIC for target nhill_client_core_resources_1
+[399/507] Automatic MOC and UIC for target nhill_client_core_resources_2
+[400/507] Running qmlimportscanner for nhill-business
+[401/507] Running qmlimportscanner for nhill-console
+[402/507] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/appcontext.cpp.o
+[403/507] Running qmlimportscanner for nhill-pos
+[404/507] Linking CXX static library client/qml/Nhill/Ui/libnhill_uiplugin.a
+[405/507] Linking CXX static library client/libnhill_client_core.a
+[406/507] Linking CXX static library client/qml/Nhill/Business/libnhill_businessplugin.a
+[407/507] Running qmlimportscanner for test_client
+[408/507] Running qmlimportscanner for test_keychain
+[409/507] Linking CXX static library client/qml/Nhill/Console/libnhill_consoleplugin.a
+[410/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_posplugin.dir/nhill_posplugin_Nhill_PosPlugin.cpp.o
+[411/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_pos_qmlcache.dir/.rcc/qmlcache/nhill_pos_qmlcache_loader.cpp.o
+[412/507] Linking CXX static library client/qml/Nhill/Pos/libnhill_posplugin.a
+[413/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/config.cpp.o
+[414/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/db.cpp.o
+[415/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/migrate.cpp.o
+[416/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/util/crypto.cpp.o
+[417/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/util/mailer.cpp.o
+[418/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/util/zip.cpp.o
+[419/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/pdf/pdf.cpp.o
+[420/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/routes.cpp.o
+[421/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/http/app.cpp.o
+[422/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/setup.cpp.o
+[423/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/report.cpp.o
+[424/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/jobs/jobs.cpp.o
+[425/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/codes.cpp.o
+[426/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/common.cpp.o
+[427/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/activity.cpp.o
+[428/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/members.cpp.o
+[429/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/auth.cpp.o
+[430/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/establishments.cpp.o
+[431/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/entitlements.cpp.o
+[432/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/subscriptions.cpp.o
+[433/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/providers.cpp.o
+[434/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/support.cpp.o
+[435/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/catalog.cpp.o
+[436/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/console.cpp.o
+[437/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/stock.cpp.o
+[438/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/parties.cpp.o
+[439/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/pos.cpp.o
+[440/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/purchases.cpp.o
+[441/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/payments.cpp.o
+[442/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/sales.cpp.o
+[443/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/documents.cpp.o
+[444/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/expenses.cpp.o
+[445/507] Automatic MOC and UIC for target nhill-business
+[446/507] Automatic MOC and UIC for target nhill-console
+[447/507] Automatic MOC and UIC for target nhill-pos
+[448/507] Running rcc for resource nhill_assets
+[449/507] Running rcc for resource nhill_translations
+[450/507] Automatic MOC and UIC for target nhill_uiplugin_init
+[451/507] Automatic MOC and UIC for target nhill_businessplugin_init
+[452/507] Automatic MOC and UIC for target nhill_consoleplugin_init
+[453/507] Automatic MOC and UIC for target nhill_posplugin_init
+[454/507] Automatic MOC for target test_client
+[455/507] Automatic MOC for target test_keychain
+[456/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/reports.cpp.o
+[457/507] Building CXX object client/CMakeFiles/nhill_client_core_resources_1.dir/nhill_client_core_resources_1_autogen/mocs_compilation.cpp.o
+[458/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/export.cpp.o
+[459/507] Building CXX object client/CMakeFiles/nhill_client_core_resources_2.dir/nhill_client_core_resources_2_autogen/mocs_compilation.cpp.o
+[460/507] Building CXX object client/CMakeFiles/nhill_client_core_resources_2.dir/.rcc/qrc_nhill_translations.cpp.o
+[461/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_uiplugin_init.dir/nhill_uiplugin_init_autogen/mocs_compilation.cpp.o
+[462/507] Building CXX object client/qml/Nhill/Ui/CMakeFiles/nhill_uiplugin_init.dir/nhill_uiplugin_init.cpp.o
+[463/507] Building CXX object client/CMakeFiles/nhill-business.dir/nhill-business_autogen/mocs_compilation.cpp.o
+[464/507] Building CXX object client/CMakeFiles/nhill_client_core_resources_1.dir/.rcc/qrc_nhill_assets.cpp.o
+[465/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_businessplugin_init.dir/nhill_businessplugin_init_autogen/mocs_compilation.cpp.o
+[466/507] Building CXX object client/qml/Nhill/Business/CMakeFiles/nhill_businessplugin_init.dir/nhill_businessplugin_init.cpp.o
+[467/507] Building CXX object client/CMakeFiles/nhill-console.dir/nhill-console_autogen/mocs_compilation.cpp.o
+[468/507] Building CXX object server/CMakeFiles/nhill-server.dir/src/main.cpp.o
+[469/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_consoleplugin_init.dir/nhill_consoleplugin_init_autogen/mocs_compilation.cpp.o
+[470/507] Building CXX object client/CMakeFiles/nhill-business.dir/src/business/main.cpp.o
+[471/507] Building CXX object client/CMakeFiles/nhill-pos.dir/nhill-pos_autogen/mocs_compilation.cpp.o
+[472/507] Building CXX object client/qml/Nhill/Console/CMakeFiles/nhill_consoleplugin_init.dir/nhill_consoleplugin_init.cpp.o
+[473/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_posplugin_init.dir/nhill_posplugin_init_autogen/mocs_compilation.cpp.o
+[474/507] Building CXX object client/CMakeFiles/nhill-console.dir/src/console/main.cpp.o
+[475/507] Building CXX object client/CMakeFiles/nhill-pos.dir/src/pos/main.cpp.o
+[476/507] Building CXX object client/qml/Nhill/Pos/CMakeFiles/nhill_posplugin_init.dir/nhill_posplugin_init.cpp.o
+[477/507] Building CXX object tests/CMakeFiles/test_common.dir/common/test_int128.cpp.o
+[478/507] Building CXX object tests/CMakeFiles/test_common.dir/common/test_common.cpp.o
+[479/507] Building CXX object server/CMakeFiles/nhill_server_core.dir/src/services/admin.cpp.o
+[480/507] Linking CXX static library server/libnhill_server_core.a
+[481/507] Building CXX object tests/server/CMakeFiles/test_server.dir/harness.cpp.o
+[482/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_billing.cpp.o
+[483/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_platform.cpp.o
+[484/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_samples.cpp.o
+[485/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_activity.cpp.o
+[486/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_commerce.cpp.o
+[487/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_pos.cpp.o
+[488/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_console.cpp.o
+[489/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_password.cpp.o
+[490/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_erasure.cpp.o
+[491/507] Building CXX object tests/client/CMakeFiles/test_client.dir/test_client_autogen/mocs_compilation.cpp.o
+[492/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_documents.cpp.o
+[493/507] Building CXX object tests/keychain/CMakeFiles/test_keychain.dir/test_keychain_autogen/mocs_compilation.cpp.o
+[494/507] Building CXX object tests/server/CMakeFiles/test_server.dir/test_entitlements.cpp.o
+[495/507] Building CXX object tests/client/CMakeFiles/test_client.dir/test_client.cpp.o
+[496/507] Building CXX object tests/keychain/CMakeFiles/test_keychain.dir/test_keychain.cpp.o
+[497/507] Building CXX object tests/server/CMakeFiles/test_setup.dir/test_setup.cpp.o
+[498/507] Linking CXX executable client/nhill-business
+[499/507] Linking CXX executable tests/test_common
+[500/507] Linking CXX executable client/nhill-console
+[501/507] Linking CXX executable client/nhill-pos
+[502/507] Linking CXX executable tests/server/test_setup
+[503/507] Linking CXX executable tests/client/test_client
+[504/507] Linking CXX executable tests/keychain/test_keychain
+[505/507] Linking CXX executable server/nhill-server
+[506/507] Linking CXX executable tests/server/test_server
+[06:25:01] ==> Vérification des binaires produits
+[06:25:01]   ok build/server/nhill-server (64414696 octets)
+[06:25:01]   ok build/client/nhill-business (31628328 octets)
+[06:25:01]   ok build/client/nhill-pos (22370920 octets)
+[06:25:01]   ok build/client/nhill-console (26640256 octets)
+[06:25:01] ==> Tests (ctest) — le serveur démarre des grappes PostgreSQL jetables
+Internal ctest changing into directory: /home/runner/work/Nhill/Nhill/build
+Test project /home/runner/work/Nhill/Nhill/build
+    Start 1: common
+1/5 Test #1: common ...........................   Passed    0.05 sec
+    Start 2: server
+2/5 Test #2: server ...........................   Passed   20.51 sec
+    Start 3: setup
+3/5 Test #3: setup ............................   Passed    5.32 sec
+    Start 4: client
+4/5 Test #4: client ...........................   Passed    7.56 sec
+    Start 5: keychain
+5/5 Test #5: keychain .........................   Passed    0.11 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =  33.63 sec
+[06:25:36]   ok tous les tests sont passés
+[06:25:36]   ok Construction terminée : build
+[06:25:36] ==> Installation locale : sudo cmake --install build   ou paquets : scripts/build-deb.sh

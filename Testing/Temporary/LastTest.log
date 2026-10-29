@@ -1,0 +1,694 @@
+Start testing: Oct 29 06:25 UTC
+----------------------------------------------------------
+1/5 Testing: common
+1/5 Test: common
+Command: "/home/runner/work/Nhill/Nhill/build/tests/test_common"
+Directory: /home/runner/work/Nhill/Nhill/build/tests
+"common" start time: Oct 29 06:25 UTC
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 22 tests from 6 test suites.
+[----------] Global test environment set-up.
+[----------] 2 tests from Int128
+[ RUN      ] Int128.FixedArithmetic
+[       OK ] Int128.FixedArithmetic (0 ms)
+[ RUN      ] Int128.MatchesNativeInt128
+[       OK ] Int128.MatchesNativeInt128 (12 ms)
+[----------] 2 tests from Int128 (12 ms total)
+
+[----------] 5 tests from Money
+[ RUN      ] Money.ParsesWithBothSeparators
+[       OK ] Money.ParsesWithBothSeparators (0 ms)
+[ RUN      ] Money.RejectsMalformedOrTooPrecise
+[       OK ] Money.RejectsMalformedOrTooPrecise (0 ms)
+[ RUN      ] Money.NoFloatingPointDrift
+[       OK ] Money.NoFloatingPointDrift (26 ms)
+[ RUN      ] Money.Formatting
+[       OK ] Money.Formatting (0 ms)
+[ RUN      ] Money.MulDivRounding
+[       OK ] Money.MulDivRounding (0 ms)
+[----------] 5 tests from Money (26 ms total)
+
+[----------] 5 tests from Tax
+[ RUN      ] Tax.LineComputationDrcVat
+[       OK ] Tax.LineComputationDrcVat (0 ms)
+[ RUN      ] Tax.FractionalQuantities
+[       OK ] Tax.FractionalQuantities (0 ms)
+[ RUN      ] Tax.RoundingModesDiffer
+[       OK ] Tax.RoundingModesDiffer (0 ms)
+[ RUN      ] Tax.MixedRatesBuckets
+[       OK ] Tax.MixedRatesBuckets (0 ms)
+[ RUN      ] Tax.RejectsInvalidLines
+[       OK ] Tax.RejectsInvalidLines (0 ms)
+[----------] 5 tests from Tax (0 ms total)
+
+[----------] 1 test from Fx
+[ RUN      ] Fx.ExactConversion
+[       OK ] Fx.ExactConversion (0 ms)
+[----------] 1 test from Fx (0 ms total)
+
+[----------] 3 tests from Code
+[ RUN      ] Code.GenerateIsCanonicalAndUnique
+[       OK ] Code.GenerateIsCanonicalAndUnique (8 ms)
+[ RUN      ] Code.NormalizationIsTolerant
+[       OK ] Code.NormalizationIsTolerant (0 ms)
+[ RUN      ] Code.DeterministicSourceGivesSameCode
+[       OK ] Code.DeterministicSourceGivesSameCode (0 ms)
+[----------] 3 tests from Code (8 ms total)
+
+[----------] 6 tests from Validation
+[ RUN      ] Validation.Email
+[       OK ] Validation.Email (0 ms)
+[ RUN      ] Validation.PhoneAndLegalIds
+[       OK ] Validation.PhoneAndLegalIds (0 ms)
+[ RUN      ] Validation.Passwords
+[       OK ] Validation.Passwords (0 ms)
+[ RUN      ] Validation.PasswordMinimumIsEightCharacters
+[       OK ] Validation.PasswordMinimumIsEightCharacters (0 ms)
+[ RUN      ] Validation.PasswordBlocklistCoversEightCharacterFavourites
+[       OK ] Validation.PasswordBlocklistCoversEightCharacterFavourites (0 ms)
+[ RUN      ] Validation.Text
+[       OK ] Validation.Text (0 ms)
+[----------] 6 tests from Validation (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 22 tests from 6 test suites ran. (48 ms total)
+[  PASSED  ] 22 tests.
+<end of output>
+Test time =   0.05 sec
+----------------------------------------------------------
+Test Passed.
+"common" end time: Oct 29 06:25 UTC
+"common" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/5 Testing: server
+2/5 Test: server
+Command: "/home/runner/work/Nhill/Nhill/build/tests/server/test_server"
+Directory: /home/runner/work/Nhill/Nhill/build/tests/server
+"server" start time: Oct 29 06:25 UTC
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 122 tests from 34 test suites.
+[----------] Global test environment set-up.
+[----------] 5 tests from Erasure
+[ RUN      ] Erasure.NotPossibleWhileTheEstablishmentHasFullAccess
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0001_platform"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0002_business"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0003_security"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0004_reference_data"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0005_helpers"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0006_activity_and_platform_stats"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0007_local_time"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0008_console_billing"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0009_pos"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0010_fk_indexes"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0011_password_recovery"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0012_plan_entitlements"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0013_documents"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0014_establishment_erasure"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"migration applied: 0015_search_patterns"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"compliance profile registered: CD v2"}
+{"ts":"2026-10-29T06:25:05Z","level":"info","msg":"compliance profile registered: INTL v2"}
+[       OK ] Erasure.NotPossibleWhileTheEstablishmentHasFullAccess (3662 ms)
+[ RUN      ] Erasure.WaitsNinetyDaysAfterTheEndOfAccessUnlessTheCustomerAsks
+[       OK ] Erasure.WaitsNinetyDaysAfterTheEndOfAccessUnlessTheCustomerAsks (73 ms)
+[ RUN      ] Erasure.DeletesEverythingKeepsTheBillingArchiveAndLogsTheErasure
+[       OK ] Erasure.DeletesEverythingKeepsTheBillingArchiveAndLogsTheErasure (227 ms)
+[ RUN      ] Erasure.KeepsTheAccountOfAPersonWhoBelongsToAnotherEstablishment
+[       OK ] Erasure.KeepsTheAccountOfAPersonWhoBelongsToAnotherEstablishment (95 ms)
+[ RUN      ] Erasure.TheApplicationRoleCannotUseTheErasureFlag
+[       OK ] Erasure.TheApplicationRoleCannotUseTheErasureFlag (107 ms)
+[----------] 5 tests from Erasure (4166 ms total)
+
+[----------] 1 test from Retention
+[ RUN      ] Retention.OldSentEmailsAndEndedSessionsAreDeletedByTheDailyJob
+{"ts":"2026-10-29T06:25:07Z","level":"info","msg":"email (log transport, not sent) template=welcome to=ol***@nhill.test"}
+[       OK ] Retention.OldSentEmailsAndEndedSessionsAreDeletedByTheDailyJob (54 ms)
+[----------] 1 test from Retention (54 ms total)
+
+[----------] 1 test from Search
+[ RUN      ] Search.PercentAndUnderscoreAreTakenLiterally
+[       OK ] Search.PercentAndUnderscoreAreTakenLiterally (52 ms)
+[----------] 1 test from Search (52 ms total)
+
+[----------] 6 tests from Documents
+[ RUN      ] Documents.PdfInvoiceContainsLegalDataAndNotice
+[       OK ] Documents.PdfInvoiceContainsLegalDataAndNotice (195 ms)
+[ RUN      ] Documents.LogoValidationAndInvalidStoredLogoFallback
+Syntax Warning: Invalid 'begincidrange' operator in ToUnicode CMap
+Syntax Warning: Invalid 'begincidrange' operator in ToUnicode CMap
+[       OK ] Documents.LogoValidationAndInvalidStoredLogoFallback (143 ms)
+[ RUN      ] Documents.NoticeOnlyForVatRegisteredAndDefReferenceIsRecorded
+[       OK ] Documents.NoticeOnlyForVatRegisteredAndDefReferenceIsRecorded (209 ms)
+[ RUN      ] Documents.TillInvoiceIsTheSameDocumentAsABusinessInvoice
+[       OK ] Documents.TillInvoiceIsTheSameDocumentAsABusinessInvoice (516 ms)
+[ RUN      ] Documents.TillInvoiceNeedsTheInvoiceFeature
+[       OK ] Documents.TillInvoiceNeedsTheInvoiceFeature (73 ms)
+[ RUN      ] Documents.EveryCurrencyHasTheSameMinorUnitsEverywhere
+[       OK ] Documents.EveryCurrencyHasTheSameMinorUnitsEverywhere (3 ms)
+[----------] 6 tests from Documents (1141 ms total)
+
+[----------] 10 tests from Plans
+[ RUN      ] Plans.ConsoleSetsTheCapabilitiesOfAPlanWithoutCode
+[       OK ] Plans.ConsoleSetsTheCapabilitiesOfAPlanWithoutCode (66 ms)
+[ RUN      ] Plans.EveryFeatureOutsideThePlanIsAbsentAndRefusedForEveryRole
+[       OK ] Plans.EveryFeatureOutsideThePlanIsAbsentAndRefusedForEveryRole (2712 ms)
+[ RUN      ] Plans.SuppliersExistOnlyWithPurchasesOrExpenses
+[       OK ] Plans.SuppliersExistOnlyWithPurchasesOrExpenses (86 ms)
+[ RUN      ] Plans.DataOfARemovedFeatureIsNotReachableIndirectlyAndComesBack
+[       OK ] Plans.DataOfARemovedFeatureIsNotReachableIndirectlyAndComesBack (347 ms)
+[ RUN      ] Plans.LimitsAreEnforcedByTheServer
+[       OK ] Plans.LimitsAreEnforcedByTheServer (224 ms)
+[ RUN      ] Plans.ConcurrentRequestsCannotExceedALimit
+[       OK ] Plans.ConcurrentRequestsCannotExceedALimit (89 ms)
+[ RUN      ] Plans.ExpiryAndSuspensionLimitWritesNotReads
+[       OK ] Plans.ExpiryAndSuspensionLimitWritesNotReads (129 ms)
+[ RUN      ] Plans.EndOfGraceMovesToTheFallbackPlanWithItsRights
+[       OK ] Plans.EndOfGraceMovesToTheFallbackPlanWithItsRights (91 ms)
+[ RUN      ] Plans.AssignmentRuleGivesItsPlanToANewEstablishment
+[       OK ] Plans.AssignmentRuleGivesItsPlanToANewEstablishment (97 ms)
+[ RUN      ] Plans.OwnerExportsAllDataWhateverThePlanAndTheSubscription
+[       OK ] Plans.OwnerExportsAllDataWhateverThePlanAndTheSubscription (345 ms)
+[----------] 10 tests from Plans (4190 ms total)
+
+[----------] 5 tests from PasswordAdminReset
+[ RUN      ] PasswordAdminReset.TemporaryPasswordForcesANewPasswordAtNextSignIn
+[       OK ] PasswordAdminReset.TemporaryPasswordForcesANewPasswordAtNextSignIn (186 ms)
+[ RUN      ] PasswordAdminReset.OnlyForMembersOfTheAdministratorsOwnEstablishment
+[       OK ] PasswordAdminReset.OnlyForMembersOfTheAdministratorsOwnEstablishment (211 ms)
+[ RUN      ] PasswordAdminReset.AccountUsedInAnotherEstablishmentIsNotResetByOneOfThem
+[       OK ] PasswordAdminReset.AccountUsedInAnotherEstablishmentIsNotResetByOneOfThem (122 ms)
+[ RUN      ] PasswordAdminReset.ExpiredTemporaryPasswordIsRefused
+[       OK ] PasswordAdminReset.ExpiredTemporaryPasswordIsRefused (89 ms)
+[ RUN      ] PasswordAdminReset.TemporaryPasswordCannotBeUsedToJoinAnotherEstablishment
+[       OK ] PasswordAdminReset.TemporaryPasswordCannotBeUsedToJoinAnotherEstablishment (115 ms)
+[----------] 5 tests from PasswordAdminReset (724 ms total)
+
+[----------] 5 tests from PasswordEmailRecovery
+[ RUN      ] PasswordEmailRecovery.SameAnswerWhateverTheAccount
+[       OK ] PasswordEmailRecovery.SameAnswerWhateverTheAccount (89 ms)
+[ RUN      ] PasswordEmailRecovery.CodeResetsThePasswordOnceAndClosesSessions
+[       OK ] PasswordEmailRecovery.CodeResetsThePasswordOnceAndClosesSessions (109 ms)
+[ RUN      ] PasswordEmailRecovery.AttemptsExpiryAndNewRequestInvalidateTheCode
+[       OK ] PasswordEmailRecovery.AttemptsExpiryAndNewRequestInvalidateTheCode (180 ms)
+[ RUN      ] PasswordEmailRecovery.RepeatedRequestsAreThrottledIdenticallyForUnknownAddresses
+[       OK ] PasswordEmailRecovery.RepeatedRequestsAreThrottledIdenticallyForUnknownAddresses (180 ms)
+[ RUN      ] PasswordEmailRecovery.AccountSharedByTwoEstablishmentsReceivesACode
+[       OK ] PasswordEmailRecovery.AccountSharedByTwoEstablishmentsReceivesACode (113 ms)
+[----------] 5 tests from PasswordEmailRecovery (673 ms total)
+
+[----------] 6 tests from PasswordEmailDelivery
+[ RUN      ] PasswordEmailDelivery.CodeIsDeliveredBySmtpThenErasedFromTheOutbox
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=plan_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_by_admin to=sa***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_by_admin to=sa***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_by_admin to=ad***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_by_admin to=vi***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_by_admin to=sa***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_contact_admin to=sa***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_reset_code to=sa***@example.cd"}
+[       OK ] PasswordEmailDelivery.CodeIsDeliveredBySmtpThenErasedFromTheOutbox (88 ms)
+[ RUN      ] PasswordEmailDelivery.FailedDeliveryIsRetriedThenAbandonedWithoutKeepingTheCode
+{"ts":"2026-10-29T06:25:14Z","level":"info","msg":"email (log transport, not sent) template=password_changed to=ow***@example.cd"}
+{"ts":"2026-10-29T06:25:14Z","level":"error","msg":"email password_reset_code not delivered: SMTP delivery failed (Couldn't connect to server, SMTP 0): Failed to connect to 127.0.0.1 port 45405 after 0 ms: Couldn't connect to server"}
+{"ts":"2026-10-29T06:25:14Z","level":"error","msg":"email password_reset_code not delivered: SMTP delivery failed (Couldn't connect to server, SMTP 0): Failed to connect to 127.0.0.1 port 45405 after 0 ms: Couldn't connect to server"}
+{"ts":"2026-10-29T06:25:14Z","level":"error","msg":"email password_reset_code not delivered: SMTP delivery failed (Couldn't connect to server, SMTP 0): Failed to connect to 127.0.0.1 port 45405 after 0 ms: Couldn't connect to server"}
+{"ts":"2026-10-29T06:25:14Z","level":"error","msg":"email password_reset_code not delivered: SMTP delivery failed (Couldn't connect to server, SMTP 0): Failed to connect to 127.0.0.1 port 45405 after 0 ms: Couldn't connect to server"}
+{"ts":"2026-10-29T06:25:14Z","level":"error","msg":"email password_reset_code not delivered: SMTP delivery failed (Couldn't connect to server, SMTP 0): Failed to connect to 127.0.0.1 port 45405 after 0 ms: Couldn't connect to server"}
+[       OK ] PasswordEmailDelivery.FailedDeliveryIsRetriedThenAbandonedWithoutKeepingTheCode (61 ms)
+[ RUN      ] PasswordEmailDelivery.ExpiredCodeIsNotSent
+[       OK ] PasswordEmailDelivery.ExpiredCodeIsNotSent (47 ms)
+[ RUN      ] PasswordEmailDelivery.HeadersCannotBeInjected
+[       OK ] PasswordEmailDelivery.HeadersCannotBeInjected (0 ms)
+[ RUN      ] PasswordEmailDelivery.TemplatesAreTranslatedAndFilled
+[       OK ] PasswordEmailDelivery.TemplatesAreTranslatedAndFilled (0 ms)
+[ RUN      ] PasswordEmailDelivery.SignatureGivesTheSupportAddressOnlyWhenConfigured
+[       OK ] PasswordEmailDelivery.SignatureGivesTheSupportAddressOnlyWhenConfigured (0 ms)
+[----------] 6 tests from PasswordEmailDelivery (198 ms total)
+
+[----------] 2 tests from PasswordEmailConfig
+[ RUN      ] PasswordEmailConfig.SmtpRequiresTlsExceptOnLoopbackAndNoCredentialsInTheUrl
+[       OK ] PasswordEmailConfig.SmtpRequiresTlsExceptOnLoopbackAndNoCredentialsInTheUrl (0 ms)
+[ RUN      ] PasswordEmailConfig.SupportAddressIsOneValidAddress
+[       OK ] PasswordEmailConfig.SupportAddressIsOneValidAddress (0 ms)
+[----------] 2 tests from PasswordEmailConfig (0 ms total)
+
+[----------] 8 tests from Pos
+[ RUN      ] Pos.RegistersAreLimitedByThePlan
+[       OK ] Pos.RegistersAreLimitedByThePlan (83 ms)
+[ RUN      ] Pos.SaleWithSeveralPaymentsChangeStockAndReceipt
+[       OK ] Pos.SaleWithSeveralPaymentsChangeStockAndReceipt (229 ms)
+[ RUN      ] Pos.CashierIsLimitedToTheAssignedRegisterAndOwnSession
+[       OK ] Pos.CashierIsLimitedToTheAssignedRegisterAndOwnSession (182 ms)
+[ RUN      ] Pos.DiscountAboveTheLimitNeedsASupervisorApprovalUsedOnce
+[       OK ] Pos.DiscountAboveTheLimitNeedsASupervisorApprovalUsedOnce (218 ms)
+[ RUN      ] Pos.ReturnsAndVoidsUseCreditNotesRefundsAndRestock
+[       OK ] Pos.ReturnsAndVoidsUseCreditNotesRefundsAndRestock (326 ms)
+[ RUN      ] Pos.CashMovementsClosingVarianceAndZReport
+[       OK ] Pos.CashMovementsClosingVarianceAndZReport (219 ms)
+[ RUN      ] Pos.EstablishmentPromoCodes
+[       OK ] Pos.EstablishmentPromoCodes (158 ms)
+[ RUN      ] Pos.AccountantReadsSessionsButCannotSell
+[       OK ] Pos.AccountantReadsSessionsButCannotSell (198 ms)
+[----------] 8 tests from Pos (1616 ms total)
+
+[----------] 2 tests from Isolation
+[ RUN      ] Isolation.OtherEstablishmentsDataIsUnreachable
+[       OK ] Isolation.OtherEstablishmentsDataIsUnreachable (165 ms)
+[ RUN      ] Isolation.PosSupportAndBillingIdentifiersOfAnotherEstablishmentAreUseless
+[       OK ] Isolation.PosSupportAndBillingIdentifiersOfAnotherEstablishmentAreUseless (312 ms)
+[----------] 2 tests from Isolation (478 ms total)
+
+[----------] 7 tests from Billing
+[ RUN      ] Billing.PlansExposePricesPerDurationAndCurrency
+[       OK ] Billing.PlansExposePricesPerDurationAndCurrency (24 ms)
+[ RUN      ] Billing.UpgradeIsImmediateWithProRataCredit
+[       OK ] Billing.UpgradeIsImmediateWithProRataCredit (95 ms)
+[ RUN      ] Billing.DowngradeIsPaidNowAndEffectiveAtPeriodEnd
+[       OK ] Billing.DowngradeIsPaidNowAndEffectiveAtPeriodEnd (101 ms)
+[ RUN      ] Billing.PromoCodesAreValidatedReservedAndConsumed
+[       OK ] Billing.PromoCodesAreValidatedReservedAndConsumed (151 ms)
+[ RUN      ] Billing.FullyDiscountedOrderIsAppliedWithoutPayment
+[       OK ] Billing.FullyDiscountedOrderIsAppliedWithoutPayment (63 ms)
+[ RUN      ] Billing.UnpaidOrdersExpireAndReleaseTheirPromo
+[       OK ] Billing.UnpaidOrdersExpireAndReleaseTheirPromo (107 ms)
+[ RUN      ] Billing.FailedPaymentsAreCountedAndNotified
+[       OK ] Billing.FailedPaymentsAreCountedAndNotified (61 ms)
+[----------] 7 tests from Billing (605 ms total)
+
+[----------] 3 tests from Providers
+[ RUN      ] Providers.SecretsAreWriteOnlyAndEncrypted
+[       OK ] Providers.SecretsAreWriteOnlyAndEncrypted (33 ms)
+[ RUN      ] Providers.StripeCheckoutAndVerifiedWebhook
+{"ts":"2026-10-29T06:25:17Z","level":"warn","msg":"webhook verification failed for provider stripebaf742"}
+[       OK ] Providers.StripeCheckoutAndVerifiedWebhook (67 ms)
+[ RUN      ] Providers.PaypalOrderCaptureAfterVerifiedApproval
+{"ts":"2026-10-29T06:25:17Z","level":"warn","msg":"webhook verification failed for provider paypald5b514"}
+[       OK ] Providers.PaypalOrderCaptureAfterVerifiedApproval (65 ms)
+[----------] 3 tests from Providers (165 ms total)
+
+[----------] 1 test from Console
+[ RUN      ] Console.SubscriptionActionsAreAuditedAndRoleRestricted
+[       OK ] Console.SubscriptionActionsAreAuditedAndRoleRestricted (68 ms)
+[----------] 1 test from Console (68 ms total)
+
+[----------] 3 tests from Support
+[ RUN      ] Support.TicketsAreScopedAndInternalNotesHidden
+[       OK ] Support.TicketsAreScopedAndInternalNotesHidden (112 ms)
+[ RUN      ] Support.ErrorReportsAreGroupedByFingerprint
+[       OK ] Support.ErrorReportsAreGroupedByFingerprint (52 ms)
+[ RUN      ] Support.ErrorReportsMaskPersonalData
+[       OK ] Support.ErrorReportsMaskPersonalData (40 ms)
+[----------] 3 tests from Support (205 ms total)
+
+[----------] 3 tests from Activity
+[ RUN      ] Activity.OwnerSeesWhoDidWhatAndSellerOnlySeesOwnActions
+[       OK ] Activity.OwnerSeesWhoDidWhatAndSellerOnlySeesOwnActions (143 ms)
+[ RUN      ] Activity.ExportsAndPerEmployeeReport
+[       OK ] Activity.ExportsAndPerEmployeeReport (176 ms)
+[ RUN      ] Activity.SellerDashboardShowsOwnFiguresOnly
+[       OK ] Activity.SellerDashboardShowsOwnFiguresOnly (166 ms)
+[----------] 3 tests from Activity (485 ms total)
+
+[----------] 2 tests from PlatformStats
+[ RUN      ] PlatformStats.AggregatesPerEstablishmentWithoutRecordsAndAudited
+[       OK ] PlatformStats.AggregatesPerEstablishmentWithoutRecordsAndAudited (221 ms)
+[ RUN      ] PlatformStats.AggregateFunctionsKeepTenantIsolation
+[       OK ] PlatformStats.AggregateFunctionsKeepTenantIsolation (155 ms)
+[----------] 2 tests from PlatformStats (376 ms total)
+
+[----------] 1 test from LocalTime
+[ RUN      ] LocalTime.DocumentsAreDatedInTheEstablishmentTimeZone
+[       OK ] LocalTime.DocumentsAreDatedInTheEstablishmentTimeZone (109 ms)
+[----------] 1 test from LocalTime (109 ms total)
+
+[----------] 1 test from Samples
+[ RUN      ] Samples.GenerateDocumentSamples
+./tests/server/test_samples.cpp:13: Skipped
+set NH_SAMPLES_DIR to generate samples
+
+[  SKIPPED ] Samples.GenerateDocumentSamples (0 ms)
+[----------] 1 test from Samples (0 ms total)
+
+[----------] 2 tests from Stock
+[ RUN      ] Stock.MovementsOnlyAndNegativeStockRefused
+[       OK ] Stock.MovementsOnlyAndNegativeStockRefused (148 ms)
+[ RUN      ] Stock.ServicesDoNotTrackStockAndAdjustmentNeedsReason
+[       OK ] Stock.ServicesDoNotTrackStockAndAdjustmentNeedsReason (50 ms)
+[----------] 2 tests from Stock (198 ms total)
+
+[----------] 7 tests from Invoice
+[ RUN      ] Invoice.TotalsTaxesAndImmutability
+[       OK ] Invoice.TotalsTaxesAndImmutability (120 ms)
+[ RUN      ] Invoice.AmountsMustBeDecimalStrings
+[       OK ] Invoice.AmountsMustBeDecimalStrings (54 ms)
+[ RUN      ] Invoice.ConcurrentIssuingGivesUniqueConsecutiveNumbers
+[       OK ] Invoice.ConcurrentIssuingGivesUniqueConsecutiveNumbers (867 ms)
+[ RUN      ] Invoice.NetworkLossDuringSaleIsSafeToRetry
+[       OK ] Invoice.NetworkLossDuringSaleIsSafeToRetry (103 ms)
+[ RUN      ] Invoice.CreditNoteRestocksAndClosesInvoice
+[       OK ] Invoice.CreditNoteRestocksAndClosesInvoice (146 ms)
+[ RUN      ] Invoice.QuoteToInvoiceConversion
+[       OK ] Invoice.QuoteToInvoiceConversion (97 ms)
+[ RUN      ] Invoice.ForeignCurrencyRequiresAndFreezesExchangeRate
+[       OK ] Invoice.ForeignCurrencyRequiresAndFreezesExchangeRate (91 ms)
+[----------] 7 tests from Invoice (1483 ms total)
+
+[----------] 1 test from Payments
+[ RUN      ] Payments.ConcurrentPaymentsCannotOverpay
+[       OK ] Payments.ConcurrentPaymentsCannotOverpay (118 ms)
+[----------] 1 test from Payments (118 ms total)
+
+[----------] 1 test from Roles
+[ RUN      ] Roles.ServerEnforcesPermissions
+[       OK ] Roles.ServerEnforcesPermissions (116 ms)
+[----------] 1 test from Roles (116 ms total)
+
+[----------] 1 test from Reports
+[ RUN      ] Reports.CsvAndPdfExportsAndDashboard
+[       OK ] Reports.CsvAndPdfExportsAndDashboard (173 ms)
+[----------] 1 test from Reports (173 ms total)
+
+[----------] 1 test from Purchases
+[ RUN      ] Purchases.ReceiveStocksAndPay
+[       OK ] Purchases.ReceiveStocksAndPay (72 ms)
+[----------] 1 test from Purchases (72 ms total)
+
+[----------] 1 test from Catalog
+[ RUN      ] Catalog.CsvImportIsAllOrNothing
+[       OK ] Catalog.CsvImportIsAllOrNothing (47 ms)
+[----------] 1 test from Catalog (47 ms total)
+
+[----------] 6 tests from Subscription
+[ RUN      ] Subscription.TrialReminderGraceAndSuspension
+[       OK ] Subscription.TrialReminderGraceAndSuspension (116 ms)
+[ RUN      ] Subscription.AnnualPlanStaysAnnualDespiteMonthlyCodeRotation
+[       OK ] Subscription.AnnualPlanStaysAnnualDespiteMonthlyCodeRotation (138 ms)
+[ RUN      ] Subscription.AnnualExpiryAndPaymentDuringGraceKeepsContractDates
+[       OK ] Subscription.AnnualExpiryAndPaymentDuringGraceKeepsContractDates (75 ms)
+[ RUN      ] Subscription.PayingDuringTrialKeepsRemainingTrialDays
+[       OK ] Subscription.PayingDuringTrialKeepsRemainingTrialDays (57 ms)
+[ RUN      ] Subscription.PlanAudienceAndSeatLimits
+[       OK ] Subscription.PlanAudienceAndSeatLimits (99 ms)
+[ RUN      ] Subscription.PlanDetailsAreReservedToOwnersAndAdministrators
+[       OK ] Subscription.PlanDetailsAreReservedToOwnersAndAdministrators (430 ms)
+[----------] 6 tests from Subscription (917 ms total)
+
+[----------] 3 tests from Webhook
+[ RUN      ] Webhook.DuplicateDeliveryIsAppliedOnce
+[       OK ] Webhook.DuplicateDeliveryIsAppliedOnce (56 ms)
+[ RUN      ] Webhook.SignatureTimestampAndAmountAreVerified
+{"ts":"2026-10-29T06:25:21Z","level":"warn","msg":"webhook verification failed for provider generic"}
+{"ts":"2026-10-29T06:25:21Z","level":"warn","msg":"webhook verification failed for provider generic"}
+{"ts":"2026-10-29T06:25:21Z","level":"warn","msg":"webhook verification failed for provider generic"}
+[       OK ] Webhook.SignatureTimestampAndAmountAreVerified (57 ms)
+[ RUN      ] Webhook.FailedPaymentIsRecordedWithoutRights
+[       OK ] Webhook.FailedPaymentIsRecordedWithoutRights (58 ms)
+[----------] 3 tests from Webhook (172 ms total)
+
+[----------] 5 tests from Migrations
+[ RUN      ] Migrations.ApplicationRoleCanCheckPendingMigrationsAfterFirstRun
+[       OK ] Migrations.ApplicationRoleCanCheckPendingMigrationsAfterFirstRun (2 ms)
+[ RUN      ] Migrations.AppliedOnceAndIdempotent
+[       OK ] Migrations.AppliedOnceAndIdempotent (16 ms)
+[ RUN      ] Migrations.ModifiedMigrationIsRefused
+[       OK ] Migrations.ModifiedMigrationIsRefused (6 ms)
+[ RUN      ] Migrations.ApplicationRoleHasNoDdlAndNoBypass
+[       OK ] Migrations.ApplicationRoleHasNoDdlAndNoBypass (10 ms)
+[ RUN      ] Migrations.EverythingLivesInTheNhillSchemaClosedToOtherRoles
+[       OK ] Migrations.EverythingLivesInTheNhillSchemaClosedToOtherRoles (28 ms)
+[----------] 5 tests from Migrations (64 ms total)
+
+[----------] 5 tests from Establishment
+[ RUN      ] Establishment.CreateCompanyWithTrialAndCode
+[       OK ] Establishment.CreateCompanyWithTrialAndCode (51 ms)
+[ RUN      ] Establishment.IndividualEntrepreneurNeedsNoLegalIdAndHasOneSeat
+[       OK ] Establishment.IndividualEntrepreneurNeedsNoLegalIdAndHasOneSeat (48 ms)
+[ RUN      ] Establishment.ValidationRejectsBadInput
+[       OK ] Establishment.ValidationRejectsBadInput (19 ms)
+[ RUN      ] Establishment.DuplicateLegalIdIsRefusedWithoutRevealingName
+[       OK ] Establishment.DuplicateLegalIdIsRefusedWithoutRevealingName (59 ms)
+[ RUN      ] Establishment.ConcurrentCreationWithSameIdentifier
+[       OK ] Establishment.ConcurrentCreationWithSameIdentifier (73 ms)
+[----------] 5 tests from Establishment (251 ms total)
+
+[----------] 1 test from Trial
+[ RUN      ] Trial.CannotBeResetByRecreatingTheAccount
+[       OK ] Trial.CannotBeResetByRecreatingTheAccount (83 ms)
+[----------] 1 test from Trial (83 ms total)
+
+[----------] 4 tests from Auth
+[ RUN      ] Auth.LoginRefreshRotationAndReuseDetection
+[       OK ] Auth.LoginRefreshRotationAndReuseDetection (70 ms)
+[ RUN      ] Auth.BruteForceIsThrottled
+[       OK ] Auth.BruteForceIsThrottled (91 ms)
+[ RUN      ] Auth.LogoutAndPasswordChangeRevokeSessions
+[       OK ] Auth.LogoutAndPasswordChangeRevokeSessions (67 ms)
+[ RUN      ] Auth.PasswordMinimumIsEightCharactersOnEveryPath
+[       OK ] Auth.PasswordMinimumIsEightCharactersOnEveryPath (113 ms)
+[----------] 4 tests from Auth (342 ms total)
+
+[----------] 5 tests from Admin
+[ RUN      ] Admin.ConsoleFirstAccessAcceptsEightCharactersWithTotp
+[       OK ] Admin.ConsoleFirstAccessAcceptsEightCharactersWithTotp (15 ms)
+[ RUN      ] Admin.TotpVectorsRfc6238
+[       OK ] Admin.TotpVectorsRfc6238 (0 ms)
+[ RUN      ] Admin.ConsoleRequiresPasswordAndTotpAndCannotReadBusinessData
+[       OK ] Admin.ConsoleRequiresPasswordAndTotpAndCannotReadBusinessData (72 ms)
+[ RUN      ] Admin.WrongTotpIsRefusedAndRolesAreEnforced
+[       OK ] Admin.WrongTotpIsRefusedAndRolesAreEnforced (54 ms)
+[ RUN      ] Admin.SuspensionRevokesSessionsAndIsAudited
+[       OK ] Admin.SuspensionRevokesSessionsAndIsAudited (71 ms)
+[----------] 5 tests from Admin (213 ms total)
+
+[----------] 7 tests from Codes
+[ RUN      ] Codes.ValidationIsGenericForEveryFailure
+[       OK ] Codes.ValidationIsGenericForEveryFailure (156 ms)
+[ RUN      ] Codes.CodeAloneGivesNoAccess
+[       OK ] Codes.CodeAloneGivesNoAccess (51 ms)
+[ RUN      ] Codes.ValidationAttemptsAreLimited
+[       OK ] Codes.ValidationAttemptsAreLimited (19 ms)
+[ RUN      ] Codes.JoinWithInvitationGivesTheInvitedRole
+[       OK ] Codes.JoinWithInvitationGivesTheInvitedRole (66 ms)
+[ RUN      ] Codes.CollisionIsRetriedWithANewCode
+{"ts":"2026-10-29T06:25:23Z","level":"warn","msg":"establishment code collision, regenerating"}
+[       OK ] Codes.CollisionIsRetriedWithANewCode (67 ms)
+[ RUN      ] Codes.ScheduledRotationIsAtomicAndConcurrencySafe
+[       OK ] Codes.ScheduledRotationIsAtomicAndConcurrencySafe (311 ms)
+[ RUN      ] Codes.OnlyAuthorisedRolesSeeTheCode
+[       OK ] Codes.OnlyAuthorisedRolesSeeTheCode (57 ms)
+[----------] 7 tests from Codes (731 ms total)
+
+[----------] Global test environment tear-down
+[==========] 122 tests from 34 test suites ran. (20304 ms total)
+[  PASSED  ] 121 tests.
+[  SKIPPED ] 1 test, listed below:
+[  SKIPPED ] Samples.GenerateDocumentSamples
+<end of output>
+Test time =  20.51 sec
+----------------------------------------------------------
+Test Passed.
+"server" end time: Oct 29 06:25 UTC
+"server" time elapsed: 00:00:20
+----------------------------------------------------------
+
+3/5 Testing: setup
+3/5 Test: setup
+Command: "/home/runner/work/Nhill/Nhill/build/tests/server/test_setup"
+Directory: /home/runner/work/Nhill/Nhill/build/tests/server
+"setup" start time: Oct 29 06:25 UTC
+Output:
+----------------------------------------------------------
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 6 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 6 tests from Setup
+[ RUN      ] Setup.TargetValidation
+[       OK ] Setup.TargetValidation (0 ms)
+[ RUN      ] Setup.ConfigFileIsWrittenAtomicallyWithPrivateMode
+[       OK ] Setup.ConfigFileIsWrittenAtomicallyWithPrivateMode (0 ms)
+[ RUN      ] Setup.InstallOnSelfHostedPostgresAsSuperuser
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0001_platform"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0002_business"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0003_security"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0004_reference_data"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0005_helpers"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0006_activity_and_platform_stats"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0007_local_time"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0008_console_billing"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0009_pos"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0010_fk_indexes"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0011_password_recovery"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0012_plan_entitlements"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0013_documents"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0014_establishment_erasure"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"migration applied: 0015_search_patterns"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"setup: installation completed on postgres (127.0.0.1)"}
+{"ts":"2026-10-29T06:25:24Z","level":"info","msg":"setup: installation completed on postgres (127.0.0.1)"}
+[       OK ] Setup.InstallOnSelfHostedPostgresAsSuperuser (1337 ms)
+[ RUN      ] Setup.InstallAsNonSuperuserOnHostedLikeDatabase
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0001_platform"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0002_business"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0003_security"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0004_reference_data"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0005_helpers"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0006_activity_and_platform_stats"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0007_local_time"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0008_console_billing"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0009_pos"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0010_fk_indexes"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0011_password_recovery"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0012_plan_entitlements"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0013_documents"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0014_establishment_erasure"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"migration applied: 0015_search_patterns"}
+{"ts":"2026-10-29T06:25:25Z","level":"info","msg":"setup: installation completed on postgres (127.0.0.1)"}
+[       OK ] Setup.InstallAsNonSuperuserOnHostedLikeDatabase (1137 ms)
+[ RUN      ] Setup.RefusesAnAdministratorWithoutRoleCreation
+[       OK ] Setup.RefusesAnAdministratorWithoutRoleCreation (873 ms)
+[ RUN      ] Setup.SetupModeEndpoints
+
+  Nhill server is in SETUP MODE (no database configured).
+  Open Nhill Console, choose the server address and enter this setup token
+  (valid 60 minutes, new token at each restart):
+
+      test-setup-token-0123456789
+
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"setup mode listening on 127.0.0.1:56081"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0001_platform"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0002_business"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0003_security"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0004_reference_data"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0005_helpers"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0006_activity_and_platform_stats"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0007_local_time"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0008_console_billing"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0009_pos"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0010_fk_indexes"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0011_password_recovery"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0012_plan_entitlements"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0013_documents"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0014_establishment_erasure"}
+{"ts":"2026-10-29T06:25:27Z","level":"info","msg":"migration applied: 0015_search_patterns"}
+{"ts":"2026-10-29T06:25:28Z","level":"info","msg":"setup: installation completed on postgres (127.0.0.1)"}
+[       OK ] Setup.SetupModeEndpoints (1962 ms)
+[----------] 6 tests from Setup (5311 ms total)
+
+[----------] Global test environment tear-down
+[==========] 6 tests from 1 test suite ran. (5311 ms total)
+[  PASSED  ] 6 tests.
+<end of output>
+Test time =   5.32 sec
+----------------------------------------------------------
+Test Passed.
+"setup" end time: Oct 29 06:25 UTC
+"setup" time elapsed: 00:00:05
+----------------------------------------------------------
+
+4/5 Testing: client
+4/5 Test: client
+Command: "/home/runner/work/Nhill/Nhill/build/tests/client/test_client"
+Directory: /home/runner/work/Nhill/Nhill/build/tests/client
+"client" start time: Oct 29 06:25 UTC
+Output:
+----------------------------------------------------------
+********* Start testing of ClientTest *********
+Config: Using QtTest library 6.4.2, Qt 6.4.2 (x86_64-little_endian-lp64 shared (dynamic) release build; by GCC 13.2.0), ubuntu 24.04
+PASS   : ClientTest::initTestCase()
+PASS   : ClientTest::moneyFormatting()
+PASS   : ClientTest::moneyParsing()
+PASS   : ClientTest::exactSums()
+PASS   : ClientTest::lineTotals()
+PASS   : ClientTest::percents()
+PASS   : ClientTest::validation()
+PASS   : ClientTest::refusesPlainHttpToRemoteHosts()
+PASS   : ClientTest::serverAddressIsNormalised()
+PASS   : ClientTest::probeRefusesPlainHttp()
+PASS   : ClientTest::probeChecksTheServerIdentity()
+PASS   : ClientTest::rightsVersionChangesAreAnnounced()
+PASS   : ClientTest::sendsJsObjectBodiesFromQml()
+PASS   : ClientTest::writesAreNeverRetriedAutomatically()
+PASS   : ClientTest::readsAreRetried()
+PASS   : ClientTest::singleFlightRefreshKeepsKeys()
+PASS   : ClientTest::cleanupTestCase()
+Totals: 17 passed, 0 failed, 0 skipped, 0 blacklisted, 7430ms
+********* Finished testing of ClientTest *********
+<end of output>
+Test time =   7.56 sec
+----------------------------------------------------------
+Test Passed.
+"client" end time: Oct 29 06:25 UTC
+"client" time elapsed: 00:00:07
+----------------------------------------------------------
+
+5/5 Testing: keychain
+5/5 Test: keychain
+Command: "/home/runner/work/Nhill/Nhill/build/tests/keychain/test_keychain"
+Directory: /home/runner/work/Nhill/Nhill/build/tests/keychain
+"keychain" start time: Oct 29 06:25 UTC
+Output:
+----------------------------------------------------------
+********* Start testing of KeychainTest *********
+Config: Using QtTest library 6.4.2, Qt 6.4.2 (x86_64-little_endian-lp64 shared (dynamic) release build; by GCC 13.2.0), ubuntu 24.04
+PASS   : KeychainTest::initTestCase()
+QWARN  : KeychainTest::sessionSurvivesARestartWhenRemembered() secure store: the session cannot be remembered on this device (Unknown error)
+NHILL_KEYCHAIN_PHASE write UNAVAILABLE Unknown error
+NHILL_KEYCHAIN_PHASE write UNAVAILABLE Unknown error
+
+SKIP   : KeychainTest::sessionSurvivesARestartWhenRemembered() UNAVAILABLE Unknown error
+   Loc: [./tests/keychain/test_keychain.cpp(262)]
+SKIP   : KeychainTest::logoutErasesTheStoredSession() no stored session to sign out from (secure store unavailable)
+   Loc: [./tests/keychain/test_keychain.cpp(269)]
+QWARN  : KeychainTest::nothingIsStoredWithoutRememberMe() secure store: the session cannot be remembered on this device (Unknown error)
+NHILL_KEYCHAIN_PHASE forget UNAVAILABLE Unknown error
+NHILL_KEYCHAIN_PHASE forget UNAVAILABLE Unknown error
+
+SKIP   : KeychainTest::nothingIsStoredWithoutRememberMe() UNAVAILABLE Unknown error
+   Loc: [./tests/keychain/test_keychain.cpp(273)]
+PASS   : KeychainTest::cleanupTestCase()
+Totals: 2 passed, 0 failed, 3 skipped, 0 blacklisted, 88ms
+********* Finished testing of KeychainTest *********
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"keychain" end time: Oct 29 06:25 UTC
+"keychain" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 29 06:25 UTC

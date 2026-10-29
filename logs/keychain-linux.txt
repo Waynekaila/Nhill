@@ -1,0 +1,22 @@
+********* Start testing of KeychainTest *********
+Config: Using QtTest library 6.4.2, Qt 6.4.2 (x86_64-little_endian-lp64 shared (dynamic) release build; by GCC 13.2.0), ubuntu 24.04
+INFO   : KeychainTest::initTestCase() entering
+PASS   : KeychainTest::initTestCase()
+INFO   : KeychainTest::sessionSurvivesARestartWhenRemembered() entering
+INFO   : KeychainTest::sessionSurvivesARestartWhenRemembered() QVERIFY(v_ == QLatin1String("OK"))
+   Loc: [./tests/keychain/test_keychain.cpp(262)]
+INFO   : KeychainTest::sessionSurvivesARestartWhenRemembered() QVERIFY(v_ == QLatin1String("OK"))
+   Loc: [./tests/keychain/test_keychain.cpp(263)]
+PASS   : KeychainTest::sessionSurvivesARestartWhenRemembered()
+INFO   : KeychainTest::logoutErasesTheStoredSession() entering
+INFO   : KeychainTest::logoutErasesTheStoredSession() QVERIFY(v_ == QLatin1String("OK"))
+   Loc: [./tests/keychain/test_keychain.cpp(271)]
+PASS   : KeychainTest::logoutErasesTheStoredSession()
+INFO   : KeychainTest::nothingIsStoredWithoutRememberMe() entering
+INFO   : KeychainTest::nothingIsStoredWithoutRememberMe() QVERIFY(v_ == QLatin1String("OK"))
+   Loc: [./tests/keychain/test_keychain.cpp(273)]
+PASS   : KeychainTest::nothingIsStoredWithoutRememberMe()
+INFO   : KeychainTest::cleanupTestCase() entering
+PASS   : KeychainTest::cleanupTestCase()
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 775ms
+********* Finished testing of KeychainTest *********
