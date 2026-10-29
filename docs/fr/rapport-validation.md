@@ -1,6 +1,74 @@
-# Rapport de validation — Nhill 2.1.0
+# Rapport de validation — Nhill 3.0.0
 
 *English: [../en/validation-report.md](../en/validation-report.md)*
+
+## Version 3.0.0 — formules, documents, données, mise en service
+
+| | |
+|---|---|
+| Date | 29 octobre 2026 |
+| Version | 3.0.0 (`project(nhill VERSION 3.0.0)`), branche `release/3.0.0`, non publiée |
+| Commit du code validé | `18d7054` (les commits suivants ne modifient que la documentation) |
+
+### Tests exécutés (intégration continue du commit `18d7054`)
+
+| Suite | Où | Résultat | Preuve |
+|---|---|---|---|
+| `common` | CI Ubuntu 24.04 | **22/22** | [exécution 40826508382](https://github.com/Waynekaila/Nhill/actions/runs/40826508382), `ci-results/ci` |
+| `server` (formules et droits pour chaque formule et chaque rôle, limites, accès calculé, documents, caisse, suppression d'un établissement, conservation, recherches, mot de passe oublié…) | CI Ubuntu 24.04 (PostgreSQL 16) ; espace de travail | **121 réussis, 1 ignoré** (`Samples.GenerateDocumentSamples`) sur 122 | idem |
+| `setup`, `client` | CI | **6/6**, **15/15** | idem |
+| `keychain` — Secret Service réel | CI Ubuntu 24.04 | **3/3** (+ init/nettoyage) | `ci-results/ci`, `logs/keychain-linux.txt` |
+| `keychain` — Gestionnaire d'identification Windows réel | CI `windows-2022` | **3/3** | [exécution 40826508391](https://github.com/Waynekaila/Nhill/actions/runs/40826508391) |
+| `keychain` — Keystore Android | émulateur Android 11 (CI) | phases `write`, `read`, `logout`, `forget` : **OK** | [exécution 40826508406](https://github.com/Waynekaila/Nhill/actions/runs/40826508406), `ci-results/android-keychain` |
+| Paquets `.deb` Ubuntu 24.04 et Debian 13, installation par `apt` puis désinstallation | CI (conteneurs propres) | **réussis** | [exécution 40826508393](https://github.com/Waynekaila/Nhill/actions/runs/40826508393) |
+| Kit VPS : `provision.sh` sur une machine Ubuntu 24.04 neuve, puis recette | CI | **12/12 contrôles** (ports locaux, pare-feu, secrets, TLS et HSTS par Caddy, surveillance, sauvegarde chiffrée restaurée hors du serveur, mise à jour, retour arrière, refus d'une base plus récente, premier administrateur) | `ci-results/vps-test` |
+| Installateurs Windows, installation silencieuse | CI `windows-2022` | réussis | `ci-results/windows` |
+| APK : notices tierces présentes | CI | `assets/THIRD-PARTY-NOTICES.txt` présent | `ci-results/android` |
+| Références de l'API et de la base à jour | CI | réussi | `ci-results/ci`, `ci-results/docs-website` |
+| PDF à jour, site vitrine, backend des formulaires (SQLite, PostgreSQL) | CI | réussis ; 24 pages, 0 problème | [exécution 40826508436](https://github.com/Waynekaila/Nhill/actions/runs/40826508436) |
+| Contrôle QML | espace de travail, CI | 100 fichiers, 0 problème, 0 texte non traduit | `scripts/qa/qml-check.py` |
+| Domaine `nhill.online` | CI | **échec attendu** : page de parking d'Hostinger, aucun MX, SPF ni DMARC | `ci-results/domain-check` |
+
+Empreintes SHA-256 des livrables construits par la CI (`18d7054`) :
+
+```
+fe68846cf61ff330f5ca8f332916d38685417bba272f4213c14f6d82cc19da9b  windows/nhill-business-3.0.0-setup.exe
+9d5d55a841850ee9dc3a8d8911fd84398f0a01b10c472384e1dbb65b899be763  windows/nhill-pos-3.0.0-setup.exe
+eb654f3bfa0ef7e39785f03c8bacc8f466e281556744686f8ca6d3da8aa498e6  windows/nhill-console-3.0.0-setup.exe
+500d06e310fe7a68d5b29f5a2a5ddab5c6055b54274300eb10f671fde573c0e8  android/nhill-business-3.0.0-arm64-v8a.apk
+456ca24392c57fd860b3096b05d564c0e828b1afad97df6c61be2bd2d542757f  linux/ubuntu-24.04/nhill-server_3.0.0-1_amd64.deb
+f9cddb2f63854b65423757d521dd2eea97d4fc3a287df904b8ae23c9d4366c0f  linux/debian-13/nhill-server_3.0.0-1_amd64.deb
+cb60e13fa18e09f1430f9d983bb86bdd6fee141c4fe5e48adeae67fa30d34c87  website/nhill-website-3.0.0.tar.gz
+```
+
+Liste complète : `release/V3.0.0/checksums/SHA256SUMS`.
+
+### Anomalies trouvées et corrigées pendant la validation 3.0
+
+| Anomalie | Correction |
+|---|---|
+| Suppression d'un établissement promise par les conditions mais impossible (documents et journal immuables pour l'application) | migration 0014, fonction de suppression contrôlée, écran de la console, tests |
+| `%` et `_` interprétés dans les recherches | migration 0015, `nh_like_contains` |
+| Recette VPS : service PostgreSQL « parapluie » inactif, certificat interne à 0 jour, test de restauration illisible pour `nobody`, empreinte de sauvegarde avec chemin absolu | contrôle par `pg_isready`, seuil adapté, copie du script, empreinte sur le nom du fichier |
+| Captures POS 1366×768 absentes (affichage Xvfb pas prêt) | attente du socket X avant le lancement |
+| Test du Keystore Android : « Can't find service: activity » juste après le démarrage | attente du service et nouvelles tentatives des commandes `am` |
+| APK sans la notice BSD de QtKeychain (liée statiquement) | notices incluses et vérifiées à la construction |
+| Dossier commercial : champs entre crochets, lignes de suivi fictives, offre « pilote 8 semaines » périmée | champs de fusion déclarés, fichiers vides, essai de 30 jours partout |
+
+### Non testé
+
+- Déploiement réel sur le VPS Hostinger (aucun accès) ; site `nhill.online` non publié.
+- Téléphone Android réel, poste Windows 10/11 d'utilisateur, envoi d'e-mails par un vrai relais SMTP.
+- Mise à jour d'une base 2.1 contenant de vraies données vers 0012–0015 (les tests appliquent 0001–0015 sur une base vide).
+- Masquage des fonctions dans l'interface pour chaque formule (vérifié côté serveur par les tests `Plans.*` ; côté applications par lecture du code et contrôle statique).
+
+### Décisions et actions humaines en attente
+
+- R1 (cpp-httplib du paquet Ubuntu 24.04) et R2 (Qt 6.5.3 sous Windows et Android) : choix de la correction ([03-audit-securite.md](03-audit-securite.md) § 4).
+- Hébergeur du site vitrine (mentions légales), adresse d'expéditeur des e-mails automatiques, enregistrements DNS de messagerie (MX, SPF, DMARC).
+- Certificats de signature (Authenticode, clé Android de publication), relecture juridique (points V-01 à V-14), audit externe.
+
+---
 
 ## Version 2.1.0 — session mémorisée et mot de passe oublié
 

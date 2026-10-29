@@ -221,14 +221,14 @@
    "title": "Nhill 3.0 — User guide"
   },
   "docs/pdf/en/validation-report.pdf": {
-   "bytes": 113324,
+   "bytes": 156116,
    "engine": "playwright",
-   "generated": "2026-10-28T14:16:06+00:00",
+   "generated": "2026-10-29T06:15:54+00:00",
    "lang": "en",
-   "pdf_sha256": "cf2ca479337c855767ccdd06bff271025fd92c10c4be782c0ea79a24c7b04eab",
+   "pdf_sha256": "9d15e2de6c6b563d4c42bf7f65252130b8d9586ef62eb2df844bc55eb2d24a3c",
    "source": "docs/en/validation-report.md",
-   "source_sha256": "94a051f322ecdd6f4be84980fd12a40e95c9436d5fff9d14f5475ce77092a34d",
-   "title": "Validation report — Nhill 2.1.0"
+   "source_sha256": "92de853ebc7cd554f76fb2fb3032981149f1ab0bce2b8c49015ec420349258cf",
+   "title": "Validation report — Nhill 3.0.0"
   },
   "docs/pdf/en/vps-deployment-hostinger.pdf": {
    "bytes": 137619,
@@ -441,14 +441,14 @@
    "title": "Paramètres légaux de Nhill 3.0"
   },
   "docs/pdf/fr/rapport-validation.pdf": {
-   "bytes": 115203,
+   "bytes": 160791,
    "engine": "playwright",
-   "generated": "2026-10-28T14:15:53+00:00",
+   "generated": "2026-10-29T06:15:52+00:00",
    "lang": "fr",
-   "pdf_sha256": "4bd7c2be3645dbd01908e3109feb215693256f7307db5b4b1c799ba84eff7523",
+   "pdf_sha256": "a156d8336538a05610d2b139bd7dd3b7208830325125a0f168730b26bc768e78",
    "source": "docs/fr/rapport-validation.md",
-   "source_sha256": "37378c14f7755eee117ed972ea2e8c4915baf9ac66454215ab0f11032d91faaf",
-   "title": "Rapport de validation — Nhill 2.1.0"
+   "source_sha256": "347615751381a7835485af4c08fc1f1a245cd193b6fa07abfc15b33b40be4110",
+   "title": "Rapport de validation — Nhill 3.0.0"
   },
   "docs/pdf/fr/reference-api.pdf": {
    "bytes": 279871,

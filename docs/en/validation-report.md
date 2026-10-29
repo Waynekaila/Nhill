@@ -1,6 +1,74 @@
-# Validation report — Nhill 2.1.0
+# Validation report — Nhill 3.0.0
 
 *Français : [../fr/rapport-validation.md](../fr/rapport-validation.md)*
+
+## Version 3.0.0 — plans, documents, data, deployment
+
+| | |
+|---|---|
+| Date | 29 October 2026 |
+| Version | 3.0.0 (`project(nhill VERSION 3.0.0)`), branch `release/3.0.0`, not published |
+| Validated code commit | `18d7054` (later commits only change documentation) |
+
+### Tests run (continuous integration of commit `18d7054`)
+
+| Suite | Where | Result | Evidence |
+|---|---|---|---|
+| `common` | CI Ubuntu 24.04 | **22/22** | [run 40826508382](https://github.com/Waynekaila/Nhill/actions/runs/40826508382), `ci-results/ci` |
+| `server` (plans and rights for every plan and every role, limits, computed access, documents, till, erasure of a business, retention, searches, forgotten password…) | CI Ubuntu 24.04 (PostgreSQL 16); workspace | **121 passed, 1 skipped** (`Samples.GenerateDocumentSamples`) out of 122 | same |
+| `setup`, `client` | CI | **6/6**, **15/15** | same |
+| `keychain` — real Secret Service | CI Ubuntu 24.04 | **3/3** (+ init/cleanup) | `ci-results/ci`, `logs/keychain-linux.txt` |
+| `keychain` — real Windows Credential Manager | CI `windows-2022` | **3/3** | [run 40826508391](https://github.com/Waynekaila/Nhill/actions/runs/40826508391) |
+| `keychain` — Android Keystore | Android 11 emulator (CI) | phases `write`, `read`, `logout`, `forget`: **OK** | [run 40826508406](https://github.com/Waynekaila/Nhill/actions/runs/40826508406), `ci-results/android-keychain` |
+| Ubuntu 24.04 and Debian 13 `.deb` packages, `apt` installation then removal | CI (clean containers) | **passed** | [run 40826508393](https://github.com/Waynekaila/Nhill/actions/runs/40826508393) |
+| VPS kit: `provision.sh` on a fresh Ubuntu 24.04 machine, then acceptance | CI | **12/12 checks** (local ports, firewall, secrets, TLS and HSTS through Caddy, monitoring, encrypted backup restored off the server, update, rollback, refusal of a newer database, first administrator) | `ci-results/vps-test` |
+| Windows installers, silent installation | CI `windows-2022` | passed | `ci-results/windows` |
+| APK: third-party notices present | CI | `assets/THIRD-PARTY-NOTICES.txt` present | `ci-results/android` |
+| API and database references up to date | CI | passed | `ci-results/ci`, `ci-results/docs-website` |
+| PDFs up to date, website, forms backend (SQLite, PostgreSQL) | CI | passed; 24 pages, 0 problems | [run 40826508436](https://github.com/Waynekaila/Nhill/actions/runs/40826508436) |
+| QML check | workspace, CI | 100 files, 0 problems, 0 untranslated texts | `scripts/qa/qml-check.py` |
+| `nhill.online` domain | CI | **expected failure**: Hostinger parking page, no MX, SPF or DMARC | `ci-results/domain-check` |
+
+SHA-256 of the deliverables built by CI (`18d7054`):
+
+```
+fe68846cf61ff330f5ca8f332916d38685417bba272f4213c14f6d82cc19da9b  windows/nhill-business-3.0.0-setup.exe
+9d5d55a841850ee9dc3a8d8911fd84398f0a01b10c472384e1dbb65b899be763  windows/nhill-pos-3.0.0-setup.exe
+eb654f3bfa0ef7e39785f03c8bacc8f466e281556744686f8ca6d3da8aa498e6  windows/nhill-console-3.0.0-setup.exe
+500d06e310fe7a68d5b29f5a2a5ddab5c6055b54274300eb10f671fde573c0e8  android/nhill-business-3.0.0-arm64-v8a.apk
+456ca24392c57fd860b3096b05d564c0e828b1afad97df6c61be2bd2d542757f  linux/ubuntu-24.04/nhill-server_3.0.0-1_amd64.deb
+f9cddb2f63854b65423757d521dd2eea97d4fc3a287df904b8ae23c9d4366c0f  linux/debian-13/nhill-server_3.0.0-1_amd64.deb
+cb60e13fa18e09f1430f9d983bb86bdd6fee141c4fe5e48adeae67fa30d34c87  website/nhill-website-3.0.0.tar.gz
+```
+
+Full list: `release/V3.0.0/checksums/SHA256SUMS`.
+
+### Defects found and fixed during the 3.0 validation
+
+| Defect | Fix |
+|---|---|
+| Erasure of a business promised by the terms but impossible (documents and log immutable for the application) | migration 0014, controlled erasure function, console screen, tests |
+| `%` and `_` interpreted in searches | migration 0015, `nh_like_contains` |
+| VPS acceptance: inactive PostgreSQL umbrella unit, internal certificate at 0 days, restore test unreadable for `nobody`, backup checksum with absolute path | `pg_isready` check, adapted threshold, script copy, checksum on the file name |
+| POS 1366×768 screenshots missing (Xvfb display not ready) | wait for the X socket before launching |
+| Android Keystore test: "Can't find service: activity" right after boot | wait for the service and retry `am` commands |
+| APK without QtKeychain's BSD notice (statically linked) | notices included and checked at build time |
+| Sales file: bracket fields, fictitious tracker rows, outdated "8-week pilot" offer | declared merge fields, empty files, 30-day trial everywhere |
+
+### Not tested
+
+- Real deployment on the Hostinger VPS (no access); `nhill.online` website not published.
+- Real Android phone, user Windows 10/11 machine, e-mails through a real SMTP relay.
+- Upgrade of a 2.1 database holding real data to 0012–0015 (tests apply 0001–0015 to an empty database).
+- Hiding of features in the interface for each plan (checked server-side by the `Plans.*` tests; in the applications by code reading and static check).
+
+### Pending decisions and human actions
+
+- R1 (cpp-httplib of the Ubuntu 24.04 package) and R2 (Qt 6.5.3 on Windows and Android): choice of the fix ([03-security-audit.md](03-security-audit.md) § 4).
+- Website host (legal notice), sender address of automatic e-mails, mail DNS records (MX, SPF, DMARC).
+- Signing certificates (Authenticode, Android release key), legal review (points V-01 to V-14), external audit.
+
+---
 
 ## Version 2.1.0 — remembered session and forgotten password
 
