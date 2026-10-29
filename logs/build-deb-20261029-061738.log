@@ -1,0 +1,94 @@
+[06:17:38] ==> Journal : /__w/Nhill/Nhill/build/logs/build-deb-20261029-061738.log
+[06:17:38] ==> Contrôle de l'environnement
+[06:17:38]   ok espace disque : 84 Go libres dans /tmp
+[06:17:38]   ok Nhill 3.0.0 -> paquets ubuntu-24.04 dans /__w/Nhill/Nhill/dist/linux/ubuntu-24.04
+[06:17:38] ==> Compilation, tests et paquets (ubuntu-24.04)
+==> Vérification du système
+attention: distribution ubuntu 24.04 (noble) : ce script vise Debian 13 ; poursuite demandée par --force-distro
+  ok architecture : amd64
+==> Détection du code source
+attention: le dossier de sortie est dans l'arborescence source (/__w/Nhill/Nhill/dist/linux/ubuntu-24.04) : seul ce dossier y sera écrit
+  ok projet nhill 3.0.0 — CMake, langage(s) CXX, C++17, Qt 6 / QML
+==> Déduction des dépendances depuis les fichiers CMake
+  ok 35 paquets requis : build-essential cmake dpkg-dev file libcpp-httplib-dev libcurl4-openssl-dev libgtest-dev libhpdf-dev libpng-dev libpqxx-dev libsodium-dev libssl-dev ninja-build nlohmann-json3-dev pkgconf poppler-utils postgresql postgresql-client procps qml6-module-qtqml-workerscript qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-dialogs qml6-module-qtquick-layouts qml6-module-qtquick-templates qml6-module-qtquick-window qt6-base-dev qt6-declarative-dev qt6-declarative-dev-tools qt6-l10n-tools qt6-qpa-plugins qt6-svg-dev qt6-tools-dev qtkeychain-qt6-dev zlib1g-dev
+==> Vérification de la disponibilité des paquets (amd64)
+==> installation de 1 paquet(s) manquant(s) : postgresql-client
+Hit:1 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu noble InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following NEW packages will be installed:
+  postgresql-client
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 11.6 kB of archives.
+After this operation, 17.4 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 postgresql-client all 16+257build1.1 [11.6 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 11.6 kB in 0s (110 kB/s)
+Selecting previously unselected package postgresql-client.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 36869 files and directories currently installed.)
+Preparing to unpack .../postgresql-client_16+257build1.1_all.deb ...
+Unpacking postgresql-client (16+257build1.1) ...
+Setting up postgresql-client (16+257build1.1) ...
+  ok toutes les dépendances de compilation sont installées
+==> Préparation du dossier temporaire
+  ok /tmp/nhill-deb.VAQJD6fe
+==> Configuration CMake (drapeaux de durcissement Debian)
+  ok configuration terminée
+==> Compilation (4 tâches)
+  ok compilation terminée (1 avertissement(s))
+==> Tests (ctest)
+  ok 100% tests passed, 0 tests failed out of 5
+==> Détection des composants d'installation
+  ok composants : business console pos server
+==> Construction des paquets
+==>   nhill-business (business)
+attention: section « office » inconnue de Debian pour nhill-business : « misc » utilisée
+  ok nhill-business_3.0.0-1_amd64.deb — Depends: libc6 (>= 2.34), libgcc-s1 (>= 7), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.1.2), libqt6keychain1 (>= 0.13.2), libqt6network6t64 (>= 6.1.2), libqt6qml6 (>= 6.4.0), libqt6quick6 (>= 6.2.0), libqt6quickcontrols2-6 (>= 6.2.0), libstdc++6 (>= 5.2), libqt6svg6, qml6-module-qtqml, qml6-module-qtqml-models, qml6-module-qtqml-workerscript, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts, qml6-module-qtquick-templates, qml6-module-qtquick-window
+==>   nhill-console (console)
+  ok nhill-console_3.0.0-1_amd64.deb — Depends: libc6 (>= 2.34), libgcc-s1 (>= 7), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.1.2), libqt6keychain1 (>= 0.13.2), libqt6network6t64 (>= 6.1.2), libqt6qml6 (>= 6.4.0), libqt6quick6 (>= 6.2.0), libqt6quickcontrols2-6 (>= 6.2.0), libstdc++6 (>= 5.2), libqt6svg6, qml6-module-qtqml, qml6-module-qtqml-models, qml6-module-qtqml-workerscript, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts, qml6-module-qtquick-templates, qml6-module-qtquick-window
+==>   nhill-pos (pos)
+attention: section « office » inconnue de Debian pour nhill-pos : « misc » utilisée
+  ok nhill-pos_3.0.0-1_amd64.deb — Depends: libc6 (>= 2.34), libgcc-s1 (>= 7), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.1.2), libqt6keychain1 (>= 0.13.2), libqt6network6t64 (>= 6.1.2), libqt6qml6 (>= 6.4.0), libqt6quick6 (>= 6.2.0), libqt6quickcontrols2-6 (>= 6.2.0), libstdc++6 (>= 5.2), libqt6svg6, qml6-module-qtqml, qml6-module-qtqml-models, qml6-module-qtqml-workerscript, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts, qml6-module-qtquick-templates, qml6-module-qtquick-window
+==>   nhill-server (server)
+  ok nhill-server_3.0.0-1_amd64.deb — Depends: libc6 (>= 2.38), libcpp-httplib0.14t64 (>= 0.14.3+ds), libcurl4t64 (>= 7.16.2), libgcc-s1 (>= 7), libhpdf-2.3.0 (>= 2.3.0), libpng16-16t64 (>= 1.6.2), libpqxx-7.8t64 (>= 7.2), libsodium23 (>= 1.0.14), libssl3t64 (>= 3.0.0), libstdc++6 (>= 13.1), zlib1g (>= 1:1.2.0), adduser, systemd
+==> Contrôles
+  ok lintian nhill-business_3.0.0-1_amd64.deb : 0 erreur, 0 avertissement(s)
+  ok lintian nhill-console_3.0.0-1_amd64.deb : 0 erreur, 0 avertissement(s)
+  ok lintian nhill-pos_3.0.0-1_amd64.deb : 0 erreur, 0 avertissement(s)
+  ok lintian nhill-server_3.0.0-1_amd64.deb : 0 erreur, 7 avertissement(s)
+  ok code source inchangé
+==> Paquets générés dans /__w/Nhill/Nhill/dist/linux/ubuntu-24.04 :
+    nhill-business_3.0.0-1_amd64.deb
+    nhill-console_3.0.0-1_amd64.deb
+    nhill-pos_3.0.0-1_amd64.deb
+    nhill-server_3.0.0-1_amd64.deb
+==> Installation : sudo apt install ./dist/linux/ubuntu-24.04/<paquet>.deb
+[06:25:01] ==> Vérification des paquets
+[06:25:01]   ok dist/linux/ubuntu-24.04/nhill-business_3.0.0-1_amd64.deb (841284 octets)
+    Package: nhill-business
+    Version: 3.0.0-1
+    Architecture: amd64
+    Depends: libc6 (>= 2.34), libgcc-s1 (>= 7), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.1.2), libqt6keychain1 (>= 0.13.2), libqt6network6t64 (>= 6.1.2), libqt6qml6 (>= 6.4.0), libqt6quick6 (>= 6.2.0), libqt6quickcontrols2-6 (>= 6.2.0), libstdc++6 (>= 5.2), libqt6svg6, qml6-module-qtqml, qml6-module-qtqml-models, qml6-module-qtqml-workerscript, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts, qml6-module-qtquick-templates, qml6-module-qtquick-window
+[06:25:01]   ok dist/linux/ubuntu-24.04/nhill-console_3.0.0-1_amd64.deb (725564 octets)
+    Package: nhill-console
+    Version: 3.0.0-1
+    Architecture: amd64
+    Depends: libc6 (>= 2.34), libgcc-s1 (>= 7), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.1.2), libqt6keychain1 (>= 0.13.2), libqt6network6t64 (>= 6.1.2), libqt6qml6 (>= 6.4.0), libqt6quick6 (>= 6.2.0), libqt6quickcontrols2-6 (>= 6.2.0), libstdc++6 (>= 5.2), libqt6svg6, qml6-module-qtqml, qml6-module-qtqml-models, qml6-module-qtqml-workerscript, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts, qml6-module-qtquick-templates, qml6-module-qtquick-window
+[06:25:01]   ok dist/linux/ubuntu-24.04/nhill-pos_3.0.0-1_amd64.deb (659748 octets)
+    Package: nhill-pos
+    Version: 3.0.0-1
+    Architecture: amd64
+    Depends: libc6 (>= 2.34), libgcc-s1 (>= 7), libqt6core6t64 (>= 6.4.0), libqt6gui6t64 (>= 6.1.2), libqt6keychain1 (>= 0.13.2), libqt6network6t64 (>= 6.1.2), libqt6qml6 (>= 6.4.0), libqt6quick6 (>= 6.2.0), libqt6quickcontrols2-6 (>= 6.2.0), libstdc++6 (>= 5.2), libqt6svg6, qml6-module-qtqml, qml6-module-qtqml-models, qml6-module-qtqml-workerscript, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtquick-dialogs, qml6-module-qtquick-layouts, qml6-module-qtquick-templates, qml6-module-qtquick-window
+[06:25:01]   ok dist/linux/ubuntu-24.04/nhill-server_3.0.0-1_amd64.deb (1363020 octets)
+    Package: nhill-server
+    Version: 3.0.0-1
+    Architecture: amd64
+    Depends: libc6 (>= 2.38), libcpp-httplib0.14t64 (>= 0.14.3+ds), libcurl4t64 (>= 7.16.2), libgcc-s1 (>= 7), libhpdf-2.3.0 (>= 2.3.0), libpng16-16t64 (>= 1.6.2), libpqxx-7.8t64 (>= 7.2), libsodium23 (>= 1.0.14), libssl3t64 (>= 3.0.0), libstdc++6 (>= 13.1), zlib1g (>= 1:1.2.0), adduser, systemd
+[06:25:02]   ok sommes de contrôle : /__w/Nhill/Nhill/dist/linux/ubuntu-24.04/SHA256SUMS
+[06:25:02] ==> Paquets : /__w/Nhill/Nhill/dist/linux/ubuntu-24.04
+[06:25:02] ==> Installation : sudo apt install /__w/Nhill/Nhill/dist/linux/ubuntu-24.04/nhill-<composant>_3.0.0-1*_amd64.deb

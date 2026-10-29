@@ -1,0 +1,17 @@
+[06:25:02] ==> Journal : /__w/Nhill/Nhill/build/logs/verify-build-20261029-062502.log
+[06:25:02] ==> Paquets Debian
+[06:25:02]   ok nhill-business_3.0.0-1_amd64.deb (3.0.0-1)
+[06:25:02]   ok nhill-console_3.0.0-1_amd64.deb (3.0.0-1)
+[06:25:02]   ok nhill-pos_3.0.0-1_amd64.deb (3.0.0-1)
+[06:25:02]   ok nhill-server_3.0.0-1_amd64.deb (3.0.0-1)
+[06:25:02]   ok SHA256SUMS conformes : /__w/Nhill/Nhill/dist/linux/ubuntu-24.04
+[06:25:02] ==> Installateurs Windows
+[06:25:02] attention: aucun installateur Windows (non construit)
+[06:25:02] ==> APK Android
+[06:25:02] attention: aucun APK (non construit)
+[06:25:02] ==> Site vitrine
+[06:25:02] attention: archive du site absente (non construite)
+[06:25:02] ==> PDF de documentation
+124 PDF attendus, 0 problème(s)
+[06:25:02]   ok PDF présents et à jour
+[06:25:02]   ok Vérification terminée : conforme.
