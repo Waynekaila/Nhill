@@ -1,0 +1,25 @@
+[06:18:11] ==> Journal : /home/runner/work/Nhill/Nhill/build/logs/build-website-20261029-061811.log
+[06:18:11] ==> Contrôles statiques du site
+24 pages contrôlées, 0 problème(s)
+[06:18:11] ==> Tests du backend des formulaires
+test_config_refuses_weak_or_missing_settings (test_backend.ConfigTests.test_config_refuses_weak_or_missing_settings) ... ok
+test_control_characters_are_removed (test_backend.FormTests.test_control_characters_are_removed) ... ok
+test_every_form_kind (test_backend.FormTests.test_every_form_kind) ... ok
+test_honeypot_is_accepted_but_not_stored (test_backend.FormTests.test_honeypot_is_accepted_but_not_stored) ... ok
+test_protocol_errors (test_backend.FormTests.test_protocol_errors) ... ok
+test_proxy_header_only_trusted_when_configured (test_backend.FormTests.test_proxy_header_only_trusted_when_configured) ... ok
+test_rate_limit_per_ip_and_form (test_backend.FormTests.test_rate_limit_per_ip_and_form) ... ok
+test_valid_demo_is_stored_minimised_with_retention (test_backend.FormTests.test_valid_demo_is_stored_minimised_with_retention) ... ok
+test_validation_errors_name_the_field (test_backend.FormTests.test_validation_errors_name_the_field) ... ok
+test_access_and_erasure_by_email (test_backend.MaintenanceTests.test_access_and_erasure_by_email) ... ok
+test_cli_commands (test_backend.MaintenanceTests.test_cli_commands) ... ok
+test_purge_applies_retention_and_clears_ip_fingerprints (test_backend.MaintenanceTests.test_purge_applies_retention_and_clears_ip_fingerprints) ... ok
+test_sqlite_file_is_private (test_backend.MaintenanceTests.test_sqlite_file_is_private) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.239s
+
+OK
+[06:18:11] ==> Archive
+[06:18:11]   ok dist/website/nhill-website-3.0.0.tar.gz (750292 octets)
+[06:18:11]   ok sommes de contrôle : /home/runner/work/Nhill/Nhill/dist/website/SHA256SUMS
