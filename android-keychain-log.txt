@@ -1,0 +1,928 @@
+yes: standard output: Broken pipe
+Loading package information...                                                  Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [=                                      ] 3% Fetch remote repository...         [=                                      ] 4% Fetch remote repository...         [=                                      ] 5% Fetch remote repository...         [==                                     ] 5% Fetch remote repository...         [==                                     ] 6% Fetch remote repository...         [==                                     ] 7% Fetch remote repository...         [==                                     ] 7% Computing updates...               [===                                    ] 8% Computing updates...               [===                                    ] 10% Computing updates...              [===                                    ] 10% Installing Android Emulator       [===                                    ] 10% Downloading emulator-linux_x64-164[====                                   ] 10% Downloading emulator-linux_x64-164[====                                   ] 11% Downloading emulator-linux_x64-164[====                                   ] 12% Downloading emulator-linux_x64-164[=====                                  ] 13% Downloading emulator-linux_x64-164[=====                                  ] 14% Downloading emulator-linux_x64-164[=====                                  ] 15% Downloading emulator-linux_x64-164[======                                 ] 15% Downloading emulator-linux_x64-164[======                                 ] 16% Downloading emulator-linux_x64-164[======                                 ] 17% Downloading emulator-linux_x64-164[=======                                ] 18% Downloading emulator-linux_x64-164[=======                                ] 18% Unzipping...                      [=======                                ] 18% Unzipping... emulator/            [=======                                ] 18% Unzipping... emulator/resources/  [=======                                ] 18% Unzipping... emulator/qsn         [=======                                ] 18% Unzipping... emulator/emulator    [=======                                ] 18% Unzipping... emulator/netsimd     [=======                                ] 18% Unzipping... emulator/bin64/      [=======                                ] 18% Unzipping... emulator/qemu/       [=======                                ] 18% Unzipping... emulator/NOTICE.txt  [=======                                ] 18% Unzipping... emulator/crashpad_han[=======                                ] 18% Unzipping... emulator/source.prope[=======                                ] 18% Unzipping... emulator/nimble_bridg[=======                                ] 18% Unzipping... emulator/LICENSE     [=======                                ] 18% Unzipping... emulator/lib/        [=======                                ] 18% Unzipping... emulator/qemu-img    [=======                                ] 18% Unzipping... emulator/include/    [=======                                ] 18% Unzipping... emulator/NOTICE.csv  [=======                                ] 18% Unzipping... emulator/lib64/      [=======                                ] 18% Unzipping... emulator/emulator-che[=======                                ] 18% Unzipping... emulator/crashreport [=======                                ] 18% Unzipping... emulator/mksdcard    [=======                                ] 18% Unzipping... emulator/resources/To[=======                                ] 18% Unzipping... emulator/resources/de[=======                                ] 18% Unzipping... emulator/resources/To[=======                                ] 18% Unzipping... emulator/resources/de[=======                                ] 18% Unzipping... emulator/resources/To[=======                                ] 18% Unzipping... emulator/resources/ma[=======                                ] 18% Unzipping... emulator/resources/de[=======                                ] 18% Unzipping... emulator/resources/sk[=======                                ] 18% Unzipping... emulator/resources/de[=======                                ] 18% Unzipping... emulator/resources/ma[=======                                ] 18% Unzipping... emulator/resources/po[=======                                ] 18% Unzipping... emulator/resources/ma[=======                                ] 18% Unzipping... emulator/resources/sk[=======                                ] 18% Unzipping... emulator/resources/ma[=======                                ] 18% Unzipping... emulator/bin64/e2fsck[=======                                ] 18% Unzipping... emulator/bin64/fsck.e[=======                                ] 18% Unzipping... emulator/bin64/tune2f[=======                                ] 18% Unzipping... emulator/bin64/resize[=======                                ] 18% Unzipping... emulator/bin64/mkfs.e[=======                                ] 18% Unzipping... emulator/qemu/linux-x[=======                                ] 19% Unzipping... emulator/qemu/linux-x[=======                                ] 20% Unzipping... emulator/qemu/linux-x[========                               ] 20% Unzipping... emulator/qemu/linux-x[========                               ] 20% Unzipping... emulator/lib/emulator[========                               ] 20% Unzipping... emulator/lib/rtc_serv[========                               ] 20% Unzipping... emulator/lib/advanced[========                               ] 20% Unzipping... emulator/lib/cmake/  [========                               ] 20% Unzipping... emulator/lib/emulator[========                               ] 20% Unzipping... emulator/lib/control_[========                               ] 20% Unzipping... emulator/lib/emulated[========                               ] 20% Unzipping... emulator/lib/rtc_serv[========                               ] 20% Unzipping... emulator/lib/emu-orig[========                               ] 20% Unzipping... emulator/lib/hardware[========                               ] 20% Unzipping... emulator/lib/pkgconfi[========                               ] 20% Unzipping... emulator/lib/pc-bios/[========                               ] 20% Unzipping... emulator/lib/snapshot[========                               ] 20% Unzipping... emulator/lib/adb_serv[========                               ] 20% Unzipping... emulator/lib/hostapd.[========                               ] 20% Unzipping... emulator/lib/grpc_end[========                               ] 20% Unzipping... emulator/lib/ca-bundl[========                               ] 20% Unzipping... emulator/lib/ui_contr[========                               ] 20% Unzipping... emulator/lib/snapshot[========                               ] 20% Unzipping... emulator/lib/ice_conf[========                               ] 20% Unzipping... emulator/lib/libflatb[========                               ] 20% Unzipping... emulator/lib/emulator[========                               ] 20% Unzipping... emulator/lib/waterfal[========                               ] 20% Unzipping... emulator/lib/emulated[========                               ] 20% Unzipping... emulator/lib/cmake/fl[========                               ] 20% Unzipping... emulator/lib/pkgconfi[========                               ] 20% Unzipping... emulator/lib/pc-bios/[========                               ] 20% Unzipping... emulator/include/flat[========                               ] 20% Unzipping... emulator/lib64/libgli[========                               ] 20% Unzipping... emulator/lib64/libpro[========                               ] 20% Unzipping... emulator/lib64/qt/   [========                               ] 20% Unzipping... emulator/lib64/liband[========                               ] 20% Unzipping... emulator/lib64/libgfx[========                               ] 21% Unzipping... emulator/lib64/libgfx[========                               ] 21% Unzipping... emulator/lib64/gles_l[========                               ] 21% Unzipping... emulator/lib64/liband[========                               ] 21% Unzipping... emulator/lib64/vulkan[========                               ] 21% Unzipping... emulator/lib64/gles_s[========                               ] 21% Unzipping... emulator/lib64/libemu[========                               ] 21% Unzipping... emulator/lib64/libpro[========                               ] 21% Unzipping... emulator/lib64/liband[========                               ] 21% Unzipping... emulator/lib64/libtcm[========                               ] 21% Unzipping... emulator/lib64/libima[========                               ] 21% Unzipping... emulator/lib64/libc++[========                               ] 21% Unzipping... emulator/lib64/liband[========                               ] 21% Unzipping... emulator/lib64/libabs[========                               ] 21% Unzipping... emulator/lib64/gles_a[========                               ] 21% Unzipping... emulator/lib64/libsha[========                               ] 21% Unzipping... emulator/lib64/libc++[========                               ] 21% Unzipping... emulator/lib64/qt/res[========                               ] 21% Unzipping... emulator/lib64/qt/lib[========                               ] 21% Unzipping... emulator/lib64/qt/tra[========                               ] 21% Unzipping... emulator/lib64/qt/plu[========                               ] 21% Unzipping... emulator/lib64/qt/res[========                               ] 21% Unzipping... emulator/lib64/qt/lib[========                               ] 22% Unzipping... emulator/lib64/qt/lib[=========                              ] 23% Unzipping... emulator/lib64/qt/lib[=========                              ] 23% Unzipping... emulator/lib64/qt/tra[=========                              ] 24% Unzipping... emulator/lib64/qt/tra[=========                              ] 24% Unzipping... emulator/lib64/qt/plu[=========                              ] 24% Unzipping... emulator/lib64/gles_l[=========                              ] 24% Unzipping... emulator/lib64/vulkan[=========                              ] 25% Unzipping... emulator/lib64/vulkan[=========                              ] 25% Unzipping... emulator/lib64/gles_s[=========                              ] 25% Unzipping... emulator/lib64/gles_a[===============                        ] 40% Unzipping... emulator/lib64/gles_a[===============                        ] 40% Installing Intel x86_64 Atom Syste[===============                        ] 40% Downloading x86_64-30_r11.zip... e[================                       ] 40% Downloading x86_64-30_r11.zip... e[================                       ] 41% Downloading x86_64-30_r11.zip... e[================                       ] 42% Downloading x86_64-30_r11.zip... e[=================                      ] 43% Downloading x86_64-30_r11.zip... e[=================                      ] 44% Downloading x86_64-30_r11.zip... e[=================                      ] 45% Downloading x86_64-30_r11.zip... e[==================                     ] 45% Downloading x86_64-30_r11.zip... e[==================                     ] 46% Downloading x86_64-30_r11.zip... e[==================                     ] 47% Downloading x86_64-30_r11.zip... e[==================                     ] 48% Downloading x86_64-30_r11.zip... e[==================                     ] 48% Unzipping... emulator/lib64/gles_a[==================                     ] 48% Unzipping... x86_64/VerifiedBootPa[===================                    ] 48% Unzipping... x86_64/VerifiedBootPa[===================                    ] 48% Unzipping... x86_64/advancedFeatur[===================                    ] 48% Unzipping... x86_64/build.prop    [===================                    ] 48% Unzipping... x86_64/encryptionkey.[===================                    ] 48% Unzipping... x86_64/kernel-ranchu [===================                    ] 48% Unzipping... x86_64/ramdisk.img   [===================                    ] 48% Unzipping... x86_64/source.propert[===================                    ] 48% Unzipping... x86_64/system.img    [===================                    ] 49% Unzipping... x86_64/system.img    [===================                    ] 50% Unzipping... x86_64/system.img    [====================                   ] 50% Unzipping... x86_64/system.img    [====================                   ] 51% Unzipping... x86_64/system.img    [====================                   ] 52% Unzipping... x86_64/system.img    [=====================                  ] 53% Unzipping... x86_64/system.img    [=====================                  ] 54% Unzipping... x86_64/system.img    [=====================                  ] 55% Unzipping... x86_64/system.img    [=====================                  ] 55% Unzipping... x86_64/userdata.img  [=====================                  ] 55% Unzipping... x86_64/vendor.img    [=====================                  ] 55% Unzipping... x86_64/data/local.pro[=====================                  ] 55% Unzipping... x86_64/data/misc/apns[=====================                  ] 55% Unzipping... x86_64/data/misc/emul[=====================                  ] 55% Unzipping... x86_64/data/misc/gcec[=====================                  ] 55% Unzipping... x86_64/data/misc/wifi[=====================                  ] 55% Unzipping... x86_64/data/system/di[===========================            ] 70% Unzipping... x86_64/data/system/di[===========================            ] 70% Installing NDK (Side by side) 25.2[===========================            ] 70% Downloading android-ndk-r25c-linux[============================           ] 70% Downloading android-ndk-r25c-linux[============================           ] 71% Downloading android-ndk-r25c-linux[============================           ] 72% Downloading android-ndk-r25c-linux[=============================          ] 73% Downloading android-ndk-r25c-linux[=============================          ] 74% Downloading android-ndk-r25c-linux[=============================          ] 75% Downloading android-ndk-r25c-linux[==============================         ] 75% Downloading android-ndk-r25c-linux[==============================         ] 76% Downloading android-ndk-r25c-linux[==============================         ] 77% Downloading android-ndk-r25c-linux[==============================         ] 77% Unzipping... x86_64/data/system/di[==============================         ] 77% Unzipping... android-ndk-r25c/    [==============================         ] 77% Unzipping... android-ndk-r25c/CHAN[===============================        ] 78% Unzipping... android-ndk-r25c/CHAN[===============================        ] 78% Unzipping... android-ndk-r25c/wrap[===============================        ] 78% Unzipping... android-ndk-r25c/preb[===============================        ] 78% Unzipping... android-ndk-r25c/buil[===============================        ] 78% Unzipping... android-ndk-r25c/NOTI[===============================        ] 78% Unzipping... android-ndk-r25c/ndk-[===============================        ] 78% Unzipping... android-ndk-r25c/NOTI[===============================        ] 78% Unzipping... android-ndk-r25c/meta[===============================        ] 78% Unzipping... android-ndk-r25c/ndk-[===============================        ] 78% Unzipping... android-ndk-r25c/pyth[===============================        ] 78% Unzipping... android-ndk-r25c/sour[===============================        ] 78% Unzipping... android-ndk-r25c/simp[===============================        ] 78% Unzipping... android-ndk-r25c/ndk-[===============================        ] 78% Unzipping... android-ndk-r25c/READ[===============================        ] 78% Unzipping... android-ndk-r25c/tool[===============================        ] 79% Unzipping... android-ndk-r25c/tool[===============================        ] 80% Unzipping... android-ndk-r25c/tool[================================       ] 80% Unzipping... android-ndk-r25c/tool[================================       ] 81% Unzipping... android-ndk-r25c/tool[================================       ] 82% Unzipping... android-ndk-r25c/tool[=================================      ] 83% Unzipping... android-ndk-r25c/tool[=================================      ] 84% Unzipping... android-ndk-r25c/tool[=================================      ] 85% Unzipping... android-ndk-r25c/tool[=================================      ] 85% Unzipping... android-ndk-r25c/ndk-[=================================      ] 85% Unzipping... android-ndk-r25c/shad[=======================================] 100% Unzipping... android-ndk-r25c/sha
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [===                                    ] 10% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+
+== Qt 6.5.3 hôte et Android x86_64
+INFO    : aqtinstall(aqt) v3.3.0 on Python 3.12.3 [CPython GCC 13.3.0]
+ERROR   : The packages ['qt_base', 'qtshadertools'] were not found while parsing XML of package information!
+==============================Suggested follow-up:==============================
+* Please use 'aqt list-qt linux desktop --arch 6.5.3' to show architectures available.
+* Please use 'aqt list-qt linux desktop --modules 6.5.3 <arch>' to show modules available.
+INFO    : aqtinstall(aqt) v3.3.0 on Python 3.12.3 [CPython GCC 13.3.0]
+INFO    : Downloading qtbase...
+INFO    : Downloading qtsvg...
+INFO    : Downloading qttools...
+INFO    : Downloading qtdeclarative...
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Finished installation of qtsvg-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 1.79114435
+INFO    : Downloading qttranslations...
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Finished installation of qttranslations-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 2.22268069
+INFO    : Finished installation of qtbase-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 4.65351015
+INFO    : Downloading qtwayland...
+INFO    : Finished installation of qttools-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 4.90180470
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Downloading icu...
+INFO    : Downloading qtshadertools...
+INFO    : Finished installation of qtwayland-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 1.83965698
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Finished installation of qtshadertools-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 1.89506222
+INFO    : Finished installation of icu-linux-Rhel7.2-x64.7z in 2.38122747
+INFO    : Finished installation of qtdeclarative-Linux-RHEL_8_4-GCC-Linux-RHEL_8_4-X86_64.7z in 7.61664984
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/bin/qmake
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Widgets.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Quick.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickWidgets.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickControls2Impl.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QmlCore.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QmlWorkerScript.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Sql.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6LabsWavefrontMesh.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6LabsQmlModels.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QmlModels.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickControls2.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Qml.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6OpenGLWidgets.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6SvgWidgets.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickLayouts.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QmlLocalStorage.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6ShaderTools.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickTest.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QmlXmlListModel.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickDialogs2.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Xml.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6OpenGL.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickDialogs2Utils.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6WaylandClient.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6PrintSupport.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6LabsSharedImage.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Test.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickDialogs2QuickImpl.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6LabsSettings.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6LabsFolderListModel.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Core.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Platform.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Svg.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QmlIntegration.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6QuickTemplates2.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Network.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Help.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Designer.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Gui.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6UiPlugin.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Concurrent.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6LabsAnimation.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6Linguist.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6UiTools.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/pkgconfig/Qt6DBus.pc
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickTemplates2.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Gui.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6SvgWidgets.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6LabsSettings.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6PacketProtocol.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickControlsTestUtils.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6FbSupport.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickControls2Impl.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlCompiler.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6UiTools.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlLocalStorage.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6WaylandClient.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Designer.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6InputSupport.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6XcbQpa.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlCore.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6EglFsKmsSupport.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6DBus.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Qml.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6PrintSupport.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Xml.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6OpenGL.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlDebug.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickDialogs2.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6EglFSDeviceIntegration.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Network.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickParticles.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Test.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6LabsWavefrontMesh.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickDialogs2QuickImpl.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Concurrent.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickShapes.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6WaylandEglClientHwIntegration.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6LabsAnimation.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Widgets.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6DeviceDiscoverySupport.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlWorkerScript.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6WlShellIntegration.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6KmsSupport.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Help.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6DesignerComponents.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Core.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Svg.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Quick.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6ShaderTools.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickLayouts.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6LabsQmlModels.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlXmlListModel.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickEffects.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlDom.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlModels.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6LabsFolderListModel.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickControls2.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QmlTypeRegistrar.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickTestUtils.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6LabsSharedImage.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6ExampleIcons.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickDialogs2Utils.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6Sql.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickWidgets.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6OpenGLWidgets.prl
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/gcc_64/lib/libQt6QuickTest.prl
+INFO    : Finished installation
+INFO    : Time elapsed: 9.27962704 second
+INFO    : aqtinstall(aqt) v3.3.0 on Python 3.12.3 [CPython GCC 13.3.0]
+INFO    : Found installed linux-desktop Qt at /home/runner/work/_temp/qt/6.5.3/gcc_64
+INFO    : Downloading qtbase...
+INFO    : Downloading qtsvg...
+INFO    : Downloading qttools...
+INFO    : Downloading qtdeclarative...
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Finished installation of qtsvg-Linux-RHEL_8_4-Clang-Android-Android_ANY-X86_64.7z in 1.64364174
+INFO    : Finished installation of qttools-Linux-RHEL_8_4-Clang-Android-Android_ANY-X86_64.7z in 2.21377828
+INFO    : Downloading qttranslations...
+INFO    : Downloading qtshadertools...
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Redirected: qt.mirror.constant.com
+INFO    : Finished installation of qttranslations-Linux-RHEL_8_4-Clang-Android-Android_ANY-X86_64.7z in 2.05222535
+INFO    : Finished installation of qtbase-Linux-RHEL_8_4-Clang-Android-Android_ANY-X86_64.7z in 4.11521360
+INFO    : Finished installation of qtshadertools-Linux-RHEL_8_4-Clang-Android-Android_ANY-X86_64.7z in 1.86932876
+INFO    : Finished installation of qtdeclarative-Linux-RHEL_8_4-Clang-Android-Android_ANY-X86_64.7z in 4.75568862
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/android_x86_64/bin/qmake
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/android_x86_64/bin/qtpaths
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/android_x86_64/bin/qmake6
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/android_x86_64/bin/qtpaths6
+INFO    : Patching /home/runner/work/_temp/qt/6.5.3/android_x86_64/bin/target_qt.conf
+INFO    : Finished installation
+INFO    : Time elapsed: 6.48971139 second
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+== QtKeychain 0.17.0 (x86_64)
+warning: refs/tags/0.17.0 85835a638c6598ecd712473c555360a29746aad1 is not a commit!
+Note: switching to '875f77d9f61bd97fd84cca47ce3bc71186dfbd09'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+QtKeychain 0.17.0 (875f77d9f61bd97fd84cca47ce3bc71186dfbd09) vérifié
+-- Android toolchain file within NDK detected: /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /usr/local/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:146 (include)
+  CMakeLists.txt:6 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /usr/local/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:146 (include)
+  CMakeLists.txt:6 (project)
+
+
+-- Android toolchain file within NDK detected: /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  CMakeLists.txt:6 (project)
+
+
+-- The CXX compiler identification is Clang 14.0.7
+-- Detecting CXX compiler ABI info
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-NrKT2C/CMakeLists.txt:5 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-NrKT2C/CMakeLists.txt:5 (project)
+
+
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "1.8.1")
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-yz9wgQ/CMakeLists.txt:5 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-yz9wgQ/CMakeLists.txt:5 (project)
+
+
+-- Check if compiler accepts -pthread
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-cPTB84/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-cPTB84/CMakeLists.txt:4 (project)
+
+
+-- Check if compiler accepts -pthread - yes
+-- Performing Test HAVE_STDATOMIC
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-1REuwH/CMakeLists.txt:5 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-1REuwH/CMakeLists.txt:5 (project)
+
+
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-NbmNQV/CMakeLists.txt:5 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-NbmNQV/CMakeLists.txt:5 (project)
+
+
+-- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+-- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-yEo7Mn/CMakeLists.txt:5 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-yEo7Mn/CMakeLists.txt:5 (project)
+
+
+-- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY - Success
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-krskNX/CMakeLists.txt:5 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /tmp/qtkeychain-android.FrsBay/build/CMakeFiles/CMakeScratch/TryCompile-krskNX/CMakeLists.txt:5 (project)
+
+
+-- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Success
+-- Configuring done (1.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/qtkeychain-android.FrsBay/build
+[1/11] Generating moc_keychain.cpp
+[2/11] Generating moc_keychain_p.cpp
+[3/11] Generating moc_gnomekeyring_p.cpp
+[4/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/plaintextstore.cpp.o
+[5/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/androidkeystore.cpp.o
+[6/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/keychain.cpp.o
+[7/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/moc_keychain.cpp.o
+[8/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/moc_keychain_p.cpp.o
+[9/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/keychain_android.cpp.o
+[10/11] Building CXX object qtkeychain/CMakeFiles/qt6keychain.dir/moc_gnomekeyring_p.cpp.o
+[11/11] Linking CXX static library lib/libqt6keychain.a
+QtKeychain (Android, statique) installé dans /home/runner/work/_temp/qtkeychain-android-x86_64
+== APK de test (tests/keychain)
+-- Android toolchain file within NDK detected: /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /usr/local/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:146 (include)
+  CMakeLists.txt:2 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /usr/local/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:146 (include)
+  CMakeLists.txt:2 (project)
+
+
+-- Android toolchain file within NDK detected: /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  CMakeLists.txt:2 (project)
+
+
+-- The CXX compiler identification is Clang 14.0.7
+-- Detecting CXX compiler ABI info
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-FAYHUz/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-FAYHUz/CMakeLists.txt:4 (project)
+
+
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-7E7xuo/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-7E7xuo/CMakeLists.txt:4 (project)
+
+
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-CywVvC/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-CywVvC/CMakeLists.txt:4 (project)
+
+
+-- Check if compiler accepts -pthread - yes
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-ZkVLe7/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-ZkVLe7/CMakeLists.txt:4 (project)
+
+
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Performing Test HAVE_EGL
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-g4534Z/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-g4534Z/CMakeLists.txt:4 (project)
+
+
+-- Performing Test HAVE_EGL - Success
+-- Found EGL: /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include (found version "1.5")
+-- Performing Test HAVE_GLESv2
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-bIxhTc/CMakeLists.txt:4 (project)
+
+
+CMake Deprecation Warning at /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android-legacy.toolchain.cmake:34 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+Call Stack (most recent call first):
+  /usr/local/lib/android/sdk/ndk/25.2.9519653/build/cmake/android.toolchain.cmake:54 (include)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6/qt.toolchain.cmake:80 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/3.31.6/CMakeSystem.cmake:6 (include)
+  /home/runner/work/Nhill/Nhill/build/android-keychain-test/CMakeFiles/CMakeScratch/TryCompile-bIxhTc/CMakeLists.txt:4 (project)
+
+
+-- Performing Test HAVE_GLESv2 - Success
+-- Found GLESv2: /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include
+-- Found WrapVulkanHeaders: /usr/local/lib/android/sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include
+-- Nhill client: QtKeychain found, refresh tokens stored in the OS keychain
+CMake Warning (dev) at /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Ui/CMakeLists.txt:3 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Business/CMakeLists.txt:4 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  /home/runner/work/_temp/qt/6.5.3/android_x86_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Console/CMakeLists.txt:4 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring 'nhill-business' for the following Android ABIs: x86_64 (default)
+-- Found android platform plugin at: /home/runner/work/_temp/qt/6.5.3/android_x86_64/./plugins/platforms/libplugins_platforms_qtforandroid_x86_64.so
+-- Configuring 'test_keychain' for the following Android ABIs: x86_64 (default)
+-- Found android platform plugin at: /home/runner/work/_temp/qt/6.5.3/android_x86_64/./plugins/platforms/libplugins_platforms_qtforandroid_x86_64.so
+-- Configuring done (1.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/runner/work/Nhill/Nhill/build/android-keychain-test
+QtKeychain : session mémorisée, chiffrée par le Keystore Android
+[0/2] Re-checking globbed directories...
+[1/28] Generating nhill_fr.qm
+Updating '/home/runner/work/Nhill/Nhill/build/android-keychain-test/client/nhill_fr.qm'...
+    Generated 2152 translation(s) (2152 finished and 0 unfinished)
+[2/28] Generating nhill_en.qm
+Updating '/home/runner/work/Nhill/Nhill/build/android-keychain-test/client/nhill_en.qm'...
+    Generated 8 translation(s) (8 finished and 0 unfinished)
+    Ignored 1946 untranslated source text(s)
+[3/28] Automatic MOC and UIC for target nhill_client_core_resources_1
+[4/28] Automatic MOC and UIC for target nhill_client_core_resources_2
+[5/28] Running rcc for resource nhill_translations
+[6/28] Building CXX object client/CMakeFiles/nhill_client_core_resources_2.dir/nhill_client_core_resources_2_autogen/mocs_compilation.cpp.o
+[7/28] Running rcc for resource nhill_assets
+[8/28] Building CXX object client/CMakeFiles/nhill_client_core_resources_1.dir/nhill_client_core_resources_1_autogen/mocs_compilation.cpp.o
+[9/28] Building CXX object client/CMakeFiles/nhill_client_core_resources_2.dir/.rcc/qrc_nhill_translations.cpp.o
+[10/28] Building CXX object common/CMakeFiles/nhill_common.dir/src/establishment_code.cpp.o
+[11/28] Building CXX object common/CMakeFiles/nhill_common.dir/src/validation.cpp.o
+[12/28] Building CXX object common/CMakeFiles/nhill_common.dir/src/money.cpp.o
+[13/28] Linking CXX static library common/libnhill_common.a
+[14/28] Automatic MOC and UIC for target nhill_client_core
+[15/28] Building CXX object client/CMakeFiles/nhill_client_core_resources_1.dir/.rcc/qrc_nhill_assets.cpp.o
+[16/28] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/formatter.cpp.o
+[17/28] Building CXX object client/CMakeFiles/nhill_client_core.dir/nhill_client_core_autogen/mocs_compilation.cpp.o
+[18/28] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/session.cpp.o
+[19/28] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/apiclient.cpp.o
+/home/runner/work/Nhill/Nhill/client/src/core/apiclient.cpp:155:10: warning: misleading indentation; statement is not part of the previous 'else' [-Wmisleading-indentation]
+    emit connectionStateChanged();
+         ^
+/home/runner/work/Nhill/Nhill/client/src/core/apiclient.cpp:154:5: note: previous statement is here
+    else m_probe.stop();
+    ^
+1 warning generated.
+[20/28] Building CXX object client/CMakeFiles/nhill_client_core.dir/src/core/appcontext.cpp.o
+[21/28] Linking CXX static library client/libnhill_client_core_x86_64.a
+[22/28] Automatic MOC for target test_keychain
+[23/28] Building CXX object tests/keychain/CMakeFiles/test_keychain.dir/test_keychain_autogen/mocs_compilation.cpp.o
+[24/28] Building CXX object tests/keychain/CMakeFiles/test_keychain.dir/test_keychain.cpp.o
+[25/28] Linking CXX shared module tests/keychain/libtest_keychain_x86_64.so
+[26/28] Copying test_keychain binary to apk folder
+[27/28] Creating APK for test_keychain
+Generating Android Package
+  Input file: /home/runner/work/Nhill/Nhill/build/android-keychain-test/tests/keychain/android-test_keychain-deployment-settings.json
+  Output directory: /home/runner/work/Nhill/Nhill/build/android-keychain-test/tests/keychain/android-build/
+  Application binary: test_keychain
+  Android build platform: android-34-ext12
+  Install to device: No
+Skipping createRCC
+Downloading https://services.gradle.org/distributions/gradle-8.0-bin.zip
+...........10%............20%............30%............40%............50%............60%...........70%............80%............90%............100%
+
+Welcome to Gradle 8.0!
+
+For more details see https://docs.gradle.org/8.0/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+WARNING:We recommend using a newer Android Gradle plugin to use compileSdk = 34
+
+This Android Gradle plugin (7.4.1) was tested up to compileSdk = 33
+
+This warning can be suppressed by adding
+    android.suppressUnsupportedCompileSdk=34
+to this project's gradle.properties
+
+The build will continue, but you are strongly encouraged to update your project to
+use a newer Android Gradle Plugin that has been tested with compileSdk = 34
+> Task :preBuild UP-TO-DATE
+> Task :preReleaseBuild UP-TO-DATE
+> Task :compileReleaseAidl NO-SOURCE
+> Task :compileReleaseRenderscript NO-SOURCE
+> Task :generateReleaseBuildConfig
+> Task :javaPreCompileRelease
+> Task :checkReleaseAarMetadata
+> Task :generateReleaseResValues
+> Task :mapReleaseSourceSetPaths
+> Task :generateReleaseResources
+> Task :createReleaseCompatibleScreenManifests
+> Task :extractDeepLinksRelease
+
+> Task :processReleaseMainManifest
+package="org.qtproject.example.test_keychain" found in source AndroidManifest.xml: /home/runner/work/Nhill/Nhill/build/android-keychain-test/tests/keychain/android-build/AndroidManifest.xml.
+Setting the namespace via a source AndroidManifest.xml's package attribute is deprecated.
+Please instead set the namespace (or testNamespace) in the module's build.gradle file, as described here: https://developer.android.com/studio/build/configure-app-module#set-namespace
+This migration can be done automatically using the AGP Upgrade Assistant, please refer to https://developer.android.com/studio/build/agp-upgrade-assistant for more information.
+
+> Task :mergeReleaseResources
+> Task :processReleaseManifest
+> Task :extractProguardFiles
+> Task :mergeReleaseJniLibFolders
+> Task :processReleaseManifestForPackage
+> Task :checkReleaseDuplicateClasses
+> Task :mergeReleaseNativeLibs
+> Task :processReleaseResources
+> Task :stripReleaseDebugSymbols
+
+> Task :compileReleaseJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :desugarReleaseFileDependencies
+> Task :extractReleaseNativeSymbolTables
+> Task :dexBuilderRelease
+> Task :mergeReleaseArtProfile
+> Task :mergeReleaseShaders
+> Task :compileReleaseShaders NO-SOURCE
+> Task :generateReleaseAssets UP-TO-DATE
+> Task :mergeReleaseAssets
+> Task :compressReleaseAssets
+> Task :processReleaseJavaRes NO-SOURCE
+> Task :mergeReleaseNativeDebugMetadata
+> Task :mergeExtDexRelease
+> Task :optimizeReleaseResources
+> Task :mergeReleaseJavaResource
+> Task :collectReleaseDependencies
+> Task :mergeDexRelease
+> Task :sdkReleaseDependencyData
+> Task :compileReleaseArtProfile
+> Task :writeReleaseAppMetadata
+> Task :writeReleaseSigningConfigVersions
+> Task :packageRelease
+> Task :createReleaseApkListingFileRedirect
+> Task :lintVitalAnalyzeRelease
+> Task :lintVitalReportRelease
+> Task :lintVitalRelease
+> Task :assembleRelease
+
+BUILD SUCCESSFUL in 41s
+40 actionable tasks: 40 executed
+Android package built successfully in 41.875 ms.
+  -- File: /home/runner/work/Nhill/Nhill/build/android-keychain-test/tests/keychain/android-build//build/outputs/apk/release/android-build-release-unsigned.apk
+APK de test construit dans /home/runner/work/Nhill/Nhill/build/android-keychain-test
+Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10,000 days
+	for: CN=Android Debug, O=Android, C=US
+paquet org.qtproject.example.test_keychain, activité org.qtproject.qt.android.bindings.QtActivity
+== Émulateur Android 30 x86_64 (KVM)
+crw-rw-rw- 1 root kvm 10, 232 Oct 29 06:20 /dev/kvm
+ANDROID_NDK=/usr/local/lib/android/sdk/ndk/27.3.13750724
+ANDROID_NDK_LATEST_HOME=/usr/local/lib/android/sdk/ndk/30.0.16248370
+ANDROID_NDK_HOME=/usr/local/lib/android/sdk/ndk/27.3.13750724
+ANDROID_AVD_HOME=/home/runner/.android/avd
+ANDROID_HOME=/usr/local/lib/android/sdk
+ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
+ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/25.2.9519653
+/usr/local/lib/android/sdk/system-images/android-30/default/x86_64
+Loading local repository...                                                     [=========                              ] 25% Loading local repository...       [=========                              ] 25% Fetch remote repository...        [=======================================] 100% Fetch remote repository...       
+Auto-selecting single ABI x86_64
+Do you wish to create a custom hardware profile? [no] Available Android Virtual Devices:
+    Name: nhill
+    Path: /home/runner/.android/avd/nhill.avd
+  Target: Default Android System Image
+          Based on: Android 11.0 ("R") Tag/ABI: default/x86_64
+  Sdcard: 512 MB
+total 16
+drwxr-xr-x 3 runner runner 4096 Oct 29 06:20 .
+drwxr-xr-x 4 runner runner 4096 Oct 29 06:20 ..
+drwxr-xr-x 2 runner runner 4096 Oct 29 06:20 nhill.avd
+-rw-r--r-- 1 runner runner   82 Oct 29 06:20 nhill.ini
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+11
+Performing Streamed Install
+Success
+phase write : NHILL_KEYCHAIN_PHASE write OK
+phase read : NHILL_KEYCHAIN_PHASE read OK
+phase logout : NHILL_KEYCHAIN_PHASE logout OK
+phase forget : NHILL_KEYCHAIN_PHASE forget OK
+Keystore Android : session mémorisée entre deux lancements — OK
