@@ -1,0 +1,17 @@
+[22:21:28] ==> Journal : /__w/Nhill/Nhill/build/logs/verify-build-20261105-222128.log
+[22:21:28] ==> Paquets Debian
+[22:21:28]   ok nhill-business_3.0.0-1_amd64.deb (3.0.0-1)
+[22:21:28]   ok nhill-console_3.0.0-1_amd64.deb (3.0.0-1)
+[22:21:28]   ok nhill-pos_3.0.0-1_amd64.deb (3.0.0-1)
+[22:21:28]   ok nhill-server_3.0.0-1_amd64.deb (3.0.0-1)
+[22:21:28]   ok SHA256SUMS conformes : /__w/Nhill/Nhill/dist/linux/debian-13
+[22:21:28] ==> Installateurs Windows
+[22:21:28] attention: aucun installateur Windows (non construit)
+[22:21:28] ==> APK Android
+[22:21:28] attention: aucun APK (non construit)
+[22:21:28] ==> Site vitrine
+[22:21:28] attention: archive du site absente (non construite)
+[22:21:28] ==> PDF de documentation
+124 PDF attendus, 0 problème(s)
+[22:21:28]   ok PDF présents et à jour
+[22:21:28]   ok Vérification terminée : conforme.
