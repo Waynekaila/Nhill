@@ -1,0 +1,149 @@
+Nov 05 22:26:14 runnervm7aw5e systemd[1]: Starting caddy.service - Caddy...
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: caddy.HomeDir=/var/lib/caddy
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: caddy.AppDataDir=/var/lib/caddy/.local/share/caddy
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: caddy.AppConfigDir=/var/lib/caddy/.config/caddy
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: caddy.ConfigAutosavePath=/var/lib/caddy/.config/caddy/autosave.json
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: caddy.Version=2.6.2
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: runtime.GOOS=linux
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: runtime.GOARCH=amd64
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: runtime.Compiler=gc
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: runtime.NumCPU=4
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: runtime.GOMAXPROCS=4
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: runtime.Version=go1.22.2
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: os.Getwd=/
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: LANG=C.UTF-8
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/snap/bin
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: SGX_AESM_ADDR=1
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: NOTIFY_SOCKET=/run/systemd/notify
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: USER=caddy
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: LOGNAME=caddy
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: HOME=/var/lib/caddy
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: INVOCATION_ID=376af30cff56410a9c687b5692f2d6f0
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: JOURNAL_STREAM=10:22429
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: SYSTEMD_EXEC_PID=7719
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: MEMORY_PRESSURE_WATCH=/sys/fs/cgroup/system.slice/caddy.service/memory.pressure
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: MEMORY_PRESSURE_WRITE=c29tZSAyMDAwMDAgMjAwMDAwMAA=
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5876143,"msg":"using provided configuration","config_file":"/etc/caddy/Caddyfile","config_adapter":""}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5887935,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//localhost:2019","//[::1]:2019","//127.0.0.1:2019"]}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5889723,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc000488700"}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"warn","ts":1793917574.5889804,"logger":"http","msg":"server is listening only on the HTTP port, so no automatic HTTPS will be applied to this server","server_name":"srv0","http_port":80}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.58935,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5893974,"logger":"tls","msg":"cleaning storage unit","description":"FileStorage:/var/lib/caddy/.local/share/caddy"}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5894547,"msg":"autosaved config (load with --resume flag)","file":"/var/lib/caddy/.config/caddy/autosave.json"}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5894926,"msg":"serving initial configuration"}
+Nov 05 22:26:14 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917574.5894575,"logger":"tls","msg":"finished cleaning storage units"}
+Nov 05 22:26:14 runnervm7aw5e systemd[1]: Started caddy.service - Caddy.
+Nov 05 22:26:30 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:26:31 runnervm7aw5e nhill-server[9041]: no database configured: nothing to migrate (the server starts in setup mode)
+Nov 05 22:26:31 runnervm7aw5e systemd[1]: Started nhill-server.service - Nhill API server.
+Nov 05 22:26:31 runnervm7aw5e nhill-server[9043]:   Nhill server is in SETUP MODE (no database configured).
+Nov 05 22:26:31 runnervm7aw5e nhill-server[9043]:   Open Nhill Console, choose the server address and enter this setup token
+Nov 05 22:26:31 runnervm7aw5e nhill-server[9043]:   (valid 60 minutes, new token at each restart):
+Nov 05 22:26:31 runnervm7aw5e nhill-server[9043]:       fLKK0gOXIah2B5bFwdunP_ro
+Nov 05 22:26:31 runnervm7aw5e nhill-server[9043]: {"ts":"2026-11-05T22:26:31Z","level":"info","msg":"setup mode listening on 127.0.0.1:8080"}
+Nov 05 22:26:32 runnervm7aw5e systemd[1]: Stopping nhill-server.service - Nhill API server...
+Nov 05 22:26:32 runnervm7aw5e systemd[1]: nhill-server.service: Deactivated successfully.
+Nov 05 22:26:32 runnervm7aw5e systemd[1]: Stopped nhill-server.service - Nhill API server.
+Nov 05 22:26:33 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:26:33 runnervm7aw5e nhill-server[9226]: applied: 0, already applied: 15
+Nov 05 22:26:33 runnervm7aw5e systemd[1]: Started nhill-server.service - Nhill API server.
+Nov 05 22:26:33 runnervm7aw5e nhill-server[9229]: {"ts":"2026-11-05T22:26:33Z","level":"info","msg":"compliance profile registered: CD v2"}
+Nov 05 22:26:33 runnervm7aw5e nhill-server[9229]: {"ts":"2026-11-05T22:26:33Z","level":"info","msg":"compliance profile registered: INTL v2"}
+Nov 05 22:26:33 runnervm7aw5e nhill-server[9229]: {"ts":"2026-11-05T22:26:33Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Nov 05 22:26:33 runnervm7aw5e nhill-server[9229]: {"ts":"2026-11-05T22:26:33Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}
+Nov 05 22:26:34 runnervm7aw5e systemd[1]: Starting nhill-backup.service - Nhill encrypted database backup...
+Nov 05 22:26:34 runnervm7aw5e nhill-backup.sh[9432]: backup written: /var/backups/nhill/archives/nhill-20261105T222634Z.dump.age (324K)
+Nov 05 22:26:34 runnervm7aw5e systemd[1]: nhill-backup.service: Deactivated successfully.
+Nov 05 22:26:34 runnervm7aw5e systemd[1]: Finished nhill-backup.service - Nhill encrypted database backup.
+Nov 05 22:26:35 runnervm7aw5e systemd[1]: Reloading caddy.service - Caddy...
+Nov 05 22:26:35 runnervm7aw5e caddy[9538]: {"level":"info","ts":1793917595.07039,"msg":"using provided configuration","config_file":"/etc/caddy/Caddyfile","config_adapter":""}
+Nov 05 22:26:35 runnervm7aw5e caddy[9538]: {"level":"warn","ts":1793917595.0706513,"logger":"caddyfile","msg":"Unnecessary header_up X-Forwarded-For: the reverse proxy's default behavior is to pass headers to the upstream"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0718567,"logger":"admin.api","msg":"received request","method":"POST","host":"localhost:2019","uri":"/load","remote_ip":"127.0.0.1","remote_port":"60542","headers":{"Accept-Encoding":["gzip"],"Cache-Control":["must-revalidate"],"Content-Length":["1216"],"Content-Type":["application/json"],"Origin":["http://localhost:2019"],"User-Agent":["Go-http-client/1.1"]}}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0723393,"logger":"admin","msg":"admin endpoint started","address":"localhost:2019","enforce_origin":false,"origins":["//127.0.0.1:2019","//localhost:2019","//[::1]:2019"]}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0730796,"logger":"http","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0730932,"logger":"http","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0734515,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0734959,"msg":"connection doesn't allow setting of send buffer size. Not a *net.UDPConn?. See https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes for details."}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0735714,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc00033b180"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0735807,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0736015,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0736046,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["api.nhill-ci.test"]}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0738027,"logger":"tls.obtain","msg":"acquiring lock","identifier":"api.nhill-ci.test"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0745473,"logger":"tls.obtain","msg":"lock acquired","identifier":"api.nhill-ci.test"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0746212,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"api.nhill-ci.test"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.075361,"logger":"tls.obtain","msg":"certificate obtained successfully","identifier":"api.nhill-ci.test"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0753791,"logger":"tls.obtain","msg":"releasing lock","identifier":"api.nhill-ci.test"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"warn","ts":1793917595.0757275,"logger":"tls","msg":"stapling OCSP","error":"no OCSP stapling for [api.nhill-ci.test]: no OCSP server specified in certificate","identifiers":["api.nhill-ci.test"]}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"warn","ts":1793917595.0801752,"logger":"pki.ca.local","msg":"installing root certificate (you might be prompted for password)","path":"storage:pki/authorities/local/root.crt"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.080284,"msg":"not NSS security databases found"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0802927,"msg":"define JAVA_HOME environment variable to use the Java trust"}
+Nov 05 22:26:35 runnervm7aw5e sudo[9546]: pam_unix(sudo:auth): conversation failed
+Nov 05 22:26:35 runnervm7aw5e sudo[9546]: pam_unix(sudo:auth): auth could not identify password for [caddy]
+Nov 05 22:26:35 runnervm7aw5e sudo[9546]:    caddy : user NOT in sudoers ; PWD=/ ; USER=root ; COMMAND=/usr/bin/tee /usr/local/share/ca-certificates/Caddy_Local_Authority_-_2026_ECC_Root_73056135718880587347968467578986532705.crt
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"error","ts":1793917595.084384,"logger":"pki.ca.local","msg":"failed to install root certificate","error":"failed to execute sudo: exit status 1","certificate_file":"storage:pki/authorities/local/root.crt"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0844738,"logger":"tls.cache.maintenance","msg":"stopped background certificate maintenance","cache":"0xc000488700"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0845528,"msg":"autosaved config (load with --resume flag)","file":"/var/lib/caddy/.config/caddy/autosave.json"}
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.0845861,"logger":"admin.api","msg":"load complete"}
+Nov 05 22:26:35 runnervm7aw5e systemd[1]: Reloaded caddy.service - Caddy.
+Nov 05 22:26:35 runnervm7aw5e caddy[7719]: {"level":"info","ts":1793917595.089864,"logger":"admin","msg":"stopped previous server","address":"localhost:2019"}
+Nov 05 22:26:35 runnervm7aw5e systemd[1]: Starting nhill-healthcheck.service - Nhill health check (API, HTTPS, database, ports, firewall, disk, backups)...
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    service nhill-server   active
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    service caddy          active
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    postgresql             127.0.0.1:5432 - accepting connections
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    api local              {"database":true,"status":"ok"}
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    api https (Caddy)      HTTP 200 via https://api.nhill-ci.test/health
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    certificate            0 days left (Nov  6 10:26:35 2026 GMT)
+Nov 05 22:26:35 runnervm7aw5e nhill-healthcheck[9720]: ok    local-only ports       PostgreSQL 5432 and API 8080 on loopback only
+Nov 05 22:26:36 runnervm7aw5e systemd[1]: Starting nhill-backup.service - Nhill encrypted database backup...
+Nov 05 22:26:36 runnervm7aw5e nhill-backup.sh[10034]: backup written: /var/backups/nhill/archives/nhill-20261105T222636Z.dump.age (324K)
+Nov 05 22:26:36 runnervm7aw5e systemd[1]: nhill-backup.service: Deactivated successfully.
+Nov 05 22:26:36 runnervm7aw5e systemd[1]: Finished nhill-backup.service - Nhill encrypted database backup.
+Nov 05 22:26:38 runnervm7aw5e systemd[1]: Starting nhill-backup.service - Nhill encrypted database backup...
+Nov 05 22:26:38 runnervm7aw5e nhill-backup.sh[10183]: backup written: /var/backups/nhill/archives/nhill-20261105T222638Z.dump.age (324K)
+Nov 05 22:26:38 runnervm7aw5e systemd[1]: nhill-backup.service: Deactivated successfully.
+Nov 05 22:26:38 runnervm7aw5e systemd[1]: Finished nhill-backup.service - Nhill encrypted database backup.
+Nov 05 22:26:38 runnervm7aw5e systemd[1]: Stopping nhill-server.service - Nhill API server...
+Nov 05 22:26:39 runnervm7aw5e nhill-healthcheck[9720]: FAIL  firewall
+Nov 05 22:26:39 runnervm7aw5e nhill-healthcheck[9720]: ok    disk /                 42% used (alert at 85%)
+Nov 05 22:26:39 runnervm7aw5e nhill-healthcheck[9720]: ok    disk /var/backups      42% used (alert at 85%)
+Nov 05 22:26:40 runnervm7aw5e nhill-healthcheck[9720]: ok    last backup            nhill-20261105T222638Z.dump.age, 0 h old
+Nov 05 22:26:40 runnervm7aw5e nhill-healthcheck[9720]: ok    backup service         last run: success
+Nov 05 22:26:40 runnervm7aw5e systemd[1]: nhill-healthcheck.service: Main process exited, code=exited, status=1/FAILURE
+Nov 05 22:26:40 runnervm7aw5e systemd[1]: nhill-healthcheck.service: Failed with result 'exit-code'.
+Nov 05 22:26:40 runnervm7aw5e systemd[1]: Failed to start nhill-healthcheck.service - Nhill health check (API, HTTPS, database, ports, firewall, disk, backups).
+Nov 05 22:26:40 runnervm7aw5e systemd[1]: nhill-healthcheck.service: Triggering OnFailure= dependencies.
+Nov 05 22:26:41 runnervm7aw5e systemd[1]: nhill-server.service: Deactivated successfully.
+Nov 05 22:26:41 runnervm7aw5e systemd[1]: Stopped nhill-server.service - Nhill API server.
+Nov 05 22:26:43 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:26:43 runnervm7aw5e nhill-server[10634]: applied: 0, already applied: 15
+Nov 05 22:26:43 runnervm7aw5e systemd[1]: Started nhill-server.service - Nhill API server.
+Nov 05 22:26:43 runnervm7aw5e nhill-server[10637]: {"ts":"2026-11-05T22:26:43Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Nov 05 22:26:43 runnervm7aw5e nhill-server[10637]: {"ts":"2026-11-05T22:26:43Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}
+Nov 05 22:26:45 runnervm7aw5e systemd[1]: Stopping nhill-server.service - Nhill API server...
+Nov 05 22:26:49 runnervm7aw5e systemd[1]: nhill-server.service: Deactivated successfully.
+Nov 05 22:26:49 runnervm7aw5e systemd[1]: Stopped nhill-server.service - Nhill API server.
+Nov 05 22:26:50 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:26:50 runnervm7aw5e nhill-server[10797]: applied: 0, already applied: 15
+Nov 05 22:26:50 runnervm7aw5e systemd[1]: Started nhill-server.service - Nhill API server.
+Nov 05 22:26:50 runnervm7aw5e nhill-server[10800]: {"ts":"2026-11-05T22:26:50Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Nov 05 22:26:50 runnervm7aw5e nhill-server[10800]: {"ts":"2026-11-05T22:26:50Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}
+Nov 05 22:26:51 runnervm7aw5e systemd[1]: Stopping nhill-server.service - Nhill API server...
+Nov 05 22:26:56 runnervm7aw5e systemd[1]: nhill-server.service: Deactivated successfully.
+Nov 05 22:26:56 runnervm7aw5e systemd[1]: Stopped nhill-server.service - Nhill API server.
+Nov 05 22:26:56 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:26:56 runnervm7aw5e nhill-server[10947]: {"ts":"2026-11-05T22:26:56Z","level":"error","msg":"the database was migrated by a newer version of Nhill (migration 9999_newer_version unknown to this server): install that version, or restore the copy of the database taken before the update"}
+Nov 05 22:26:56 runnervm7aw5e systemd[1]: nhill-server.service: Control process exited, code=exited, status=1/FAILURE
+Nov 05 22:26:56 runnervm7aw5e systemd[1]: nhill-server.service: Failed with result 'exit-code'.
+Nov 05 22:26:56 runnervm7aw5e systemd[1]: Failed to start nhill-server.service - Nhill API server.
+Nov 05 22:27:01 runnervm7aw5e systemd[1]: nhill-server.service: Scheduled restart job, restart counter is at 1.
+Nov 05 22:27:01 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:27:01 runnervm7aw5e nhill-server[10954]: {"ts":"2026-11-05T22:27:01Z","level":"error","msg":"the database was migrated by a newer version of Nhill (migration 9999_newer_version unknown to this server): install that version, or restore the copy of the database taken before the update"}
+Nov 05 22:27:01 runnervm7aw5e systemd[1]: nhill-server.service: Control process exited, code=exited, status=1/FAILURE
+Nov 05 22:27:01 runnervm7aw5e systemd[1]: nhill-server.service: Failed with result 'exit-code'.
+Nov 05 22:27:01 runnervm7aw5e systemd[1]: Failed to start nhill-server.service - Nhill API server.
+Nov 05 22:27:04 runnervm7aw5e systemd[1]: Stopped nhill-server.service - Nhill API server.
+Nov 05 22:27:04 runnervm7aw5e systemd[1]: Starting nhill-server.service - Nhill API server...
+Nov 05 22:27:04 runnervm7aw5e nhill-server[10968]: applied: 0, already applied: 15
+Nov 05 22:27:04 runnervm7aw5e systemd[1]: Started nhill-server.service - Nhill API server.
+Nov 05 22:27:04 runnervm7aw5e nhill-server[10971]: {"ts":"2026-11-05T22:27:04Z","level":"info","msg":"e-mail transport 'log': e-mails are NOT delivered (password recovery codes included); set NH_EMAIL_TRANSPORT=smtp"}
+Nov 05 22:27:04 runnervm7aw5e nhill-server[10971]: {"ts":"2026-11-05T22:27:04Z","level":"info","msg":"Nhill server 3.0.0 listening on 127.0.0.1:8080"}

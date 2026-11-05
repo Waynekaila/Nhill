@@ -1,0 +1,9 @@
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./ABSENT.txt
+a8563cd645d75a95181079e3404c75f613888dde40a91eaa8761339f4587f5f5  ./RUN-INFO.txt
+ba28d9898a44d3bf930faadd225685b4956aceefbf646624698b3d88ffe57b72  ./vps-report/acceptance.log
+538c894e7c282e98812122f728783abce5041226da9d60bebd7bcb9bab856250  ./vps-report/health.json
+8c5fb3ef054b30d750e0d6278729a5d3d8f6a9d2f9b1ef906bdf6a5147fe23ee  ./vps-report/journal.log
+84e2f608864a8c07b9aad0d9d73021bac2c67a78cb3df9c974114bf126edf41f  ./vps-report/listening.txt
+93bfcefcf1cc91ee53aba37e6974a8ac3b3c2dfd54a4306db99ce65f38c65782  ./vps-report/provision.log
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./vps-report/shellcheck.txt
+8b3e7812317a71a0832ec1b450e18f2264c7fcd93c6afe9ccbdde73952e5ddfd  ./vps-report/ufw.txt
