@@ -1,0 +1,48 @@
+CMake Warning (dev) at D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Ui/CMakeLists.txt:3 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Business/CMakeLists.txt:4 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Console/CMakeLists.txt:4 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:2702 (message):
+  Qt policy QTP0001 is not set: ':/qt/qml/' is the default resource prefix
+  for QML modules.  Check https://doc.qt.io/qt-6/qt-cmake-policy-qtp0001.html
+  for policy details.  Use the qt_policy command to set the policy and
+  suppress this warning.
+
+Call Stack (most recent call first):
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:445 (__qt_internal_setup_policy)
+  D:/a/Nhill/Qt/6.5.3/msvc2019_64/lib/cmake/Qt6Qml/Qt6QmlMacros.cmake:686 (qt6_add_qml_module)
+  client/qml/Nhill/Pos/CMakeLists.txt:4 (qt_add_qml_module)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
